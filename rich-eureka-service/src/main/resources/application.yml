@@ -1,0 +1,93 @@
+spring:
+  application:
+    name: rich-eureka-service
+  profiles:
+    active: dev
+info:
+  build:
+    artifact: rich-eureka-service
+    name: rich-eureka-service
+    description: Rich服务注册中心
+    version: 1.0.0-SNAPSHOT
+management:
+  endpoint:
+    shutdown:
+      enabled: false # 关闭shutdown端点，禁止通过Http方式关闭服务
+---
+spring:
+  profiles: dev
+server:
+  port: 10151
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+    metadata-map:
+      zone: dev
+  server:
+    enable-self-preservation: false # 关闭自我保护
+    eviction-interval-timer-in-ms: 5000 # 主动失效检测 单位ms
+    response-cache-auto-expiration-in-seconds: 3000 # Eurake实例缓存刷新时间，PS 读取 ReadWriterCacheMap的间隔
+    use-read-only-response-cache: false # 大集群开启
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+---
+spring:
+  profiles: prd
+server:
+  port: 10151
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+    metadata-map:
+      zone: prd
+  server:
+    enable-self-preservation: false # 关闭自我保护
+    eviction-interval-timer-in-ms: 5000 # 主动失效检测 单位ms
+    response-cache-auto-expiration-in-seconds: 3000 # Eurake实例缓存刷新时间，PS 读取 ReadWriterCacheMap的间隔
+    use-read-only-response-cache: false # 大集群开启
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+--- # 集群节点1
+spring:
+  profiles: node-1
+server:
+  port: 10151
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:10152/eureka/,http://${eureka.instance.hostname}:10153/eureka/
+--- # 集群节点2
+spring:
+  profiles: node-2
+server:
+  port: 10152
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:10151/eureka/,http://${eureka.instance.hostname}:10153/eureka/
+--- # 集群节点3
+spring:
+  profiles: node-3
+server:
+  port: 10153
+eureka:
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:10151/eureka/,http://${eureka.instance.hostname}:10152/eureka/
