@@ -5,6 +5,7 @@
     <artifactId>rich-gateway-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>rich-gateway-service</name>
+    <packaging>jar</packaging>
     <description>服务网关</description>
 
     <parent>
@@ -17,6 +18,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.minstone.bd.eda</groupId>
+            <artifactId>eda-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

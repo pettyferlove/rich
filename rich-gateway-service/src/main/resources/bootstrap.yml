@@ -3,6 +3,18 @@ spring:
     name: rich-gateway-service
   profiles:
     active: dev
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: rich-config-service
+      profile: ${spring.profiles.active}
+      label: ${spring.profiles.active}
+      fail-fast: true
+    bus:
+      trace:
+        enabled: true
+      enabled: true
 ---
 spring:
   profiles: dev
