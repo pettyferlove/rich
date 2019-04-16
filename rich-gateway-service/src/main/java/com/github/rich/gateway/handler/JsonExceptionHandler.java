@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.codec.HttpMessageReader;
 import org.springframework.http.codec.HttpMessageWriter;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -76,6 +77,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     @Override
+    @NonNull
     public Mono<Void> handle(@Nullable ServerWebExchange exchange, @Nullable Throwable ex) {
         // 按照异常类型进行处理
         HttpStatus httpStatus;
@@ -142,11 +144,13 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
     private class ResponseContext implements ServerResponse.Context {
 
         @Override
+        @NonNull
         public List<HttpMessageWriter<?>> messageWriters() {
             return JsonExceptionHandler.this.messageWriters;
         }
 
         @Override
+        @NonNull
         public List<ViewResolver> viewResolvers() {
             return JsonExceptionHandler.this.viewResolvers;
         }
