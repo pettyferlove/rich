@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +76,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
     }
 
     @Override
-    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
+    public Mono<Void> handle(@Nullable ServerWebExchange exchange, @Nullable Throwable ex) {
         // 按照异常类型进行处理
         HttpStatus httpStatus;
         String body;
@@ -97,7 +98,9 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
         String msg = "{\"code\":" + httpStatus.value() + ",\"msg\": \"" + body + "\"}";
         result.put("body", msg);
         //错误记录
+        assert exchange != null;
         ServerHttpRequest request = exchange.getRequest();
+        assert ex != null;
         log.error("[全局异常处理]异常请求路径:{},记录异常信息:{}", request.getPath(), ex.getMessage());
         //参考AbstractErrorWebExceptionHandler
         if (exchange.getResponse().isCommitted()) {
@@ -115,8 +118,9 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
     /**
      * 参考DefaultErrorWebExceptionHandler
      */
-    protected Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
+    private Mono<ServerResponse> renderErrorResponse(ServerRequest request) {
         Map<String, Object> result = exceptionHandlerResult.get();
+        exceptionHandlerResult.remove();
         return ServerResponse.status((HttpStatus) result.get("httpStatus"))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .body(BodyInserters.fromObject(result.get("body")));
