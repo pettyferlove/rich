@@ -5,6 +5,7 @@
     <artifactId>rich-common-core</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>rich-common-core</name>
+    <packaging>jar</packaging>
     <description>公共依赖-核心</description>
 
     <parent>
@@ -29,14 +30,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

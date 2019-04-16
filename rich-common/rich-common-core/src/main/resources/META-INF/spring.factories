@@ -1,0 +1,7 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.rich.common.core.config.RedisConfig,\
+  com.github.rich.common.core.bean.interceptor.ServiceFeignInterceptor,\
+  com.github.rich.common.core.config.FeignOkHttpConfig,\
+  com.github.rich.common.core.config.FilterIgnorePropertiesConfig,\
+  com.github.rich.common.core.bean.handler.GlobalExceptionHandler,\
+  com.github.rich.common.core.utils.SpringContextHolder
