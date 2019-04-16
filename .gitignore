@@ -24,3 +24,5 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+rich-config-service/target/
+rich-eureka-service/target/

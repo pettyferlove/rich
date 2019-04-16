@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-gateway-service
+    name: rich-gateway-service
+    description: 服务网关
+    version: 1.0.0-SNAPSHOT
