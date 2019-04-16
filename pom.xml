@@ -34,6 +34,8 @@
         <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
         <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
         <spring-platform.version>Cairo-SR7</spring-platform.version>
+        <security.oauth.version>2.3.5.RELEASE</security.oauth.version>
+        <security.oauth.auto.version>2.1.2.RELEASE</security.oauth.auto.version>
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
         <swagger.version>2.9.2</swagger.version>
         <junit.version>4.12</junit.version>
@@ -46,6 +48,7 @@
         <logstash.version>5.0</logstash.version>
         <guava.version>23.0</guava.version>
         <jasypt.version>1.18</jasypt.version>
+        <hutool.version>4.5.1</hutool.version>
         <skipTests>true</skipTests>
     </properties>
 
@@ -91,6 +94,11 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -154,6 +162,16 @@
                 <version>${spring-platform.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>${security.oauth.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth.boot</groupId>
+                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+                <version>${security.oauth.auto.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
