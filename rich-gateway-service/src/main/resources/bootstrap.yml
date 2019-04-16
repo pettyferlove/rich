@@ -6,6 +6,19 @@ spring:
   profiles:
     active: dev
   cloud:
+    gateway:
+      default-filters:
+        # 限流配置
+        - name: RequestRateLimiter
+          args:
+            key-resolver: '#{@remoteAddrKeyResolver}'
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 1
+          # 降级配置
+        - name: Hystrix
+          args:
+            name: default
+            fallbackUri: 'forward:/fallback'
     config:
       discovery:
         enabled: true
