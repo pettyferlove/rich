@@ -1,6 +1,9 @@
 package com.github.rich.common.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.rich.common.core.constant.CommonConstant;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,22 +11,20 @@ import java.io.Serializable;
 
 /**
  * 响应数据1包装
+ * @author Petty
  * @param <T>
  */
+
+@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Getter
-    @Setter
     private int code = CommonConstant.SUCCESS;
 
-    @Getter
-    @Setter
     private String msg = "success";
 
-
-    @Getter
-    @Setter
     private T data;
 
     public R() {

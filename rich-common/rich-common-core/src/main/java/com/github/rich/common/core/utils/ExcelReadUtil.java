@@ -66,13 +66,18 @@ public class ExcelReadUtil{
 		List<Map<String, Object>> dataList = new ArrayList<Map<String,Object>>();
 		
 		try {
-			Workbook workbook = ExcelReadUtil.getWorkbook(in);//得到工作簿
-			
-			Map<String, Object> data = null; //数据
-			Sheet sheet = null; //表格
-			Row row = null; //行
-			int numColnum = 0; //列数
-			String[] marks = null; //标志位数组
+			//得到工作簿
+			Workbook workbook = ExcelReadUtil.getWorkbook(in);
+			//数据
+			Map<String, Object> data = null;
+			//表格
+			Sheet sheet = null;
+			//行
+			Row row = null;
+			//列数
+			int numColnum = 0;
+			//标志位数组
+			String[] marks = null;
 			int workbooklength = 1;
 			if(!oneSheet) {
 				workbooklength = workbook.getNumberOfSheets();
@@ -148,8 +153,8 @@ public class ExcelReadUtil{
 					int maxColIx =row.getLastCellNum();
 					List<String> rowlist = new ArrayList<String>();
 					//循环读取列
-					for (int ColIx = minColIx; ColIx < maxColIx; ColIx++) {
-						Cell cell=row.getCell(ColIx);//row.getCell(ColIx)  row行的第i列
+					for (int colIx = minColIx; colIx < maxColIx; colIx++) {
+						Cell cell=row.getCell(colIx);//row.getCell(ColIx)  row行的第i列
 						if(cell == null){
 							continue;
 						}
