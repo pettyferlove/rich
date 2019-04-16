@@ -20,7 +20,7 @@
     <property name="log_name" value="rich-gateway-service"/>
 
     <!-- 应用名称 -->
-    <property name="application_name" value="rich-basic"/>
+    <property name="application_name" value="rich"/>
 
     <property name="profiles" value="dev"/>
 

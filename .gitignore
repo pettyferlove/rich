@@ -26,3 +26,4 @@
 rich-config-service/target/
 rich-eureka-service/target/
 rich-gateway-service/target/
+rich-auth-service/target/

@@ -13,7 +13,9 @@
         <module>rich-eureka-service</module>
         <module>rich-config-service</module>
         <module>rich-gateway-service</module>
+        <module>rich-auth-service</module>
         <module>rich-common</module>
+        <module>rich-module</module>
     </modules>
 
     <parent>
@@ -36,6 +38,7 @@
         <swagger.version>2.9.2</swagger.version>
         <junit.version>4.12</junit.version>
         <druid.version>1.1.12</druid.version>
+        <mysql.version>8.0.15</mysql.version>
         <mybatisplus.version>1.0.5</mybatisplus.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <velocity.version>2.0</velocity.version>

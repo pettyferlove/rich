@@ -74,7 +74,7 @@ public interface CommonConstant {
     /**
      * 用户名称上下文传递Map数据结构所需key
      */
-    String BASIC_USER_CONTEXT = "basic_user_context";
+    String BASE_USER_CONTEXT = "base_user_context";
 
     /**
      * 未知客户端请求来源IP
