@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * 自定义异常处理
  * @author Petty
  */
 public class JsonExceptionHandler implements ErrorWebExceptionHandler {

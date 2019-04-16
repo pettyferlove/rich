@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 import java.util.Objects;
 
 /**
+ * 限流Key生成器
  * @author Petty
  */
 @Configuration

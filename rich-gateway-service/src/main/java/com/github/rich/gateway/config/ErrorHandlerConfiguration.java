@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 替换自定义异常处理器
  * @author Petty
  */
 @Configuration
