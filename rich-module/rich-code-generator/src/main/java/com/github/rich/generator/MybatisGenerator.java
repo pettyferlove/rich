@@ -48,10 +48,10 @@ public class MybatisGenerator {
         StrategyConfig strategy = new StrategyConfig();
         // 乐观锁字段
         //strategy.setVersionFieldName("VERSION");
-        strategy.setLogicDeleteFieldName("DEL_FLAG");
+        strategy.setLogicDeleteFieldName("del_flag");
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         // 表名生成策略
-        strategy.setInclude("test");
+        strategy.setInclude("system_login_log","system_oauth_client","system_role","system_user","system_user_role");
         strategy.setEntityLombokModel(true);
         strategy.setNaming(NamingStrategy.underline_to_camel);
         mpg.setStrategy(strategy);

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.rich.base.mapper.SystemRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemRole">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="role" property="role" />
+        <result column="role_name" property="roleName" />
+        <result column="status" property="status" />
+        <result column="del_flag" property="delFlag" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="modifier" property="modifier" />
+        <result column="modifier_time" property="modifierTime" />
+        <result column="area_code" property="areaCode" />
+        <result column="area_name" property="areaName" />
+        <result column="dept_code" property="deptCode" />
+        <result column="dept_name" property="deptName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, role, role_name, status, del_flag, creator, create_time, modifier, modifier_time, area_code, area_name, dept_code, dept_name
+    </sql>
+
+</mapper>

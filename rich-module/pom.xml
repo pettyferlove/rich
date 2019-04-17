@@ -15,7 +15,9 @@
     </parent>
 
     <modules>
+        <module>rich-base-info-api</module>
         <module>rich-base-info-service</module>
+        <module>rich-code-generator</module>
     </modules>
 
 </project>

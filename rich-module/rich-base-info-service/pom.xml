@@ -5,6 +5,7 @@
     <artifactId>rich-base-info-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>rich-base-info-service</name>
+    <packaging>jar</packaging>
     <description>基础服务</description>
 
     <parent>
@@ -33,6 +34,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.rich</groupId>
+            <artifactId>rich-base-info-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
