@@ -1,12 +1,12 @@
 package com.github.rich.base.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -30,6 +30,7 @@ public class SystemUser extends Model<SystemUser> {
     /**
      * 用户名称/登录名称
      */
+    @TableId
     private String userCode;
 
     /**

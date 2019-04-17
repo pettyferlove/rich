@@ -53,6 +53,7 @@ public class MybatisGenerator {
         // 表名生成策略
         strategy.setInclude("system_login_log","system_oauth_client","system_role","system_user","system_user_role");
         strategy.setEntityLombokModel(true);
+        strategy.setEntityBuilderModel(false);
         strategy.setNaming(NamingStrategy.underline_to_camel);
         mpg.setStrategy(strategy);
         // 配置包路径

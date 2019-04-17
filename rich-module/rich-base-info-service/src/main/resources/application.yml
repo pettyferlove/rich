@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-base-info-service
+    name: rich-base-info-service
+    description: 基础信息服务
+    version: 1.0.0-SNAPSHOT
