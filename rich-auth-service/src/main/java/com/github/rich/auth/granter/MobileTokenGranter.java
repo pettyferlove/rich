@@ -1,6 +1,6 @@
 package com.github.rich.auth.granter;
 
-import com.github.rich.auth.service.CustomUserDetailsService;
+import com.github.rich.auth.service.RichUserDetailsService;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,9 +19,9 @@ public class MobileTokenGranter extends AbstractTokenGranter {
 
     private static final String GRANT_TYPE = "mobile";
 
-    private final CustomUserDetailsService userDetailsService;
+    private final RichUserDetailsService userDetailsService;
 
-    public MobileTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, CustomUserDetailsService userDetailsService) {
+    public MobileTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, RichUserDetailsService userDetailsService) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.userDetailsService = userDetailsService;
     }

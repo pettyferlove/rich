@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * 增加移动电话登录方式
  * @author Petty
  */
-public interface CustomUserDetailsService extends UserDetailsService {
+public interface RichUserDetailsService extends UserDetailsService {
 
     /**
      * 移动电话登录

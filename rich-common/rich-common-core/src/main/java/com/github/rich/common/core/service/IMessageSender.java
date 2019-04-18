@@ -1,6 +1,6 @@
 package com.github.rich.common.core.service;
 
-import com.github.rich.common.core.model.message.Message;
+import com.github.rich.common.core.model.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 /**

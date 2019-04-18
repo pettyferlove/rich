@@ -1,7 +1,7 @@
-package com.github.rich.auth.feign.fallback;
+package com.github.rich.base.feign.fallback;
 
-import com.github.rich.auth.feign.UserService;
-import com.github.rich.common.core.model.auth.User;
+import com.github.rich.base.dto.User;
+import com.github.rich.base.feign.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -1,16 +1,16 @@
 package com.github.rich.base.service;
 
-import com.github.rich.base.entity.SystemUser;
+import com.github.rich.base.entity.SystemResourceApi;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 用户信息 服务类
+ *  服务类
  * </p>
  *
  * @author Petty
  * @since 2019-04-18
  */
-public interface ISystemUserService extends IService<SystemUser> {
+public interface ISystemResourceApiService extends IService<SystemResourceApi> {
 
 }

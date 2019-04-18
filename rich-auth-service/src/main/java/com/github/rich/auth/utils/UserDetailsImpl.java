@@ -1,9 +1,8 @@
 package com.github.rich.auth.utils;
 
+import com.github.rich.base.dto.User;
 import com.github.rich.common.core.constant.CommonConstant;
 import com.github.rich.common.core.constant.SecurityConstant;
-import com.github.rich.common.core.model.auth.Role;
-import com.github.rich.common.core.model.auth.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -27,22 +26,22 @@ public class UserDetailsImpl implements UserDetails {
     private String status;
     private String type;
     private String name;
-    private List<Role> roleList;
+    private List<String> roles;
 
     public UserDetailsImpl(User user) {
-        this.username = user.getUserName();
+        this.username = user.getUserCode();
         this.password = user.getPassword();
         this.status = user.getStatus();
         this.type = user.getUserType();
-        this.name = user.getFullName();
-        roleList = user.getRoleList();
+        this.name = user.getUserName();
+        roles = user.getRoles();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authoritySet = new HashSet<>();
-        for (Role role : roleList) {
-            authoritySet.add(new SimpleGrantedAuthority(role.getRole()));
+        for (String role : roles) {
+            authoritySet.add(new SimpleGrantedAuthority(role));
         }
         //增加基础用户角色 ROLE_USER
         //如果用户自身具备 ROLE_USER则通过Set唯一性保留一个

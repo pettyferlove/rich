@@ -1,9 +1,9 @@
 package com.github.rich.auth.service.impl;
 
-import com.github.rich.auth.feign.UserService;
-import com.github.rich.auth.service.CustomUserDetailsService;
+import com.github.rich.auth.service.RichUserDetailsService;
 import com.github.rich.auth.utils.UserDetailsImpl;
-import com.github.rich.common.core.model.auth.User;
+import com.github.rich.base.dto.User;
+import com.github.rich.base.feign.UserService;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Service("userDetailsService")
-public class UserDetailsServiceImpl implements CustomUserDetailsService {
+public class UserDetailsServiceImpl implements RichUserDetailsService {
 
     private final UserService userService;
 

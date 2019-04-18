@@ -1,30 +1,42 @@
-package com.github.rich.common.core.model.auth;
+package com.github.rich.base.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 用户信息，用户授权服务判断登陆有效信息
- * PS:包含用户密码
- *
  * @author Petty
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
     private static final long serialVersionUID = -2924404879928203710L;
+
+    /**
+     * 登录名
+     */
+    private String userCode;
+
+    /**
+     * 用户名
+     */
     private String userName;
     private String password;
     private String userType;
-    private String fullName;
     private String email;
     private String mobileTel;
     private String status;
-    List<Role> roleList = new ArrayList<>();
+    /**
+     * 角色
+     */
+    List<String> roles;
+
+    /**
+     * 资源
+     */
+    List<String> permissions;
 }

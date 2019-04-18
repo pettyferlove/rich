@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 用户登录日志
+ * 
  * </p>
  *
  * @author Petty
@@ -19,57 +19,45 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SystemLoginLog extends Model<SystemLoginLog> {
+public class SystemResourceApi extends Model<SystemResourceApi> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 数据唯一标识符
+     */
     private String id;
 
     /**
-     * 角色code
+     * Api资源code
      */
     @TableId
     private String code;
 
     /**
-     * 用户登录名
+     * 请求地址
      */
-    private String loginCode;
-
-    /**
-     * 用户账号
-     */
-    private String loginName;
-
-    /**
-     * 登录时间
-     */
-    private LocalDateTime loginTime;
-
-    /**
-     * 登录类型
-     */
-    private String loginType;
-
-    /**
-     * 操作类型
-     */
-    private String operationType;
-
-    /**
-     * ip地址
-     */
-    private String loginIp;
-
-    /**
-     * 所属操作系统
-     */
-    private String userAgent;
+    private String requestUrl;
 
     /**
      * 请求方法
      */
     private String requestMethod;
+
+    /**
+     * 资源
+     */
+    private String permission;
+
+    /**
+     * 资源类型 
+     */
+    private String permissionType;
+
+    /**
+     * 状态
+     */
+    private String status;
 
     /**
      * 删除标记 0 未删除 1 删除

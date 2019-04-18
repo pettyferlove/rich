@@ -1,16 +1,16 @@
 package com.github.rich.base.mapper;
 
-import com.github.rich.base.entity.SystemUser;
+import com.github.rich.base.entity.SystemResourceApi;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 用户信息 Mapper 接口
+ *  Mapper 接口
  * </p>
  *
  * @author Petty
  * @since 2019-04-18
  */
-public interface SystemUserMapper extends BaseMapper<SystemUser> {
+public interface SystemResourceApiMapper extends BaseMapper<SystemResourceApi> {
 
 }

@@ -1,8 +1,8 @@
 package com.github.rich.auth.config;
 
 import com.github.rich.auth.granter.MobileTokenGranter;
-import com.github.rich.auth.service.CustomUserDetailsService;
-import com.github.rich.auth.service.impl.CustomClientDetailsService;
+import com.github.rich.auth.service.RichUserDetailsService;
+import com.github.rich.auth.service.impl.RichClientDetailsService;
 import com.github.rich.auth.translator.ResponseExceptionTranslator;
 import com.github.rich.common.core.constant.CommonConstant;
 import com.github.rich.common.core.constant.SecurityConstant;
@@ -55,14 +55,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    private final CustomUserDetailsService userDetailsService;
+    private final RichUserDetailsService userDetailsService;
 
     private final RedisConnectionFactory redisConnectionFactory;
 
     private final ResponseExceptionTranslator responseExceptionTranslator;
 
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, CustomUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, ResponseExceptionTranslator responseExceptionTranslator) {
+    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, ResponseExceptionTranslator responseExceptionTranslator) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
@@ -71,10 +71,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Bean
     public ClientDetailsService clientDetailsService() {
-        CustomClientDetailsService customClientDetailsService = new CustomClientDetailsService(dataSource);
-        customClientDetailsService.setSelectClientDetailsSql(SecurityConstant.DEFAULT_SELECT_STATEMENT);
-        customClientDetailsService.setFindClientDetailsSql(SecurityConstant.DEFAULT_FIND_STATEMENT);
-        return customClientDetailsService;
+        RichClientDetailsService richClientDetailsService = new RichClientDetailsService(dataSource);
+        richClientDetailsService.setSelectClientDetailsSql(SecurityConstant.DEFAULT_SELECT_STATEMENT);
+        richClientDetailsService.setFindClientDetailsSql(SecurityConstant.DEFAULT_FIND_STATEMENT);
+        return richClientDetailsService;
     }
 
     private OAuth2RequestFactory requestFactory() {

@@ -1,7 +1,7 @@
-package com.github.rich.auth.feign;
+package com.github.rich.base.feign;
 
-import com.github.rich.auth.feign.fallback.UserServiceFallbackImpl;
-import com.github.rich.common.core.model.auth.User;
+import com.github.rich.base.dto.User;
+import com.github.rich.base.feign.fallback.UserServiceFallbackImpl;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 /**
  * @author Petty
  */
-@FeignClient(name = "eda-base-info-service", fallback = UserServiceFallbackImpl.class)
+@FeignClient(name = "rich-base-info-service", fallback = UserServiceFallbackImpl.class)
 public interface UserService {
 
     /**

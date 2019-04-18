@@ -12,9 +12,9 @@ import javax.sql.DataSource;
 /**
  * @author Petty
  */
-public class CustomClientDetailsService extends JdbcClientDetailsService {
+public class RichClientDetailsService extends JdbcClientDetailsService {
 
-    public CustomClientDetailsService(DataSource dataSource) {
+    public RichClientDetailsService(DataSource dataSource) {
         super(dataSource);
     }
 

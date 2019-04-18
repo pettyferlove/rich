@@ -1,5 +1,6 @@
 package com.github.rich.common.core.model.message;
 
+import com.github.rich.common.core.model.Message;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -8,14 +9,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- properties:
- mail:
- smtp:
- auth: true
- starttls:
- enable: true
- required: true
- * 服务状态变更消息
  * @author Petty
  */
 @Data

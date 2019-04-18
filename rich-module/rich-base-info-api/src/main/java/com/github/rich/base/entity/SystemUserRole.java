@@ -2,10 +2,10 @@ package com.github.rich.base.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.io.Serializable;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author Petty
- * @since 2019-04-17
+ * @since 2019-04-18
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

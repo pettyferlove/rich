@@ -1,5 +1,6 @@
 package com.github.rich.common.core.model.message;
 
+import com.github.rich.common.core.model.Message;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

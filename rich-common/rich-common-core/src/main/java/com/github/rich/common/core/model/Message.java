@@ -1,4 +1,4 @@
-package com.github.rich.common.core.model.message;
+package com.github.rich.common.core.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

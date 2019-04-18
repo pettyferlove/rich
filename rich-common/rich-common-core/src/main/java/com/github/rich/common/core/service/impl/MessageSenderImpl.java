@@ -35,7 +35,7 @@ public class MessageSenderImpl implements IMessageSender {
     }
 
     @Override
-    public void send(String routerKey, com.github.rich.common.core.model.message.Message message) {
+    public void send(String routerKey, com.github.rich.common.core.model.Message message) {
         this.rabbitTemplate.setReturnCallback(this);
         this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {
