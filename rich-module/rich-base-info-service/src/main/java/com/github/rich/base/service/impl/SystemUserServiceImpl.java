@@ -28,7 +28,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     public User findByCode(String userCode) {
         User user = new User();
-        ConverterUtil.convert(this.getById(userCode),user);
+        SystemUser systemUser = this.getById(userCode);
+        ConverterUtil.convert(systemUser ,user);
         return user;
     }
 

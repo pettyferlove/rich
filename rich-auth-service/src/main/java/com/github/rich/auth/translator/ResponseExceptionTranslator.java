@@ -1,6 +1,6 @@
 package com.github.rich.auth.translator;
 
-import com.github.rich.auth.exception.CustomOAuth2Exception;
+import com.github.rich.auth.exception.RichOAuth2Exception;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -72,8 +72,8 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
         if (status == HttpStatus.UNAUTHORIZED.value() || (e instanceof InsufficientScopeException)) {
             headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
         }
-        CustomOAuth2Exception customOAuth2Exception = new CustomOAuth2Exception(e.getMessage(),e);
-        return new ResponseEntity<>(customOAuth2Exception, headers,
+        RichOAuth2Exception richOAuth2Exception = new RichOAuth2Exception(e.getMessage(),e);
+        return new ResponseEntity<>(richOAuth2Exception, headers,
                 HttpStatus.valueOf(status));
 
     }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,10 +34,10 @@ public class User implements Serializable {
     /**
      * 角色
      */
-    List<String> roles;
+    List<String> roles = new ArrayList<>();
 
     /**
      * 资源
      */
-    List<String> permissions;
+    List<String> permissions = new ArrayList<>();
 }

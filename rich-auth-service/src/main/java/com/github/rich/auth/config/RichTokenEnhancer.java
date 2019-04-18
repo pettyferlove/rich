@@ -16,16 +16,16 @@ import java.util.Map;
  * @date 2018年3月4日
  */
 @Slf4j
-public class CustomTokenEnhancer implements TokenEnhancer {
+public class RichTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         final Map<String, Object> additionalInfo = new HashMap<>(256);
         try{
             UserDetailsImpl user = (UserDetailsImpl) authentication.getUserAuthentication().getPrincipal();
-            additionalInfo.put("username", user.getUsername());
+            /*additionalInfo.put("username", user.getUsername());
             additionalInfo.put("authorities", user.getAuthorities());
             additionalInfo.put("type", user.getType());
-            additionalInfo.put("name", user.getName());
+            additionalInfo.put("name", user.getName());*/
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);
         }catch (NullPointerException e){
             log.warn("no user info");

@@ -181,7 +181,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenEnhancer customerEnhancer() {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(new CustomTokenEnhancer(), jwtAccessTokenConverter()));
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(new RichTokenEnhancer(), jwtAccessTokenConverter()));
         return tokenEnhancerChain;
     }
 
@@ -198,7 +198,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //非对称加密配置
         //KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("mytest.jks"), "mypass".toCharArray());
         //converter.setKeyPair(keyStoreKeyFactory.getKeyPair("mytest"));
-        converter.setAccessTokenConverter(new CustomerAccessTokenConverter());
+        converter.setAccessTokenConverter(new RichAccessTokenConverter());
         return converter;
     }
 }

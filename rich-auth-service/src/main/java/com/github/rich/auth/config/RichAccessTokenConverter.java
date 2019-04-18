@@ -13,8 +13,8 @@ import java.util.Map;
  * @author Petty
  * @since 2018年12月6日
  */
-public class CustomerAccessTokenConverter extends DefaultAccessTokenConverter {
-    public CustomerAccessTokenConverter() {
+public class RichAccessTokenConverter extends DefaultAccessTokenConverter {
+    public RichAccessTokenConverter() {
         // 注入自定义用户认证转换器
         super.setUserTokenConverter(new CustomerUserAuthenticationConverter());
     }

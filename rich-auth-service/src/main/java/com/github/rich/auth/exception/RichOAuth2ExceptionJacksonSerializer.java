@@ -11,16 +11,16 @@ import java.util.Map;
 /**
  * @author Petty
  */
-public class CustomOAuth2ExceptionJacksonSerializer extends StdSerializer<CustomOAuth2Exception> {
+public class RichOAuth2ExceptionJacksonSerializer extends StdSerializer<RichOAuth2Exception> {
 
     private static final long serialVersionUID = 2166984503759234629L;
 
-    protected CustomOAuth2ExceptionJacksonSerializer() {
-        super(CustomOAuth2Exception.class);
+    protected RichOAuth2ExceptionJacksonSerializer() {
+        super(RichOAuth2Exception.class);
     }
 
     @Override
-    public void serialize(CustomOAuth2Exception e, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(RichOAuth2Exception e, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
         jsonGenerator.writeObjectField("status", e.getHttpErrorCode());
         jsonGenerator.writeObjectField("timestamp", System.currentTimeMillis());
