@@ -1,7 +1,9 @@
 package com.github.rich.base.controller;
 
-import com.github.rich.base.entity.SystemUser;
+import com.github.rich.base.dto.User;
 import com.github.rich.base.service.ISystemUserService;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,8 +19,8 @@ public class UserController {
         this.systemUserService = systemUserService;
     }
 
-    @RequestMapping("/detail")
-    public SystemUser detail(String userCode){
-        return systemUserService.getById(userCode);
+    @PostMapping("/find/code/{userCode}")
+    public User findByCode(@PathVariable String userCode) {
+        return systemUserService.findByCode(userCode);
     }
 }

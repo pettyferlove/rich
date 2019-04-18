@@ -1,4 +1,4 @@
-package com.github.rich.auth.utils;
+package com.github.rich.auth.service.impl;
 
 import com.github.rich.base.dto.User;
 import com.github.rich.common.core.constant.CommonConstant;
@@ -27,6 +27,7 @@ public class UserDetailsImpl implements UserDetails {
     private String type;
     private String name;
     private List<String> roles;
+    private List<String> permissions;
 
     public UserDetailsImpl(User user) {
         this.username = user.getUserCode();
@@ -34,12 +35,20 @@ public class UserDetailsImpl implements UserDetails {
         this.status = user.getStatus();
         this.type = user.getUserType();
         this.name = user.getUserName();
-        roles = user.getRoles();
+        this.roles = user.getRoles();
+        this.permissions = user.getPermissions();
     }
 
+    /**
+     * 将角色和资源授权加入到 OAuth2授权集合
+     * @return 授权集合
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authoritySet = new HashSet<>();
+        for (String permission : permissions) {
+            authoritySet.add(new SimpleGrantedAuthority(permission));
+        }
         for (String role : roles) {
             authoritySet.add(new SimpleGrantedAuthority(role));
         }

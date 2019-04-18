@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.rich.base.feign.fallback.RemoteUserServiceFallbackImpl,\
+  com.github.rich.base.feign.factory.RemoteUserServiceFallbackFactory
