@@ -23,4 +23,9 @@ public class UserController {
     public User findByCode(@PathVariable String userCode) {
         return systemUserService.findByCode(userCode);
     }
+
+    @PostMapping("/find/mobile/{mobile}")
+    public User findByMobile(@PathVariable String mobile) {
+        return systemUserService.findByMobile(mobile);
+    }
 }

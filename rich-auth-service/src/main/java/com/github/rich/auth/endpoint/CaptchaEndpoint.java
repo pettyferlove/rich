@@ -6,6 +6,7 @@ import com.github.rich.auth.utils.SMSUtil;
 import com.github.rich.common.core.constant.SecurityConstant;
 import com.github.rich.common.core.model.R;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.provider.endpoint.FrameworkEndpoint;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import java.io.IOException;
  *
  * @author Petty
  */
+@Slf4j
 @FrameworkEndpoint
 @RequestMapping("captcha")
 public class CaptchaEndpoint {
@@ -53,6 +55,7 @@ public class CaptchaEndpoint {
     @RequestMapping("/mobile/{mobileTel}")
     public void createMobileCaptcha(@PathVariable String mobileTel, HttpServletRequest request, HttpServletResponse response) throws Exception {
         String randomStr = SMSUtil.createRandomVcode();
+        log.info("Captcha -> Mobile:{},{}",mobileTel,randomStr);
         smsCaptchaValidateService.create(mobileTel,randomStr, SecurityConstant.SMS_VALIDATE_CODE_EXPIRY);
         try {
             response.reset();

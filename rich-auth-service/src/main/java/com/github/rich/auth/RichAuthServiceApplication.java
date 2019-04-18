@@ -1,6 +1,7 @@
 package com.github.rich.auth;
 
 import com.github.rich.common.core.annotation.EnableRichFeignClients;
+import feign.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -30,4 +31,12 @@ public class RichAuthServiceApplication {
         SpringApplication.run(RichAuthServiceApplication.class, args);
     }
 
+    /**
+     * 开启Feign Debug模式
+     * @return Logger.Level
+     */
+    @Bean
+    Logger.Level feignLoggerLevel() {
+        return Logger.Level.FULL;
+    }
 }
