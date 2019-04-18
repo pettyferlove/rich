@@ -1,4 +1,4 @@
-package com.github.rich.security.translator;
+package com.github.rich.security.component;
 
 import com.github.rich.security.exception.RichOAuth2Exception;
 import org.apache.commons.lang.StringUtils;

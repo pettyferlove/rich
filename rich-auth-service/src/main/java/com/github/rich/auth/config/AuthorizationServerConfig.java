@@ -3,7 +3,7 @@ package com.github.rich.auth.config;
 import com.github.rich.auth.granter.MobileTokenGranter;
 import com.github.rich.security.service.RichUserDetailsService;
 import com.github.rich.security.service.RichClientDetailsService;
-import com.github.rich.security.translator.ResponseExceptionTranslator;
+import com.github.rich.security.component.ResponseExceptionTranslator;
 import com.github.rich.common.core.constant.CommonConstant;
 import com.github.rich.common.core.constant.SecurityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
