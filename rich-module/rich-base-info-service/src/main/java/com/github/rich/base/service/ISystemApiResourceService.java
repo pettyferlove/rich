@@ -1,6 +1,6 @@
 package com.github.rich.base.service;
 
-import com.github.rich.base.entity.SystemResourceApi;
+import com.github.rich.base.entity.SystemApiResource;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Petty
  * @since 2019-04-18
  */
-public interface ISystemResourceApiService extends IService<SystemResourceApi> {
+public interface ISystemApiResourceService extends IService<SystemApiResource> {
 
 }

@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SystemResourceApi extends Model<SystemResourceApi> {
+public class SystemApiResource extends Model<SystemApiResource> {
 
     private static final long serialVersionUID = 1L;
 

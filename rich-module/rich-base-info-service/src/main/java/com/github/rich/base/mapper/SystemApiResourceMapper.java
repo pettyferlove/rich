@@ -1,6 +1,6 @@
 package com.github.rich.base.mapper;
 
-import com.github.rich.base.entity.SystemResourceApi;
+import com.github.rich.base.entity.SystemApiResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Petty
  * @since 2019-04-18
  */
-public interface SystemResourceApiMapper extends BaseMapper<SystemResourceApi> {
+public interface SystemApiResourceMapper extends BaseMapper<SystemApiResource> {
 
 }
