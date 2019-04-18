@@ -1,3 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.rich.security.service.impl.UserDetailsServiceImpl,\
-  com.github.rich.security.translator.ResponseExceptionTranslator
+  com.github.rich.security.service.impl.UserDetailsServiceImpl

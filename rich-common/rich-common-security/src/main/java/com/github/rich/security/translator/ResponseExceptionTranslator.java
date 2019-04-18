@@ -29,7 +29,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
  *
  * @author Petty
  */
-@Component
 public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTranslator {
 
     private static final String BAD_MSG = "Bad credentials";

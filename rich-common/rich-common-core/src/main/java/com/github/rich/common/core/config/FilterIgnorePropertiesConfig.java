@@ -23,7 +23,6 @@ import java.util.List;
 @AllArgsConstructor
 @Configuration
 @RefreshScope
-@EnableConfigurationProperties(FilterIgnorePropertiesConfig.class)
 @ConditionalOnExpression("!'${urls}'.isEmpty()")
 @ConfigurationProperties(prefix = "urls")
 public class FilterIgnorePropertiesConfig {

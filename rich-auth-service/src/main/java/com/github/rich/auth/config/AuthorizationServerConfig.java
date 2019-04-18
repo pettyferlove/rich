@@ -59,14 +59,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final RedisConnectionFactory redisConnectionFactory;
 
-    private final ResponseExceptionTranslator responseExceptionTranslator;
-
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, ResponseExceptionTranslator responseExceptionTranslator) {
+    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
-        this.responseExceptionTranslator = responseExceptionTranslator;
     }
 
     @Bean
@@ -134,7 +131,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints.authenticationManager(authenticationManager);
         endpoints.approvalStore(approvalStore());
         endpoints.userDetailsService(userDetailsService);
-        endpoints.exceptionTranslator(responseExceptionTranslator);
+        endpoints.exceptionTranslator(new ResponseExceptionTranslator());
         // 由于初始化顺序排在最后，所以这里必定获取到AuthorizationCodeServices,TODO 存在歧义
         endpoints.tokenGranter(tokenGranter(endpoints.getAuthorizationCodeServices()));
         // TODO 该配置会使refresh_token只用刷新一次Token，再次刷新需要使用新的refresh_token保证安全性
