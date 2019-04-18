@@ -2,21 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>rich-common</artifactId>
+    <artifactId>rich-common-security</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>rich-common</name>
-    <packaging>pom</packaging>
-    <description>公共依赖</description>
+    <name>rich-common-security</name>
+    <packaging>jar</packaging>
+    <description>安全依赖</description>
 
     <parent>
         <groupId>com.github.rich</groupId>
-        <artifactId>rich</artifactId>
+        <artifactId>rich-common</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <modules>
-        <module>rich-common-core</module>
-        <module>rich-common-security</module>
-    </modules>
+    <dependencies>
+    </dependencies>
 
 </project>
