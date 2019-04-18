@@ -1,3 +1,6 @@
+logging:
+  level:
+    org.springframework.security: debug
 spring:
   application:
     name: rich-auth-service

@@ -6,12 +6,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Petty
  */
 @Slf4j
+@EnableResourceServer
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringCloudApplication
 public class RichBaseInfoServiceApplication {
 
@@ -28,5 +32,6 @@ public class RichBaseInfoServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(RichBaseInfoServiceApplication.class, args);
     }
+
 
 }

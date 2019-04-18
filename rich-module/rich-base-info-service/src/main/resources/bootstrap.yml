@@ -1,3 +1,15 @@
+security:
+  oauth2:
+    resource:
+      loadBalanced: true
+      token-info-uri: http://rich-auth-service/oauth/check_token
+    client:
+      client-id: eda
+      client-secret: edaSecret
+      scope: application
+logging:
+  level:
+    org.springframework.security: debug
 spring:
   application:
     name: rich-base-info-service
