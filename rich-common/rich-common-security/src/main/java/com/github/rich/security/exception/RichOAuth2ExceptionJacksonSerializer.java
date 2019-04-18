@@ -1,4 +1,4 @@
-package com.github.rich.auth.exception;
+package com.github.rich.security.exception;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;

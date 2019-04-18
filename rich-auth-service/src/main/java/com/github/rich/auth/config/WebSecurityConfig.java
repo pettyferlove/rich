@@ -1,7 +1,7 @@
 package com.github.rich.auth.config;
 
 import com.github.rich.auth.handler.SuccessHandler;
-import com.github.rich.auth.service.RichUserDetailsService;
+import com.github.rich.security.service.RichUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

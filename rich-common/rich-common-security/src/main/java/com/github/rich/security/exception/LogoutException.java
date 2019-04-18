@@ -1,4 +1,4 @@
-package com.github.rich.auth.exception;
+package com.github.rich.security.exception;
 
 /**
  * @author Petty

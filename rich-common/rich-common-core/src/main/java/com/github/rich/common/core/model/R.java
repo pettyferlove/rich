@@ -21,9 +21,11 @@ import java.io.Serializable;
 public class R<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private int code = CommonConstant.SUCCESS;
+    private int status = CommonConstant.SUCCESS;
 
-    private String msg = "success";
+    private long timestamp;
+
+    private String message;
 
     private T data;
 
@@ -34,23 +36,27 @@ public class R<T> implements Serializable {
     public R(T data) {
         super();
         this.data = data;
+        this.timestamp = System.currentTimeMillis();
     }
 
-    public R(T data, String msg) {
+    public R(T data, String message) {
         super();
         this.data = data;
-        this.msg = msg;
+        this.message = message;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public R(Throwable e) {
         super();
-        this.msg = e.getMessage();
-        this.code = CommonConstant.FAIL;
+        this.message = e.getMessage();
+        this.status = CommonConstant.FAIL;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public R(Throwable e, int code) {
         super();
-        this.msg = e.getMessage();
-        this.code = code;
+        this.message = e.getMessage();
+        this.status = code;
+        this.timestamp = System.currentTimeMillis();
     }
 }

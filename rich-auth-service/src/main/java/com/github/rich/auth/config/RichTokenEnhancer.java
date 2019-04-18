@@ -1,6 +1,6 @@
 package com.github.rich.auth.config;
 
-import com.github.rich.auth.service.impl.UserDetailsImpl;
+import com.github.rich.security.service.impl.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

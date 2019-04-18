@@ -1,6 +1,6 @@
-package com.github.rich.auth.service.impl;
+package com.github.rich.security.service.impl;
 
-import com.github.rich.auth.service.RichUserDetailsService;
+import com.github.rich.security.service.RichUserDetailsService;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.RemoteUserService;
 import com.google.common.base.Preconditions;

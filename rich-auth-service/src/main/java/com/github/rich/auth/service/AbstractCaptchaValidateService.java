@@ -1,4 +1,4 @@
-package com.github.rich.auth.service.impl;
+package com.github.rich.auth.service;
 
 import com.github.rich.auth.service.CaptchaValidateService;
 import org.springframework.data.redis.core.RedisTemplate;

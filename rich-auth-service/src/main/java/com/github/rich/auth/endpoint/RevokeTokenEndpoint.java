@@ -1,7 +1,7 @@
 package com.github.rich.auth.endpoint;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.rich.auth.exception.LogoutException;
+import com.github.rich.security.exception.LogoutException;
 import com.github.rich.auth.model.LogoutInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

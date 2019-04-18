@@ -1,6 +1,6 @@
 package com.github.rich.auth.granter;
 
-import com.github.rich.auth.service.RichUserDetailsService;
+import com.github.rich.security.service.RichUserDetailsService;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;

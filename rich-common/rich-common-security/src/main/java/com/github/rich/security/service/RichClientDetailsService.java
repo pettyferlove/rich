@@ -1,4 +1,4 @@
-package com.github.rich.auth.service.impl;
+package com.github.rich.security.service;
 
 import com.github.rich.common.core.constant.SecurityConstant;
 import lombok.SneakyThrows;

@@ -1,6 +1,6 @@
-package com.github.rich.auth.translator;
+package com.github.rich.security.translator;
 
-import com.github.rich.auth.exception.RichOAuth2Exception;
+import com.github.rich.security.exception.RichOAuth2Exception;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

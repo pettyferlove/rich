@@ -1,4 +1,4 @@
-package com.github.rich.auth.service;
+package com.github.rich.security.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
