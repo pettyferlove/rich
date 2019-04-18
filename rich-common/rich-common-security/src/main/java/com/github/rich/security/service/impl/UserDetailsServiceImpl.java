@@ -1,12 +1,10 @@
 package com.github.rich.security.service.impl;
 
-import com.github.rich.security.service.RichUserDetailsService;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.RemoteUserService;
-import com.github.rich.security.utils.SecurityUtil;
+import com.github.rich.security.service.RichUserDetailsService;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
