@@ -5,6 +5,11 @@ package com.github.rich.common.core.constant;
  */
 public interface SecurityConstant {
     /**
+     * 角色前缀
+     */
+    String ROLE = "ROLE_";
+
+    /**
      * 基础用户角色
      */
     String BASE_ROLE = "ROLE_USER";

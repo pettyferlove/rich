@@ -2,7 +2,7 @@ package com.github.rich.auth.endpoint;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.rich.auth.service.CaptchaValidateService;
-import com.github.rich.auth.utils.SMSUtils;
+import com.github.rich.auth.utils.SMSUtil;
 import com.github.rich.common.core.constant.SecurityConstant;
 import com.github.rich.common.core.model.R;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
@@ -52,7 +52,7 @@ public class CaptchaEndpoint {
 
     @RequestMapping("/mobile/{mobileTel}")
     public void createMobileCaptcha(@PathVariable String mobileTel, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String randomStr = SMSUtils.createRandomVcode();
+        String randomStr = SMSUtil.createRandomVcode();
         smsCaptchaValidateService.create(mobileTel,randomStr, SecurityConstant.SMS_VALIDATE_CODE_EXPIRY);
         try {
             response.reset();
