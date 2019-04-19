@@ -26,11 +26,34 @@ public interface SecurityConstant {
      * 匿名角色
      */
     String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+    /**
+     * oauth 授权码模式
+     */
+    String AUTHORIZATION_CODE = "authorization_code";
 
     /**
      * 资源授权失败或没有授权记录
      */
     String AUTHORIZATION_FAILURES = "403 Forbidden";
+
+    /**
+     * 客户端授权模式
+     */
+    String CLIENT = "client_credentials";
+    /**
+     * 密码模式
+     */
+    String PASSWORD = "password";
+    /**
+     * 刷新token
+     */
+    String REFRESH_TOKEN = "refresh_token";
+
+    /**
+     * 手机登陆
+     */
+    String MOBILE = "mobile";
+
 
     /**
      * token

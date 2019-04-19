@@ -1,6 +1,7 @@
 package com.github.rich.demo;
 
 import com.github.rich.common.core.annotation.EnableRichFeignClients;
+import com.github.rich.security.annotation.EnableRichResourceServer;
 import feign.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
+@EnableRichResourceServer
 @EnableRichFeignClients
 @SpringCloudApplication
 public class RichDemoServiceApplication {
