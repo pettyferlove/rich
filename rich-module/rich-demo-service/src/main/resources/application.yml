@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-demo-service
+    name: rich-demo-service
+    description: 示范
+    version: 1.0.0-SNAPSHOT

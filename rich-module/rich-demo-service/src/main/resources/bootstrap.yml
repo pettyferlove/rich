@@ -3,7 +3,7 @@ logging:
     org.springframework.security: debug
 spring:
   application:
-    name: rich-base-info-service
+    name: rich-demo-service
   main:
     allow-bean-definition-overriding: true
   profiles:
