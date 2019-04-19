@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.Objects;
 
 
@@ -48,6 +49,11 @@ public class ControllerAop {
         long startTime = System.currentTimeMillis();
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()){
+            String headerName = headerNames.nextElement();
+            log.info("HEADER : name:"+headerName+", value:"+request.getHeader(headerName));
+        }
         log.info("URL : " + request.getRequestURL().toString());
         log.info("HTTP_METHOD : " + request.getMethod());
         log.info("IP : " + request.getRemoteAddr());

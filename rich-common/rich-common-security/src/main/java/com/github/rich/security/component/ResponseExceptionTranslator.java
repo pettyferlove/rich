@@ -7,10 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.InsufficientScopeException;
-import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
-import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
-import org.springframework.security.oauth2.common.exceptions.UnsupportedResponseTypeException;
+import org.springframework.security.oauth2.common.exceptions.*;
 import org.springframework.security.oauth2.provider.error.DefaultWebResponseExceptionTranslator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -60,6 +57,7 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
         } else {
             oAuth2Exception = new UnsupportedResponseTypeException(e.getMessage(), e);
         }
+
         return handleOAuth2Exception(oAuth2Exception);
     }
 
@@ -78,6 +76,10 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
             headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
         }
         RichOAuth2Exception richOAuth2Exception = new RichOAuth2Exception(e.getMessage(), e);
+        if (e instanceof ClientAuthenticationException) {
+            return new ResponseEntity<>(e, headers,
+                    HttpStatus.valueOf(status));
+        }
         return new ResponseEntity<>(richOAuth2Exception, headers,
                 HttpStatus.valueOf(status));
 

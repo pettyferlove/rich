@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 公共异常处理
+ *
  * @author Petty
  */
 @Slf4j
@@ -32,6 +33,21 @@ public class GlobalExceptionHandler {
     public R baseExceptionHandler(HttpServletRequest request, HttpServletResponse response, BaseRuntimeException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(ex.getStatus());
+        return new R(ex);
+    }
+
+    /**
+     * 处理RuntimeException异常
+     *
+     * @param request  请求对象
+     * @param response 响应对象
+     * @param ex       异常
+     * @return data
+     */
+    @ExceptionHandler(RuntimeException.class)
+    public R runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RuntimeException ex) {
+        log.error(ex.getMessage(), ex);
+        response.setStatus(CommonConstant.EX_OTHER_CODE);
         return new R(ex);
     }
 

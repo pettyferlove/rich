@@ -16,6 +16,9 @@ spring:
       profile: ${spring.profiles.active}
       label: ${spring.profiles.active}
       fail-fast: true
+urls:
+  anon:
+    - /demo/demo
 ---
 spring:
   profiles: dev

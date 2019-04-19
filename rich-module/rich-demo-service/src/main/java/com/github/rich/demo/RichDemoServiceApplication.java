@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
+@EnableRichResourceServer
 @EnableRichFeignClients
 @SpringCloudApplication
 public class RichDemoServiceApplication {
