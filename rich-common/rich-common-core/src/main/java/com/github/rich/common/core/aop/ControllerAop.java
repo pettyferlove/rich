@@ -31,7 +31,7 @@ import java.util.Objects;
 public class ControllerAop {
 
     @Pointcut("execution(public com.github.rich.common.core.model.R *(..))")
-    public void pointCutResponse() {
+    public void pointCut() {
     }
 
     /**
@@ -40,7 +40,7 @@ public class ControllerAop {
      * @param pjp ProceedingJoinPoint
      * @return Object
      */
-    @Around("pointCutResponse()")
+    @Around("pointCut()")
     public Object methodAroundHandler(ProceedingJoinPoint pjp) {
         return methodHandler(pjp);
     }
