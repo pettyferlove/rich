@@ -1,4 +1,4 @@
-package com.github.rich.security.service;
+package com.github.rich.auth.service;
 
 import com.github.rich.common.core.constant.SecurityConstant;
 import lombok.SneakyThrows;
@@ -18,9 +18,15 @@ public class RichClientDetailsService extends JdbcClientDetailsService {
         super(dataSource);
     }
 
-    @SneakyThrows
+    /**
+     * 重写接口但是不额外增加逻辑，增加缓存即可
+     * @param clientId 客户端ID
+     * @return ClientDetails
+     * @throws InvalidClientException 客户端无效异常
+     */
     @Cacheable(value = SecurityConstant.CLIENT_DETAILS_KEY, key = "#clientId", unless = "#result == null")
     @Override
+    @SneakyThrows
     public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
         return super.loadClientByClientId(clientId);
     }

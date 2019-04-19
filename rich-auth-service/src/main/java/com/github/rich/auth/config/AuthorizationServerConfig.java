@@ -1,11 +1,10 @@
 package com.github.rich.auth.config;
 
 import com.github.rich.auth.granter.MobileTokenGranter;
-import com.github.rich.security.service.RichUserDetailsService;
-import com.github.rich.security.service.RichClientDetailsService;
-import com.github.rich.security.component.ResponseExceptionTranslator;
+import com.github.rich.auth.service.RichClientDetailsService;
 import com.github.rich.common.core.constant.CommonConstant;
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.security.component.ResponseExceptionTranslator;
+import com.github.rich.security.service.RichUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +41,7 @@ import java.util.List;
 /**
  * @author Petty
  * @date 2018年12月6日
+ * @see org.springframework.security.oauth2.provider.client.JdbcClientDetailsService
  * 用户认证服务
  */
 @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -50,7 +50,18 @@ import java.util.List;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    private final DataSource dataSource;
+    private static final String CLIENT_FIELDS_FOR_UPDATE = "resource_ids, scope, "
+            + "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, "
+            + "refresh_token_validity, additional_information, autoapprove";
+
+    private static final String CLIENT_FIELDS = "client_secret, " + CLIENT_FIELDS_FOR_UPDATE;
+
+    private static final String BASE_FIND_STATEMENT = "select client_id, " + CLIENT_FIELDS
+            + " from system_oauth_client_details";
+
+    private static final String DEFAULT_FIND_STATEMENT = BASE_FIND_STATEMENT + " order by client_id";
+
+    private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -58,6 +69,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final RichUserDetailsService userDetailsService;
 
     private final RedisConnectionFactory redisConnectionFactory;
+
+    private final DataSource dataSource;
 
     @Autowired
     public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory) {
@@ -69,8 +82,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public ClientDetailsService clientDetailsService() {
         RichClientDetailsService richClientDetailsService = new RichClientDetailsService(dataSource);
-        richClientDetailsService.setSelectClientDetailsSql(SecurityConstant.DEFAULT_SELECT_STATEMENT);
-        richClientDetailsService.setFindClientDetailsSql(SecurityConstant.DEFAULT_FIND_STATEMENT);
+        richClientDetailsService.setSelectClientDetailsSql(DEFAULT_SELECT_STATEMENT);
+        richClientDetailsService.setFindClientDetailsSql(DEFAULT_FIND_STATEMENT);
         return richClientDetailsService;
     }
 
@@ -88,6 +101,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return defaultTokenServices;
     }
 
+    /**
+     * 将自定义Granter加入至授权池中
+     * @param authorizationCodeServices 默认初始化的AuthorizationCodeServices，不要自己初始化，会导致会在两个Service，直接导致AuthorizationCode模式失效
+     * @return List
+     */
     private List<TokenGranter> getDefaultTokenGranters(AuthorizationCodeServices authorizationCodeServices) {
         ClientDetailsService clientDetails = clientDetailsService();
         AuthorizationServerTokenServices tokenServices = tokenServices();
@@ -151,7 +169,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     /**
      * 配置加密模式
      *
-     * @return
+     * @return PasswordEncoder
      */
     @Bean
     public PasswordEncoder passwordEncoder() {

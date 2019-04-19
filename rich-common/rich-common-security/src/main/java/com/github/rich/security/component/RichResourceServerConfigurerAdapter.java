@@ -41,7 +41,7 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
 	@Autowired
 	private FilterIgnorePropertiesConfig ignorePropertiesConfig;
 	@Autowired
-	private RestTemplate lbRestTemplate;
+	private RestTemplate richRestTemplate;
 
 	/**
 	 * 将不需要鉴权的url加载到忽略链
@@ -67,7 +67,7 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
 		/*UserAuthenticationConverter userTokenConverter = new PigUserAuthenticationConverter();
 		accessTokenConverter.setUserTokenConverter(userTokenConverter);*/
 
-		remoteTokenServices.setRestTemplate(lbRestTemplate);
+		remoteTokenServices.setRestTemplate(richRestTemplate);
 		remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
 		resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
 			.tokenServices(remoteTokenServices);

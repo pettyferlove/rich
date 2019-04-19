@@ -63,6 +63,12 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
         return handleOAuth2Exception(oAuth2Exception);
     }
 
+    /**
+     * 包装异常
+     *
+     * @param e Exception
+     * @return ResponseEntity
+     */
     private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) {
         int status = e.getHttpErrorCode();
         HttpHeaders headers = new HttpHeaders();
@@ -71,7 +77,7 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
         if (status == HttpStatus.UNAUTHORIZED.value() || (e instanceof InsufficientScopeException)) {
             headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
         }
-        RichOAuth2Exception richOAuth2Exception = new RichOAuth2Exception(e.getMessage(),e);
+        RichOAuth2Exception richOAuth2Exception = new RichOAuth2Exception(e.getMessage(), e);
         return new ResponseEntity<>(richOAuth2Exception, headers,
                 HttpStatus.valueOf(status));
 

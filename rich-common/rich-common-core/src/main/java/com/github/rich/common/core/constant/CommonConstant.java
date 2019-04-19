@@ -20,13 +20,13 @@ public interface CommonConstant {
     /**
      * 没有权限
      */
-    Integer EX_TOKEN_ERROR_CODE = 403;
+    int EX_TOKEN_ERROR_CODE = 403;
 
-    Integer EX_USER_LOGIN = 400;
+    int EX_USER_LOGIN = 400;
 
-    Integer EX_NO_USER = 405;
+    int EX_NO_USER = 405;
 
-    Integer EX_OTHER_CODE = 500;
+    int EX_OTHER_CODE = 500;
     /**
      * Jwt加密/解密凭据
      */
@@ -39,15 +39,6 @@ public interface CommonConstant {
      * 请求头
      */
     String REQUEST_HEADER = "Authorization";
-
-    /**
-     * 传递至服务的用户头
-     */
-    String REQUEST_USER_HEADER = "Eda-Request-User";
-    /**
-     * 传递至服务的角色头
-     */
-    String REQUEST_ROLE_HEADER = "Eda-Request-Role";
     /**
      * 用户无效
      */

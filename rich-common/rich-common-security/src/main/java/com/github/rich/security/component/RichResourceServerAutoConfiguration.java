@@ -16,7 +16,7 @@
 
 package com.github.rich.security.component;
 
-import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,22 +30,32 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author Petty
  */
+@Slf4j
 @ComponentScan("com.github.rich.security")
 public class RichResourceServerAutoConfiguration {
-	@Bean
-	@Primary
-	@LoadBalanced
-	public RestTemplate richRestTemplate() {
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
-			@Override
-			@SneakyThrows
-			public void handleError(ClientHttpResponse response) {
-				if (response.getRawStatusCode() != HttpStatus.BAD_REQUEST.value()) {
-					super.handleError(response);
-				}
-			}
-		});
-		return restTemplate;
-	}
+
+
+    /**
+     * 自定义RestTemplate 增加错误处理以及日志打印
+     * @return RestTemplate
+     */
+    @Bean
+    @Primary
+    @LoadBalanced
+    public RestTemplate richRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            public void handleError(ClientHttpResponse response) {
+                try {
+                    if (response.getRawStatusCode() != HttpStatus.BAD_REQUEST.value()) {
+                        super.handleError(response);
+                    }
+                } catch (Exception e) {
+                    log.error("RestTemplate richRestTemplate->Error Response:{}", response);
+                }
+            }
+        });
+        return restTemplate;
+    }
 }
