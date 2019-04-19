@@ -10,7 +10,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
+ * 通过远程调用的方式实现UserDetailsService
+ * Spring Security默认会使用该Bean进行用户信息获取
  * @author Petty
+ * @version 1.0.0
+ * @see org.springframework.security.core.userdetails.UserDetailsService
  */
 @Service("userDetailsService")
 public class UserDetailsServiceImpl implements RichUserDetailsService {
@@ -22,6 +26,12 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
         this.remoteUserService = remoteUserService;
     }
 
+    /**
+     * 根据用户名获取用户信息（原生）
+     * @param username 用户名
+     * @return UserDetails
+     * @throws UsernameNotFoundException 未找到用户
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = remoteUserService.findUserByUsername(username);
@@ -29,6 +39,12 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
         return new UserDetailsImpl(user);
     }
 
+    /**
+     * 根据用户名获取用户信息（自定义）
+     * @param mobile 手机号码
+     * @return UserDetails
+     * @throws UsernameNotFoundException 未找到用户
+     */
     @Override
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
         User user = remoteUserService.findUserByMobile(mobile);
