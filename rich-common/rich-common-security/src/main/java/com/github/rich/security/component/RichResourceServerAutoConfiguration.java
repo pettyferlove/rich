@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 /**
+ * 资源服务初始化过程中需要自定义或者初始化的Bean
  * @author Petty
  */
 @Slf4j

@@ -1,7 +1,7 @@
 package com.github.rich.auth.endpoint;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.rich.security.exception.LogoutException;
+import com.github.rich.security.exception.RichOAuth2LogoutException;
 import com.github.rich.auth.model.LogoutInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class RevokeTokenEndpoint {
                 OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);
                 Map<String, Object> information = accessToken.getAdditionalInformation();
                 if (StrUtil.isBlank(accessToken.getValue())) {
-                    throw new LogoutException("logout fail");
+                    throw new RichOAuth2LogoutException("logout fail");
                 }
                 tokenStore.removeAccessToken(accessToken);
                 return ResponseEntity.ok(new LogoutInfo("logout success", System.currentTimeMillis(), 200));
