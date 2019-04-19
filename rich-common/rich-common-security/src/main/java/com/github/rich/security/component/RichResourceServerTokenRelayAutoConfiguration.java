@@ -35,7 +35,9 @@ import java.lang.annotation.*;
 
 /**
  * 初始化AccessTokenContextRelay
+ *
  * @author Petty
+ * @see org.springframework.cloud.security.oauth2.client.ResourceServerTokenRelayAutoConfiguration
  */
 @Configuration
 @AutoConfigureAfter(OAuth2AutoConfiguration.class)
@@ -43,33 +45,33 @@ import java.lang.annotation.*;
 @ConditionalOnProperty("security.oauth2.client.client-id")
 public class RichResourceServerTokenRelayAutoConfiguration {
 
-	@Bean
-	public AccessTokenContextRelay accessTokenContextRelay(OAuth2ClientContext context) {
-		return new AccessTokenContextRelay(context);
-	}
+    @Bean
+    public AccessTokenContextRelay accessTokenContextRelay(OAuth2ClientContext context) {
+        return new AccessTokenContextRelay(context);
+    }
 
-	@Target({ElementType.TYPE, ElementType.METHOD})
-	@Retention(RetentionPolicy.RUNTIME)
-	@Documented
-	@Conditional(OAuth2OnClientInResourceServerCondition.class)
-	@interface ConditionalOnOAuth2ClientInResourceServer {
+    @Target({ElementType.TYPE, ElementType.METHOD})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @Conditional(OAuth2OnClientInResourceServerCondition.class)
+    @interface ConditionalOnOAuth2ClientInResourceServer {
 
-	}
+    }
 
-	private static class OAuth2OnClientInResourceServerCondition
-		extends AllNestedConditions {
+    private static class OAuth2OnClientInResourceServerCondition
+            extends AllNestedConditions {
 
-		public OAuth2OnClientInResourceServerCondition() {
-			super(ConfigurationPhase.REGISTER_BEAN);
-		}
+        public OAuth2OnClientInResourceServerCondition() {
+            super(ConfigurationPhase.REGISTER_BEAN);
+        }
 
-		@ConditionalOnBean(ResourceServerConfiguration.class)
-		static class Server {
-		}
+        @ConditionalOnBean(ResourceServerConfiguration.class)
+        static class Server {
+        }
 
-		@ConditionalOnBean(OAuth2ClientConfiguration.class)
-		static class Client {
-		}
+        @ConditionalOnBean(OAuth2ClientConfiguration.class)
+        static class Client {
+        }
 
-	}
+    }
 }
