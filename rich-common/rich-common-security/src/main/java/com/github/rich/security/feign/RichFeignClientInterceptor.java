@@ -55,7 +55,6 @@ public class RichFeignClientInterceptor extends OAuth2FeignRequestInterceptor {
 	 */
 	@Override
 	public void apply(RequestTemplate template) {
-		System.out.println("2");
 		accessTokenContextRelay.copyToken();
 		if (oAuth2ClientContext != null
 			&& oAuth2ClientContext.getAccessToken() != null) {
