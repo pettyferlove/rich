@@ -10,6 +10,10 @@ import java.lang.annotation.*;
 
 /**
  * 初始化资源服务
+ * 该注解将会把服务变成OAuth2服务系统中的资源服务，会忽略Spring Security自身部分功能
+ * @author Petty
+ * @since 如果应用需要自己实现登录等操作，则不要使用该注解
+ * @version 1.0.0
  */
 @Documented
 @Inherited

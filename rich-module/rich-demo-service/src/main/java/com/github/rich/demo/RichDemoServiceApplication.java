@@ -8,13 +8,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Petty
  */
 @Slf4j
-@EnableRichResourceServer
 @EnableRichFeignClients
 @SpringCloudApplication
 public class RichDemoServiceApplication {
@@ -42,6 +43,16 @@ public class RichDemoServiceApplication {
     @Bean
     Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;
+    }
+
+
+    /**
+     * 登录操作需要的密码操作
+     * @return PasswordEncoder
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
