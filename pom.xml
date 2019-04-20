@@ -179,7 +179,7 @@
     </dependencyManagement>
 
     <build>
-        <finalName>${project.name}</finalName>
+        <finalName>${project.name}-${project.version}</finalName>
         <plugins>
             <!-- 源码插件配置 -->
             <plugin>
@@ -269,7 +269,7 @@
                             <imageTag>latest</imageTag>
                         </imageTags>
                         <forceTags>true</forceTags>
-                        <imageName>${docker.image.prefix}/${project.build.finalName}</imageName>
+                        <imageName>${docker.image.prefix}/${project.name}</imageName>
                         <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                         <resources>
                             <resource>

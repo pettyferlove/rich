@@ -3,6 +3,6 @@ RUN mkdir -p /home
 RUN echo "Asia/shanghai" > /etc/timezone;
 WORKDIR /home
 EXPOSE 10151
-ADD /rich-gateway-service.jar app.jar
+ADD /rich-gateway-service-1.0.0-SNAPSHOT.jar app.jar
 ADD /lib lib
 CMD java -jar -Djava.security.egd=file:/dev/./urandom -Dfile.encoding=UTF-8 -Xmn128m -Xms512m -Xmx512m -Dloader.path=. app.jar --spring.profiles.active=dev
