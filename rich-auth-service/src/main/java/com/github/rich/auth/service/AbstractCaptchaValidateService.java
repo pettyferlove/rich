@@ -1,6 +1,5 @@
 package com.github.rich.auth.service;
 
-import com.github.rich.auth.service.CaptchaValidateService;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Optional;
@@ -29,12 +28,10 @@ public abstract class AbstractCaptchaValidateService implements CaptchaValidateS
             String redisValidateCode = redisValidateCodeOptional.orElse("");
             if (captcha.equals(redisValidateCode)) {
                 result = true;
+                //判断完成后删除Key
+                redisTemplate.delete(stringBuffer.toString());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
-            //判断完成后删除Key
-            redisTemplate.delete(stringBuffer.toString());
             //清空
             stringBuffer.setLength(0);
         }

@@ -27,10 +27,4 @@ public class CaptchaFilterConfig {
     @Value("${captcha.password:false}")
     Boolean password;
 
-    /**
-     * 是否开启Mobile模式验证码校验
-     */
-    @Value("${captcha.password:true}")
-    Boolean mobile;
-
 }
