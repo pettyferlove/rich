@@ -37,6 +37,8 @@
         <security.oauth.version>2.3.5.RELEASE</security.oauth.version>
         <security.oauth.auto.version>2.1.2.RELEASE</security.oauth.auto.version>
         <mybatis-plus.version>3.0.6</mybatis-plus.version>
+        <docker.image.prefix>rich</docker.image.prefix>
+        <docker.plugin.version>0.4.13</docker.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <junit.version>4.12</junit.version>
         <druid.version>1.1.12</druid.version>
@@ -222,6 +224,31 @@
                     <version>${spring-boot.version}</version>
                     <configuration>
                         <fork>true</fork>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.plugin.version}</version>
+                    <configuration>
+                        <imageTags>
+                            <imageTag>latest</imageTag>
+                        </imageTags>
+                        <forceTags>true</forceTags>
+                        <imageName>${docker.image.prefix}/${project.build.finalName}</imageName>
+                        <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${project.build.finalName}.jar</include>
+                            </resource>
+                            <resource>
+                                <targetPath>/lib</targetPath>
+                                <directory>${project.build.directory}/lib</directory>
+                                <include>*.jar</include>
+                            </resource>
+                        </resources>
                     </configuration>
                 </plugin>
             </plugins>
