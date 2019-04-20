@@ -4,6 +4,8 @@ logging:
 spring:
   application:
     name: rich-auth-service
+  mvc:
+    static-path-pattern: /static/**
   main:
     allow-bean-definition-overriding: true
   profiles:

@@ -60,6 +60,10 @@ public class RichFeignClientInterceptor extends OAuth2FeignRequestInterceptor {
         boolean needSecurity = false;
         try {
             needSecurity = (boolean) BaseContextHandler.get("x-inner-service-security");
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug("已忽略内部服务调用权限校验");
+            }
         } finally {
             BaseContextHandler.remove();
         }

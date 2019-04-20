@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/static/js/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/rich.css}">
+</head>
+<body>
+<div class="layui-layout-body">
+    <div class="user-login">
+        <div class="user-login-main">
+            <div class="user-login-box user-login-header">
+                <h2>统一身份认证</h2>
+            </div>
+            <div class="user-login-box user-login-body">
+                <form class="layui-form" action="">
+                    <div class="layui-form-item">
+                        <label class="user-login-icon layui-icon layui-icon-username" for="username"></label>
+                        <input type="text" name="username" id="username" lay-verify="required" placeholder="用户名" class="layui-input">
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="user-login-icon layui-icon layui-icon-password" for="password"></label>
+                        <input type="password" name="password" id="password" lay-verify="required" placeholder="密码" class="layui-input">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:src="@{/static/js/layui/layui.all.js}"></script>
+<script th:src="@{/static/js/rich/app.js}"></script>
+</html>
