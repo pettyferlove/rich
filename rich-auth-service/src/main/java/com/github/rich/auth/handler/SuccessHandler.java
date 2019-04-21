@@ -16,7 +16,7 @@ public class SuccessHandler extends SavedRequestAwareAuthenticationSuccessHandle
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        setDefaultTargetUrl("/home/dashboard");
+        setDefaultTargetUrl("/");
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

@@ -173,3 +173,30 @@ body,html {
     }
 }
 /* Login */
+
+/* AUTHORIZE */
+.authorize{
+    position: relative;
+    left: 0;
+    top: 0;
+    padding: 210px 0;
+    min-height: 100%;
+    box-sizing: border-box;
+}
+.authorize-main{
+    width: 430px;
+    margin: 0 auto;
+    box-sizing: border-box
+}
+.authorize-card-header{
+    font-size: 20px;
+    padding: 15px;
+}
+.authorize-form{
+    word-wrap: break-word;
+    word-break: normal;
+}
+.authorize-checkbox{
+    width: 450px;
+}
+/* AUTHORIZE */

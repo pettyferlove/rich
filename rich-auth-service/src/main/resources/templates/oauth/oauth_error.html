@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>统一认证</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" th:href="@{/static/js/layui/css/layui.css}">
+  <link rel="stylesheet" th:href="@{/static/css/rich.css}">
+</head>
+<body class="layui-layout-body">
+<div class="four-zero-four-container">
+  <div class="error-message">授权失败</div>
+  <small>请重试</small>
+  <div class="button-place">
+    <a th:href="@{/login}" class="btn btn-default btn-lg waves-effect">返回登录界面</a>
+  </div>
+</div>
+</body>
+<script th:src="@{/static/js/layui/layui.all.js}"></script>
+<script th:src="@{/static/js/rich/app.js}"></script>
+</html>
