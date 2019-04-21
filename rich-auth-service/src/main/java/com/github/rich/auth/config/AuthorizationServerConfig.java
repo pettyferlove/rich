@@ -101,7 +101,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
-        defaultTokenServices.setTokenEnhancer(customerEnhancer());
+        //defaultTokenServices.setTokenEnhancer(customerEnhancer());
         return defaultTokenServices;
     }
 

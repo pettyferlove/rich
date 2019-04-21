@@ -1,5 +1,6 @@
 package com.github.rich.base;
 
+import com.github.rich.common.core.annotation.EnableRichFeignClients;
 import com.github.rich.security.annotation.EnableRichResourceServer;
 import feign.Logger;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
+@EnableRichFeignClients
 @EnableRichResourceServer
 @SpringCloudApplication
 public class RichBaseInfoServiceApplication {
