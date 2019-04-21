@@ -1,0 +1,17 @@
+package com.github.rich.auth.controller.index;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+/**
+ * @author Petty
+ */
+@Controller
+public class IndexController {
+
+    @GetMapping("/")
+    public String index() {
+        return "forward:/home/dashboard";
+    }
+
+}

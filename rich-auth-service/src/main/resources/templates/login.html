@@ -15,14 +15,21 @@
                 <h2>统一身份认证</h2>
             </div>
             <div class="user-login-box user-login-body">
-                <form class="layui-form" action="">
+                <form id="sign_in" class="layui-form" method="POST" th:action="${loginProcessUrl}">
                     <div class="layui-form-item">
                         <label class="user-login-icon layui-icon layui-icon-username" for="username"></label>
-                        <input type="text" name="username" id="username" lay-verify="required" placeholder="用户名" class="layui-input">
+                        <input type="text" name="username" id="username" lay-verify="required" placeholder="用户名" class="layui-input" autofocus>
                     </div>
                     <div class="layui-form-item">
                         <label class="user-login-icon layui-icon layui-icon-password" for="password"></label>
                         <input type="password" name="password" id="password" lay-verify="required" placeholder="密码" class="layui-input">
+                    </div>
+                    <div class="layui-form-item" style="margin-bottom: 20px;">
+                        <input type="checkbox" name="remember-me" id="remember-me" lay-skin="primary" title="记住密码"><div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>记住密码</span><i class="layui-icon layui-icon-ok"></i></div>
+                        <a lay-href="#" class="user-jump-change" style="margin-top: 7px;">忘记密码？</a>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid" type="submit">登 入</button>
                     </div>
                 </form>
             </div>

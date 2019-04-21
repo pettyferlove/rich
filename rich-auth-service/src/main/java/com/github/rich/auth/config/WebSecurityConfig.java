@@ -61,8 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authorize")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/console/**").hasRole("DEVELOPER")
+                .antMatchers("/").authenticated()
                 .and()
                 //开启记住密码
                 .rememberMe()
