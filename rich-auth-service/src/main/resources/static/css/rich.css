@@ -205,6 +205,8 @@ body,html {
     box-sizing: border-box;
 }
 .authorize-main{
+    -webkit-box-shadow: 0 0 0.5rem 0 rgba(9,41,77,.25);
+    box-shadow: 0 0 0.5rem 0 rgba(9,41,77,.25);
     width: 430px;
     margin: 0 auto;
     box-sizing: border-box
@@ -222,5 +224,8 @@ body,html {
 }
 .authorize-content{
     padding-bottom: 25px;
+}
+.error-again{
+    margin-top: 15px;
 }
 /* AUTHORIZE */
