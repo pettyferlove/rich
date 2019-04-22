@@ -230,8 +230,29 @@ body,html {
 }
 /* AUTHORIZE */
 
-/* INDEX */
-.rich-header{
-
+/* ERROR */
+.error-tips {
+    margin-top: 100px;
+    text-align: center;
 }
-/* INDEX */
+.error-tips h1 {
+    font-size: 100px;
+    line-height: 100px;
+    color: #009688;
+}
+.error-tips .layui-text .layui-anim {
+    display: inline-block;
+}
+.error-icon {
+    display: inline-block;
+    font-size: 300px;
+    color: #393D49;
+}
+.error-text {
+    width: 500px;
+    margin: 30px auto;
+    padding-top: 20px;
+    border-top: 5px solid #009688;
+    font-size: 16px;
+}
+/* ERROR */
