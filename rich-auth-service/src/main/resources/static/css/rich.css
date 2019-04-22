@@ -220,4 +220,7 @@ body,html {
 .authorize-checkbox{
     width: 450px;
 }
+.authorize-content{
+    padding-bottom: 25px;
+}
 /* AUTHORIZE */

@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <title>Rich OAuth2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" th:href="@{/static/js/layui/css/layui.css}">
-    <link rel="stylesheet" th:href="@{/static/css/rich.css}">
+    <th:block th:replace="fragments/css/css-import::core-css"/>
 </head>
 
 <body class="layui-layout-body">
@@ -16,7 +15,7 @@
             <div class="layui-card-header authorize-card-header">
                 <b><span class="font-bold" th:text="${client.clientId}"></span></b>希望访问你的账号,并获取用户信息
             </div>
-            <div class="layui-card-body">
+            <div class="layui-card-body authorize-content">
                 <h4>检查权限</h4>
                 <hr/>
                 <form class="layui-form" name="confirmationForm" th:action="@{/oauth/authorize}" method="post">
@@ -35,9 +34,9 @@
                 </form>
             </div>
         </div>
+        <th:block th:replace="common/footer"/>
     </div>
 </div>
 </body>
-<script th:src="@{/static/js/layui/layui.all.js}"></script>
-<script th:src="@{/static/js/rich/app.js}"></script>
+<th:block th:replace="fragments/js/js-import::core-js"/>
 </html>
