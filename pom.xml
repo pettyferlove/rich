@@ -16,6 +16,8 @@
         <module>rich-auth-service</module>
         <module>rich-common</module>
         <module>rich-module</module>
+        <module>rich-message-service</module>
+        <module>rich-monitor-service</module>
     </modules>
 
     <parent>
