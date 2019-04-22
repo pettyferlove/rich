@@ -98,7 +98,7 @@ public class JsonExceptionHandler implements ErrorWebExceptionHandler {
         Map<String, Object> result = new HashMap<>(2, 1);
         result.put("httpStatus", httpStatus);
 
-        String msg = "{\"code\":" + httpStatus.value() + ",\"msg\": \"" + body + "\"}";
+        String msg = "{\"status\":" + httpStatus.value() + ",\"message\": \"" + body + "\"}";
         result.put("body", msg);
         //错误记录
         assert exchange != null;
