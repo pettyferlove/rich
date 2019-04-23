@@ -27,7 +27,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/pettyferlove/rich-cloud-config.git
+          uri: https://gitee.com/union_tech_company/rich-cloud-config.git
           username: pettyferlove@live.cn
           password: ENC(svG0ecjDmqadkzNiUF78e32+b0ObmhBY)
     bus:
