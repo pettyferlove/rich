@@ -30,7 +30,7 @@ public interface CommonConstant {
     /**
      * Jwt加密/解密凭据
      */
-    String SIGN_KEY = "eda";
+    String SIGN_KEY = "rich";
     /**
      * 解析Token分隔符
      */
