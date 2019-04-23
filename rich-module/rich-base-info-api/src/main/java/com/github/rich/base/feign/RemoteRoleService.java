@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+/**
+ * @author Petty
+ */
 @FeignClient(name = "rich-base-info-service", fallbackFactory = RemoteRoleServiceFallbackFactory.class)
 public interface RemoteRoleService {
 

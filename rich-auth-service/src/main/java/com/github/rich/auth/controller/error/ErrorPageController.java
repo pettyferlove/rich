@@ -42,11 +42,11 @@ public class ErrorPageController implements ErrorController {
         ModelAndView modelAndView = null;
 
         HttpStatus status = getStatus(request);
-        if (status.value() == 404){
+        if (status == HttpStatus.NOT_FOUND){
             modelAndView = new ModelAndView("error/404", model);
-        } else if (status.value() == 403){
+        } else if (status == HttpStatus.FORBIDDEN){
             modelAndView = new ModelAndView("error/403", model);
-        } else if (status.value() == 500){
+        } else if (status == HttpStatus.INTERNAL_SERVER_ERROR){
             modelAndView = new ModelAndView("error/500", model);
         } else {
             modelAndView = new ModelAndView("error", model);

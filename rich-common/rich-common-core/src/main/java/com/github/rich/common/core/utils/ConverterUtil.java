@@ -22,6 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings("rawtypes")
 public final class ConverterUtil {
 
+    private static final String DTO_SUFFIX = "DTO";
+    private static final String CMP_SUFFIX = "CMP";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConverterUtil.class);
 
@@ -96,9 +98,9 @@ public final class ConverterUtil {
         beanCopier.copy(source, target, converter);
         ObjectConverter customConverter = getCustomConverterInstance(customConverterClass);
         if (customConverter != null) {
-            if (target.getClass().getName().endsWith("CMP")) {
+            if (target.getClass().getName().endsWith(CMP_SUFFIX)) {
                 customConverter.convertFromDto(source, target);
-            } else if (target.getClass().getName().endsWith("DTO")) {
+            } else if (target.getClass().getName().endsWith(DTO_SUFFIX)) {
                 customConverter.convertToDto(source, target);
             }
         }

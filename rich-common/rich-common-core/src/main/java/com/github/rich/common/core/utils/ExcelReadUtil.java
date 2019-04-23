@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * Excel读取工具
- * @author ouezh
+ * @author petty
  * @date 2017/6/27
  */
 public class ExcelReadUtil{
@@ -102,7 +102,7 @@ public class ExcelReadUtil{
 				for (int rowNum = numRowRead-1; rowNum <= sheet.getLastRowNum(); rowNum++) {
 					row = sheet.getRow(rowNum);
 					if (row != null) {
-						data = new HashMap<String, Object>();
+						data = new HashMap<String, Object>(16);
 						
 						//循环读取列
 						for (int i = 0; i < numColnum; i++) {
