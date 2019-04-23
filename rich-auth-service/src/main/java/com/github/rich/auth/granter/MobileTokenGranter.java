@@ -1,6 +1,7 @@
 package com.github.rich.auth.granter;
 
 import com.github.rich.auth.service.CaptchaValidateService;
+import com.github.rich.common.core.constant.SecurityConstant;
 import com.github.rich.common.core.exception.security.CaptchaCheckException;
 import com.github.rich.security.service.RichUserDetailsService;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -19,7 +20,7 @@ import java.util.Map;
  */
 public class MobileTokenGranter extends AbstractTokenGranter {
 
-    private static final String GRANT_TYPE = "mobile";
+    private static final String GRANT_TYPE = SecurityConstant.MOBILE;
 
     private final RichUserDetailsService userDetailsService;
 

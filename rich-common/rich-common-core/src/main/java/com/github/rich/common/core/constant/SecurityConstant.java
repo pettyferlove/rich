@@ -54,7 +54,7 @@ public interface SecurityConstant {
      */
     String MOBILE = "mobile";
 
-
+    String WECHAT = "wechat";
     /**
      * token
      */
