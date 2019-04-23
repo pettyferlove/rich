@@ -6,6 +6,8 @@ package com.github.rich.common.core.constant;
  */
 public interface CommonConstant {
 
+    String INNER_SERVICE_PREFIX = "api/v1";
+
     /**
      * 用户未登陆
      */
