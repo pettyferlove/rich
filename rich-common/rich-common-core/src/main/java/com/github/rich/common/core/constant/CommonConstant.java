@@ -42,15 +42,15 @@ public interface CommonConstant {
     /**
      * 用户无效
      */
-    String STATUS_INVALID = "0";
+    int STATUS_INVALID = 0;
     /**
      * 用户正常
      */
-    String STATUS_NORMAL = "1";
+    int STATUS_NORMAL = 1;
     /**
      * 用户锁定
      */
-    String STATUS_LOCK = "9";
+    int STATUS_LOCK = 9;
     String DEL_FLAG = "del_flag";
 
     /**

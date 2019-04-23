@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-18
+ * @since 2019-04-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,10 +26,10 @@ public class SystemLoginLog extends Model<SystemLoginLog> {
     private String id;
 
     /**
-     * 角色code
+     * 日志code
      */
     @TableId
-    private String code;
+    private String logCode;
 
     /**
      * 用户登录名
@@ -96,26 +96,6 @@ public class SystemLoginLog extends Model<SystemLoginLog> {
      * 修改时间
      */
     private LocalDateTime modifierTime;
-
-    /**
-     * 行政区划CODE
-     */
-    private String areaCode;
-
-    /**
-     * 行政区划名称
-     */
-    private String areaName;
-
-    /**
-     * 部门CODE
-     */
-    private String deptCode;
-
-    /**
-     * 部门名称
-     */
-    private String deptName;
 
 
     @Override

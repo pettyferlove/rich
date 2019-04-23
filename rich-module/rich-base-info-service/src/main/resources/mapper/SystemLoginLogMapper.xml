@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemLoginLog">
         <id column="id" property="id" />
-        <result column="code" property="code" />
+        <result column="log_code" property="logCode" />
         <result column="login_code" property="loginCode" />
         <result column="login_name" property="loginName" />
         <result column="login_time" property="loginTime" />
@@ -19,15 +19,11 @@
         <result column="create_time" property="createTime" />
         <result column="modifier" property="modifier" />
         <result column="modifier_time" property="modifierTime" />
-        <result column="area_code" property="areaCode" />
-        <result column="area_name" property="areaName" />
-        <result column="dept_code" property="deptCode" />
-        <result column="dept_name" property="deptName" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, login_code, login_name, login_time, login_type, operation_type, login_ip, user_agent, request_method, del_flag, creator, create_time, modifier, modifier_time, area_code, area_name, dept_code, dept_name
+        id, log_code, login_code, login_name, login_time, login_type, operation_type, login_ip, user_agent, request_method, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

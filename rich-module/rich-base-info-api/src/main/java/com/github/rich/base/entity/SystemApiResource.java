@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-18
+ * @since 2019-04-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -32,7 +32,7 @@ public class SystemApiResource extends Model<SystemApiResource> {
      * Api资源code
      */
     @TableId
-    private String code;
+    private String apiCode;
 
     /**
      * 请求地址
@@ -55,7 +55,7 @@ public class SystemApiResource extends Model<SystemApiResource> {
     private String permissionType;
 
     /**
-     * 状态
+     * 状态 0 无效 1有效
      */
     private String status;
 
@@ -84,26 +84,6 @@ public class SystemApiResource extends Model<SystemApiResource> {
      * 修改时间
      */
     private LocalDateTime modifierTime;
-
-    /**
-     * 行政区划CODE
-     */
-    private String areaCode;
-
-    /**
-     * 行政区划名称
-     */
-    private String areaName;
-
-    /**
-     * 部门CODE
-     */
-    private String deptCode;
-
-    /**
-     * 部门名称
-     */
-    private String deptName;
 
 
     @Override

@@ -30,7 +30,7 @@ public class User implements Serializable {
     private String userType;
     private String email;
     private String mobileTel;
-    private String status;
+    private Integer status;
     /**
      * 角色
      */

@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 用户角色关联信息
+ * 角色接口关联
  * </p>
  *
  * @author Petty
@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SystemUserRole extends Model<SystemUserRole> {
+public class SystemRoleApi extends Model<SystemRoleApi> {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,9 +26,9 @@ public class SystemUserRole extends Model<SystemUserRole> {
     @TableId
     private String code;
 
-    private String userCode;
-
     private String roleCode;
+
+    private String apiCode;
 
 
     @Override

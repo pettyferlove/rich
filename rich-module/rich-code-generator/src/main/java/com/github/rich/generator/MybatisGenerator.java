@@ -2,10 +2,7 @@ package com.github.rich.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 /**
@@ -40,10 +37,10 @@ public class MybatisGenerator {
         mpg.setDataSource(dsc);
 
 
-        /*TemplateConfig tc = new TemplateConfig();
-        tc.setService("/templatesMybatis/service.java.vm");
-        tc.setServiceImpl("/templatesMybatis/serviceImpl.java.vm");
-        mpg.setTemplate(tc);*/
+        TemplateConfig tc = new TemplateConfig();
+        tc.setEntity("/templates/entity.java.vm");
+        mpg.setTemplate(tc);
+
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         // 乐观锁字段
@@ -51,7 +48,7 @@ public class MybatisGenerator {
         strategy.setLogicDeleteFieldName("del_flag");
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         // 表名生成策略
-        strategy.setInclude("system_api_resource");
+        strategy.setInclude("system_login_log","system_role","system_user","system_user_role","system_api_resource","system_region","system_role_api");
         strategy.setEntityLombokModel(true);
         strategy.setEntityBuilderModel(false);
         strategy.setNaming(NamingStrategy.underline_to_camel);

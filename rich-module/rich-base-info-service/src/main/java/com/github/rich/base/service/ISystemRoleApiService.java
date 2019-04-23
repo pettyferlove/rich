@@ -1,16 +1,16 @@
 package com.github.rich.base.service;
 
-import com.github.rich.base.entity.SystemRole;
+import com.github.rich.base.entity.SystemRoleApi;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 用户角色 服务类
+ * 角色接口关联 服务类
  * </p>
  *
  * @author Petty
  * @since 2019-04-23
  */
-public interface ISystemRoleService extends IService<SystemRole> {
+public interface ISystemRoleApiService extends IService<SystemRoleApi> {
 
 }

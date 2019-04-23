@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-18
+ * @since 2019-04-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -32,7 +32,7 @@ public class SystemRole extends Model<SystemRole> {
      * 角色CODE
      */
     @TableId
-    private String code;
+    private String roleCode;
 
     /**
      * 角色
@@ -47,7 +47,7 @@ public class SystemRole extends Model<SystemRole> {
     /**
      * 状态 1有效 0无效 默认为1
      */
-    private String status;
+    private Integer status;
 
     /**
      * 删除标记 0 未删除 1 删除
@@ -74,26 +74,6 @@ public class SystemRole extends Model<SystemRole> {
      * 修改时间
      */
     private LocalDateTime modifierTime;
-
-    /**
-     * 行政区划CODE
-     */
-    private String areaCode;
-
-    /**
-     * 行政区划名称
-     */
-    private String areaName;
-
-    /**
-     * 部门CODE
-     */
-    private String deptCode;
-
-    /**
-     * 部门名称
-     */
-    private String deptName;
 
 
     @Override

@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemApiResource">
         <id column="id" property="id" />
-        <result column="code" property="code" />
+        <result column="api_code" property="apiCode" />
         <result column="request_url" property="requestUrl" />
         <result column="request_method" property="requestMethod" />
         <result column="permission" property="permission" />
@@ -16,15 +16,11 @@
         <result column="create_time" property="createTime" />
         <result column="modifier" property="modifier" />
         <result column="modifier_time" property="modifierTime" />
-        <result column="area_code" property="areaCode" />
-        <result column="area_name" property="areaName" />
-        <result column="dept_code" property="deptCode" />
-        <result column="dept_name" property="deptName" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, request_url, request_method, permission, permission_type, status, del_flag, creator, create_time, modifier, modifier_time, area_code, area_name, dept_code, dept_name
+        id, api_code, request_url, request_method, permission, permission_type, status, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

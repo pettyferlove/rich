@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-18
+ * @since 2019-04-23
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -45,6 +45,16 @@ public class SystemUser extends Model<SystemUser> {
     private String password;
 
     /**
+     * QQ OpenID
+     */
+    private String qqOpenid;
+
+    /**
+     * 微信OpenID
+     */
+    private String wechatOpenid;
+
+    /**
      * 用户类型
      */
     private String userType;
@@ -52,7 +62,7 @@ public class SystemUser extends Model<SystemUser> {
     /**
      * 性别
      */
-    private String userSex;
+    private Integer userSex;
 
     /**
      * 生日
@@ -68,6 +78,11 @@ public class SystemUser extends Model<SystemUser> {
      * 电子邮件
      */
     private String email;
+
+    /**
+     * 居住地址
+     */
+    private String userAddress;
 
     /**
      * 移动电话
@@ -90,9 +105,14 @@ public class SystemUser extends Model<SystemUser> {
     private String userIden;
 
     /**
-     * 是否有效
+     * 行政区划CODE
      */
-    private String status;
+    private String regionCode;
+
+    /**
+     * 是否有效 0 无效 1 有效
+     */
+    private Integer status;
 
     /**
      * 删除标记 0 未删除 1 删除
@@ -119,26 +139,6 @@ public class SystemUser extends Model<SystemUser> {
      * 修改时间
      */
     private LocalDateTime modifierTime;
-
-    /**
-     * 行政区划CODE
-     */
-    private String areaCode;
-
-    /**
-     * 行政区划名称
-     */
-    private String areaName;
-
-    /**
-     * 部门CODE
-     */
-    private String deptCode;
-
-    /**
-     * 部门名称
-     */
-    private String deptName;
 
 
     @Override

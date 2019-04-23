@@ -8,10 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Petty
@@ -23,7 +20,7 @@ public class UserDetailsImpl implements UserDetails {
 
     private String username;
     private String password;
-    private String status;
+    private Integer status;
     private String type;
     private String name;
     private List<String> roles;
@@ -70,7 +67,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return !CommonConstant.STATUS_INVALID.equals(status);
+        return !Objects.equals(CommonConstant.STATUS_INVALID,status);
     }
 
     /**
@@ -80,7 +77,7 @@ public class UserDetailsImpl implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return !CommonConstant.STATUS_LOCK.equals(status);
+        return !Objects.equals(CommonConstant.STATUS_LOCK,status);
     }
 
     @Override
@@ -95,6 +92,6 @@ public class UserDetailsImpl implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return CommonConstant.STATUS_NORMAL.equals(status);
+        return Objects.equals(CommonConstant.STATUS_NORMAL,status);
     }
 }
