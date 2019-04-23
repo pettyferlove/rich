@@ -5,13 +5,17 @@ import com.github.rich.message.config.RabbitMqCustomConfig;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @author Petty
+ */
 @Slf4j
-public class AbstractMessageListener implements MessageListener {
+abstract class AbstractMessageListener<T extends Message> implements MessageListener<T> {
 
     private final String RETRY_HEADER = "x-custom-retry";
 
@@ -29,7 +33,8 @@ public class AbstractMessageListener implements MessageListener {
      * @param amqpMessage 消息队列消息，用于重试
      */
     @Override
-    public void process(Message message, Channel channel, org.springframework.amqp.core.Message amqpMessage) {
+    @RabbitHandler
+    public void process(T message, Channel channel, org.springframework.amqp.core.Message amqpMessage) {
         try {
             channel.basicAck(amqpMessage.getMessageProperties().getDeliveryTag(), false);
             if (this.send(message)) {
@@ -89,7 +94,7 @@ public class AbstractMessageListener implements MessageListener {
      * @return 是否成功
      */
     @Override
-    public boolean send(Message message) {
+    public boolean send(T message) {
         return false;
     }
 
@@ -100,7 +105,7 @@ public class AbstractMessageListener implements MessageListener {
      * @param amqpMessage 消息队列消息
      */
     @Override
-    public void aboveAgain(Message message, org.springframework.amqp.core.Message amqpMessage) {
+    public void aboveAgain(T message, org.springframework.amqp.core.Message amqpMessage) {
         log.info("超过重试次数，直接忽略");
     }
 }

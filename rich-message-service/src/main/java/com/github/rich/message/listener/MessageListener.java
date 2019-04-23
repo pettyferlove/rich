@@ -2,7 +2,6 @@ package com.github.rich.message.listener;
 
 import com.github.rich.common.core.model.Message;
 import com.rabbitmq.client.Channel;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 
 /**
  * 消息消费者顶层接口
@@ -16,7 +15,6 @@ public interface MessageListener<T extends Message> {
      * @param channel 通道
      * @param amqpMessage 消息队列消息，用于重试
      */
-    @RabbitHandler
     void process(T message, Channel channel, org.springframework.amqp.core.Message amqpMessage);
 
     /**
