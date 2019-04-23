@@ -1,6 +1,6 @@
 package com.github.rich.base.service;
 
-import com.github.rich.base.dto.User;
+import com.github.rich.base.model.User;
 import com.github.rich.base.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 

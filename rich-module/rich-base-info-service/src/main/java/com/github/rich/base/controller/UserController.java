@@ -1,6 +1,6 @@
 package com.github.rich.base.controller;
 
-import com.github.rich.base.dto.User;
+import com.github.rich.base.model.User;
 import com.github.rich.base.service.ISystemUserService;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

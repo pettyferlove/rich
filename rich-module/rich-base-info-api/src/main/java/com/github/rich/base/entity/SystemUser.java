@@ -50,6 +50,11 @@ public class SystemUser extends Model<SystemUser> {
     private String qqOpenid;
 
     /**
+     * 微信UnionID
+     */
+    private Integer wechatUnionid;
+
+    /**
      * 微信OpenID
      */
     private String wechatOpenid;

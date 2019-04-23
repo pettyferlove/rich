@@ -1,6 +1,6 @@
 package com.github.rich.security.service.impl;
 
-import com.github.rich.base.dto.User;
+import com.github.rich.base.model.User;
 import com.github.rich.common.core.constant.CommonConstant;
 import com.github.rich.common.core.constant.SecurityConstant;
 import lombok.Data;
