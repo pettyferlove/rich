@@ -1,5 +1,6 @@
-package com.github.rich.auth.service;
+package com.github.rich.auth.service.impl;
 
+import com.github.rich.auth.service.AbstractCaptchaValidateService;
 import com.github.rich.common.core.constant.MqQueueConstant;
 import com.github.rich.common.core.constant.SecurityConstant;
 import com.github.rich.common.core.model.message.CaptchaMessage;
