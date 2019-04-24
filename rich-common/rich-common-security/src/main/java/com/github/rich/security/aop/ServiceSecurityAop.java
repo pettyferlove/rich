@@ -24,13 +24,14 @@ public class ServiceSecurityAop {
     }
 
     @Around("pointCut()")
-    public Object methodAroundHandler(ProceedingJoinPoint pjp) {
+    public Object methodAroundHandler(ProceedingJoinPoint pjp) throws Throwable {
         Object result = null;
         try {
             BaseContextHandler.set("x-inner-service-security",true);
             result = pjp.proceed();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+            throw throwable;
         }
         return result;
     }

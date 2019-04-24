@@ -4,6 +4,7 @@ import com.github.rich.base.feign.RemoteUserService;
 import com.github.rich.security.annotation.InnerServiceSecurity;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 import com.github.rich.security.utils.SecurityUtil;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ public class DemoController {
 
     @GetMapping("/demo")
     @InnerServiceSecurity
+    @PreAuthorize("@permission.hasPermission('c')")
     public void demo(){
         UserDetailsImpl user = SecurityUtil.getUser();
         List<String> roles = SecurityUtil.getRoles();
