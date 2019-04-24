@@ -34,7 +34,7 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     public List<SystemRole> findRoleByUserCode(String userCode) {
         List<SystemUserRole> systemUserRoles = this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode));
         Set<String> roleIds = new HashSet<>();
-        systemUserRoles.forEach(userRole-> roleIds.add(userRole.getCode()));
+        systemUserRoles.forEach(userRole-> roleIds.add(userRole.getRoleCode()));
         return (List<SystemRole>) systemRoleService.listByIds(roleIds);
     }
 }
