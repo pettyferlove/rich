@@ -1,6 +1,7 @@
 package com.github.rich.security.service.impl;
 
 import cn.hutool.core.util.StrUtil;
+import com.github.rich.common.core.constant.SecurityConstant;
 import com.github.rich.security.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -31,6 +32,7 @@ public class PermissionServiceImpl implements PermissionService {
         return authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(StringUtils::hasText)
+                .filter(authority-> !authority.startsWith(SecurityConstant.ROLE_PREFIX))
                 .anyMatch(x -> PatternMatchUtils.simpleMatch(permission, x));
     }
 }

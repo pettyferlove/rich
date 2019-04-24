@@ -61,10 +61,10 @@ public class SecurityUtil {
 
 		List<String> roles = new ArrayList<>();
 		authorities.stream()
-			.filter(granted -> StrUtil.startWith(granted.getAuthority(), SecurityConstant.ROLE))
+			.filter(granted -> StrUtil.startWith(granted.getAuthority(), SecurityConstant.ROLE_PREFIX))
 			.forEach(granted -> {
 				System.out.println(granted);
-				String id = StrUtil.removePrefix(granted.getAuthority(), SecurityConstant.ROLE);
+				String id = StrUtil.removePrefix(granted.getAuthority(), SecurityConstant.ROLE_PREFIX);
 				roles.add(id);
 			});
 		return roles;

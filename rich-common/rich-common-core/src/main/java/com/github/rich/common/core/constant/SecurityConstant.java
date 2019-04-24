@@ -7,7 +7,7 @@ public interface SecurityConstant {
     /**
      * 角色前缀
      */
-    String ROLE = "ROLE_";
+    String ROLE_PREFIX = "ROLE_";
 
     /**
      * 基础用户角色
