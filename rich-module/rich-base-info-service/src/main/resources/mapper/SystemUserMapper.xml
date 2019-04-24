@@ -9,6 +9,7 @@
         <result column="user_name" property="userName" />
         <result column="password" property="password" />
         <result column="qq_openid" property="qqOpenid" />
+        <result column="wechat_unionid" property="wechatUnionid" />
         <result column="wechat_openid" property="wechatOpenid" />
         <result column="user_type" property="userType" />
         <result column="user_sex" property="userSex" />
@@ -31,7 +32,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_code, user_name, password, qq_openid, wechat_openid, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_code, status, del_flag, creator, create_time, modifier, modifier_time
+        id, user_code, user_name, password, qq_openid, wechat_unionid, wechat_openid, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_code, status, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>
