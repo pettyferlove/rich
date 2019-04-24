@@ -1,10 +1,17 @@
 package com.github.rich.base.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUserRole;
 import com.github.rich.base.mapper.SystemUserRoleMapper;
+import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -17,4 +24,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper, SystemUserRole> implements ISystemUserRoleService {
 
+    private final ISystemRoleService systemRoleService;
+
+    public SystemUserRoleServiceImpl(ISystemRoleService systemRoleService) {
+        this.systemRoleService = systemRoleService;
+    }
+
+    @Override
+    public List<SystemRole> findRoleByUserCode(String userCode) {
+        List<SystemUserRole> systemUserRoles = this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode));
+        Set<String> roleIds = new HashSet<>();
+        systemUserRoles.forEach(userRole-> roleIds.add(userRole.getCode()));
+        return (List<SystemRole>) systemRoleService.listByIds(roleIds);
+    }
 }

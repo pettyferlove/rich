@@ -1,7 +1,7 @@
 package com.github.rich.base.api.impl;
 
 import com.github.rich.base.api.UserServiceApi;
-import com.github.rich.base.model.User;
+import com.github.rich.base.dto.User;
 import com.github.rich.base.service.ISystemUserService;
 import org.springframework.web.bind.annotation.RestController;
 

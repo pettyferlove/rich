@@ -1,6 +1,6 @@
 package com.github.rich.base.feign;
 
-import com.github.rich.base.model.User;
+import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.factory.RemoteUserServiceFallbackFactory;
 import com.github.rich.common.core.constant.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;

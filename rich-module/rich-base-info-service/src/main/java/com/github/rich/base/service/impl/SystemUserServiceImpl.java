@@ -1,7 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.rich.base.model.User;
+import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.ISystemUserService;

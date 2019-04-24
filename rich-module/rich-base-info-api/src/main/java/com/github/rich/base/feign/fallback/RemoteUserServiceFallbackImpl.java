@@ -1,6 +1,6 @@
 package com.github.rich.base.feign.fallback;
 
-import com.github.rich.base.model.User;
+import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.RemoteUserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
