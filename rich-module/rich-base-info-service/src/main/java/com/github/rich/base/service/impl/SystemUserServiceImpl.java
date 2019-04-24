@@ -20,42 +20,35 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService {
 
-    /**
-     * 根据登录名查找用户信息
-     *
-     * @param userCode 登录名
-     * @return 用户信息
-     */
     @Override
     public User findByCode(String userCode) {
         User user = new User();
         SystemUser systemUser = this.getById(userCode);
-        ConverterUtil.convert(systemUser ,user);
+        ConverterUtil.convert(systemUser, user);
         return user;
     }
 
-    /**
-     * 根据手机号码查找用户信息
-     *
-     * @param mobile 手机号码
-     * @return 用户信息
-     */
     @Override
     public User findByMobile(String mobile) {
         User user = new User();
-        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("mobile_tel",mobile));
-        ConverterUtil.convert(systemUser ,user);
+        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("mobile_tel", mobile));
+        ConverterUtil.convert(systemUser, user);
         return user;
     }
 
-    /**
-     * 根据微信OpenId查找用户信息
-     *
-     * @param openid 微信开放授权ID
-     * @return 用户信息
-     */
     @Override
-    public User findByWeChat(String openid) {
-        return null;
+    public User findByWeChatOpenID(String openid) {
+        User user = new User();
+        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_openid", openid));
+        ConverterUtil.convert(systemUser, user);
+        return user;
+    }
+
+    @Override
+    public User findByWeChatUnionID(String unionid) {
+        User user = new User();
+        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_unionid", unionid));
+        ConverterUtil.convert(systemUser, user);
+        return user;
     }
 }
