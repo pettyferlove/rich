@@ -27,6 +27,15 @@ public class RichAuthServiceApplication {
         return new RestTemplate();
     }
 
+    /**
+     * 该RestTemplate不会调用Ribbon相关方法
+     * @return RestTemplate
+     */
+    @Bean(name="remoteRestTemplate")
+    public RestTemplate remoteRestTemplate() {
+        return new RestTemplate();
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(RichAuthServiceApplication.class, args);
     }

@@ -1,8 +1,10 @@
 package com.github.rich.auth.config;
 
 import com.github.rich.auth.granter.MobileTokenGranter;
+import com.github.rich.auth.granter.WeChatTokenGranter;
 import com.github.rich.auth.service.CaptchaValidateService;
 import com.github.rich.auth.service.RichClientDetailsService;
+import com.github.rich.auth.service.WeChatAuthService;
 import com.github.rich.common.core.constant.CommonConstant;
 import com.github.rich.security.component.ResponseExceptionTranslator;
 import com.github.rich.security.service.RichUserDetailsService;
@@ -73,14 +75,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final CaptchaValidateService captchaValidateService;
 
+    private final WeChatAuthService weChatAuthService;
+
     private final DataSource dataSource;
 
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService) {
+    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService, WeChatAuthService weChatAuthService) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
         this.captchaValidateService = smsCaptchaValidateService;
+        this.weChatAuthService = weChatAuthService;
     }
 
     @Bean
@@ -120,6 +125,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 authorizationCodeServices, clientDetails, requestFactory));
         tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetails, requestFactory));
         tokenGranters.add(new MobileTokenGranter(tokenServices, clientDetails, requestFactory, userDetailsService, captchaValidateService));
+        tokenGranters.add(new WeChatTokenGranter(tokenServices, clientDetails, requestFactory, userDetailsService, weChatAuthService));
         ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices, clientDetails,
                 requestFactory);
         tokenGranters.add(implicit);
