@@ -21,12 +21,12 @@ public class UserDetailsImpl implements UserDetails {
     private String username;
     private String password;
     private Integer status;
-    private String type;
+    private Integer type;
     private String name;
     private List<String> roles;
     private List<String> permissions;
 
-    public UserDetailsImpl(User user) {
+    UserDetailsImpl(User user) {
         this.username = user.getUserCode();
         this.password = user.getPassword();
         this.status = user.getStatus();
