@@ -293,8 +293,8 @@
 
     <repositories>
         <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
+            <id>Ali Maven</id>
+            <name>阿里云公共仓库</name>
             <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>
@@ -304,8 +304,8 @@
             </snapshots>
         </repository>
         <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
+            <id>Spring</id>
+            <name>Spring</name>
             <url>https://maven.aliyun.com/repository/spring</url>
             <releases>
                 <enabled>true</enabled>
@@ -317,8 +317,8 @@
     </repositories>
     <pluginRepositories>
         <pluginRepository>
-            <id>spring-plugin</id>
-            <name>spring-plugin</name>
+            <id>Spring-plugin</id>
+            <name>Spring-plugin</name>
             <url>https://maven.aliyun.com/repository/spring-plugin</url>
             <releases>
                 <enabled>true</enabled>
