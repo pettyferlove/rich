@@ -1,6 +1,7 @@
-package com.github.rich.wechat;
+package com.github.rich.thirdparty;
 
 import com.github.rich.common.core.annotation.EnableRichFeignClients;
+import com.github.rich.security.annotation.EnableRichResourceServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,13 +14,13 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
-@SpringCloudApplication
 @EnableRichFeignClients
-public class RichWeChatServiceApplication {
+@EnableRichResourceServer
+@SpringCloudApplication
+public class RichThirdPartyServiceApplication {
 
     /**
      * 负载均衡配置
-     *
      * @return RestTemplate
      */
     @Bean
@@ -30,16 +31,15 @@ public class RichWeChatServiceApplication {
 
     /**
      * 该RestTemplate不会调用Ribbon相关方法
-     *
      * @return RestTemplate
      */
-    @Bean(name = "remoteRestTemplate")
+    @Bean(name="remoteRestTemplate")
     public RestTemplate remoteRestTemplate() {
         return new RestTemplate();
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(RichWeChatServiceApplication.class, args);
+        SpringApplication.run(RichThirdPartyServiceApplication.class, args);
     }
 
 }

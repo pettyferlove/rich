@@ -17,7 +17,7 @@
     <property name="totalSize" value="50"/>
 
     <!-- 定义日志文件名称 -->
-    <property name="log_name" value="rich-wechat-service"/>
+    <property name="log_name" value="rich-third-party-service"/>
 
     <!-- 应用名称 -->
     <property name="application_name" value="rich"/>

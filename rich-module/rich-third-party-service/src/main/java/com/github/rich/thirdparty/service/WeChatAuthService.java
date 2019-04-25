@@ -1,7 +1,7 @@
-package com.github.rich.auth.service;
+package com.github.rich.thirdparty.service;
 
-import com.github.rich.auth.model.WeChatAuthCallback;
 import com.github.rich.common.core.exception.BaseRuntimeException;
+import com.github.rich.thirdparty.model.WeChatAuthCallback;
 
 /**
  * 微信认证

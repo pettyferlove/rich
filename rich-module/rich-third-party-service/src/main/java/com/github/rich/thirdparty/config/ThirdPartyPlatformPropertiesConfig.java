@@ -1,4 +1,4 @@
-package com.github.rich.common.core.config;
+package com.github.rich.thirdparty.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

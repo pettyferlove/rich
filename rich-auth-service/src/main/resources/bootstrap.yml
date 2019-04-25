@@ -22,10 +22,6 @@ spring:
       trace:
         enabled: true
       enabled: true
-third-party:
-  wechat:
-    app-id: wxb58205906d91941e
-    app-secret: 0d8d3f95693970f8ec6c84a2c767b619
 ---
 spring:
   profiles: dev

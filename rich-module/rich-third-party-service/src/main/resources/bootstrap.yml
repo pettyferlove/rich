@@ -3,7 +3,7 @@ logging:
     org.springframework.security: debug
 spring:
   application:
-    name: rich-wechat-service
+    name: rich-third-party-service
   main:
     allow-bean-definition-overriding: true
   profiles:

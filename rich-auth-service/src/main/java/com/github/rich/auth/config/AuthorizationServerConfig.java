@@ -4,7 +4,6 @@ import com.github.rich.auth.granter.MobileTokenGranter;
 import com.github.rich.auth.granter.WeChatTokenGranter;
 import com.github.rich.auth.service.CaptchaValidateService;
 import com.github.rich.auth.service.RichClientDetailsService;
-import com.github.rich.auth.service.WeChatAuthService;
 import com.github.rich.common.core.constant.CommonConstant;
 import com.github.rich.security.component.ResponseExceptionTranslator;
 import com.github.rich.security.service.RichUserDetailsService;
@@ -75,17 +74,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final CaptchaValidateService captchaValidateService;
 
-    private final WeChatAuthService weChatAuthService;
-
     private final DataSource dataSource;
 
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService, WeChatAuthService weChatAuthService) {
+    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
         this.captchaValidateService = smsCaptchaValidateService;
-        this.weChatAuthService = weChatAuthService;
     }
 
     @Bean
@@ -112,6 +108,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 将自定义Granter加入至授权池中
+     *
      * @param authorizationCodeServices 默认初始化的AuthorizationCodeServices，不要自己初始化，会导致会在两个Service，直接导致AuthorizationCode模式失效
      * @return List
      */
@@ -125,7 +122,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 authorizationCodeServices, clientDetails, requestFactory));
         tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetails, requestFactory));
         tokenGranters.add(new MobileTokenGranter(tokenServices, clientDetails, requestFactory, userDetailsService, captchaValidateService));
-        tokenGranters.add(new WeChatTokenGranter(tokenServices, clientDetails, requestFactory, userDetailsService, weChatAuthService));
+        tokenGranters.add(new WeChatTokenGranter(tokenServices, clientDetails, requestFactory, userDetailsService));
         ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices, clientDetails,
                 requestFactory);
         tokenGranters.add(implicit);
