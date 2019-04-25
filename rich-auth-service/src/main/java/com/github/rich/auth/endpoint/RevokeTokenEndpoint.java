@@ -2,7 +2,7 @@ package com.github.rich.auth.endpoint;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.rich.security.exception.RichOAuth2LogoutException;
-import com.github.rich.auth.model.LogoutInfo;
+import com.github.rich.auth.model.Logout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -30,7 +30,7 @@ public class RevokeTokenEndpoint {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/oauth/token")
     @ResponseBody
-    public ResponseEntity<LogoutInfo> revokeToken(String token) {
+    public ResponseEntity<Logout> revokeToken(String token) {
         if (StringUtils.hasText(token)) {
             try {
                 OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);
@@ -39,12 +39,12 @@ public class RevokeTokenEndpoint {
                     throw new RichOAuth2LogoutException("logout fail");
                 }
                 tokenStore.removeAccessToken(accessToken);
-                return ResponseEntity.ok(new LogoutInfo("logout success", System.currentTimeMillis(), 200));
+                return ResponseEntity.ok(new Logout("logout success", System.currentTimeMillis(), 200));
             } catch (Exception e) {
-                return ResponseEntity.status(500).body(new LogoutInfo("logout error", System.currentTimeMillis(), 500));
+                return ResponseEntity.status(500).body(new Logout("logout error", System.currentTimeMillis(), 500));
             }
         } else {
-            return ResponseEntity.status(204).body(new LogoutInfo("no token", System.currentTimeMillis(), 200));
+            return ResponseEntity.status(204).body(new Logout("no token", System.currentTimeMillis(), 200));
         }
     }
 }

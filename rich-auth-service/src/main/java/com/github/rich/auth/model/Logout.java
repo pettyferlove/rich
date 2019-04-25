@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LogoutInfo implements Serializable {
+public class Logout implements Serializable {
     private static final long serialVersionUID = 1171266392291021795L;
     private String message;
     private long timestamp;
