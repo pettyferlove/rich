@@ -1,0 +1,38 @@
+logging:
+  level:
+    org.springframework.security: debug
+spring:
+  application:
+    name: rich-wechat-service
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: rich-config-service
+      profile: ${spring.profiles.active}
+      label: ${spring.profiles.active}
+      fail-fast: true
+---
+spring:
+  profiles: dev
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10151/eureka
+---
+spring:
+  profiles: prd
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:10151/eureka

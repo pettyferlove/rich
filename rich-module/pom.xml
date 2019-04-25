@@ -18,6 +18,7 @@
         <module>rich-base-info-api</module>
         <module>rich-base-info-service</module>
         <module>rich-code-generator</module>
+        <module>rich-wechat-service</module>
         <module>rich-demo-service</module>
     </modules>
 

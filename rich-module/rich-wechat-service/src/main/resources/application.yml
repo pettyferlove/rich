@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-wechat-service
+    name: rich-wechat-service
+    description: 微信平台相关API调用服务
+    version: 1.0.0-SNAPSHOT
