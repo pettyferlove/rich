@@ -5,6 +5,7 @@ import com.github.rich.common.core.exception.BaseException;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.model.R;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,8 +48,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public R runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        response.setStatus(CommonConstant.EX_OTHER_CODE);
-        return new R(ex);
+        int status = CommonConstant.EX_OTHER_CODE;
+        if (ex instanceof AccessDeniedException) {
+            status = CommonConstant.EX_TOKEN_ERROR_CODE;
+        }
+        response.setStatus(status);
+        return new R(ex,status);
     }
 
     /**
