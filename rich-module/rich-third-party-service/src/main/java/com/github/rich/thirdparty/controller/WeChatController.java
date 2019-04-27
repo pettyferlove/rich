@@ -1,7 +1,8 @@
 package com.github.rich.thirdparty.controller;
 
 import com.github.rich.common.core.model.R;
-import com.github.rich.thirdparty.model.WeChatAuthCallback;
+import com.github.rich.thirdparty.model.WeChatCode2SessionCallback;
+import com.github.rich.thirdparty.model.WeChatUserInfoDecryptedData;
 import com.github.rich.thirdparty.service.WeChatAuthService;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +28,8 @@ public class WeChatController {
             @ApiImplicitParam(paramType = "form", name = "code", value = "JS_CODE", dataTypeClass = String.class),
     })
     @PostMapping("/auth/openid")
-    public R<WeChatAuthCallback> auth(String code) {
-        return new R<>(weChatAuthService.auth(code));
+    public R<WeChatCode2SessionCallback> auth(String code) {
+        return new R<>(weChatAuthService.code2Session(code));
     }
 
     @ApiOperation(value = "获取微信详细用户信息", notes = "无需权限")
@@ -38,7 +39,7 @@ public class WeChatController {
             @ApiImplicitParam(paramType = "iv", name = "iv", value = "偏移量", dataTypeClass = String.class),
     })
     @PostMapping("/auth/user/info")
-    public WeChatAuthCallback userInfo(String code, String encryptedData, String iv) {
-        return null;
+    public R<WeChatUserInfoDecryptedData> userInfo(String code, String encryptedData, String iv) {
+        return new R<>(weChatAuthService.decryptedUserInfo(code, encryptedData, iv));
     }
 }

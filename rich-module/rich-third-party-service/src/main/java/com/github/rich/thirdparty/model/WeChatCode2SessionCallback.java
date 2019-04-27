@@ -17,7 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WeChatAuthCallback implements Serializable {
+public class WeChatCode2SessionCallback implements Serializable {
 
     private static final long serialVersionUID = -3494595764100365549L;
     /**
