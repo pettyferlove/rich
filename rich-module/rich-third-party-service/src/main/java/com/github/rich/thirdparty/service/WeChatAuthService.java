@@ -11,7 +11,7 @@ public interface WeChatAuthService {
 
 
     /**
-     * 通过JS_CODE获取
+     * 通过JS_CODE获取OpenID Session_Key
      * @param jsCode 调用wx.login 获取的code
      * @return WeChatAuthCallback
      * @throws BaseRuntimeException Exception
