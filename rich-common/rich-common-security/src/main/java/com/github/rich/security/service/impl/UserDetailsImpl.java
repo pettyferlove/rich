@@ -18,6 +18,14 @@ import java.util.*;
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 用户UUID
+     */
+    private String userCode;
+    /**
+     * 登录名
+     */
+    private String loginCode;
     private String username;
     private String password;
     private Integer status;
@@ -27,7 +35,9 @@ public class UserDetailsImpl implements UserDetails {
     private List<String> permissions;
 
     UserDetailsImpl(User user) {
-        this.username = user.getUserCode();
+        this.userCode = user.getUserCode();
+        this.loginCode = user.getLoginCode();
+        this.username = user.getUserName();
         this.password = user.getPassword();
         this.status = user.getStatus();
         this.type = user.getUserType();
@@ -62,7 +72,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.loginCode;
     }
 
     @Override

@@ -34,9 +34,9 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    public User findByCode(String userCode) {
+    public User findByLoginCode(String loginCode) {
         User user = new User();
-        SystemUser systemUser = this.getById(userCode);
+        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("login_code", loginCode));
         ConverterUtil.convert(systemUser, user);
         user.setRoles(loadRoles(systemUser.getUserCode()));
         return user;

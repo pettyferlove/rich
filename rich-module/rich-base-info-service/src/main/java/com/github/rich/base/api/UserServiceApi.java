@@ -15,11 +15,11 @@ public interface UserServiceApi {
     /**
      * 通过用户名查询用户及其角色信息
      *
-     * @param userCode 用户名
+     * @param loginCode 用户名
      * @return User
      */
-    @PostMapping("/find/code/{userCode}")
-    User findByCode(@PathVariable String userCode);
+    @PostMapping("/find/code/{loginCode}")
+    User findByLoginCode(@PathVariable String loginCode);
 
     /**
      * 通过手机号查询用户及其角色信息

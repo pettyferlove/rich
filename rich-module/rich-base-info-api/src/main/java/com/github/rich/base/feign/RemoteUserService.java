@@ -16,11 +16,11 @@ public interface RemoteUserService {
     /**
      * 通过用户名查询用户信息
      *
-     * @param userCode 用户名
+     * @param loginCode 登录名
      * @return 用户信息实体类
      */
-    @PostMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/find/code/{userCode}")
-    User findUserByUsername(@PathVariable("userCode") String userCode);
+    @PostMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/find/code/{loginCode}")
+    User findUserByLoginCode(@PathVariable("loginCode") String loginCode);
 
     /**
      * 通过手机号码查询用户信息

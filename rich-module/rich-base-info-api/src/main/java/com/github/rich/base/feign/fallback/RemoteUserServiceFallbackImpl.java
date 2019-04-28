@@ -17,8 +17,8 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
     private Throwable cause;
 
     @Override
-    public User findUserByUsername(String userCode) {
-        log.error("Feign---RemoteUserService->findUserByUsername Hystrix Fusing->Params:{},Date:{},Cause:{}", userCode, System.currentTimeMillis(), cause);
+    public User findUserByLoginCode(String loginCode) {
+        log.error("Feign---RemoteUserService->findUserByLoginCode Hystrix Fusing->Params:{},Date:{},Cause:{}", loginCode, System.currentTimeMillis(), cause);
         return null;
     }
 

@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-25
+ * @since 2019-04-28
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,10 +29,15 @@ public class SystemUser extends Model<SystemUser> {
     private String id;
 
     /**
-     * 用户名称/登录名称
+     * 用户UUID
      */
     @TableId
     private String userCode;
+
+    /**
+     * 用户登录名
+     */
+    private String loginCode;
 
     /**
      * 用户全名

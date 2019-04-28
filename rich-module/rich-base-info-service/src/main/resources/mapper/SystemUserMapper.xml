@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemUser">
         <id column="id" property="id" />
         <result column="user_code" property="userCode" />
+        <result column="login_code" property="loginCode" />
         <result column="user_name" property="userName" />
         <result column="password" property="password" />
         <result column="qq_openid" property="qqOpenid" />
@@ -32,7 +33,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_code, user_name, password, qq_openid, wechat_unionid, wechat_openid, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_code, status, del_flag, creator, create_time, modifier, modifier_time
+        id, user_code, login_code, user_name, password, qq_openid, wechat_unionid, wechat_openid, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_code, status, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

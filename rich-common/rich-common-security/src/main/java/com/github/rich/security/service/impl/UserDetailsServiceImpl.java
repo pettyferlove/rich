@@ -28,8 +28,8 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = remoteUserService.findUserByUsername(username);
+    public UserDetails loadUserByUsername(String loginCode) throws UsernameNotFoundException {
+        User user = remoteUserService.findUserByLoginCode(loginCode);
         Preconditions.checkNotNull(user, "没有找到该用户");
         return new UserDetailsImpl(user);
     }
