@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-23
+ * @since 2019-04-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -60,9 +60,9 @@ public class SystemUser extends Model<SystemUser> {
     private String wechatOpenid;
 
     /**
-     * 用户类型
+     * 用户类型 0 管理员 1 普通用户
      */
-    private String userType;
+    private Integer userType;
 
     /**
      * 性别

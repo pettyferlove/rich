@@ -76,10 +76,6 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
             headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
         }
         RichOAuth2Exception richOAuth2Exception = new RichOAuth2Exception(e.getMessage(), e);
-        if (e instanceof ClientAuthenticationException) {
-            return new ResponseEntity<>(e, headers,
-                    HttpStatus.valueOf(status));
-        }
         return new ResponseEntity<>(richOAuth2Exception, headers,
                 HttpStatus.valueOf(status));
 

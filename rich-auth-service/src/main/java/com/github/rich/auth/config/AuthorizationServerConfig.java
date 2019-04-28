@@ -1,6 +1,7 @@
 package com.github.rich.auth.config;
 
 import com.github.rich.auth.granter.MobileTokenGranter;
+import com.github.rich.auth.granter.WeChatTokenGranter;
 import com.github.rich.auth.service.CaptchaValidateService;
 import com.github.rich.auth.service.RichClientDetailsService;
 import com.github.rich.common.core.constant.CommonConstant;
@@ -107,6 +108,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 将自定义Granter加入至授权池中
+     *
      * @param authorizationCodeServices 默认初始化的AuthorizationCodeServices，不要自己初始化，会导致会在两个Service，直接导致AuthorizationCode模式失效
      * @return List
      */
@@ -120,6 +122,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 authorizationCodeServices, clientDetails, requestFactory));
         tokenGranters.add(new RefreshTokenGranter(tokenServices, clientDetails, requestFactory));
         tokenGranters.add(new MobileTokenGranter(tokenServices, clientDetails, requestFactory, userDetailsService, captchaValidateService));
+        tokenGranters.add(new WeChatTokenGranter(tokenServices, clientDetails, requestFactory, userDetailsService));
         ImplicitTokenGranter implicit = new ImplicitTokenGranter(tokenServices, clientDetails,
                 requestFactory);
         tokenGranters.add(implicit);

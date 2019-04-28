@@ -1,7 +1,8 @@
-package com.github.rich.auth;
+package com.github.rich.thirdparty;
 
 import com.github.rich.common.core.annotation.EnableRichFeignClients;
-import feign.Logger;
+import com.github.rich.common.core.annotation.EnableSwaggerDoc;
+import com.github.rich.security.annotation.EnableRichResourceServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -13,9 +14,11 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
-@SpringCloudApplication
+@EnableSwaggerDoc
 @EnableRichFeignClients
-public class RichAuthServiceApplication {
+@EnableRichResourceServer
+@SpringCloudApplication
+public class RichThirdPartyServiceApplication {
 
     /**
      * 负载均衡配置
@@ -37,15 +40,7 @@ public class RichAuthServiceApplication {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(RichAuthServiceApplication.class, args);
+        SpringApplication.run(RichThirdPartyServiceApplication.class, args);
     }
 
-    /**
-     * 开启Feign Debug模式
-     * @return Logger.Level
-     */
-    @Bean
-    Logger.Level feignLoggerLevel() {
-        return Logger.Level.FULL;
-    }
 }

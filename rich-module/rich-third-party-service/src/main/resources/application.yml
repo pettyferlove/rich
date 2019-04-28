@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-third-party-service
+    name: rich-third-party-service
+    description: 第三方服务调用
+    version: 1.0.0-SNAPSHOT

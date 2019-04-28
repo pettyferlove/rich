@@ -1,14 +1,11 @@
 package com.github.rich.auth.granter;
 
-import com.github.rich.auth.service.CaptchaValidateService;
+import cn.hutool.core.util.StrUtil;
 import com.github.rich.common.core.constant.SecurityConstant;
-import com.github.rich.common.core.exception.security.CaptchaCheckException;
 import com.github.rich.security.service.RichUserDetailsService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
@@ -18,34 +15,42 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * 微信登录
+ *
  * @author Petty
  */
-public class MobileTokenGranter extends AbstractTokenGranter {
+public class WeChatTokenGranter extends AbstractTokenGranter {
 
-    private static final String GRANT_TYPE = SecurityConstant.MOBILE;
+    private final String OPEN_ID_KEY = "open_id";
+    private final String UNION_ID_KEY = "union_id";
+
+    private static final String GRANT_TYPE = SecurityConstant.WECHAT;
 
     private final RichUserDetailsService userDetailsService;
 
-    private final CaptchaValidateService captchaValidateService;
-
-    public MobileTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, RichUserDetailsService userDetailsService, CaptchaValidateService captchaValidateService) {
+    public WeChatTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, RichUserDetailsService userDetailsService) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.userDetailsService = userDetailsService;
-        this.captchaValidateService = captchaValidateService;
     }
 
     @Override
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
         Map<String, String> parameters = new LinkedHashMap<String, String>(tokenRequest.getRequestParameters());
-        String mobile = parameters.get("mobile");
-        String smsCode = parameters.get("sms_code");
-        if (!captchaValidateService.validate(mobile, smsCode)) {
-            throw new CaptchaCheckException("验证码错误");
+        UserDetails userDetails = null;
+        if (parameters.containsKey(UNION_ID_KEY)) {
+            String unionId = parameters.get(UNION_ID_KEY);
+            if (StrUtil.isNotBlank(unionId)) {
+                userDetails = userDetailsService.loadUserByWeChatOpenID(unionId);
+            }
+        } else if (parameters.containsKey(OPEN_ID_KEY)) {
+            String openId = parameters.get(OPEN_ID_KEY);
+            if (StrUtil.isNotBlank(openId)) {
+                userDetails = userDetailsService.loadUserByWeChatOpenID(openId);
+            }
         }
-        if(StringUtils.isEmpty(mobile)){
-            throw new OAuth2Exception("手机号码不能为空");
+        if (userDetails == null) {
+            throw new OAuth2Exception("请求参数异常");
         }
-        UserDetails userDetails = userDetailsService.loadUserByMobile(mobile);
         AbstractAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         userAuth.setDetails(parameters);
         OAuth2Request storedOAuth2Request = getRequestFactory().createOAuth2Request(client, tokenRequest);
