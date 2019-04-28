@@ -26,7 +26,6 @@ public class UserDetailsImpl implements UserDetails {
      * 登录名
      */
     private String loginCode;
-    private String username;
     private String password;
     private Integer status;
     private Integer type;
@@ -37,7 +36,6 @@ public class UserDetailsImpl implements UserDetails {
     UserDetailsImpl(User user) {
         this.userCode = user.getUserCode();
         this.loginCode = user.getLoginCode();
-        this.username = user.getUserName();
         this.password = user.getPassword();
         this.status = user.getStatus();
         this.type = user.getUserType();
