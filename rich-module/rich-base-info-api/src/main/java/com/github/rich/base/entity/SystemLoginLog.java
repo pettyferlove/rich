@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-23
+ * @since 2019-04-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -96,6 +96,11 @@ public class SystemLoginLog extends Model<SystemLoginLog> {
      * 修改时间
      */
     private LocalDateTime modifierTime;
+
+    /**
+     * 客户端ID
+     */
+    private String client;
 
 
     @Override

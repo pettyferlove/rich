@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-23
+ * @since 2019-04-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -26,12 +26,12 @@ public class SystemRole extends Model<SystemRole> {
     /**
      * 数据唯一标识符
      */
+    @TableId
     private String id;
 
     /**
      * 角色CODE
      */
-    @TableId
     private String roleCode;
 
     /**
@@ -74,6 +74,11 @@ public class SystemRole extends Model<SystemRole> {
      * 修改时间
      */
     private LocalDateTime modifierTime;
+
+    /**
+     * 客户端ID
+     */
+    private String client;
 
 
     @Override

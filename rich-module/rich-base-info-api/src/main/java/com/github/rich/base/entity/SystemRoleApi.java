@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-23
+ * @since 2019-04-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -29,6 +29,11 @@ public class SystemRoleApi extends Model<SystemRoleApi> {
     private String roleCode;
 
     private String apiCode;
+
+    /**
+     * 客户端ID
+     */
+    private String client;
 
 
     @Override

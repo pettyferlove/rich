@@ -8,11 +8,12 @@
         <result column="code" property="code" />
         <result column="user_code" property="userCode" />
         <result column="role_code" property="roleCode" />
+        <result column="client" property="client" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, user_code, role_code
+        id, code, user_code, role_code, client
     </sql>
 
 </mapper>

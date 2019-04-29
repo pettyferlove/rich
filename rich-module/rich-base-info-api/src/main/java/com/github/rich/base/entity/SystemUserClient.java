@@ -2,7 +2,6 @@ package com.github.rich.base.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 行政区划信息表
+ * 
  * </p>
  *
  * @author Petty
@@ -18,41 +17,25 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class SystemRegion extends Model<SystemRegion> {
+public class SystemUserClient extends Model<SystemUserClient> {
 
     private static final long serialVersionUID = 1L;
 
-    private String id;
-
     /**
-     * 行政区划编码
+     * 数据唯一标识符
      */
+    private Integer id;
+
     @TableId
-    private String regionCode;
+    private String code;
 
     /**
-     * 行政区划父级编码
+     * USER_CODE
      */
-    private String parentCode;
+    private String userCode;
 
     /**
-     * 行政区划名称
-     */
-    private String regionName;
-
-    /**
-     * 行政区划类型：0=国家；1=省；2=市；3=区／县
-     */
-    private Integer regionType;
-
-    /**
-     * 删除标记
-     */
-    @TableLogic
-    private Integer delFlag;
-
-    /**
-     * 客户端ID
+     * 客户端名称
      */
     private String client;
 
