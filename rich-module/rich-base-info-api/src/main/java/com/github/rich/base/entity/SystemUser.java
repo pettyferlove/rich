@@ -57,7 +57,7 @@ public class SystemUser extends Model<SystemUser> {
     /**
      * 微信UnionID
      */
-    private Integer wechatUnionid;
+    private String wechatUnionid;
 
     /**
      * 微信OpenID

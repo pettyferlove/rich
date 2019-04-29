@@ -11,10 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * <p>
@@ -67,6 +65,22 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         ConverterUtil.convert(systemUser, user);
         user.setRoles(loadRoles(systemUser.getUserCode()));
         return user;
+    }
+
+    @Override
+    public Boolean registerByWeChatOpenID(String openid, String unionid) {
+        SystemUser systemUser = new SystemUser();
+        systemUser.setId(UUID.randomUUID().toString().replace("-",""));
+        systemUser.setUserCode(UUID.randomUUID().toString().replace("-",""));
+        systemUser.setLoginCode("wx_"+UUID.randomUUID().toString().replace("-",""));
+        systemUser.setPassword("");
+        systemUser.setWechatOpenid(openid);
+        systemUser.setWechatUnionid(unionid);
+        systemUser.setUserType(1);
+        systemUser.setStatus(1);
+        systemUser.setCreateTime(LocalDateTime.now());
+        systemUser.setModifierTime(LocalDateTime.now());
+        return this.save(systemUser);
     }
 
     private List<String> loadRoles(String userCode){

@@ -41,4 +41,12 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @return 用户信息
      */
     User findByWeChatUnionID(String unionid);
+
+    /**
+     * 通过OpenID 和UnionID 进行用户注册
+     * @param openid 微信OpenID
+     * @param unionid 微信UnionID
+     * @return Boolean
+     */
+    Boolean registerByWeChatOpenID(String openid,String unionid);
 }
