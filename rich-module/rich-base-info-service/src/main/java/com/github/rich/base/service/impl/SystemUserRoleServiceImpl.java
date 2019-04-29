@@ -9,6 +9,7 @@ import com.github.rich.base.service.ISystemUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,9 +33,13 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
 
     @Override
     public List<SystemRole> findRoleByUserCode(String userCode) {
+        List<SystemRole> systemRoles = new ArrayList<>();
         List<SystemUserRole> systemUserRoles = this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode));
         Set<String> roleIds = new HashSet<>();
         systemUserRoles.forEach(userRole-> roleIds.add(userRole.getRoleCode()));
-        return (List<SystemRole>) systemRoleService.listByIds(roleIds);
+        if(!roleIds.isEmpty()){
+            systemRoles = (List<SystemRole>) systemRoleService.listByIds(roleIds);
+        }
+        return systemRoles;
     }
 }

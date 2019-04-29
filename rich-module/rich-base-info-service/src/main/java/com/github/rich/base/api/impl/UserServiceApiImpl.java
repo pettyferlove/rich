@@ -29,11 +29,11 @@ public class UserServiceApiImpl implements UserServiceApi {
 
     @Override
     public User findByWeChatOpenID(String openid) {
-        return null;
+        return systemUserService.findByWeChatOpenID(openid);
     }
 
     @Override
     public User findByWeChatUnionID(String unionid) {
-        return null;
+        return systemUserService.findByWeChatUnionID(unionid);
     }
 }
