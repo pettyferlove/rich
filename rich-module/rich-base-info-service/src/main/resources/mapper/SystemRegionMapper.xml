@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemRegion">
         <id column="id" property="id" />
-        <result column="region_code" property="regionCode" />
+        <result column="code" property="code" />
         <result column="parent_code" property="parentCode" />
         <result column="region_name" property="regionName" />
         <result column="region_type" property="regionType" />
@@ -15,7 +15,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, region_code, parent_code, region_name, region_type, del_flag, client
+        id, code, parent_code, region_name, region_type, del_flag, client
     </sql>
 
 </mapper>

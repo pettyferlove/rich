@@ -1,6 +1,7 @@
 package com.github.rich.generator;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -18,6 +19,7 @@ public class MybatisGenerator {
         gc.setOutputDir(outputDir);
         gc.setFileOverride(true);
         gc.setActiveRecord(true);
+        gc.setIdType(IdType.UUID);
         // XML 二级缓存
         gc.setEnableCache(false);
         // XML ResultMap

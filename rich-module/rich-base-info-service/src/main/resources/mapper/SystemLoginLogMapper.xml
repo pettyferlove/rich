@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemLoginLog">
         <id column="id" property="id" />
-        <result column="log_code" property="logCode" />
+        <result column="code" property="code" />
         <result column="login_code" property="loginCode" />
         <result column="login_name" property="loginName" />
         <result column="login_time" property="loginTime" />
@@ -24,7 +24,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, log_code, login_code, login_name, login_time, login_type, operation_type, login_ip, user_agent, request_method, del_flag, creator, create_time, modifier, modifier_time, client
+        id, code, login_code, login_name, login_time, login_type, operation_type, login_ip, user_agent, request_method, del_flag, creator, create_time, modifier, modifier_time, client
     </sql>
 
 </mapper>

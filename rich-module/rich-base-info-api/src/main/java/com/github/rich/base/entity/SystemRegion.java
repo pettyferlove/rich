@@ -1,7 +1,8 @@
 package com.github.rich.base.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
 import lombok.Data;
@@ -27,8 +28,8 @@ public class SystemRegion extends Model<SystemRegion> {
     /**
      * 行政区划编码
      */
-    @TableId
-    private String regionCode;
+    @TableId(value = "code", type = IdType.UUID)
+    private String code;
 
     /**
      * 行政区划父级编码
@@ -59,7 +60,7 @@ public class SystemRegion extends Model<SystemRegion> {
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return this.code;
     }
 
 }

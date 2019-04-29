@@ -1,8 +1,9 @@
 package com.github.rich.base.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
 import lombok.Data;
@@ -26,13 +27,13 @@ public class SystemRole extends Model<SystemRole> {
     /**
      * 数据唯一标识符
      */
-    @TableId
     private String id;
 
     /**
      * 角色CODE
      */
-    private String roleCode;
+    @TableId(value = "code", type = IdType.UUID)
+    private String code;
 
     /**
      * 角色
@@ -83,7 +84,7 @@ public class SystemRole extends Model<SystemRole> {
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return this.code;
     }
 
 }

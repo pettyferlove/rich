@@ -34,7 +34,7 @@ public class UserDetailsImpl implements UserDetails {
     private List<String> permissions;
 
     UserDetailsImpl(User user) {
-        this.userCode = user.getUserCode();
+        this.userCode = user.getCode();
         this.loginCode = user.getLoginCode();
         this.password = user.getPassword();
         this.status = user.getStatus();

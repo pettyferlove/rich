@@ -36,7 +36,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("login_code", loginCode));
         ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getUserCode()));
+        user.setRoles(loadRoles(systemUser.getCode()));
         return user;
     }
 
@@ -45,7 +45,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("mobile_tel", mobile));
         ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getUserCode()));
+        user.setRoles(loadRoles(systemUser.getCode()));
         return user;
     }
 
@@ -54,7 +54,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_openid", openid));
         ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getUserCode()));
+        user.setRoles(loadRoles(systemUser.getCode()));
         return user;
     }
 
@@ -63,7 +63,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_unionid", unionid));
         ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getUserCode()));
+        user.setRoles(loadRoles(systemUser.getCode()));
         return user;
     }
 
@@ -71,7 +71,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public Boolean registerByWeChatOpenID(String openid, String unionid) {
         SystemUser systemUser = new SystemUser();
         systemUser.setId(UUID.randomUUID().toString().replace("-",""));
-        systemUser.setUserCode(UUID.randomUUID().toString().replace("-",""));
+        systemUser.setCode(UUID.randomUUID().toString().replace("-",""));
         systemUser.setLoginCode("wx_"+UUID.randomUUID().toString().replace("-",""));
         systemUser.setPassword("");
         systemUser.setWechatOpenid(openid);

@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemRole">
         <id column="id" property="id" />
-        <result column="role_code" property="roleCode" />
+        <result column="code" property="code" />
         <result column="role" property="role" />
         <result column="role_name" property="roleName" />
         <result column="status" property="status" />
@@ -19,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, role_code, role, role_name, status, del_flag, creator, create_time, modifier, modifier_time, client
+        id, code, role, role_name, status, del_flag, creator, create_time, modifier, modifier_time, client
     </sql>
 
 </mapper>

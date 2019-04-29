@@ -1,7 +1,8 @@
 package com.github.rich.base.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +27,7 @@ public class SystemUserClient extends Model<SystemUserClient> {
      */
     private Integer id;
 
-    @TableId
+    @TableId(value = "code", type = IdType.UUID)
     private String code;
 
     /**
@@ -42,7 +43,7 @@ public class SystemUserClient extends Model<SystemUserClient> {
 
     @Override
     protected Serializable pkVal() {
-        return this.id;
+        return this.code;
     }
 
 }

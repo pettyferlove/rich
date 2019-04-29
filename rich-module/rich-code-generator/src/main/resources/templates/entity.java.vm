@@ -47,7 +47,7 @@ public class ${entity} implements Serializable {
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 
-#if(${field.keyFlag})
+#if("$field.name"=="code")
 #set($keyPropertyName=${field.propertyName})
 #end
 #if("$!field.comment" != "")
@@ -59,13 +59,13 @@ public class ${entity} implements Serializable {
      */
 #end
 #end
-#if(${field.keyFlag})
+#if("$field.name"=="code")
 ## 主键
 #if(${field.keyIdentityFlag})
     @TableId(value = "${field.name}", type = IdType.AUTO)
 #elseif(!$null.isNull(${idType}) && "$!idType" != "")
     @TableId(value = "${field.name}", type = IdType.${idType})
-#elseif(${field.convert})
+#else
     @TableId("${field.name}")
 #end
 ## 普通字段
