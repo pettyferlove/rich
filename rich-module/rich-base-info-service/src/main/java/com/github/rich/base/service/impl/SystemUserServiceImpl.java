@@ -73,6 +73,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         systemUser.setId(UUID.randomUUID().toString().replace("-",""));
         systemUser.setCode(UUID.randomUUID().toString().replace("-",""));
         systemUser.setLoginCode("wx_"+UUID.randomUUID().toString().replace("-",""));
+        systemUser.setUserName("");
         systemUser.setPassword("");
         systemUser.setWechatOpenid(openid);
         systemUser.setWechatUnionid(unionid);
