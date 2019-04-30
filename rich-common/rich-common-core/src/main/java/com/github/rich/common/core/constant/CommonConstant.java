@@ -13,7 +13,20 @@ public interface CommonConstant {
      */
     int NO_LOGIN = 403;
 
+    /**
+     * 请求成功
+     */
     int SUCCESS = 200;
+
+    /**
+     * 创建成功
+     */
+    int CREATED = 201;
+
+    /**
+     * 无返回内容
+     */
+    int NO_CONTENT=204;
 
     int FAIL = 500;
 
