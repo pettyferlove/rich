@@ -34,14 +34,13 @@ public class RevokeTokenEndpoint {
         if (StringUtils.hasText(token)) {
             try {
                 OAuth2AccessToken accessToken = tokenStore.readAccessToken(token);
-                Map<String, Object> information = accessToken.getAdditionalInformation();
                 if (StrUtil.isBlank(accessToken.getValue())) {
                     throw new RichOAuth2LogoutException("logout fail");
                 }
                 tokenStore.removeAccessToken(accessToken);
                 return ResponseEntity.ok(new Logout("logout success", System.currentTimeMillis(), 200));
-            } catch (Exception e) {
-                return ResponseEntity.status(500).body(new Logout("logout error", System.currentTimeMillis(), 500));
+            } catch (Exception e){
+                return ResponseEntity.ok(new Logout("token already remove", System.currentTimeMillis(), 200));
             }
         } else {
             return ResponseEntity.status(204).body(new Logout("no token", System.currentTimeMillis(), 200));
