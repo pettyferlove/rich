@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author Petty
  */
-@Api(value = "微信信息相关接口", tags = {"微信信息接口"})
+@Api(value = "微信对接", tags = {"微信对接接口"})
 @RestController
 @RequestMapping("/wechat")
 public class WeChatController {

@@ -1,6 +1,7 @@
 package com.github.rich.base;
 
 import com.github.rich.common.core.annotation.EnableRichFeignClients;
+import com.github.rich.common.core.annotation.EnableSwaggerDoc;
 import com.github.rich.security.annotation.EnableRichResourceServer;
 import feign.Logger;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @EnableRichFeignClients
 @EnableRichResourceServer
 @SpringCloudApplication
+@EnableSwaggerDoc
 public class RichBaseInfoServiceApplication {
 
     /**

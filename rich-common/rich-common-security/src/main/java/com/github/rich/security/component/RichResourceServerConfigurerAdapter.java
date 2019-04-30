@@ -60,6 +60,15 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
 		ExpressionUrlAuthorizationConfigurer<HttpSecurity>
 			.ExpressionInterceptUrlRegistry registry = httpSecurity
 			.authorizeRequests();
+		registry.antMatchers("/favicon.ico").permitAll();
+		registry.antMatchers("/webjars/**").permitAll();
+		registry.antMatchers("/images/**").permitAll();
+		registry.antMatchers("/static/**").permitAll();
+		registry.antMatchers("/swagger**/**").permitAll();
+		registry.antMatchers("/swagger-resources/**").permitAll();
+		registry.antMatchers("/swagger-ui.html").permitAll();
+		registry.antMatchers("/**/v2/api-docs").permitAll();
+		registry.antMatchers("/swagger/api-docs").permitAll();
 		ignorePropertiesConfig.getAnon()
 			.forEach(url -> registry.antMatchers(url).permitAll());
 		registry.anyRequest().authenticated()
