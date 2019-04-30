@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
         log.error(ex.getMessage(), ex);
         int status = CommonConstant.EX_OTHER_CODE;
         if (ex instanceof AccessDeniedException) {
-            status = CommonConstant.EX_TOKEN_ERROR_CODE;
+            status = CommonConstant.FORBIDDEN;
         }
         response.setStatus(status);
         return new R(ex,status);

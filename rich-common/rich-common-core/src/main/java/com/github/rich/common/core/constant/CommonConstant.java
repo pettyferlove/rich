@@ -9,33 +9,16 @@ public interface CommonConstant {
     String INNER_SERVICE_PREFIX = "api/v1";
 
     /**
-     * 用户未登陆
-     */
-    int NO_LOGIN = 403;
-
-    /**
      * 请求成功
      */
     int SUCCESS = 200;
 
-    /**
-     * 创建成功
-     */
-    int CREATED = 201;
-
-    /**
-     * 无返回内容
-     */
-    int NO_CONTENT=204;
-
     int FAIL = 500;
-
-    int NO_PERMISSION = 403;
 
     /**
      * 没有权限
      */
-    int EX_TOKEN_ERROR_CODE = 403;
+    int FORBIDDEN = 403;
 
     int EX_USER_LOGIN = 400;
 

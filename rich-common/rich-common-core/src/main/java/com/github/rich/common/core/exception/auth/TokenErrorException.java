@@ -15,6 +15,6 @@ public class TokenErrorException extends BaseRuntimeException {
     private static final long serialVersionUID = 8827019082477401466L;
 
     public TokenErrorException(String message) {
-        super(message, CommonConstant.EX_TOKEN_ERROR_CODE);
+        super(message, CommonConstant.FORBIDDEN);
     }
 }
