@@ -11,7 +11,7 @@ public class PasswordValidateTests {
      */
     @Test
     public void passwordValidate() {
-        System.out.println(new MessageDigestPasswordEncoder("MD5").encode("rich@123456"));
+        System.out.println(new BCryptPasswordEncoder().encode("rich@123456"));
         System.out.println(new BCryptPasswordEncoder().matches("admin", "$2a$10$ruJZU6MaoqoTGstpiBs5P.y3OIs0f3H01iyf31qZz1NnS/BxrHMOa"));
     }
 
