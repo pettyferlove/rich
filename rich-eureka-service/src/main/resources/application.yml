@@ -8,7 +8,7 @@ info:
     artifact: rich-eureka-service
     name: rich-eureka-service
     description: Rich服务注册中心
-    version: 1.0.0-SNAPSHOT
+    version: 1.0.0-RELEASE
 management:
   endpoint:
     shutdown:

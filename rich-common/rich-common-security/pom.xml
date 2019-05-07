@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rich-common-security</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>rich-common-security</name>
     <packaging>jar</packaging>
     <description>安全依赖</description>
@@ -11,14 +11,19 @@
     <parent>
         <groupId>com.github.rich</groupId>
         <artifactId>rich-common</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-RELEASE</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.rich</groupId>
+            <artifactId>rich-base-info-api</artifactId>
+            <version>1.0.0-RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -27,11 +32,6 @@
         <dependency>
             <groupId>org.springframework.security.oauth.boot</groupId>
             <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.rich</groupId>
-            <artifactId>rich-base-info-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

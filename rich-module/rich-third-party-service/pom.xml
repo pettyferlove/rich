@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rich-third-party-service</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>rich-third-party-service</name>
     <packaging>jar</packaging>
     <description>第三方服务调用</description>
@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.github.rich</groupId>
         <artifactId>rich-module</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-RELEASE</version>
     </parent>
 
     <dependencies>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-security</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0-RELEASE</version>
         </dependency>
     </dependencies>
 
