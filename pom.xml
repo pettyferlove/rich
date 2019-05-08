@@ -7,7 +7,7 @@
     <version>1.0.0-RELEASE</version>
     <name>rich</name>
     <packaging>pom</packaging>
-    <description>Demo project for Spring Boot</description>
+    <description>Rich</description>
 
     <modules>
         <module>rich-eureka-service</module>
