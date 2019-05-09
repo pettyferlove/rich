@@ -2,7 +2,7 @@ FROM pettyfer/jre-8:latest
 RUN mkdir -p /home
 RUN echo "Asia/shanghai" > /etc/timezone;
 WORKDIR /home
-EXPOSE 10152
-ADD /rich-config-service-1.0.0-RELEASE.jar app.jar
+EXPOSE 6060
+ADD /rich-message-service-1.0.0-RELEASE.jar app.jar
 ADD /lib lib
 CMD java -jar -Djava.security.egd=file:/dev/./urandom -Dfile.encoding=UTF-8 -Xmn128m -Xms256m -Xmx256m -Dloader.path=. app.jar --spring.profiles.active=dev
