@@ -7,6 +7,7 @@ import com.github.rich.base.mapper.SystemUserRoleMapper;
 import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     }
 
     @Override
+    @Cacheable(value = "base-api-role", key = "#userCode", condition = "#userCode!=null")
     public List<SystemRole> findRoleByUserCode(String userCode) {
         List<SystemRole> systemRoles = new ArrayList<>();
         List<SystemUserRole> systemUserRoles = this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode));

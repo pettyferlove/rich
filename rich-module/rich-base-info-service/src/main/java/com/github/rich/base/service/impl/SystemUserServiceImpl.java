@@ -9,6 +9,7 @@ import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.service.ISystemUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.common.core.utils.ConverterUtil;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Cacheable(value = "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
     public User findByLoginCode(String loginCode) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("login_code", loginCode));
@@ -41,6 +43,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Cacheable(value = "base-api-user", key = "#mobile", condition = "#mobile!=null")
     public User findByMobile(String mobile) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("mobile_tel", mobile));
@@ -50,6 +53,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Cacheable(value = "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenID(String openid) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_openid", openid));
@@ -59,6 +63,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Cacheable(value = "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionID(String unionid) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_unionid", unionid));
