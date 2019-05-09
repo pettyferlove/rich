@@ -44,8 +44,8 @@
         <docker.plugin.version>0.4.13</docker.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <junit.version>4.12</junit.version>
-        <druid.version>1.1.12</druid.version>
-        <mysql.version>8.0.15</mysql.version>
+        <druid.version>1.1.16</druid.version>
+        <mysql.version>8.0.9-rc</mysql.version>
         <mybatisplus.version>1.0.5</mybatisplus.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <velocity.version>2.0</velocity.version>
