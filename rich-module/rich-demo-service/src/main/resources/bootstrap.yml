@@ -29,7 +29,7 @@ eureka:
     lease-expiration-duration-in-seconds: 20
   client:
     service-url:
-      defaultZone: http://127.0.0.1:10151/eureka
+      defaultZone: http://10.0.100.1:10151/eureka
 ---
 spring:
   profiles: prd
@@ -38,4 +38,4 @@ eureka:
     prefer-ip-address: true
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:10151/eureka
+      defaultZone: http://10.0.100.1:10151/eureka

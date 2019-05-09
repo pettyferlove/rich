@@ -20,7 +20,7 @@ server:
   port: 10151
 eureka:
   instance:
-    hostname: 127.0.0.1
+    hostname: 10.0.100.1
     prefer-ip-address: true
     metadata-map:
       zone: dev
@@ -41,7 +41,7 @@ server:
   port: 10151
 eureka:
   instance:
-    hostname: 127.0.0.1
+    hostname: 10.0.100.1
     prefer-ip-address: true
     metadata-map:
       zone: prd
@@ -62,7 +62,7 @@ server:
   port: 10151
 eureka:
   instance:
-    hostname: 127.0.0.1
+    hostname: 10.0.100.1
     prefer-ip-address: true
   client:
     serviceUrl:
@@ -74,7 +74,7 @@ server:
   port: 10152
 eureka:
   instance:
-    hostname: 127.0.0.1
+    hostname: 10.0.100.1
     prefer-ip-address: true
   client:
     serviceUrl:
@@ -86,7 +86,7 @@ server:
   port: 10153
 eureka:
   instance:
-    hostname: 127.0.0.1
+    hostname: 10.0.100.1
     prefer-ip-address: true
   client:
     serviceUrl:
