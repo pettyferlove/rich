@@ -43,9 +43,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Value("${spring.cache.expire:3600}")
     private Long expiration;
 
-    @Value("${spring.cache.prefix:DEFAULT}")
-    private String prefix;
-
     private final RedisConnectionFactory connectionFactory;
 
     @Autowired
