@@ -25,10 +25,3 @@
 /.nb-gradle/
 
 ### Service ###
-rich-config-service/target/
-rich-eureka-service/target/
-rich-gateway-service/target/
-rich-auth-service/target/
-rich-module/rich-base-info-service/target/
-rich-module/rich-code-generator/target/
-rich-module/rich-base-info-api/target/
