@@ -35,7 +35,7 @@ spring:
         enabled: true
       enabled: true
   rabbitmq:
-    host: 127.0.0.1
+    host: 10.0.100.1
     port: 5672
     username: pettyfer
     password: ENC(4sVYGbF1iKxTo92qDT8kpQ==)
@@ -60,7 +60,7 @@ spring:
         enabled: true
       enabled: true
   rabbitmq:
-    host: 127.0.0.1
+    host: 10.0.100.1
     port: 5672
     username: pettyfer
     password: ENC(4sVYGbF1iKxTo92qDT8kpQ==)
