@@ -37,7 +37,7 @@ spring:
   rabbitmq:
     host: 10.0.100.1
     port: 5672
-    username: pettyfer
+    username: rich
     password: ENC(4sVYGbF1iKxTo92qDT8kpQ==)
 eureka:
   instance:
