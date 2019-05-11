@@ -20,6 +20,7 @@ import com.github.rich.common.core.config.FilterIgnorePropertiesConfig;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +29,6 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -36,6 +36,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
+@EnableFeignClients(basePackageClasses = {com.github.rich.base.feign.RemoteUserService.class})
 public class RichResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
 	@Autowired
 	protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
