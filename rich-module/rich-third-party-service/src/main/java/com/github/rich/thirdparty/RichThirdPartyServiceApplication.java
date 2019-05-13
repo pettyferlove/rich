@@ -1,6 +1,5 @@
 package com.github.rich.thirdparty;
 
-import com.github.rich.common.core.annotation.EnableRichFeignClients;
 import com.github.rich.common.core.annotation.EnableSwaggerDoc;
 import com.github.rich.security.annotation.EnableRichResourceServer;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
  */
 @Slf4j
 @EnableSwaggerDoc
-@EnableRichFeignClients
 @EnableRichResourceServer
 @SpringCloudApplication
 public class RichThirdPartyServiceApplication {

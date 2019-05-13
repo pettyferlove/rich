@@ -1,6 +1,5 @@
 package com.github.rich.base;
 
-import com.github.rich.common.core.annotation.EnableRichFeignClients;
 import com.github.rich.common.core.annotation.EnableSwaggerDoc;
 import com.github.rich.security.annotation.EnableRichResourceServer;
 import feign.Logger;
@@ -15,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
-@EnableRichFeignClients
 @EnableRichResourceServer
 @SpringCloudApplication
 @EnableSwaggerDoc
