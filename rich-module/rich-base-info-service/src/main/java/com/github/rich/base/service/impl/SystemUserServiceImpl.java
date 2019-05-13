@@ -1,6 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUser;
@@ -33,7 +34,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
+    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
     public User findByLoginCode(String loginCode) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("login_code", loginCode));
@@ -43,7 +44,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = "base-api-user", key = "#mobile", condition = "#mobile!=null")
+    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#mobile", condition = "#mobile!=null")
     public User findByMobile(String mobile) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("mobile_tel", mobile));
@@ -53,7 +54,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = "base-api-user", key = "#openid", condition = "#openid!=null")
+    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenID(String openid) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_openid", openid));
@@ -63,7 +64,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = "base-api-user", key = "#unionid", condition = "#unionid!=null")
+    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionID(String unionid) {
         User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_unionid", unionid));
@@ -75,9 +76,9 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     public Boolean registerByWeChatOpenID(String openid, String unionid) {
         SystemUser systemUser = new SystemUser();
-        systemUser.setId(UUID.randomUUID().toString().replace("-",""));
-        systemUser.setCode(UUID.randomUUID().toString().replace("-",""));
-        systemUser.setLoginCode("wx_"+UUID.randomUUID().toString().replace("-",""));
+        systemUser.setId(UUID.randomUUID().toString().replace("-", ""));
+        systemUser.setCode(UUID.randomUUID().toString().replace("-", ""));
+        systemUser.setLoginCode("wx_" + UUID.randomUUID().toString().replace("-", ""));
         systemUser.setUserName("");
         systemUser.setPassword("");
         systemUser.setWechatOpenid(openid);
@@ -89,10 +90,10 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         return this.save(systemUser);
     }
 
-    private List<String> loadRoles(String userCode){
+    private List<String> loadRoles(String userCode) {
         List<SystemRole> systemRoles = systemUserRoleService.findRoleByUserCode(userCode);
         Set<String> roles = new HashSet<>();
-        systemRoles.forEach(role-> roles.add(role.getRole()));
+        systemRoles.forEach(role -> roles.add(role.getRole()));
         return new ArrayList<>(roles);
     }
 }

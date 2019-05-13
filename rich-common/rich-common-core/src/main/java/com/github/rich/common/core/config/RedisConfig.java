@@ -21,6 +21,7 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 
 
@@ -37,16 +38,13 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "spring.cache.redis")
 public class RedisConfig extends CachingConfigurerSupport {
 
-    /**
-     * 缓存过期时间
-     */
-    @Value("${spring.cache.expire:3600}")
-    private Long expiration;
+    private final CacheConfig cacheConfig;
 
     private final RedisConnectionFactory connectionFactory;
 
     @Autowired
-    public RedisConfig(RedisConnectionFactory connectionFactory) {
+    public RedisConfig(CacheConfig cacheConfig, RedisConnectionFactory connectionFactory) {
+        this.cacheConfig = cacheConfig;
         this.connectionFactory = connectionFactory;
     }
 
@@ -75,7 +73,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public RedisCacheConfiguration redisCacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(expiration))
+                .entryTtl(Duration.ofSeconds(cacheConfig.getExpiration()))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()));
     }

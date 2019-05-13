@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.rich.common.core.config.RedisConfig,\
+  com.github.rich.common.core.config.CacheConfig,\
   com.github.rich.common.core.bean.interceptor.ServiceFeignInterceptor,\
   com.github.rich.common.core.config.FeignOkHttpConfig,\
   com.github.rich.common.core.config.FilterIgnorePropertiesConfig,\

@@ -1,12 +1,13 @@
 package com.github.rich.base.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUserRole;
 import com.github.rich.base.mapper.SystemUserRoleMapper;
 import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.base.service.ISystemUserRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +34,13 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     }
 
     @Override
-    @Cacheable(value = "base-api-role", key = "#userCode", condition = "#userCode!=null")
+    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-role", key = "#userCode", condition = "#userCode!=null")
     public List<SystemRole> findRoleByUserCode(String userCode) {
         List<SystemRole> systemRoles = new ArrayList<>();
         List<SystemUserRole> systemUserRoles = this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode));
         Set<String> roleIds = new HashSet<>();
-        systemUserRoles.forEach(userRole-> roleIds.add(userRole.getRoleCode()));
-        if(!roleIds.isEmpty()){
+        systemUserRoles.forEach(userRole -> roleIds.add(userRole.getRoleCode()));
+        if (!roleIds.isEmpty()) {
             systemRoles = (List<SystemRole>) systemRoleService.listByIds(roleIds);
         }
         return systemRoles;
