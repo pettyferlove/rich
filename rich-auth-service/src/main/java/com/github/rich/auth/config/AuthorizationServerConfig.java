@@ -100,6 +100,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Primary
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
+        defaultTokenServices.setClientDetailsService(clientDetailsService());
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         //defaultTokenServices.setTokenEnhancer(customerEnhancer());
@@ -162,7 +163,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // TODO 该配置会使refresh_token只用刷新一次Token，再次刷新需要使用新的refresh_token保证安全性
         //强制refresh_token只能使用一次
         //为True则不限制刷新次数
-        endpoints.reuseRefreshTokens(true);
+        endpoints.reuseRefreshTokens(false);
         super.configure(endpoints);
     }
 
