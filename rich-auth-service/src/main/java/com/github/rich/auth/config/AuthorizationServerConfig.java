@@ -103,6 +103,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         defaultTokenServices.setClientDetailsService(clientDetailsService());
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
+        defaultTokenServices.setReuseRefreshToken(false);
         //defaultTokenServices.setTokenEnhancer(customerEnhancer());
         return defaultTokenServices;
     }
@@ -158,12 +159,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints.approvalStore(approvalStore());
         endpoints.userDetailsService(userDetailsService);
         endpoints.exceptionTranslator(new ResponseExceptionTranslator());
-        // 由于初始化顺序排在最后，所以这里必定获取到AuthorizationCodeServices,TODO 存在歧义
         endpoints.tokenGranter(tokenGranter(endpoints.getAuthorizationCodeServices()));
-        // TODO 该配置会使refresh_token只用刷新一次Token，再次刷新需要使用新的refresh_token保证安全性
-        //强制refresh_token只能使用一次
-        //为True则不限制刷新次数
-        endpoints.reuseRefreshTokens(false);
         super.configure(endpoints);
     }
 
