@@ -35,7 +35,7 @@ public class MybatisGenerator {
         dsc.setUrl("jdbc:mysql://10.0.100.1:3306/rich_base?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("123456");
+        dsc.setPassword("root");
         mpg.setDataSource(dsc);
 
 
