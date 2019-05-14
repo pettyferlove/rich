@@ -2,7 +2,7 @@ package com.github.rich.base.api;
 
 import com.github.rich.base.dto.Route;
 import com.github.rich.common.core.constant.CommonConstant;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public interface GatewayRouteServiceApi {
      * 加载全部路由定义信息
      * @return Route集合
      */
-    @PostMapping("/load/all")
+    @GetMapping("/load/all")
     List<Route> loadRoutes();
 
 }

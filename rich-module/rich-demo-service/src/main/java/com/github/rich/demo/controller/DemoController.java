@@ -1,5 +1,6 @@
 package com.github.rich.demo.controller;
 
+import com.github.rich.base.feign.RemoteGatewayRouteService;
 import com.github.rich.base.feign.RemoteUserService;
 import com.github.rich.security.annotation.InnerServiceSecurity;
 import com.github.rich.security.service.impl.UserDetailsImpl;
@@ -19,20 +20,19 @@ import java.util.List;
 @RequestMapping("/demo")
 public class DemoController {
 
-    private final RemoteUserService remoteUserService;
+    private final RemoteGatewayRouteService remoteGatewayRouteService;
 
-    public DemoController(RemoteUserService remoteUserService) {
-        this.remoteUserService = remoteUserService;
+    public DemoController(RemoteGatewayRouteService remoteGatewayRouteService) {
+        this.remoteGatewayRouteService = remoteGatewayRouteService;
     }
 
     @GetMapping("/demo")
     @InnerServiceSecurity
-    @PreAuthorize("@permission.hasPermission('c')")
     public void demo(){
         UserDetailsImpl user = SecurityUtil.getUser();
         List<String> roles = SecurityUtil.getRoles();
         System.out.println(user);
         System.out.println(roles);
-        System.out.println("Success");
+        System.out.println(remoteGatewayRouteService.loadRoutes());
     }
 }
