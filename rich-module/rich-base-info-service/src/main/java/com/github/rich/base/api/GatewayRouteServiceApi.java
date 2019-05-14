@@ -11,7 +11,7 @@ import java.util.List;
  * @author Petty
  */
 @RequestMapping(CommonConstant.INNER_SERVICE_PREFIX + "/gateway")
-public interface GatewayRouteApi {
+public interface GatewayRouteServiceApi {
 
     /**
      * 加载全部路由定义信息

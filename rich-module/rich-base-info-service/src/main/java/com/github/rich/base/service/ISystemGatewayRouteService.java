@@ -1,7 +1,10 @@
 package com.github.rich.base.service;
 
+import com.github.rich.base.dto.Route;
 import com.github.rich.base.entity.SystemGatewayRoute;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISystemGatewayRouteService extends IService<SystemGatewayRoute> {
 
+    /**
+     * 加载全部Route
+     * @return 集合
+     */
+    List<Route> loadAll();
 }
