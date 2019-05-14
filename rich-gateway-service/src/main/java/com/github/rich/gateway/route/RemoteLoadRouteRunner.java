@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * Gateway启动自动加载Route - Remote
+ *
  * @author Petty
  */
 @Slf4j
@@ -39,14 +40,11 @@ public class RemoteLoadRouteRunner implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        log.info("======start load======");
+    public void run(String... args) {
         List<Route> routes = remoteGatewayRouteService.loadRoutes();
         routes.forEach(route -> {
             RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
             routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
         });
-        log.info("加载Route");
-        log.info("======start end======");
     }
 }
