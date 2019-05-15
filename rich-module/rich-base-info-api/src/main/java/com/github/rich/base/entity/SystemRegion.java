@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
-import lombok.Data;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * <p>
@@ -15,46 +18,39 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-29
+ * @since 2019-05-15
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@ApiModel(value="SystemRegion对象", description="行政区划信息表")
 public class SystemRegion extends Model<SystemRegion> {
 
     private static final long serialVersionUID = 1L;
 
     private String id;
 
-    /**
-     * 行政区划编码
-     */
+    @ApiModelProperty(value = "行政区划编码")
     @TableId(value = "code", type = IdType.UUID)
     private String code;
 
-    /**
-     * 行政区划父级编码
-     */
+    @ApiModelProperty(value = "行政区划父级编码")
     private String parentCode;
 
-    /**
-     * 行政区划名称
-     */
+    @ApiModelProperty(value = "行政区划名称")
     private String regionName;
 
-    /**
-     * 行政区划类型：0=国家；1=省；2=市；3=区／县
-     */
+    @ApiModelProperty(value = "行政区划类型：0=国家；1=省；2=市；3=区／县")
     private Integer regionType;
 
-    /**
-     * 删除标记
-     */
+    @ApiModelProperty(value = "删除标记")
     @TableLogic
     private Integer delFlag;
 
-    /**
-     * 客户端ID
-     */
+    @ApiModelProperty(value = "客户端ID")
     private String client;
 
 

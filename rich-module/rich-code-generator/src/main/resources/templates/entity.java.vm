@@ -8,10 +8,11 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
-import lombok.Data;
+import lombok.*;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 #end
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * <p>
@@ -23,11 +24,15 @@ import lombok.experimental.Accessors;
  */
 #if(${entityLombokModel})
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 #if(${superEntityClass})
 @EqualsAndHashCode(callSuper = true)
 #else
 @EqualsAndHashCode(callSuper = false)
 #end
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 #end
 #if(${table.convert})
 @TableName("${table.name}")

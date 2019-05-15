@@ -16,6 +16,7 @@ public class MybatisGenerator {
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
+        gc.setSwagger2(true);
         gc.setOutputDir(outputDir);
         gc.setFileOverride(true);
         gc.setActiveRecord(true);
@@ -52,6 +53,7 @@ public class MybatisGenerator {
         // 表名生成策略
         //strategy.setInclude();
         strategy.setEntityLombokModel(true);
+        strategy.setRestControllerStyle(true);
         strategy.setEntityBuilderModel(false);
         strategy.setNaming(NamingStrategy.underline_to_camel);
         mpg.setStrategy(strategy);

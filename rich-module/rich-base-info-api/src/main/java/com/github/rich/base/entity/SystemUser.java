@@ -6,9 +6,12 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
-import lombok.Data;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.*;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * <p>
@@ -16,139 +19,94 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author Petty
- * @since 2019-04-29
+ * @since 2019-05-15
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@ApiModel(value="SystemUser对象", description="用户信息")
 public class SystemUser extends Model<SystemUser> {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 数据唯一标识符
-     */
+    @ApiModelProperty(value = "数据唯一标识符")
     private String id;
 
-    /**
-     * 用户UUID
-     */
+    @ApiModelProperty(value = "用户UUID")
     @TableId(value = "code", type = IdType.UUID)
     private String code;
 
-    /**
-     * 用户登录名
-     */
+    @ApiModelProperty(value = "用户登录名")
     private String loginCode;
 
-    /**
-     * 用户全名
-     */
+    @ApiModelProperty(value = "用户全名")
     private String userName;
 
-    /**
-     * 账号密码
-     */
+    @ApiModelProperty(value = "账号密码")
     private String password;
 
-    /**
-     * QQ OpenID
-     */
+    @ApiModelProperty(value = "QQ OpenID")
     private String qqOpenid;
 
-    /**
-     * 微信UnionID
-     */
+    @ApiModelProperty(value = "微信UnionID")
     private String wechatUnionid;
 
-    /**
-     * 微信OpenID
-     */
+    @ApiModelProperty(value = "微信OpenID")
     private String wechatOpenid;
 
-    /**
-     * 用户类型 0 管理员 1 普通用户
-     */
+    @ApiModelProperty(value = "用户类型 0 管理员 1 普通用户")
     private Integer userType;
 
-    /**
-     * 性别
-     */
+    @ApiModelProperty(value = "性别")
     private Integer userSex;
 
-    /**
-     * 生日
-     */
+    @ApiModelProperty(value = "生日")
     private LocalDateTime userBorn;
 
-    /**
-     * 用户头像
-     */
+    @ApiModelProperty(value = "用户头像")
     private String userAvatar;
 
-    /**
-     * 电子邮件
-     */
+    @ApiModelProperty(value = "电子邮件")
     private String email;
 
-    /**
-     * 居住地址
-     */
+    @ApiModelProperty(value = "居住地址")
     private String userAddress;
 
-    /**
-     * 移动电话
-     */
+    @ApiModelProperty(value = "移动电话")
     private String mobileTel;
 
-    /**
-     * 用户联系电话
-     */
+    @ApiModelProperty(value = "用户联系电话")
     private String userTel;
 
-    /**
-     * 用户证件类型
-     */
+    @ApiModelProperty(value = "用户证件类型")
     private String userIdenType;
 
-    /**
-     * 证件ID
-     */
+    @ApiModelProperty(value = "证件ID")
     private String userIden;
 
-    /**
-     * 行政区划CODE
-     */
+    @ApiModelProperty(value = "行政区划CODE")
     private String regionCode;
 
-    /**
-     * 是否有效 0 无效 1 有效
-     */
+    @ApiModelProperty(value = "是否有效 0 无效 1 有效")
     private Integer status;
 
-    /**
-     * 删除标记 0 未删除 1 删除
-     */
+    @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic
     private Integer delFlag;
 
-    /**
-     * 创建人
-     */
+    @ApiModelProperty(value = "创建人")
     private String creator;
 
-    /**
-     * 创建时间
-     */
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
-    /**
-     * 修改人
-     */
+    @ApiModelProperty(value = "修改人")
     private String modifier;
 
-    /**
-     * 修改时间
-     */
+    @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifierTime;
 
 
