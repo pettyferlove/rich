@@ -11,10 +11,7 @@ import com.github.rich.base.service.ISystemUserRoleService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * <p>
@@ -37,11 +34,11 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-role", key = "#userCode", condition = "#userCode!=null")
     public List<SystemRole> findRoleByUserCode(String userCode) {
         List<SystemRole> systemRoles = new ArrayList<>();
-        List<SystemUserRole> systemUserRoles = this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode));
+        List<SystemUserRole> systemUserRoles = Optional.ofNullable(this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode))).orElseGet(ArrayList::new);
         Set<String> roleIds = new HashSet<>();
         systemUserRoles.forEach(userRole -> roleIds.add(userRole.getRoleCode()));
         if (!roleIds.isEmpty()) {
-            systemRoles = (List<SystemRole>) systemRoleService.listByIds(roleIds);
+            systemRoles = Optional.ofNullable((List<SystemRole>) systemRoleService.listByIds(roleIds)).orElseGet(ArrayList::new);
         }
         return systemRoles;
     }

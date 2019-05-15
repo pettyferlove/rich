@@ -36,41 +36,37 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
     public User findByLoginCode(String loginCode) {
-        User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("login_code", loginCode));
-        ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getCode()));
-        return user;
+        Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        return userOptional.orElseGet(User::new);
     }
 
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#mobile", condition = "#mobile!=null")
     public User findByMobile(String mobile) {
-        User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("mobile_tel", mobile));
-        ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getCode()));
-        return user;
+        Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        return userOptional.orElseGet(User::new);
     }
 
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenID(String openid) {
-        User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_openid", openid));
-        ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getCode()));
-        return user;
+        Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        return userOptional.orElseGet(User::new);
     }
 
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionID(String unionid) {
-        User user = new User();
         SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_unionid", unionid));
-        ConverterUtil.convert(systemUser, user);
-        user.setRoles(loadRoles(systemUser.getCode()));
-        return user;
+        Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        return userOptional.orElseGet(User::new);
     }
 
     @Override
