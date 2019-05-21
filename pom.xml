@@ -39,14 +39,13 @@
         <spring-platform.version>Cairo-SR7</spring-platform.version>
         <security.oauth.version>2.3.5.RELEASE</security.oauth.version>
         <security.oauth.auto.version>2.1.2.RELEASE</security.oauth.auto.version>
-        <mybatis-plus.version>3.0.6</mybatis-plus.version>
+        <mybatis-plus.version>3.1.0</mybatis-plus.version>
         <docker.image.prefix>rich</docker.image.prefix>
         <docker.plugin.version>0.4.13</docker.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <junit.version>4.12</junit.version>
         <druid.version>1.1.16</druid.version>
         <mysql.version>8.0.9-rc</mysql.version>
-        <mybatisplus.version>1.0.5</mybatisplus.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <velocity.version>2.0</velocity.version>
         <joda-time.version>2.9.9</joda-time.version>

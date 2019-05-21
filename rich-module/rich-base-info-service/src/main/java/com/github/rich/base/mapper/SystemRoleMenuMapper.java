@@ -1,16 +1,16 @@
 package com.github.rich.base.mapper;
 
-import com.github.rich.base.entity.SystemLoginLog;
+import com.github.rich.base.entity.SystemRoleMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
- * 用户登录日志 Mapper 接口
+ * 角色菜单关联 Mapper 接口
  * </p>
  *
  * @author Petty
  * @since 2019-05-21
  */
-public interface SystemLoginLogMapper extends BaseMapper<SystemLoginLog> {
+public interface SystemRoleMenuMapper extends BaseMapper<SystemRoleMenu> {
 
 }

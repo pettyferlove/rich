@@ -79,8 +79,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         systemUser.setPassword("");
         systemUser.setWechatOpenid(openid);
         systemUser.setWechatUnionid(unionid);
-        systemUser.setUserType(1);
-        systemUser.setStatus(1);
+        systemUser.setUserType(false);
+        systemUser.setStatus(true);
         systemUser.setCreateTime(LocalDateTime.now());
         systemUser.setModifierTime(LocalDateTime.now());
         return this.save(systemUser);

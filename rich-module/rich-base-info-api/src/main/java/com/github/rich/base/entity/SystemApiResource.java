@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-15
+ * @since 2019-05-21
  */
 @Data
 @NoArgsConstructor
@@ -39,6 +39,9 @@ public class SystemApiResource extends Model<SystemApiResource> {
     @TableId(value = "code", type = IdType.UUID)
     private String code;
 
+    @ApiModelProperty(value = "父级CODE")
+    private String parentCode;
+
     @ApiModelProperty(value = "请求地址")
     private String requestUrl;
 
@@ -48,15 +51,12 @@ public class SystemApiResource extends Model<SystemApiResource> {
     @ApiModelProperty(value = "资源")
     private String permission;
 
-    @ApiModelProperty(value = "资源类型 ")
-    private String permissionType;
-
     @ApiModelProperty(value = "状态 0 无效 1有效")
     private String status;
 
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic
-    private Integer delFlag;
+    private Boolean delFlag;
 
     @ApiModelProperty(value = "创建人")
     private String creator;

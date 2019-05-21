@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-15
+ * @since 2019-05-21
  */
 @Data
 @NoArgsConstructor
@@ -46,11 +46,11 @@ public class SystemRole extends Model<SystemRole> {
     private String roleName;
 
     @ApiModelProperty(value = "状态 1有效 0无效 默认为1")
-    private Integer status;
+    private Boolean status;
 
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic
-    private Integer delFlag;
+    private Boolean delFlag;
 
     @ApiModelProperty(value = "创建人")
     private String creator;

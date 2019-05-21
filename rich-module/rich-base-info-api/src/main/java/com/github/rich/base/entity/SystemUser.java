@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-15
+ * @since 2019-05-21
  */
 @Data
 @NoArgsConstructor
@@ -58,10 +58,10 @@ public class SystemUser extends Model<SystemUser> {
     private String wechatOpenid;
 
     @ApiModelProperty(value = "用户类型 0 管理员 1 普通用户")
-    private Integer userType;
+    private Boolean userType;
 
     @ApiModelProperty(value = "性别")
-    private Integer userSex;
+    private Boolean userSex;
 
     @ApiModelProperty(value = "生日")
     private LocalDateTime userBorn;
@@ -91,11 +91,11 @@ public class SystemUser extends Model<SystemUser> {
     private String regionCode;
 
     @ApiModelProperty(value = "是否有效 0 无效 1 有效")
-    private Integer status;
+    private Boolean status;
 
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic
-    private Integer delFlag;
+    private Boolean delFlag;
 
     @ApiModelProperty(value = "创建人")
     private String creator;

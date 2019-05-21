@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.rich.base.mapper.SystemApiResourceMapper">
+<mapper namespace="com.github.rich.base.mapper.SystemMenuResourceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemApiResource">
+    <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemMenuResource">
         <id column="id" property="id" />
         <result column="code" property="code" />
         <result column="parent_code" property="parentCode" />
-        <result column="request_url" property="requestUrl" />
-        <result column="request_method" property="requestMethod" />
+        <result column="title" property="title" />
+        <result column="icon" property="icon" />
+        <result column="targetType" property="targetType" />
+        <result column="target" property="target" />
+        <result column="cache" property="cache" />
+        <result column="componentName" property="componentName" />
+        <result column="sort" property="sort" />
+        <result column="permissionType" property="permissionType" />
         <result column="permission" property="permission" />
         <result column="status" property="status" />
         <result column="del_flag" property="delFlag" />
@@ -21,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, parent_code, request_url, request_method, permission, status, del_flag, creator, create_time, modifier, modifier_time, client
+        id, code, parent_code, title, icon, targetType, target, cache, componentName, sort, permissionType, permission, status, del_flag, creator, create_time, modifier, modifier_time, client
     </sql>
 
 </mapper>
