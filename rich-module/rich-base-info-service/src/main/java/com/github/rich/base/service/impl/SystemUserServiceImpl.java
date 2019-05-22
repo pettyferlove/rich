@@ -1,7 +1,7 @@
 package com.github.rich.base.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemRole;
@@ -9,7 +9,6 @@ import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.service.ISystemUserService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
