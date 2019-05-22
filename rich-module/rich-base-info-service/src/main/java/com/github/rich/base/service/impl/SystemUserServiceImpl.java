@@ -1,6 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemRole;
@@ -36,7 +37,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
     public User findByLoginCode(String loginCode) {
-        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("login_code", loginCode));
+        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginCode, loginCode));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
         return userOptional.orElseGet(User::new);
@@ -45,7 +46,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#mobile", condition = "#mobile!=null")
     public User findByMobile(String mobile) {
-        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("mobile_tel", mobile));
+        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
         return userOptional.orElseGet(User::new);
@@ -54,7 +55,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenID(String openid) {
-        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_openid", openid));
+        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getWechatOpenid, openid));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
         return userOptional.orElseGet(User::new);
@@ -63,7 +64,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionID(String unionid) {
-        SystemUser systemUser = this.getOne(new QueryWrapper<SystemUser>().eq("wechat_unionid", unionid));
+        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getWechatUnionid, unionid));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
         return userOptional.orElseGet(User::new);

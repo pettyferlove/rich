@@ -1,9 +1,11 @@
 package com.github.rich.base.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.entity.SystemRole;
+import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.entity.SystemUserRole;
 import com.github.rich.base.mapper.SystemUserRoleMapper;
 import com.github.rich.base.service.ISystemRoleService;
@@ -34,7 +36,7 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     @Cacheable(value = CacheConstant.API_PREFIX + "base-api-role", key = "#userCode", condition = "#userCode!=null")
     public List<SystemRole> findRoleByUserCode(String userCode) {
         List<SystemRole> systemRoles = new ArrayList<>();
-        List<SystemUserRole> systemUserRoles = Optional.ofNullable(this.list(new QueryWrapper<SystemUserRole>().eq("user_code", userCode))).orElseGet(ArrayList::new);
+        List<SystemUserRole> systemUserRoles = Optional.ofNullable(this.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserCode, userCode))).orElseGet(ArrayList::new);
         Set<String> roleIds = new HashSet<>();
         systemUserRoles.forEach(userRole -> roleIds.add(userRole.getRoleCode()));
         if (!roleIds.isEmpty()) {
