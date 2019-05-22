@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-21
+ * @since 2019-05-22
  */
 @Data
 @NoArgsConstructor
@@ -38,9 +38,6 @@ public class SystemRoleApi extends Model<SystemRoleApi> {
     private String roleCode;
 
     private String apiCode;
-
-    @ApiModelProperty(value = "客户端ID")
-    private String client;
 
 
     @Override

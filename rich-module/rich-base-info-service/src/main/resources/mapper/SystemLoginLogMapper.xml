@@ -19,12 +19,11 @@
         <result column="create_time" property="createTime" />
         <result column="modifier" property="modifier" />
         <result column="modifier_time" property="modifierTime" />
-        <result column="client" property="client" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, login_code, login_name, login_time, login_type, operation_type, login_ip, user_agent, request_method, del_flag, creator, create_time, modifier, modifier_time, client
+        id, code, login_code, login_name, login_time, login_type, operation_type, login_ip, user_agent, request_method, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

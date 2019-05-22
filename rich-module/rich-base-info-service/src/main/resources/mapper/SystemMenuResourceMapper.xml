@@ -22,12 +22,11 @@
         <result column="create_time" property="createTime" />
         <result column="modifier" property="modifier" />
         <result column="modifier_time" property="modifierTime" />
-        <result column="client" property="client" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, parent_code, title, icon, targetType, target, cache, componentName, sort, permissionType, permission, status, del_flag, creator, create_time, modifier, modifier_time, client
+        id, code, parent_code, title, icon, targetType, target, cache, componentName, sort, permissionType, permission, status, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

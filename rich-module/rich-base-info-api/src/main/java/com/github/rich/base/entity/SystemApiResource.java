@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-21
+ * @since 2019-05-22
  */
 @Data
 @NoArgsConstructor
@@ -56,7 +56,7 @@ public class SystemApiResource extends Model<SystemApiResource> {
 
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic
-    private Boolean delFlag;
+    private Integer delFlag;
 
     @ApiModelProperty(value = "创建人")
     private String creator;
@@ -69,9 +69,6 @@ public class SystemApiResource extends Model<SystemApiResource> {
 
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime modifierTime;
-
-    @ApiModelProperty(value = "客户端ID")
-    private String client;
 
 
     @Override

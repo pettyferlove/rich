@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-21
+ * @since 2019-05-22
  */
 @Data
 @NoArgsConstructor
@@ -43,11 +43,11 @@ public class SystemGatewayRoute extends Model<SystemGatewayRoute> {
     private String route;
 
     @ApiModelProperty(value = "状态 1有效 0无效 默认为1")
-    private Boolean status;
+    private Integer status;
 
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic
-    private Boolean delFlag;
+    private Integer delFlag;
 
     @ApiModelProperty(value = "创建人")
     private String creator;

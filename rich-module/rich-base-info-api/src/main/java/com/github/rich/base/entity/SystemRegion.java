@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-21
+ * @since 2019-05-22
  */
 @Data
 @NoArgsConstructor
@@ -44,14 +44,11 @@ public class SystemRegion extends Model<SystemRegion> {
     private String regionName;
 
     @ApiModelProperty(value = "行政区划类型：0=国家；1=省；2=市；3=区／县")
-    private Boolean regionType;
+    private Integer regionType;
 
     @ApiModelProperty(value = "删除标记")
     @TableLogic
-    private Boolean delFlag;
-
-    @ApiModelProperty(value = "客户端ID")
-    private String client;
+    private Integer delFlag;
 
 
     @Override
