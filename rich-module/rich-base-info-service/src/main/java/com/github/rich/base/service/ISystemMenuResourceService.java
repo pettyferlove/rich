@@ -1,7 +1,10 @@
 package com.github.rich.base.service;
 
-import com.github.rich.base.entity.SystemMenuResource;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.entity.SystemMenuResource;
+import com.github.rich.base.vo.MenuNode;
+
+import java.util.List;
 
 /**
  * <p>
@@ -19,4 +22,10 @@ public interface ISystemMenuResourceService extends IService<SystemMenuResource>
      * @return 节点的Code
      */
     String createNode(SystemMenuResource menu);
+
+    /**
+     * 加载菜单树
+     * @return 集合
+     */
+    List<MenuNode> loadTree();
 }
