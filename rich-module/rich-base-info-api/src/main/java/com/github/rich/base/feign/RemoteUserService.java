@@ -4,6 +4,7 @@ import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.factory.RemoteUserServiceFallbackFactory;
 import com.github.rich.common.core.constant.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -19,7 +20,7 @@ public interface RemoteUserService {
      * @param loginCode 登录名
      * @return 用户信息实体类
      */
-    @PostMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/find/code/{loginCode}")
+    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/code/{loginCode}")
     User findUserByLoginCode(@PathVariable("loginCode") String loginCode);
 
     /**
@@ -28,7 +29,7 @@ public interface RemoteUserService {
      * @param mobile 手机号码
      * @return 用户信息实体类
      */
-    @PostMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/find/mobile/{mobile}")
+    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/mobile/{mobile}")
     User findUserByMobile(@PathVariable("mobile") String mobile);
 
 
@@ -38,7 +39,7 @@ public interface RemoteUserService {
      * @param openid OpenID
      * @return User
      */
-    @PostMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/find/wechat/open/{openid}")
+    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/open/{openid}")
     User findByWeChatOpenID(@PathVariable("openid") String openid);
 
     /**
@@ -47,6 +48,6 @@ public interface RemoteUserService {
      * @param unionid UnionID
      * @return User
      */
-    @PostMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/find/wechat/union/{unionid}")
+    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/union/{unionid}")
     User findByWeChatUnionID(@PathVariable("unionid") String unionid);
 }

@@ -20,7 +20,7 @@ public interface RemoteGatewayRouteService {
      *
      * @return Route集合
      */
-    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/gateway/load/all")
+    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/gateway/all")
     List<Route> loadRoutes();
 
 }

@@ -17,7 +17,7 @@ public interface GatewayRouteServiceApi {
      * 加载全部路由定义信息
      * @return Route集合
      */
-    @GetMapping("/load/all")
+    @GetMapping("/all")
     List<Route> loadRoutes();
 
 }

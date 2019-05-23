@@ -18,22 +18,22 @@ public class UserServiceApiImpl implements UserServiceApi {
     }
 
     @Override
-    public User findByLoginCode(String loginCode) {
+    public User getByLoginCode(String loginCode) {
         return systemUserService.findByLoginCode(loginCode);
     }
 
     @Override
-    public User findByMobile(String mobile) {
+    public User getByMobile(String mobile) {
         return systemUserService.findByMobile(mobile);
     }
 
     @Override
-    public User findByWeChatOpenID(String openid) {
+    public User getByWeChatOpenID(String openid) {
         return systemUserService.findByWeChatOpenID(openid);
     }
 
     @Override
-    public User findByWeChatUnionID(String unionid) {
+    public User getByWeChatUnionID(String unionid) {
         return systemUserService.findByWeChatUnionID(unionid);
     }
 }

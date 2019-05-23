@@ -2,6 +2,7 @@ package com.github.rich.base.api;
 
 import com.github.rich.base.dto.User;
 import com.github.rich.common.core.constant.CommonConstant;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,8 @@ public interface UserServiceApi {
      * @param loginCode 用户名
      * @return User
      */
-    @PostMapping("/find/code/{loginCode}")
-    User findByLoginCode(@PathVariable String loginCode);
+    @GetMapping("/code/{loginCode}")
+    User getByLoginCode(@PathVariable String loginCode);
 
     /**
      * 通过手机号查询用户及其角色信息
@@ -27,8 +28,8 @@ public interface UserServiceApi {
      * @param mobile 手机号码
      * @return User
      */
-    @PostMapping("/find/mobile/{mobile}")
-    User findByMobile(@PathVariable String mobile);
+    @GetMapping("/mobile/{mobile}")
+    User getByMobile(@PathVariable String mobile);
 
     /**
      * 通过微信OpenID查询用户及其角色信息
@@ -36,8 +37,8 @@ public interface UserServiceApi {
      * @param openid OpenID
      * @return User
      */
-    @PostMapping("/find/wechat/open/{openid}")
-    User findByWeChatOpenID(@PathVariable String openid);
+    @GetMapping("/wechat/open/{openid}")
+    User getByWeChatOpenID(@PathVariable String openid);
 
     /**
      * 通过微信UnionID查询用户及其角色信息
@@ -45,6 +46,6 @@ public interface UserServiceApi {
      * @param unionid UnionID
      * @return User
      */
-    @PostMapping("/find/wechat/union/{unionid}")
-    User findByWeChatUnionID(@PathVariable String unionid);
+    @GetMapping("/wechat/union/{unionid}")
+    User getByWeChatUnionID(@PathVariable String unionid);
 }
