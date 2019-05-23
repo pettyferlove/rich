@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-22
+ * @since 2019-05-23
  */
 @Data
 @NoArgsConstructor
@@ -66,9 +66,6 @@ public class SystemMenuResource extends Model<SystemMenuResource> {
 
     @ApiModelProperty(value = "资源")
     private String permission;
-
-    @ApiModelProperty(value = "状态 0 无效 1有效")
-    private String status;
 
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic

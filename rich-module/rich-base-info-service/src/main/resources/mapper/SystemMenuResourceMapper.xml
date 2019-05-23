@@ -16,7 +16,6 @@
         <result column="sort" property="sort" />
         <result column="permissionType" property="permissionType" />
         <result column="permission" property="permission" />
-        <result column="status" property="status" />
         <result column="del_flag" property="delFlag" />
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
@@ -26,7 +25,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, parent_code, title, icon, targetType, target, cache, componentName, sort, permissionType, permission, status, del_flag, creator, create_time, modifier, modifier_time
+        id, code, parent_code, title, icon, targetType, target, cache, componentName, sort, permissionType, permission, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

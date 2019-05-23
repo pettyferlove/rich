@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISystemMenuResourceService extends IService<SystemMenuResource> {
 
+    /**
+     * 创建节点
+     * @param menu 前端传递的Menu node信息
+     * @return Boolean
+     */
+    Boolean createNode(SystemMenuResource menu);
 }
