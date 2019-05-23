@@ -58,7 +58,7 @@ public class SystemMenuResource extends Model<SystemMenuResource> {
     @TableField("componentName")
     private String componentName;
 
-    private Integer sort;
+    private Long sort;
 
     @ApiModelProperty(value = "请求方法")
     @TableField("permissionType")
