@@ -23,11 +23,12 @@ import java.util.Objects;
 public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourceMapper, SystemMenuResource> implements ISystemMenuResourceService {
 
     @Override
-    public Boolean createNode(SystemMenuResource menu) {
+    public String createNode(SystemMenuResource menu) {
+        String menuCode = IdUtil.simpleUUID();
         menu.setId(IdUtil.simpleUUID());
-        menu.setCode(IdUtil.simpleUUID());
+        menu.setCode(menuCode);
         menu.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
         menu.setCreateTime(LocalDateTime.now());
-        return this.save(menu);
+        return this.save(menu)?menuCode:null;
     }
 }

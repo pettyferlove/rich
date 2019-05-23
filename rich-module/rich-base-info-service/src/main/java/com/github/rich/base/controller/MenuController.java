@@ -29,7 +29,7 @@ public class MenuController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/node/create")
-    public R<Boolean> createNode(SystemMenuResource menu) {
+    public R<String> createNode(SystemMenuResource menu) {
         return new R<>(systemMenuResourceService.createNode(menu));
     }
 
