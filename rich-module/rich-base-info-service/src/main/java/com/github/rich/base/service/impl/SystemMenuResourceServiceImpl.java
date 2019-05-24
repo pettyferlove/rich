@@ -42,7 +42,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
 
     @Override
     public List<MenuNode> loadTree() {
-        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.emptyWrapper());
+        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByAsc(SystemMenuResource::getSort));
         return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), "0");
     }
 
@@ -69,7 +69,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
 
     @Override
     public List<MenuNode> loadChildrenNodes(String parentCode) {
-        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.emptyWrapper());
+        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByAsc(SystemMenuResource::getSort));
         return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), parentCode);
     }
 }
