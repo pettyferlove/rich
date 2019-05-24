@@ -6,5 +6,6 @@ package com.github.rich.base.constant;
  */
 public interface CacheConstant {
     String DEFAULT_PREFIX = "rich_base:";
-    String API_PREFIX = DEFAULT_PREFIX + "base_api:";
+    String INNER_API_PREFIX = DEFAULT_PREFIX + "base_inner:";
+    String OUTER_API_PREFIX = DEFAULT_PREFIX + "base_outer:";
 }

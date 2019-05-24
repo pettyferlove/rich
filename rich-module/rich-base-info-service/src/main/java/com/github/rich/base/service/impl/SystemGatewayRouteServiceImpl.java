@@ -26,7 +26,7 @@ import java.util.Optional;
 public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRouteMapper, SystemGatewayRoute> implements ISystemGatewayRouteService {
 
     @Override
-    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-routes")
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-routes")
     public List<Route> loadAll() {
         List<SystemGatewayRoute> systemGatewayRoutes = this.list();
         Optional<List<Route>> optionalRoutes = Optional.ofNullable(ConverterUtil.convertList(SystemGatewayRoute.class, Route.class, systemGatewayRoutes));

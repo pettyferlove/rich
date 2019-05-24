@@ -31,7 +31,7 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     }
 
     @Override
-    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-role", key = "#userCode", condition = "#userCode!=null")
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-role", key = "#userCode", condition = "#userCode!=null")
     public List<SystemRole> findRoleByUserCode(String userCode) {
         List<SystemRole> systemRoles = new ArrayList<>();
         List<SystemUserRole> systemUserRoles = Optional.ofNullable(this.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserCode, userCode))).orElseGet(ArrayList::new);

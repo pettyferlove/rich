@@ -34,7 +34,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
     public User findByLoginCode(String loginCode) {
         SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginCode, loginCode));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
@@ -43,7 +43,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#mobile", condition = "#mobile!=null")
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#mobile", condition = "#mobile!=null")
     public User findByMobile(String mobile) {
         SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
@@ -52,7 +52,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenID(String openid) {
         SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getWechatOpenid, openid));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
@@ -61,7 +61,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = CacheConstant.API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionID(String unionid) {
         SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getWechatUnionid, unionid));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
