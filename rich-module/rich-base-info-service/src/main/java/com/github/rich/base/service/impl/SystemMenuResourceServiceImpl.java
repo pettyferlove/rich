@@ -8,6 +8,7 @@ import com.github.rich.base.mapper.SystemMenuResourceMapper;
 import com.github.rich.base.service.ISystemMenuResourceService;
 import com.github.rich.base.utils.TreeUtils;
 import com.github.rich.base.vo.MenuNode;
+import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
@@ -43,5 +44,32 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     public List<MenuNode> loadTree() {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.emptyWrapper());
         return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), "0");
+    }
+
+    @Override
+    public MenuNode getNode(String code) {
+        return Optional.ofNullable(ConverterUtil.convert(this.getById(code), new MenuNode())).orElseGet(MenuNode::new);
+    }
+
+    @Override
+    public Boolean deleteNode(String code) throws Exception {
+        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentCode,code));
+        if(!systemMenuResources.isEmpty()){
+            throw new BaseRuntimeException("存在子节点，无法删除");
+        }
+        return this.removeById(code);
+    }
+
+    @Override
+    public Boolean updateNode(SystemMenuResource menu) {
+        menu.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
+        menu.setModifierTime(LocalDateTime.now());
+        return this.updateById(menu);
+    }
+
+    @Override
+    public List<MenuNode> loadChildrenNodes(String parentCode) {
+        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.emptyWrapper());
+        return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), parentCode);
     }
 }

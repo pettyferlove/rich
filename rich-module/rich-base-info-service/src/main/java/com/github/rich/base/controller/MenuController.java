@@ -24,7 +24,7 @@ public class MenuController {
         this.systemMenuResourceService = systemMenuResourceService;
     }
 
-    @ApiOperation(value = "创建菜单", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "创建菜单节点", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "object", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
     })
@@ -34,10 +34,48 @@ public class MenuController {
         return new R<>(systemMenuResourceService.createNode(menu));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation(value = "加载菜单树", notes = "无需权限")
     @GetMapping("/tree")
     public R<List<MenuNode>> loadTree(){
         return new R<>(systemMenuResourceService.loadTree());
+    }
+
+    @ApiOperation(value = "获取菜单节点详情", notes = "无需权限")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+    })
+    @GetMapping("/node/{code}")
+    public R<MenuNode> getNode(@PathVariable String code){
+        return new R<>(systemMenuResourceService.getNode(code));
+    }
+
+    @ApiOperation(value = "删除菜单节点", notes = "如果有子节点则删除失败，需要管理员权限",authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/node/{code}")
+    public R<Boolean> deleteNode(@PathVariable String code) throws Exception {
+        return new R<>(systemMenuResourceService.deleteNode(code));
+    }
+
+    @ApiOperation(value = "更新菜单节点", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "object", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/node")
+    public R<Boolean> updateNode(SystemMenuResource menu){
+        return new R<>(systemMenuResourceService.updateNode(menu));
+    }
+
+    @ApiOperation(value = "获取当前节点的子节点列表", notes = "无需权限")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "parentCode", value = "ParentCode", dataTypeClass = String.class)
+    })
+    @GetMapping("children/nodes/{parentCode}")
+    public R<List> getChildrenNodes(@PathVariable String parentCode){
+        return new R<>(systemMenuResourceService.loadChildrenNodes(parentCode));
     }
 
 }

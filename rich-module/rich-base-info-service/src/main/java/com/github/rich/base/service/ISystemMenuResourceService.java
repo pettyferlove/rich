@@ -28,4 +28,34 @@ public interface ISystemMenuResourceService extends IService<SystemMenuResource>
      * @return 集合
      */
     List<MenuNode> loadTree();
+
+    /**
+     * 通过Code获取节点信息
+     * @param code 菜单节点Code
+     * @return MenuNode
+     */
+    MenuNode getNode(String code);
+
+    /**
+     * 通过Code删除节点信息
+     * 当存在子节点的时候禁止删除
+     * @param code 菜单节点Code
+     * @return Boolean
+     * @throws  Exception 存在子节点的时候抛出异常
+     */
+    Boolean deleteNode(String code) throws Exception;
+
+    /**
+     * 更新节点信息
+     * @param menu 菜单节点信息实体
+     * @return Boolean
+     */
+    Boolean updateNode(SystemMenuResource menu);
+
+    /**
+     * 根据父节点获取子树
+     * @param parentCode 父节点Code
+     * @return 集合
+     */
+    List<MenuNode> loadChildrenNodes(String parentCode);
 }
