@@ -37,7 +37,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentCode",condition = "#menu.parentCode!=null")
     })
     public String createNode(SystemMenuResource menu) {
@@ -65,8 +65,8 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#code"),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree"),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree")
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true)
     })
     public Boolean deleteNode(String code) throws Exception {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentCode, code));
@@ -79,7 +79,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#menu.code",condition = "#menu.code!=null"),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentCode",condition = "#menu.parentCode!=null")
     })
     public Boolean updateNode(SystemMenuResource menu) {
