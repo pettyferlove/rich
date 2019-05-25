@@ -47,6 +47,34 @@ eureka:
       defaultZone: http://10.0.100.1:10151/eureka
 ---
 spring:
+  profiles: remote-dev
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/union_tech_company/rich-cloud-config.git
+          username: pettyferlove@live.cn
+          password: ENC(svG0ecjDmqadkzNiUF78e32+b0ObmhBY)
+    bus:
+      trace:
+        enabled: true
+      enabled: true
+  rabbitmq:
+    host: 106.14.2.180
+    port: 5672
+    username: rich
+    password: ENC(nQwInWa/OUaHsIVuocLiZMN88zJve+04QXJu9cqHH8g=)
+eureka:
+  instance:
+    ip-address: 106.14.2.180
+    hostname: ${eureka.instance.ip-address}
+    prefer-ip-address: false
+    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:10151/eureka
+---
+spring:
   profiles: prd
   cloud:
     config:

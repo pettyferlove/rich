@@ -20,8 +20,33 @@ server:
   port: 10151
 eureka:
   instance:
-    hostname: 10.0.100.1
-    prefer-ip-address: true
+    ip-address: 10.0.100.1
+    hostname: ${eureka.instance.ip-address}
+    prefer-ip-address: false
+    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
+    metadata-map:
+      zone: dev
+  server:
+    enable-self-preservation: false # 关闭自我保护
+    eviction-interval-timer-in-ms: 5000 # 主动失效检测 单位ms
+    response-cache-auto-expiration-in-seconds: 3000 # Eurake实例缓存刷新时间，PS 读取 ReadWriterCacheMap的间隔
+    use-read-only-response-cache: false # 大集群开启
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
+---
+spring:
+  profiles: remote-dev
+server:
+  port: 10151
+eureka:
+  instance:
+    ip-address: 106.14.2.180
+    hostname: ${eureka.instance.ip-address}
+    prefer-ip-address: false
+    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
     metadata-map:
       zone: dev
   server:
