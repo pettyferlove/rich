@@ -7,7 +7,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   profiles:
-    active: remote-dev
+    active: dev
   cloud:
     config:
       discovery:
