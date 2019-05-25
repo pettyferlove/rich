@@ -15,7 +15,6 @@ spring:
       discovery:
         enabled: true
         service-id: rich-config-service
-      profile: ${spring.profiles.active}
       label: ${spring.profiles.active}
       fail-fast: true
     bus:
