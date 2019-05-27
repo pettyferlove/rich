@@ -26,7 +26,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
 
     @Override
     public IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page) {
-        return this.page(page);
+        return super.page(page);
     }
 
     @Override
