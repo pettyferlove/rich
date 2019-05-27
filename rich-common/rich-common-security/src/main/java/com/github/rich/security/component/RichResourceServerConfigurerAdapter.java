@@ -17,6 +17,7 @@
 package com.github.rich.security.component;
 
 import com.github.rich.common.core.config.FilterIgnorePropertiesConfig;
+import com.github.rich.security.service.impl.RichRemoteTokenServices;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
     @Autowired
     protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
     @Autowired
-    protected RemoteTokenServices remoteTokenServices;
+    protected RichRemoteTokenServices richRemoteTokenServices;
     @Autowired
     private FilterIgnorePropertiesConfig ignorePropertiesConfig;
     @Autowired
@@ -83,9 +84,9 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
         DefaultUserAuthenticationConverter userTokenConverter = new DefaultUserAuthenticationConverter();
         userTokenConverter.setUserDetailsService(userDetailsService);
         accessTokenConverter.setUserTokenConverter(userTokenConverter);
-        remoteTokenServices.setRestTemplate(richRestTemplate);
-        remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
+        richRemoteTokenServices.setRestTemplate(richRestTemplate);
+        richRemoteTokenServices.setAccessTokenConverter(accessTokenConverter);
         resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
-                .tokenServices(remoteTokenServices);
+                .tokenServices(richRemoteTokenServices);
     }
 }

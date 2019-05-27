@@ -16,7 +16,9 @@
 
 package com.github.rich.security.component;
 
+import com.github.rich.security.service.impl.RichRemoteTokenServices;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,6 +37,12 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @ComponentScan("com.github.rich.security")
 public class RichResourceServerAutoConfiguration {
+
+    private final ResourceServerProperties resource;
+
+    public RichResourceServerAutoConfiguration(ResourceServerProperties resource) {
+        this.resource = resource;
+    }
 
     /**
      * 自定义RestTemplate 增加错误处理以及日志打印
@@ -59,5 +67,15 @@ public class RichResourceServerAutoConfiguration {
             }
         });
         return restTemplate;
+    }
+
+    @Bean
+    @Primary
+    public RichRemoteTokenServices richRemoteTokenServices() {
+        RichRemoteTokenServices services = new RichRemoteTokenServices();
+        services.setCheckTokenEndpointUrl(this.resource.getTokenInfoUri());
+        services.setClientId(this.resource.getClientId());
+        services.setClientSecret(this.resource.getClientSecret());
+        return services;
     }
 }
