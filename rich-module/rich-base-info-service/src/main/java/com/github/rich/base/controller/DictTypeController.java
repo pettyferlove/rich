@@ -28,8 +28,8 @@ public class DictTypeController {
             @ApiImplicitParam(paramType = "object", name = "dictType", value = "DictType", dataTypeClass = SystemDictType.class),
             @ApiImplicitParam(paramType = "object", name = "page", value = "Page", dataTypeClass = Page.class)
     })
-    @GetMapping("list")
-    public R<IPage> list(SystemDictType systemDictType, Page<SystemDictType> page) {
+    @GetMapping("page")
+    public R<IPage> page(SystemDictType systemDictType, Page<SystemDictType> page) {
         return new R<>(systemDictTypeService.page(systemDictType,page));
     }
 

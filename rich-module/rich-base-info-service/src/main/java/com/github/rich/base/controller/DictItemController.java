@@ -27,8 +27,8 @@ public class DictItemController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "object", name = "page", value = "Page", dataTypeClass = Page.class)
     })
-    @GetMapping("list")
-    public R<IPage> list(Page<SystemDictItem> page) {
+    @GetMapping("page")
+    public R<IPage> page(Page<SystemDictItem> page) {
         return new R<>(systemDictItemService.page(page));
     }
 
