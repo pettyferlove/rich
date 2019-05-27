@@ -17,6 +17,7 @@ import lombok.*;
 import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -63,6 +64,7 @@ public class SystemDictType extends Model<SystemDictType> {
     @ApiModelProperty(value = "创建时间")
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "修改人")
@@ -71,6 +73,7 @@ public class SystemDictType extends Model<SystemDictType> {
     @ApiModelProperty(value = "修改时间")
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifierTime;
 
 
