@@ -24,6 +24,15 @@ public class MenuController {
         this.systemMenuResourceService = systemMenuResourceService;
     }
 
+    /**
+     * TODO 根据用户获取菜单 待开发
+     * @return null
+     */
+    @GetMapping
+    public R<MenuNode> menu(){
+        return null;
+    }
+
     @ApiOperation(value = "创建菜单节点", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "object", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)

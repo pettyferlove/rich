@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.rich.base.mapper.SystemDictTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemDictType">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="type" property="type" />
+        <result column="description" property="description" />
+        <result column="remark" property="remark" />
+        <result column="del_flag" property="delFlag" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="modifier" property="modifier" />
+        <result column="modifier_time" property="modifierTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, type, description, remark, del_flag, creator, create_time, modifier, modifier_time
+    </sql>
+
+</mapper>
