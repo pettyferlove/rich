@@ -17,9 +17,10 @@ public interface ISystemDictItemService extends IService<SystemDictItem> {
     /**
      * List查找
      * @param page Page分页对象
+     * @param typeCode 字典类型Code
      * @return IPage 返回结果
      */
-    IPage<SystemDictItem> page(Page<SystemDictItem> page);
+    IPage<SystemDictItem> page(String typeCode, Page<SystemDictItem> page);
 
     /**
      * 通过Code查询DictItem信息

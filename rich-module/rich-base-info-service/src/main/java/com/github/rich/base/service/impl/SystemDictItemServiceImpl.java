@@ -2,6 +2,7 @@ package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemDictItem;
 import com.github.rich.base.mapper.SystemDictItemMapper;
@@ -15,7 +16,7 @@ import java.util.Objects;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Petty
@@ -25,8 +26,8 @@ import java.util.Objects;
 public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper, SystemDictItem> implements ISystemDictItemService {
 
     @Override
-    public IPage<SystemDictItem> page(Page<SystemDictItem> page) {
-        return super.page(page);
+    public IPage<SystemDictItem> page(String typeCode, Page<SystemDictItem> page) {
+        return super.page(page, Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeCode, typeCode));
     }
 
     @Override

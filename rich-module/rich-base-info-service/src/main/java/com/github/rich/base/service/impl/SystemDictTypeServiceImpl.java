@@ -34,6 +34,11 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
         return this.getById(code);
     }
 
+    /**
+     * TODO 需要判断字典项目是否存在
+     * @param code 业务主键
+     * @return
+     */
     @Override
     public Boolean delete(String code) {
         return this.removeById(code);

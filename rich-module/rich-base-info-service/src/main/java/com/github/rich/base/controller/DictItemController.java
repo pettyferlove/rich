@@ -25,11 +25,12 @@ public class DictItemController {
 
     @ApiOperation(value = "获取字典项列表", notes = "无需权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "page", value = "Page", dataTypeClass = Page.class)
+            @ApiImplicitParam(paramType = "object", name = "page", value = "Page", dataTypeClass = Page.class),
+            @ApiImplicitParam(paramType = "query", name = "typeCode", value = "TypeCode", dataTypeClass = String.class)
     })
     @GetMapping("page")
-    public R<IPage> page(Page<SystemDictItem> page) {
-        return new R<>(systemDictItemService.page(page));
+    public R<IPage> page(String typeCode, Page<SystemDictItem> page) {
+        return new R<>(systemDictItemService.page(typeCode, page));
     }
 
     @ApiOperation(value = "获取字典项详情", notes = "无需权限")
