@@ -1,5 +1,6 @@
 package com.github.rich.base.controller;
 
+import com.github.rich.base.service.ISystemDictItemService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,4 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dict/item")
 public class DictItemController {
+
+    private final ISystemDictItemService systemDictItemService;
+
+    public DictItemController(ISystemDictItemService systemDictItemService) {
+        this.systemDictItemService = systemDictItemService;
+    }
 }
