@@ -12,6 +12,7 @@ import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -38,6 +39,11 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     public Boolean delete(String code) {
         return this.removeById(code);
+    }
+
+    @Override
+    public Boolean deleteByCodes(List<String> codes) {
+        return this.removeByIds(codes);
     }
 
     @Override

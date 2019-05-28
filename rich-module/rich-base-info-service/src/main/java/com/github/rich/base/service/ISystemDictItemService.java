@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemDictItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -35,6 +37,13 @@ public interface ISystemDictItemService extends IService<SystemDictItem> {
      * @return Boolean
      */
     Boolean delete(String code);
+
+    /**
+     * 通过Codes批量删除
+     * @param codes code数组
+     * @return Boolean
+     */
+    Boolean deleteByCodes(List<String> codes);
 
     /**
      * 创建数据

@@ -40,7 +40,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
 
     @Override
     public IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page) {
-        return super.page(page);
+        return super.page(page,Wrappers.lambdaQuery(dictType));
     }
 
     @Override

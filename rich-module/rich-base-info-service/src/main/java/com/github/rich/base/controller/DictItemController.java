@@ -9,6 +9,8 @@ import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Petty
  */
@@ -70,5 +72,16 @@ public class DictItemController {
     @DeleteMapping("/{code}")
     public R<Boolean> delete(@PathVariable String code){
         return new R<>(systemDictItemService.delete(code));
+    }
+
+    @ApiOperation(value = "批量删除字典项", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "codes", value = "Codes", dataTypeClass = List.class)
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/delete/codes")
+    @Deprecated
+    public R<Boolean> deleteByCodes(List<String> codes){
+        return new R<>(systemDictItemService.deleteByCodes(codes));
     }
 }
