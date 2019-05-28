@@ -79,7 +79,7 @@ public class DictItemController {
             @ApiImplicitParam(paramType = "query", name = "codes", value = "Codes", dataTypeClass = List.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/delete/codes")
+    @PostMapping("/delete/batch")
     @Deprecated
     public R<Boolean> deleteByCodes(List<String> codes){
         return new R<>(systemDictItemService.deleteByCodes(codes));
