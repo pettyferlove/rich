@@ -2,15 +2,19 @@ package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.rich.base.entity.SystemDictItem;
 import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.mapper.SystemDictTypeMapper;
+import com.github.rich.base.service.ISystemDictItemService;
 import com.github.rich.base.service.ISystemDictTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,6 +28,12 @@ import java.util.Objects;
 @Service
 public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper, SystemDictType> implements ISystemDictTypeService {
 
+    private final ISystemDictItemService systemDictItemService;
+
+    public SystemDictTypeServiceImpl(ISystemDictItemService systemDictItemService) {
+        this.systemDictItemService = systemDictItemService;
+    }
+
     @Override
     public IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page) {
         return super.page(page);
@@ -34,13 +44,12 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
         return this.getById(code);
     }
 
-    /**
-     * TODO 需要判断字典项目是否存在
-     * @param code 业务主键
-     * @return
-     */
     @Override
     public Boolean delete(String code) {
+        List<SystemDictItem> dictItems = systemDictItemService.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeCode, code));
+        if(!dictItems.isEmpty()){
+            return false;
+        }
         return this.removeById(code);
     }
 
