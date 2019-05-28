@@ -68,7 +68,7 @@ public class DictTypeController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{code}")
-    public R<Boolean> delete(@PathVariable String code){
+    public R<Integer> delete(@PathVariable String code){
         return new R<>(systemDictTypeService.delete(code));
     }
 }

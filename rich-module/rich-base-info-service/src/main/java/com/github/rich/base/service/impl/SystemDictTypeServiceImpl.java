@@ -28,6 +28,10 @@ import java.util.Objects;
 @Service
 public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper, SystemDictType> implements ISystemDictTypeService {
 
+    private final int DELETE_ERR_CHILDREN = 2;
+    private final int DELETE_SUCCESS = 1;
+    private final int DELETE_FAIL = 0;
+
     private final ISystemDictItemService systemDictItemService;
 
     public SystemDictTypeServiceImpl(ISystemDictItemService systemDictItemService) {
@@ -45,12 +49,12 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     }
 
     @Override
-    public Boolean delete(String code) {
+    public Integer delete(String code) {
         List<SystemDictItem> dictItems = systemDictItemService.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeCode, code));
-        if(!dictItems.isEmpty()){
-            return false;
+        if (!dictItems.isEmpty()) {
+            return DELETE_ERR_CHILDREN;
         }
-        return this.removeById(code);
+        return this.removeById(code) ? DELETE_SUCCESS : DELETE_FAIL;
     }
 
     @Override

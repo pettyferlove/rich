@@ -35,7 +35,7 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
      * @param code 业务主键
      * @return Boolean
      */
-    Boolean delete(String code);
+    Integer delete(String code);
 
     /**
      * 创建数据
