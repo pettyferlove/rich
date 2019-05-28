@@ -77,12 +77,12 @@ public class DictItemController {
 
     @ApiOperation(value = "批量删除字典项", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "codes", value = "Codes", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "query", name = "codes", value = "Codes", dataTypeClass = String[].class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/batch")
     @Deprecated
-    public R<Boolean> deleteByCodes(String codes) {
-        return new R<>(systemDictItemService.deleteByCodes(Arrays.asList(codes.split(","))));
+    public R<Boolean> deleteByCodes(String[] codes) {
+        return new R<>(systemDictItemService.deleteByCodes(Arrays.asList(codes)));
     }
 }
