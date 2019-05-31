@@ -12,11 +12,14 @@ import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.ISystemUserExtendService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.service.ISystemUserService;
+import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -88,25 +91,31 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Transactional(rollbackFor = Exception.class)
     public Boolean registerByWeChatOpenID(String openid, String unionid) {
         boolean result = false;
-        String userCode = IdUtil.simpleUUID();
-        SystemUser systemUser = new SystemUser();
-        systemUser.setId(IdUtil.simpleUUID());
-        systemUser.setCode(userCode);
-        systemUser.setLoginCode("wx_" + userCode);
-        systemUser.setUserName("");
-        systemUser.setPassword("");
-        systemUser.setUserType(0);
-        systemUser.setStatus(1);
-        systemUser.setCreateTime(LocalDateTime.now());
-        systemUser.setModifierTime(LocalDateTime.now());
-        if(this.save(systemUser)){
-            SystemUserExtend systemUserExtend = new SystemUserExtend();
-            systemUserExtend.setId(IdUtil.simpleUUID());
-            systemUserExtend.setCode(IdUtil.simpleUUID());
-            systemUserExtend.setUserCode(userCode);
-            systemUserExtend.setWechatOpenid(openid);
-            systemUserExtend.setWechatUnionid(unionid);
-            result = systemUserExtendService.save(systemUserExtend);
+        try{
+            String userCode = IdUtil.simpleUUID();
+            SystemUser systemUser = new SystemUser();
+            systemUser.setId(IdUtil.simpleUUID());
+            systemUser.setCode(userCode);
+            systemUser.setLoginCode("wx_" + userCode);
+            systemUser.setUserName("");
+            systemUser.setPassword("");
+            systemUser.setUserType(0);
+            systemUser.setStatus(1);
+            systemUser.setCreateTime(LocalDateTime.now());
+            systemUser.setModifierTime(LocalDateTime.now());
+            if(this.save(systemUser)){
+                SystemUserExtend systemUserExtend = new SystemUserExtend();
+                systemUserExtend.setId(IdUtil.simpleUUID());
+                systemUserExtend.setCode(IdUtil.simpleUUID());
+                systemUserExtend.setUserCode(userCode);
+                systemUserExtend.setWechatOpenid(openid);
+                systemUserExtend.setWechatUnionid(unionid);
+                result = systemUserExtendService.save(systemUserExtend);
+            }
+        } catch (DuplicateKeyException e){
+            throw new BaseRuntimeException("用户已绑定微信公众号，不可重复绑定");
+        } catch (Exception e){
+            throw new BaseRuntimeException("注册失败");
         }
         return result;
     }
