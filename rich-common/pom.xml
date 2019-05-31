@@ -17,6 +17,7 @@
     <modules>
         <module>rich-common-core</module>
         <module>rich-common-security</module>
+        <module>rich-common-log</module>
     </modules>
 
 </project>
