@@ -1,5 +1,6 @@
 package com.github.rich.common.core.aop;
 
+import com.github.rich.common.core.constant.CommonConstant;
 import com.github.rich.common.core.exception.BaseException;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,12 +27,12 @@ import java.util.Objects;
  * @date 2018年3月1日
  */
 @Aspect
-@Order(10)
+@Order(0)
 @Component
 @Slf4j
 public class ControllerAop {
 
-    @Pointcut("execution(public com.github.rich.common.core.model.R *(..))")
+    @Pointcut("execution(public com.github.rich.common.core.model.R *(..))" )
     public void pointCut() {
     }
 
@@ -40,7 +42,7 @@ public class ControllerAop {
      * @param pjp ProceedingJoinPoint
      * @return Object
      */
-    @Around("pointCut()")
+    @Around("pointCut()" )
     public Object methodAroundHandler(ProceedingJoinPoint pjp) {
         return methodHandler(pjp);
     }
@@ -50,9 +52,9 @@ public class ControllerAop {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
         Enumeration<String> headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()){
+        while (headerNames.hasMoreElements()) {
             String headerName = headerNames.nextElement();
-            log.info("HEADER : name:"+headerName+", value:"+request.getHeader(headerName));
+            log.info("HEADER : name:" + headerName + ", value:" + request.getHeader(headerName));
         }
         log.info("URL : " + request.getRequestURL().toString());
         log.info("HTTP_METHOD : " + request.getMethod());
@@ -64,12 +66,14 @@ public class ControllerAop {
             result = pjp.proceed();
             log.info(pjp.getSignature() + "use time:" + (System.currentTimeMillis() - startTime));
         } catch (Throwable e) {
-            log.error("Error：", e);
-            if(e instanceof BaseRuntimeException) {
-                throw new BaseRuntimeException(e.getMessage(),((BaseRuntimeException) e).getStatus());
-            }else if (e instanceof BaseException) {
-                throw new BaseRuntimeException(e.getMessage(),((BaseException) e).getStatus());
-            }else {
+            log.error("Error：" , e);
+            if (e instanceof AccessDeniedException) {
+                throw new BaseRuntimeException(e.getMessage(), CommonConstant.FORBIDDEN);
+            } else if (e instanceof BaseRuntimeException) {
+                throw new BaseRuntimeException(e.getMessage(), ((BaseRuntimeException) e).getStatus());
+            } else if (e instanceof BaseException) {
+                throw new BaseRuntimeException(e.getMessage(), ((BaseException) e).getStatus());
+            } else {
                 throw new BaseRuntimeException(e.getMessage());
             }
         }

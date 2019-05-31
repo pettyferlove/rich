@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Petty
  */
 @Slf4j
-@ControllerAdvice("com.github.rich")
+@ControllerAdvice("com.github.rich" )
 @ResponseBody
 public class GlobalExceptionHandler {
     /**
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     public R baseExceptionHandler(HttpServletRequest request, HttpServletResponse response, BaseRuntimeException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(ex.getStatus());
-        return new R(ex);
+        return new R(ex, ex.getStatus());
     }
 
     /**
@@ -48,12 +48,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public R runtimeExceptionHandler(HttpServletRequest request, HttpServletResponse response, RuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        int status = CommonConstant.EX_OTHER_CODE;
-        if (ex instanceof AccessDeniedException) {
-            status = CommonConstant.FORBIDDEN;
-        }
-        response.setStatus(status);
-        return new R(ex,status);
+        response.setStatus(CommonConstant.EX_OTHER_CODE);
+        return new R(ex);
     }
 
     /**
@@ -68,7 +64,7 @@ public class GlobalExceptionHandler {
     public R otherExceptionHandler(HttpServletRequest request, HttpServletResponse response, BaseException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(ex.getStatus());
-        return new R(ex);
+        return new R(ex, ex.getStatus());
     }
 
 
