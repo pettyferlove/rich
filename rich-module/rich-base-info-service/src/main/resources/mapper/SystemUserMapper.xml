@@ -5,8 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemUser">
         <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="login_code" property="loginCode" />
+        <result column="login_name" property="loginName" />
         <result column="user_name" property="userName" />
         <result column="password" property="password" />
         <result column="user_type" property="userType" />
@@ -19,7 +18,7 @@
         <result column="user_tel" property="userTel" />
         <result column="user_iden_type" property="userIdenType" />
         <result column="user_iden" property="userIden" />
-        <result column="region_code" property="regionCode" />
+        <result column="region_id" property="regionId" />
         <result column="status" property="status" />
         <result column="del_flag" property="delFlag" />
         <result column="creator" property="creator" />
@@ -30,7 +29,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, login_code, user_name, password, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_code, status, del_flag, creator, create_time, modifier, modifier_time
+        id, login_name, user_name, password, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_id, status, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

@@ -17,9 +17,9 @@ import lombok.*;
 public class MenuNode extends TreeNode {
     private static final long serialVersionUID = 8890625026946419517L;
 
-    private String code;
+    private String id;
 
-    private String parentCode;
+    private String parentId;
 
     private String title;
 

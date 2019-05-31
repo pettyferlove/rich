@@ -16,10 +16,10 @@ public interface ISystemUserService extends IService<SystemUser> {
 
     /**
      * 根据登录名查找用户信息
-     * @param loginCode 登录名
+     * @param loginName 登录名
      * @return 用户信息
      */
-    User findByLoginCode(String loginCode);
+    User findByLoginName(String loginName);
 
     /**
      * 根据手机号码查找用户信息

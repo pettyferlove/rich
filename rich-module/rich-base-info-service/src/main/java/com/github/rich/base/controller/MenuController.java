@@ -51,21 +51,21 @@ public class MenuController {
 
     @ApiOperation(value = "获取菜单节点详情", notes = "无需权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @GetMapping("/node/{code}")
-    public R<MenuNode> getNode(@PathVariable String code){
-        return new R<>(systemMenuResourceService.getNode(code));
+    @GetMapping("/node/{id}")
+    public R<MenuNode> getNode(@PathVariable String id){
+        return new R<>(systemMenuResourceService.getNode(id));
     }
 
     @ApiOperation(value = "删除菜单节点", notes = "如果有子节点则删除失败，需要管理员权限",authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/node/{code}")
-    public R<Boolean> deleteNode(@PathVariable String code) throws Exception {
-        return new R<>(systemMenuResourceService.deleteNode(code));
+    @DeleteMapping("/node/{id}")
+    public R<Boolean> deleteNode(@PathVariable String id) throws Exception {
+        return new R<>(systemMenuResourceService.deleteNode(id));
     }
 
     @ApiOperation(value = "更新菜单节点", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
@@ -80,11 +80,11 @@ public class MenuController {
 
     @ApiOperation(value = "获取当前节点的子节点列表", notes = "无需权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "parentCode", value = "ParentCode", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "parentId", value = "parentId", dataTypeClass = String.class)
     })
-    @GetMapping("children/nodes/{parentCode}")
-    public R<List> getChildrenNodes(@PathVariable String parentCode){
-        return new R<>(systemMenuResourceService.loadChildrenNodes(parentCode));
+    @GetMapping("children/nodes/{parentId}")
+    public R<List> getChildrenNodes(@PathVariable String parentId){
+        return new R<>(systemMenuResourceService.loadChildrenNodes(parentId));
     }
 
 }

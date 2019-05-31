@@ -5,8 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemApiResource">
         <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="parent_code" property="parentCode" />
+        <result column="parent_id" property="parentId" />
         <result column="request_url" property="requestUrl" />
         <result column="request_method" property="requestMethod" />
         <result column="permission" property="permission" />
@@ -19,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, parent_code, request_url, request_method, permission, del_flag, creator, create_time, modifier, modifier_time
+        id, parent_id, request_url, request_method, permission, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

@@ -21,11 +21,11 @@ import java.util.List;
 public class User implements Serializable {
     private static final long serialVersionUID = -2924404879928203710L;
 
-    private String code;
+    private String id;
     /**
      * 登录名
      */
-    private String loginCode;
+    private String loginName;
 
     /**
      * 用户名

@@ -27,38 +27,37 @@ import java.util.Objects;
 public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper, SystemDictItem> implements ISystemDictItemService {
 
     @Override
-    public IPage<SystemDictItem> page(String typeCode, Page<SystemDictItem> page) {
-        return super.page(page, Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeCode, typeCode));
+    public IPage<SystemDictItem> page(String typeId, Page<SystemDictItem> page) {
+        return super.page(page, Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, typeId));
     }
 
     @Override
-    public SystemDictItem get(String code) {
-        return this.getById(code);
+    public SystemDictItem get(String id) {
+        return this.getById(id);
     }
 
     @Override
-    public Boolean delete(String code) {
-        return this.removeById(code);
+    public Boolean delete(String id) {
+        return this.removeById(id);
     }
 
     @Override
-    public Boolean deleteByCodes(List<String> codes) {
-        return this.removeByIds(codes);
+    public Boolean deleteByCodes(List<String> ids) {
+        return this.removeByIds(ids);
     }
 
     @Override
     public String create(SystemDictItem dictItem) {
         String dictItemCode = IdUtil.simpleUUID();
-        dictItem.setId(IdUtil.simpleUUID());
-        dictItem.setCode(dictItemCode);
-        dictItem.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
+        dictItem.setId(dictItemCode);
+        dictItem.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictItem.setCreateTime(LocalDateTime.now());
         return this.save(dictItem) ? dictItemCode : null;
     }
 
     @Override
     public Boolean update(SystemDictItem dictItem) {
-        dictItem.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
+        dictItem.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictItem.setModifierTime(LocalDateTime.now());
         return this.updateById(dictItem);
     }

@@ -5,14 +5,13 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemRoleMenu">
         <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="role_code" property="roleCode" />
-        <result column="menu_code" property="menuCode" />
+        <result column="role_id" property="roleId" />
+        <result column="menu_id" property="menuId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, role_code, menu_code
+        id, role_id, menu_id
     </sql>
 
 </mapper>

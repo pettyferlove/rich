@@ -9,17 +9,16 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * <p>
- * 用户登录日志
+ * 用户日志
  * </p>
  *
  * @author Petty
- * @since 2019-05-22
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -27,19 +26,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value="SystemLoginLog对象", description="用户登录日志")
+@ApiModel(value="SystemLoginLog对象", description="用户日志")
 public class SystemLoginLog extends Model<SystemLoginLog> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
-
-    @ApiModelProperty(value = "日志code")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
-
-    @ApiModelProperty(value = "用户登录名")
-    private String loginCode;
 
     @ApiModelProperty(value = "用户账号")
     private String loginName;
@@ -81,7 +74,7 @@ public class SystemLoginLog extends Model<SystemLoginLog> {
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

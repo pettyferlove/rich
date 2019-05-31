@@ -21,11 +21,11 @@ public class UserDetailsImpl implements UserDetails {
     /**
      * 用户UUID
      */
-    private String userCode;
+    private String userId;
     /**
      * 登录名
      */
-    private String loginCode;
+    private String username;
     private String password;
     private Integer status;
     private Integer type;
@@ -34,8 +34,8 @@ public class UserDetailsImpl implements UserDetails {
     private List<String> permissions;
 
     UserDetailsImpl(User user) {
-        this.userCode = user.getCode();
-        this.loginCode = user.getLoginCode();
+        this.userId = user.getId();
+        this.username = user.getLoginName();
         this.password = user.getPassword();
         this.status = user.getStatus();
         this.type = user.getUserType();
@@ -70,7 +70,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.loginCode;
+        return this.username;
     }
 
     @Override

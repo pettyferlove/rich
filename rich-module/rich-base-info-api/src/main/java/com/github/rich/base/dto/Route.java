@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class Route implements Serializable {
     private static final long serialVersionUID = 5185952920075364986L;
 
-    private String code;
+    private String name;
     /**
      * Route JSON
      */

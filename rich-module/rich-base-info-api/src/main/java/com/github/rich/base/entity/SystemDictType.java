@@ -6,26 +6,19 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.github.rich.common.core.datatype.CustomLocalDateTimeDeserializer;
-import com.github.rich.common.core.datatype.CustomLocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
- * 字典表
+ * 字典类型
  * </p>
  *
  * @author Petty
- * @since 2019-05-27
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -33,17 +26,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value="SystemDictType对象", description="字典表")
+@ApiModel(value="SystemDictType对象", description="字典类型")
 public class SystemDictType extends Model<SystemDictType> {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据唯一标识符")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
-
-    @ApiModelProperty(value = "字典Code")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
 
     @ApiModelProperty(value = "类型")
     private String type;
@@ -62,24 +52,18 @@ public class SystemDictType extends Model<SystemDictType> {
     private String creator;
 
     @ApiModelProperty(value = "创建时间")
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
-    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "修改人")
     private String modifier;
 
     @ApiModelProperty(value = "修改时间")
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
-    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifierTime;
 
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

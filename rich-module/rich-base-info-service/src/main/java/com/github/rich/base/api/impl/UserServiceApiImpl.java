@@ -18,8 +18,8 @@ public class UserServiceApiImpl implements UserServiceApi {
     }
 
     @Override
-    public User getByLoginCode(String loginCode) {
-        return systemUserService.findByLoginCode(loginCode);
+    public User getByLoginName(String loginName) {
+        return systemUserService.findByLoginName(loginName);
     }
 
     @Override

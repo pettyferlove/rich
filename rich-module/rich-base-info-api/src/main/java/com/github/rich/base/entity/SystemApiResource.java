@@ -9,7 +9,6 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -19,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-23
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -33,14 +32,11 @@ public class SystemApiResource extends Model<SystemApiResource> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据唯一标识符")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "Api资源code")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
-
     @ApiModelProperty(value = "父级CODE")
-    private String parentCode;
+    private String parentId;
 
     @ApiModelProperty(value = "请求地址")
     private String requestUrl;
@@ -70,7 +66,7 @@ public class SystemApiResource extends Model<SystemApiResource> {
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

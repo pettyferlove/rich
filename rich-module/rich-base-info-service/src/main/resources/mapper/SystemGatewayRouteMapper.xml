@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemGatewayRoute">
         <id column="id" property="id" />
-        <result column="code" property="code" />
+        <result column="name" property="name" />
         <result column="route" property="route" />
         <result column="status" property="status" />
         <result column="del_flag" property="delFlag" />
@@ -17,7 +17,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, route, status, del_flag, creator, create_time, modifier, modifier_time
+        id, name, route, status, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

@@ -28,30 +28,30 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String loginCode) throws UsernameNotFoundException {
-        User user = remoteUserService.findUserByLoginCode(loginCode);
-        Preconditions.checkNotNull(user.getCode(), "没有找到该用户");
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = remoteUserService.findUserByLoginName(username);
+        Preconditions.checkNotNull(user.getId(), "没有找到该用户");
         return new UserDetailsImpl(user);
     }
 
     @Override
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
         User user = remoteUserService.findUserByMobile(mobile);
-        Preconditions.checkNotNull(user.getCode(), "手机号码没有注册或者未与账号绑定");
+        Preconditions.checkNotNull(user.getId(), "手机号码没有注册或者未与账号绑定");
         return new UserDetailsImpl(user);
     }
 
     @Override
     public UserDetails loadUserByWeChatOpenID(String openid) {
         User user = remoteUserService.findByWeChatOpenID(openid);
-        Preconditions.checkNotNull(user.getCode(), "微信号未绑定");
+        Preconditions.checkNotNull(user.getId(), "微信号未绑定");
         return new UserDetailsImpl(user);
     }
 
     @Override
     public UserDetails loadUserByWeChatUnionID(String unionid) {
         User user = remoteUserService.findByWeChatUnionID(unionid);
-        Preconditions.checkNotNull(user.getCode(), "微信号未绑定");
+        Preconditions.checkNotNull(user.getId(), "微信号未绑定");
         return new UserDetailsImpl(user);
     }
 }

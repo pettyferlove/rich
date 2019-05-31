@@ -9,7 +9,6 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -33,14 +32,11 @@ public class SystemUser extends Model<SystemUser> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据唯一标识符")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "用户UUID")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
-
     @ApiModelProperty(value = "用户登录名")
-    private String loginCode;
+    private String loginName;
 
     @ApiModelProperty(value = "用户全名")
     private String userName;
@@ -79,7 +75,7 @@ public class SystemUser extends Model<SystemUser> {
     private String userIden;
 
     @ApiModelProperty(value = "行政区划CODE")
-    private String regionCode;
+    private String regionId;
 
     @ApiModelProperty(value = "是否有效 0 无效 1 有效")
     private Integer status;
@@ -103,7 +99,7 @@ public class SystemUser extends Model<SystemUser> {
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

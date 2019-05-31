@@ -7,7 +7,6 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -17,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-22
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -30,19 +29,17 @@ public class SystemRoleApi extends Model<SystemRoleApi> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
+    private String roleId;
 
-    private String roleCode;
-
-    private String apiCode;
+    private String apiId;
 
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

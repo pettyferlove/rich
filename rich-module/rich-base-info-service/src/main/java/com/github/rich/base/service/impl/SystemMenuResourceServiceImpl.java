@@ -38,13 +38,12 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentCode",condition = "#menu.parentCode!=null")
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentId",condition = "#menu.parentId!=null")
     })
     public String createNode(SystemMenuResource menu) {
         String menuCode = IdUtil.simpleUUID();
-        menu.setId(IdUtil.simpleUUID());
-        menu.setCode(menuCode);
-        menu.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
+        menu.setId(menuCode);
+        menu.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         menu.setCreateTime(LocalDateTime.now());
         return this.save(menu) ? menuCode : null;
     }
@@ -57,41 +56,41 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     }
 
     @Override
-    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#code", condition = "#code!=null")
-    public MenuNode getNode(String code) {
-        return Optional.ofNullable(ConverterUtil.convert(this.getById(code), new MenuNode())).orElseGet(MenuNode::new);
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#id", condition = "#id!=null")
+    public MenuNode getNode(String id) {
+        return Optional.ofNullable(ConverterUtil.convert(this.getById(id), new MenuNode())).orElseGet(MenuNode::new);
     }
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#code"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#id"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true)
     })
-    public Boolean deleteNode(String code) throws Exception {
-        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentCode, code));
+    public Boolean deleteNode(String id) throws Exception {
+        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentId, id));
         if (!systemMenuResources.isEmpty()) {
             throw new BaseRuntimeException("存在子节点，无法删除");
         }
-        return this.removeById(code);
+        return this.removeById(id);
     }
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#menu.code",condition = "#menu.code!=null"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#menu.id",condition = "#menu.id!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentCode",condition = "#menu.parentCode!=null")
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentId",condition = "#menu.parentId!=null")
     })
     public Boolean updateNode(SystemMenuResource menu) {
-        menu.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
+        menu.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         menu.setModifierTime(LocalDateTime.now());
         return this.updateById(menu);
     }
 
     @Override
-    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#parentCode",condition = "#parentCode!=null")
-    public List<MenuNode> loadChildrenNodes(String parentCode) {
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#parentId",condition = "#parentId!=null")
+    public List<MenuNode> loadChildrenNodes(String parentId) {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByAsc(SystemMenuResource::getSort));
-        return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), parentCode);
+        return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), parentId);
     }
 }

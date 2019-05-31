@@ -5,14 +5,13 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemRoleApi">
         <id column="id" property="id" />
-        <result column="code" property="code" />
-        <result column="role_code" property="roleCode" />
-        <result column="api_code" property="apiCode" />
+        <result column="role_id" property="roleId" />
+        <result column="api_id" property="apiId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, role_code, api_code
+        id, role_id, api_id
     </sql>
 
 </mapper>

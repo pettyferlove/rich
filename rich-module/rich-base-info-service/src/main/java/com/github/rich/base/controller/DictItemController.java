@@ -38,11 +38,11 @@ public class DictItemController {
 
     @ApiOperation(value = "获取字典项详情", notes = "无需权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @GetMapping("/{code}")
-    public R<SystemDictItem> get(@PathVariable String code) {
-        return new R<>(systemDictItemService.get(code));
+    @GetMapping("/{id}")
+    public R<SystemDictItem> get(@PathVariable String id) {
+        return new R<>(systemDictItemService.get(id));
     }
 
     @ApiOperation(value = "创建字典项", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
@@ -67,22 +67,22 @@ public class DictItemController {
 
     @ApiOperation(value = "删除字典项", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{code}")
-    public R<Boolean> delete(@PathVariable String code) {
-        return new R<>(systemDictItemService.delete(code));
+    @DeleteMapping("/{id}")
+    public R<Boolean> delete(@PathVariable String id) {
+        return new R<>(systemDictItemService.delete(id));
     }
 
     @ApiOperation(value = "批量删除字典项", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "codes", value = "Codes", dataTypeClass = String[].class)
+            @ApiImplicitParam(paramType = "query", name = "ids", value = "ids", dataTypeClass = String[].class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/batch")
     @Deprecated
-    public R<Boolean> deleteByCodes(String[] codes) {
-        return new R<>(systemDictItemService.deleteByCodes(Arrays.asList(codes)));
+    public R<Boolean> deleteByCodes(String[] ids) {
+        return new R<>(systemDictItemService.deleteByCodes(Arrays.asList(ids)));
     }
 }

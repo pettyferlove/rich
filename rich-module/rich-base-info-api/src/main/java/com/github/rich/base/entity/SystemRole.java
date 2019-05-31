@@ -9,7 +9,6 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -33,11 +32,8 @@ public class SystemRole extends Model<SystemRole> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据唯一标识符")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
-
-    @ApiModelProperty(value = "角色CODE")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
 
     @ApiModelProperty(value = "角色")
     private String role;
@@ -73,7 +69,7 @@ public class SystemRole extends Model<SystemRole> {
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

@@ -35,11 +35,11 @@ public class DictTypeController {
 
     @ApiOperation(value = "获取字典类型详情", notes = "无需权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @GetMapping("/{code}")
-    public R<SystemDictType> get(@PathVariable String code){
-        return new R<>(systemDictTypeService.get(code));
+    @GetMapping("/{id}")
+    public R<SystemDictType> get(@PathVariable String id){
+        return new R<>(systemDictTypeService.get(id));
     }
 
     @ApiOperation(value = "创建字典类型", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
@@ -64,11 +64,11 @@ public class DictTypeController {
 
     @ApiOperation(value = "删除字典类型", notes = "需要管理员权限",authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "path", name = "code", value = "Code", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/{code}")
-    public R<Integer> delete(@PathVariable String code){
-        return new R<>(systemDictTypeService.delete(code));
+    @DeleteMapping("/{id}")
+    public R<Integer> delete(@PathVariable String id){
+        return new R<>(systemDictTypeService.delete(id));
     }
 }

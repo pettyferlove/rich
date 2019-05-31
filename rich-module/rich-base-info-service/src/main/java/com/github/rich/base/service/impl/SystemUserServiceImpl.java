@@ -44,11 +44,11 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#loginCode", condition = "#loginCode!=null")
-    public User findByLoginCode(String loginCode) {
-        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginCode, loginCode));
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#loginName", condition = "#loginName!=null")
+    public User findByLoginName(String loginName) {
+        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, loginName));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
-        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getId())));
         return userOptional.orElseGet(User::new);
     }
 
@@ -57,7 +57,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public User findByMobile(String mobile) {
         SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
-        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getId())));
         return userOptional.orElseGet(User::new);
     }
 
@@ -67,10 +67,10 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatOpenid,openid)));
         Optional<User> userOptional = Optional.empty();
         if(userExtendOptional.isPresent()){
-            SystemUser systemUser = this.getById(userExtendOptional.get().getUserCode());
+            SystemUser systemUser = this.getById(userExtendOptional.get().getUserId());
             userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         }
-        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getId())));
         return userOptional.orElseGet(User::new);
     }
 
@@ -80,10 +80,10 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatUnionid,unionid)));
         Optional<User> userOptional = Optional.empty();
         if(userExtendOptional.isPresent()){
-            SystemUser systemUser = this.getById(userExtendOptional.get().getUserCode());
+            SystemUser systemUser = this.getById(userExtendOptional.get().getUserId());
             userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         }
-        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
+        userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getId())));
         return userOptional.orElseGet(User::new);
     }
 
@@ -92,11 +92,10 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public Boolean registerByWeChatOpenID(String openid, String unionid) {
         boolean result = false;
         try{
-            String userCode = IdUtil.simpleUUID();
+            String userId = IdUtil.simpleUUID();
             SystemUser systemUser = new SystemUser();
-            systemUser.setId(IdUtil.simpleUUID());
-            systemUser.setCode(userCode);
-            systemUser.setLoginCode("wx_" + userCode);
+            systemUser.setId(userId);
+            systemUser.setLoginName("wx_" + userId);
             systemUser.setUserName("");
             systemUser.setPassword("");
             systemUser.setUserType(0);
@@ -106,8 +105,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             if(this.save(systemUser)){
                 SystemUserExtend systemUserExtend = new SystemUserExtend();
                 systemUserExtend.setId(IdUtil.simpleUUID());
-                systemUserExtend.setCode(IdUtil.simpleUUID());
-                systemUserExtend.setUserCode(userCode);
+                systemUserExtend.setUserId(userId);
                 systemUserExtend.setWechatOpenid(openid);
                 systemUserExtend.setWechatUnionid(unionid);
                 result = systemUserExtendService.save(systemUserExtend);
@@ -120,8 +118,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         return result;
     }
 
-    private List<String> loadRoles(String userCode) {
-        List<SystemRole> systemRoles = systemUserRoleService.findRoleByUserCode(userCode);
+    private List<String> loadRoles(String userId) {
+        List<SystemRole> systemRoles = systemUserRoleService.findRoleByUserId(userId);
         Set<String> roles = new HashSet<>();
         systemRoles.forEach(role -> roles.add(role.getRole()));
         return new ArrayList<>(roles);

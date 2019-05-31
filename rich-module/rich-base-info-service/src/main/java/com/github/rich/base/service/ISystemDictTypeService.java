@@ -24,18 +24,18 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
     IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page);
 
     /**
-     * 通过Code查询DictType信息
-     * @param code 业务主键
+     * 通过Id查询DictType信息
+     * @param id 业务主键
      * @return 对象
      */
-    SystemDictType get(String code);
+    SystemDictType get(String id);
 
     /**
-     * 通过Code删除信息
-     * @param code 业务主键
+     * 通过Id删除信息
+     * @param id 业务主键
      * @return Boolean
      */
-    Integer delete(String code);
+    Integer delete(String id);
 
     /**
      * 创建数据

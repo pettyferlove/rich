@@ -9,17 +9,16 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * <p>
- * 
+ * gateway动态路由
  * </p>
  *
  * @author Petty
- * @since 2019-05-22
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -27,17 +26,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value="SystemGatewayRoute对象", description="")
+@ApiModel(value="SystemGatewayRoute对象", description="gateway动态路由")
 public class SystemGatewayRoute extends Model<SystemGatewayRoute> {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据唯一标识符")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     @ApiModelProperty(value = "网关CODE")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
+    private String name;
 
     @ApiModelProperty(value = "Route JSON")
     private String route;
@@ -64,7 +63,7 @@ public class SystemGatewayRoute extends Model<SystemGatewayRoute> {
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

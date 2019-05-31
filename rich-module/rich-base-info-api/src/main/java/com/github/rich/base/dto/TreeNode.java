@@ -20,8 +20,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TreeNode implements Serializable {
     private static final long serialVersionUID = 204211858352702295L;
-    private String code;
-    private String parentCode;
+    private String id;
+    private String parentId;
     List<TreeNode> children;
     public void addChildren(TreeNode node){
         if(children==null){

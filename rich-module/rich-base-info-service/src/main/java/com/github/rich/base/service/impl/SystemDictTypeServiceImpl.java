@@ -44,32 +44,31 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     }
 
     @Override
-    public SystemDictType get(String code) {
-        return this.getById(code);
+    public SystemDictType get(String id) {
+        return this.getById(id);
     }
 
     @Override
-    public Integer delete(String code) {
-        List<SystemDictItem> dictItems = systemDictItemService.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeCode, code));
+    public Integer delete(String id) {
+        List<SystemDictItem> dictItems = systemDictItemService.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, id));
         if (!dictItems.isEmpty()) {
             return DELETE_ERR_CHILDREN;
         }
-        return this.removeById(code) ? DELETE_SUCCESS : DELETE_FAIL;
+        return this.removeById(id) ? DELETE_SUCCESS : DELETE_FAIL;
     }
 
     @Override
     public String create(SystemDictType dictType) {
         String dictTypeCode = IdUtil.simpleUUID();
-        dictType.setId(IdUtil.simpleUUID());
-        dictType.setCode(dictTypeCode);
-        dictType.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
+        dictType.setId(dictTypeCode);
+        dictType.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictType.setCreateTime(LocalDateTime.now());
         return this.save(dictType) ? dictTypeCode : null;
     }
 
     @Override
     public Boolean update(SystemDictType dictType) {
-        dictType.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserCode());
+        dictType.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictType.setModifierTime(LocalDateTime.now());
         return this.updateById(dictType);
     }

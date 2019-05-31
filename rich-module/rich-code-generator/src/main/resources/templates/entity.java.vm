@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
 import lombok.*;
-import lombok.EqualsAndHashCode;
 #end
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -52,7 +51,7 @@ public class ${entity} implements Serializable {
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 
-#if("$field.name"=="code")
+#if(${field.keyFlag})
 #set($keyPropertyName=${field.propertyName})
 #end
 #if("$!field.comment" != "")
@@ -64,13 +63,13 @@ public class ${entity} implements Serializable {
      */
 #end
 #end
-#if("$field.name"=="code")
+#if(${field.keyFlag})
 ## 主键
 #if(${field.keyIdentityFlag})
     @TableId(value = "${field.name}", type = IdType.AUTO)
 #elseif(!$null.isNull(${idType}) && "$!idType" != "")
     @TableId(value = "${field.name}", type = IdType.${idType})
-#else
+#elseif(${field.convert})
     @TableId("${field.name}")
 #end
 ## 普通字段

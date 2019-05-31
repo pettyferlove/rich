@@ -10,17 +10,16 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * <p>
- * 
+ * 系统菜单
  * </p>
  *
  * @author Petty
- * @since 2019-05-23
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -28,20 +27,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value="SystemMenuResource对象", description="")
+@ApiModel(value="SystemMenuResource对象", description="系统菜单")
 public class SystemMenuResource extends Model<SystemMenuResource> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "数据唯一标识符")
+    @ApiModelProperty(value = "Api资源code")
     private String id;
 
-    @ApiModelProperty(value = "Api资源code")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
-
     @ApiModelProperty(value = "父级CODE")
-    private String parentCode;
+    private String parentId;
 
     @ApiModelProperty(value = "菜单标题")
     private String title;
@@ -86,7 +81,7 @@ public class SystemMenuResource extends Model<SystemMenuResource> {
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return null;
     }
 
 }

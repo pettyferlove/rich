@@ -16,11 +16,11 @@ public interface UserServiceApi {
     /**
      * 通过用户名查询用户及其角色信息
      *
-     * @param loginCode 用户名
+     * @param loginName 用户名
      * @return User
      */
-    @GetMapping("/code/{loginCode}")
-    User getByLoginCode(@PathVariable String loginCode);
+    @GetMapping("/{loginName}")
+    User getByLoginName(@PathVariable String loginName);
 
     /**
      * 通过手机号查询用户及其角色信息

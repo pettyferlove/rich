@@ -8,7 +8,6 @@ import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import lombok.EqualsAndHashCode;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -18,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-22
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -31,14 +30,12 @@ public class SystemRegion extends Model<SystemRegion> {
 
     private static final long serialVersionUID = 1L;
 
+    @ApiModelProperty(value = "行政区划编码")
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "行政区划编码")
-    @TableId(value = "code", type = IdType.UUID)
-    private String code;
-
     @ApiModelProperty(value = "行政区划父级编码")
-    private String parentCode;
+    private String parentId;
 
     @ApiModelProperty(value = "行政区划名称")
     private String regionName;
@@ -53,7 +50,7 @@ public class SystemRegion extends Model<SystemRegion> {
 
     @Override
     protected Serializable pkVal() {
-        return this.code;
+        return this.id;
     }
 
 }

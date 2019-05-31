@@ -40,7 +40,7 @@ public class WeChatTokenGranter extends AbstractTokenGranter {
         if (parameters.containsKey(UNION_ID_KEY)) {
             String unionId = parameters.get(UNION_ID_KEY);
             if (StrUtil.isNotBlank(unionId)) {
-                userDetails = userDetailsService.loadUserByWeChatOpenID(unionId);
+                userDetails = userDetailsService.loadUserByWeChatUnionID(unionId);
             }
         } else if (parameters.containsKey(OPEN_ID_KEY)) {
             String openId = parameters.get(OPEN_ID_KEY);

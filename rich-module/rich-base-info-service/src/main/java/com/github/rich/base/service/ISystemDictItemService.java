@@ -19,31 +19,31 @@ public interface ISystemDictItemService extends IService<SystemDictItem> {
     /**
      * List查找
      * @param page Page分页对象
-     * @param typeCode 字典类型Code
+     * @param typeId 字典类型Id
      * @return IPage 返回结果
      */
-    IPage<SystemDictItem> page(String typeCode, Page<SystemDictItem> page);
+    IPage<SystemDictItem> page(String typeId, Page<SystemDictItem> page);
 
     /**
-     * 通过Code查询DictItem信息
-     * @param code 业务主键
+     * 通过Id查询DictItem信息
+     * @param id 业务主键
      * @return 对象
      */
-    SystemDictItem get(String code);
+    SystemDictItem get(String id);
 
     /**
-     * 通过Code删除信息
-     * @param code 业务主键
+     * 通过Id删除信息
+     * @param id 业务主键
      * @return Boolean
      */
-    Boolean delete(String code);
+    Boolean delete(String id);
 
     /**
-     * 通过Codes批量删除
-     * @param codes code数组
+     * 通过ids批量删除
+     * @param ids id数组
      * @return Boolean
      */
-    Boolean deleteByCodes(List<String> codes);
+    Boolean deleteByCodes(List<String> ids);
 
     /**
      * 创建数据

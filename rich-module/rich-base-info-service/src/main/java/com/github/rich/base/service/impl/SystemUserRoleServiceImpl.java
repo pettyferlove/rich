@@ -31,12 +31,12 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     }
 
     @Override
-    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-role", key = "#userCode", condition = "#userCode!=null")
-    public List<SystemRole> findRoleByUserCode(String userCode) {
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-role", key = "#userId", condition = "#userId!=null")
+    public List<SystemRole> findRoleByUserId(String userId) {
         List<SystemRole> systemRoles = new ArrayList<>();
-        List<SystemUserRole> systemUserRoles = Optional.ofNullable(this.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserCode, userCode))).orElseGet(ArrayList::new);
+        List<SystemUserRole> systemUserRoles = Optional.ofNullable(this.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId))).orElseGet(ArrayList::new);
         Set<String> roleIds = new HashSet<>();
-        systemUserRoles.forEach(userRole -> roleIds.add(userRole.getRoleCode()));
+        systemUserRoles.forEach(userRole -> roleIds.add(userRole.getRoleId()));
         if (!roleIds.isEmpty()) {
             systemRoles = Optional.ofNullable((List<SystemRole>) systemRoleService.listByIds(roleIds)).orElseGet(ArrayList::new);
         }

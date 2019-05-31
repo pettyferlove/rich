@@ -5,7 +5,6 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemDictType">
         <id column="id" property="id" />
-        <result column="code" property="code" />
         <result column="type" property="type" />
         <result column="description" property="description" />
         <result column="remark" property="remark" />
@@ -18,7 +17,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, code, type, description, remark, del_flag, creator, create_time, modifier, modifier_time
+        id, type, description, remark, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>
