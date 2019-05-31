@@ -1,17 +1,21 @@
 package com.github.rich.base.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUser;
+import com.github.rich.base.entity.SystemUserExtend;
 import com.github.rich.base.mapper.SystemUserMapper;
+import com.github.rich.base.service.ISystemUserExtendService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.service.ISystemUserService;
 import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -29,8 +33,11 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     private final ISystemUserRoleService systemUserRoleService;
 
-    public SystemUserServiceImpl(ISystemUserRoleService systemUserRoleService) {
+    private final ISystemUserExtendService systemUserExtendService;
+
+    public SystemUserServiceImpl(ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService) {
         this.systemUserRoleService = systemUserRoleService;
+        this.systemUserExtendService = systemUserExtendService;
     }
 
     @Override
@@ -54,8 +61,12 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenID(String openid) {
-        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getWechatOpenid, openid));
-        Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatOpenid,openid)));
+        Optional<User> userOptional = Optional.empty();
+        if(userExtendOptional.isPresent()){
+            SystemUser systemUser = this.getById(userExtendOptional.get().getUserCode());
+            userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        }
         userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
         return userOptional.orElseGet(User::new);
     }
@@ -63,27 +74,41 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionID(String unionid) {
-        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getWechatUnionid, unionid));
-        Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatUnionid,unionid)));
+        Optional<User> userOptional = Optional.empty();
+        if(userExtendOptional.isPresent()){
+            SystemUser systemUser = this.getById(userExtendOptional.get().getUserCode());
+            userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        }
         userOptional.ifPresent(user -> user.setRoles(this.loadRoles(user.getCode())));
         return userOptional.orElseGet(User::new);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean registerByWeChatOpenID(String openid, String unionid) {
+        boolean result = false;
+        String userCode = IdUtil.simpleUUID();
         SystemUser systemUser = new SystemUser();
-        systemUser.setId(UUID.randomUUID().toString().replace("-", ""));
-        systemUser.setCode(UUID.randomUUID().toString().replace("-", ""));
-        systemUser.setLoginCode("wx_" + UUID.randomUUID().toString().replace("-", ""));
+        systemUser.setId(IdUtil.simpleUUID());
+        systemUser.setCode(userCode);
+        systemUser.setLoginCode("wx_" + userCode);
         systemUser.setUserName("");
         systemUser.setPassword("");
-        systemUser.setWechatOpenid(openid);
-        systemUser.setWechatUnionid(unionid);
         systemUser.setUserType(0);
         systemUser.setStatus(1);
         systemUser.setCreateTime(LocalDateTime.now());
         systemUser.setModifierTime(LocalDateTime.now());
-        return this.save(systemUser);
+        if(this.save(systemUser)){
+            SystemUserExtend systemUserExtend = new SystemUserExtend();
+            systemUserExtend.setId(IdUtil.simpleUUID());
+            systemUserExtend.setCode(IdUtil.simpleUUID());
+            systemUserExtend.setUserCode(userCode);
+            systemUserExtend.setWechatOpenid(openid);
+            systemUserExtend.setWechatUnionid(unionid);
+            result = systemUserExtendService.save(systemUserExtend);
+        }
+        return result;
     }
 
     private List<String> loadRoles(String userCode) {

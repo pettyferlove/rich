@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.rich.base.mapper.SystemUserExtendMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemUserExtend">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="user_code" property="userCode" />
+        <result column="qq_openid" property="qqOpenid" />
+        <result column="wechat_unionid" property="wechatUnionid" />
+        <result column="wechat_openid" property="wechatOpenid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, user_code, qq_openid, wechat_unionid, wechat_openid
+    </sql>
+
+</mapper>

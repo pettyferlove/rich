@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-22
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -47,15 +47,6 @@ public class SystemUser extends Model<SystemUser> {
 
     @ApiModelProperty(value = "账号密码")
     private String password;
-
-    @ApiModelProperty(value = "QQ OpenID")
-    private String qqOpenid;
-
-    @ApiModelProperty(value = "微信UnionID")
-    private String wechatUnionid;
-
-    @ApiModelProperty(value = "微信OpenID")
-    private String wechatOpenid;
 
     @ApiModelProperty(value = "用户类型 0 管理员 1 普通用户")
     private Integer userType;

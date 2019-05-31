@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-05-22
+ * @since 2019-05-31
  */
 @Data
 @NoArgsConstructor
@@ -44,6 +44,12 @@ public class SystemRole extends Model<SystemRole> {
 
     @ApiModelProperty(value = "角色名称")
     private String roleName;
+
+    @ApiModelProperty(value = "描述")
+    private String description;
+
+    @ApiModelProperty(value = "排序号")
+    private Integer sort;
 
     @ApiModelProperty(value = "状态 1有效 0无效 默认为1")
     private Integer status;
