@@ -44,12 +44,13 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     private ISystemDictTypeService systemDictTypeService;
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", key = "#type", condition = "#type!=null")
     public List<Dict> list(String type) {
         List<Dict> dicts = new ArrayList<>();
-        Optional<SystemDictType> systemDictTypeOptional = Optional.ofNullable(systemDictTypeService.getOne(Wrappers.<SystemDictType>lambdaQuery().eq(SystemDictType::getType,type)));
-        if(systemDictTypeOptional.isPresent()){
-            List<SystemDictItem> systemDictItems = super.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId,systemDictTypeOptional.get().getId()).orderByDesc(SystemDictItem::getSort));
-            Optional<List<Dict>> optionalDictList = Optional.ofNullable(ConverterUtil.convertList(SystemDictItem.class,Dict.class,systemDictItems));
+        Optional<SystemDictType> systemDictTypeOptional = Optional.ofNullable(systemDictTypeService.getOne(Wrappers.<SystemDictType>lambdaQuery().eq(SystemDictType::getType, type)));
+        if (systemDictTypeOptional.isPresent()) {
+            List<SystemDictItem> systemDictItems = super.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, systemDictTypeOptional.get().getId()).orderByDesc(SystemDictItem::getSort));
+            Optional<List<Dict>> optionalDictList = Optional.ofNullable(ConverterUtil.convertList(SystemDictItem.class, Dict.class, systemDictItems));
             dicts = optionalDictList.orElseGet(ArrayList::new);
         }
         return dicts;
@@ -70,6 +71,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#id", condition = "#id!=null")
     })
     public Boolean delete(String id) {
@@ -79,6 +81,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", allEntries = true)
     })
     public Boolean deleteByCodes(List<String> ids) {
@@ -86,7 +89,10 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true)
+    })
     public String create(SystemDictItem dictItem) {
         String dictItemCode = IdUtil.simpleUUID();
         dictItem.setId(dictItemCode);
@@ -98,6 +104,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#dictItem.id", condition = "#dictItem.id!=null")
     })
     public Boolean update(SystemDictItem dictItem) {
