@@ -6,11 +6,17 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.rich.common.core.datatype.CustomLocalDateTimeDeserializer;
+import com.github.rich.common.core.datatype.CustomLocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -55,12 +61,18 @@ public class SystemApiResource extends Model<SystemApiResource> {
     private String creator;
 
     @ApiModelProperty(value = "创建时间")
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "修改人")
     private String modifier;
 
     @ApiModelProperty(value = "修改时间")
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifierTime;
 
 

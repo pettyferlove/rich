@@ -2,8 +2,8 @@ package com.github.rich.base.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.rich.base.entity.SystemDictType;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.entity.SystemDictType;
 
 /**
  * <p>
@@ -17,14 +17,16 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
 
     /**
      * List查找
+     *
      * @param dictType 查询参数对象
-     * @param page Page分页对象
+     * @param page     Page分页对象
      * @return IPage 返回结果
      */
     IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page);
 
     /**
      * 通过Id查询DictType信息
+     *
      * @param id 业务主键
      * @return 对象
      */
@@ -32,13 +34,15 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
 
     /**
      * 通过Id删除信息
+     *
      * @param id 业务主键
-     * @return Boolean
+     * @return Integer 2 存在子项 1 删除成功 0 删除失败
      */
     Integer delete(String id);
 
     /**
      * 创建数据
+     *
      * @param dictType 要创建的对象
      * @return Boolean
      */
@@ -46,6 +50,7 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
 
     /**
      * 更新数据（必须带Code）
+     *
      * @param dictType 对象
      * @return Boolean
      */

@@ -4,18 +4,27 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.entity.SystemDictItem;
 import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.mapper.SystemDictTypeMapper;
 import com.github.rich.base.service.ISystemDictItemService;
 import com.github.rich.base.service.ISystemDictTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.base.vo.Dict;
+import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <p>
@@ -28,36 +37,39 @@ import java.util.Objects;
 @Service
 public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper, SystemDictType> implements ISystemDictTypeService {
 
-    private final int DELETE_ERR_CHILDREN = 2;
-    private final int DELETE_SUCCESS = 1;
-    private final int DELETE_FAIL = 0;
-
-    private final ISystemDictItemService systemDictItemService;
-
-    public SystemDictTypeServiceImpl(ISystemDictItemService systemDictItemService) {
-        this.systemDictItemService = systemDictItemService;
-    }
+    /**
+     * ISystemDictItemService 与 ISystemDictTypeService 存在环形依赖，使用@Autowired
+     */
+    @Autowired
+    private ISystemDictItemService systemDictItemService;
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#dictType.toString())")
     public IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page) {
         return super.page(page,Wrappers.lambdaQuery(dictType));
     }
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#id", condition = "#id!=null")
     public SystemDictType get(String id) {
         return this.getById(id);
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#id", condition = "#id!=null")
+    })
     public Integer delete(String id) {
         List<SystemDictItem> dictItems = systemDictItemService.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, id));
         if (!dictItems.isEmpty()) {
-            return DELETE_ERR_CHILDREN;
+            return 2;
         }
-        return this.removeById(id) ? DELETE_SUCCESS : DELETE_FAIL;
+        return this.removeById(id) ? 1 : 0;
     }
 
     @Override
+    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true)
     public String create(SystemDictType dictType) {
         String dictTypeCode = IdUtil.simpleUUID();
         dictType.setId(dictTypeCode);
@@ -67,6 +79,10 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#dictType.id", condition = "#dictType.id!=null")
+    })
     public Boolean update(SystemDictType dictType) {
         dictType.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictType.setModifierTime(LocalDateTime.now());

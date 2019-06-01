@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemDictItem;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.vo.Dict;
 
 import java.util.List;
 
@@ -16,6 +17,14 @@ import java.util.List;
  * @since 2019-05-27
  */
 public interface ISystemDictItemService extends IService<SystemDictItem> {
+
+    /**
+     * 根据字典类型查询字典项
+     * @param type 字典类型 eg: user_type
+     * @return Dict集合
+     */
+    List<Dict> list(String type);
+
     /**
      * List查找
      * @param page Page分页对象
