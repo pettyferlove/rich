@@ -53,7 +53,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.DICT_ITEM_LIST_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#id", condition = "#id!=null")
     })
     public Boolean delete(String id) {
@@ -63,7 +63,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.DICT_ITEM_LIST_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", allEntries = true)
     })
     public Boolean deleteByCodes(List<String> ids) {
@@ -73,7 +73,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.DICT_ITEM_LIST_CACHE, allEntries = true)
+            @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true)
     })
     public String create(SystemDictItem dictItem) {
         String dictItemId = IdUtil.simpleUUID();
@@ -90,7 +90,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.DICT_ITEM_LIST_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#dictItem.id", condition = "#dictItem.id!=null")
     })
     public Boolean update(SystemDictItem dictItem) {

@@ -4,6 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.rich.base.constant.CacheConstant;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemRoleMenu;
 import com.github.rich.base.entity.SystemUserRole;
@@ -14,6 +15,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.security.utils.SecurityUtil;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,42 +45,54 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#role.toString())")
     public IPage<SystemRole> page(SystemRole role, Page<SystemRole> page) {
         return this.page(page, Wrappers.lambdaQuery(role));
     }
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#id", condition = "#id!=null")
     public SystemRole get(String id) {
         return this.getById(id);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
+    })
     public Boolean delete(String id) {
         try {
             this.removeById(id);
-            systemUserRoleService.remove(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getRoleId,id));
-            systemRoleMenuService.remove(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getRoleId,id));
+            systemUserRoleService.remove(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getRoleId, id));
+            systemRoleMenuService.remove(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getRoleId, id));
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new BaseRuntimeException("删除失败");
         }
     }
 
     @Override
+    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true)
     public String create(SystemRole role) {
         String roleId = IdUtil.simpleUUID();
         role.setId(roleId);
         role.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         role.setCreateTime(LocalDateTime.now());
-        if(this.save(role)){
+        if (this.save(role)) {
             return roleId;
-        }else {
+        } else {
             throw new BaseRuntimeException("save error");
         }
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#role.id", condition = "#role.id!=null")
+    })
     public Boolean update(SystemRole role) {
         role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         role.setModifierTime(LocalDateTime.now());
