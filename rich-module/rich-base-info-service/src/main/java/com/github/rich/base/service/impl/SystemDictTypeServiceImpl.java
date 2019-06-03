@@ -12,6 +12,7 @@ import com.github.rich.base.service.ISystemDictItemService;
 import com.github.rich.base.service.ISystemDictTypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.vo.Dict;
+import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     }
 
     @Override
-    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", key = "#type", condition = "#type!=null")
+    @Cacheable(value = CacheConstant.DICT_ITEM_ITEM_LIST_CACHE, key = "#type", condition = "#type!=null")
     public List<Dict> list(String type) {
         List<Dict> dicts = new ArrayList<>();
         Optional<SystemDictType> systemDictTypeOptional = Optional.ofNullable(this.getOne(Wrappers.<SystemDictType>lambdaQuery().eq(SystemDictType::getType, type)));
@@ -84,11 +85,15 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     @Override
     @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true)
     public String create(SystemDictType dictType) {
-        String dictTypeCode = IdUtil.simpleUUID();
-        dictType.setId(dictTypeCode);
+        String dictTypeId = IdUtil.simpleUUID();
+        dictType.setId(dictTypeId);
         dictType.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictType.setCreateTime(LocalDateTime.now());
-        return this.save(dictType) ? dictTypeCode : null;
+        if(this.save(dictType)){
+            return dictTypeId;
+        }else {
+            throw new BaseRuntimeException("save error");
+        }
     }
 
     @Override

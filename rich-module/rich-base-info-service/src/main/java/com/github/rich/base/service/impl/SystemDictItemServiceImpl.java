@@ -12,6 +12,7 @@ import com.github.rich.base.service.ISystemDictItemService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.service.ISystemDictTypeService;
 import com.github.rich.base.vo.Dict;
+import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_ITEM_LIST_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#id", condition = "#id!=null")
     })
     public Boolean delete(String id) {
@@ -62,7 +63,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_ITEM_LIST_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", allEntries = true)
     })
     public Boolean deleteByCodes(List<String> ids) {
@@ -72,20 +73,24 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true)
+            @CacheEvict(value = CacheConstant.DICT_ITEM_ITEM_LIST_CACHE, allEntries = true)
     })
     public String create(SystemDictItem dictItem) {
-        String dictItemCode = IdUtil.simpleUUID();
-        dictItem.setId(dictItemCode);
+        String dictItemId = IdUtil.simpleUUID();
+        dictItem.setId(dictItemId);
         dictItem.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictItem.setCreateTime(LocalDateTime.now());
-        return this.save(dictItem) ? dictItemCode : null;
+        if(this.save(dictItem)){
+            return dictItemId;
+        }else {
+            throw new BaseRuntimeException("save error");
+        }
     }
 
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_ITEM_LIST_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#dictItem.id", condition = "#dictItem.id!=null")
     })
     public Boolean update(SystemDictItem dictItem) {

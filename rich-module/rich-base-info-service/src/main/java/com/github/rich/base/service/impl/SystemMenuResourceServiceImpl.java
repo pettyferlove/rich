@@ -41,11 +41,15 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentId",condition = "#menu.parentId!=null")
     })
     public String createNode(SystemMenuResource menu) {
-        String menuCode = IdUtil.simpleUUID();
-        menu.setId(menuCode);
+        String menuId = IdUtil.simpleUUID();
+        menu.setId(menuId);
         menu.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         menu.setCreateTime(LocalDateTime.now());
-        return this.save(menu) ? menuCode : null;
+        if(this.save(menu)){
+            return menuId;
+        }else {
+            throw new BaseRuntimeException("save error");
+        }
     }
 
     @Override
