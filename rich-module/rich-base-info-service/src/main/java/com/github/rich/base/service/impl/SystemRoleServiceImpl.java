@@ -23,9 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Key;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * <p>
@@ -74,6 +72,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
             @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#id", condition = "#id!=null")
@@ -106,11 +105,25 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#role.id", condition = "#role.id!=null")
     })
     public Boolean update(SystemRole role) {
         role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         role.setModifierTime(LocalDateTime.now());
         return this.updateById(role);
+    }
+
+    @Override
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-role", key = "#userId", condition = "#userId!=null")
+    public List<SystemRole> findRoleByUserId(String userId) {
+        List<SystemRole> systemRoles = new ArrayList<>();
+        List<SystemUserRole> systemUserRoles = Optional.ofNullable(systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId))).orElseGet(ArrayList::new);
+        Set<String> roleIds = new HashSet<>();
+        systemUserRoles.forEach(userRole -> roleIds.add(userRole.getRoleId()));
+        if (!roleIds.isEmpty()) {
+            systemRoles = Optional.ofNullable((List<SystemRole>) this.listByIds(roleIds)).orElseGet(ArrayList::new);
+        }
+        return systemRoles;
     }
 }

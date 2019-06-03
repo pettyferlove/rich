@@ -9,6 +9,7 @@ import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.entity.SystemUserExtend;
 import com.github.rich.base.mapper.SystemUserMapper;
+import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.base.service.ISystemUserExtendService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.service.ISystemUserService;
@@ -34,12 +35,12 @@ import java.util.*;
 @Service
 public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService {
 
-    private final ISystemUserRoleService systemUserRoleService;
+    private final ISystemRoleService systemRoleService;
 
     private final ISystemUserExtendService systemUserExtendService;
 
-    public SystemUserServiceImpl(ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService) {
-        this.systemUserRoleService = systemUserRoleService;
+    public SystemUserServiceImpl(ISystemRoleService systemRoleService, ISystemUserExtendService systemUserExtendService) {
+        this.systemRoleService = systemRoleService;
         this.systemUserExtendService = systemUserExtendService;
     }
 
@@ -119,7 +120,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     private List<String> loadRoles(String userId) {
-        List<SystemRole> systemRoles = systemUserRoleService.findRoleByUserId(userId);
+        List<SystemRole> systemRoles = systemRoleService.findRoleByUserId(userId);
         Set<String> roles = new HashSet<>();
         systemRoles.forEach(role -> roles.add(role.getRole()));
         return new ArrayList<>(roles);

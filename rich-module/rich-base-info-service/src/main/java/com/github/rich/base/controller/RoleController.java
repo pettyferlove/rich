@@ -75,11 +75,11 @@ public class RoleController {
     }
 
 
-    @ApiOperation(value = "删除角色", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "获取角色下已绑定资源（菜单）", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "roleId", value = "roleId", dataTypeClass = String.class)
     })
-    @DeleteMapping("/authority/keys/{roleId}")
+    @GetMapping("/authority/keys/{roleId}")
     public R<List<String>> authorityKey(@PathVariable String roleId) {
         return new R<>(systemRoleService.loadMenuKeysForRole(roleId));
     }

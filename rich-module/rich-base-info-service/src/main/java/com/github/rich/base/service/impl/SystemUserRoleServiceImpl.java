@@ -24,22 +24,4 @@ import java.util.*;
 @Service
 public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper, SystemUserRole> implements ISystemUserRoleService {
 
-    private final ISystemRoleService systemRoleService;
-
-    public SystemUserRoleServiceImpl(ISystemRoleService systemRoleService) {
-        this.systemRoleService = systemRoleService;
-    }
-
-    @Override
-    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-role", key = "#userId", condition = "#userId!=null")
-    public List<SystemRole> findRoleByUserId(String userId) {
-        List<SystemRole> systemRoles = new ArrayList<>();
-        List<SystemUserRole> systemUserRoles = Optional.ofNullable(this.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId))).orElseGet(ArrayList::new);
-        Set<String> roleIds = new HashSet<>();
-        systemUserRoles.forEach(userRole -> roleIds.add(userRole.getRoleId()));
-        if (!roleIds.isEmpty()) {
-            systemRoles = Optional.ofNullable((List<SystemRole>) systemRoleService.listByIds(roleIds)).orElseGet(ArrayList::new);
-        }
-        return systemRoles;
-    }
 }

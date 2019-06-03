@@ -16,10 +16,4 @@ import java.util.List;
  */
 public interface ISystemUserRoleService extends IService<SystemUserRole> {
 
-    /**
-     * 通过用户名查询角色集合
-     * @param userId 用户ID
-     * @return 集合
-     */
-    List<SystemRole> findRoleByUserId(String userId);
 }
