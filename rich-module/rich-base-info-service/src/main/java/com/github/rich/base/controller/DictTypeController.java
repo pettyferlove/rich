@@ -41,10 +41,10 @@ public class DictTypeController {
 
     @ApiOperation(value = "通过字典类型获取字典项列表", notes = "无需权限")
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "type", value = "type", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "type", value = "type", dataTypeClass = String.class)
     })
-    @GetMapping("items")
-    public R<List<Dict>> items(String type){
+    @GetMapping("items/{type}")
+    public R<List<Dict>> items(@PathVariable String type){
         return new R<>(systemDictItemService.list(type));
     }
 
