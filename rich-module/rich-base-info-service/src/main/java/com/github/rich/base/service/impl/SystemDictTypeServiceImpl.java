@@ -45,7 +45,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     }
 
     @Override
-    @Cacheable(value = CacheConstant.DICT_ITEM_ITEM_LIST_CACHE, key = "#type", condition = "#type!=null")
+    @Cacheable(value = CacheConstant.DICT_ITEM_LIST_CACHE, key = "#type", condition = "#type!=null")
     public List<Dict> list(String type) {
         List<Dict> dicts = new ArrayList<>();
         Optional<SystemDictType> systemDictTypeOptional = Optional.ofNullable(this.getOne(Wrappers.<SystemDictType>lambdaQuery().eq(SystemDictType::getType, type)));
