@@ -69,7 +69,8 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#id"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true)
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, allEntries = true)
     })
     public Boolean deleteNode(String id) throws Exception {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentId, id));

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemRole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户角色 服务类
@@ -14,6 +16,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-05-21
  */
 public interface ISystemRoleService extends IService<SystemRole> {
+
+    /**
+     * 加载当前roleId已分配菜单的Keys
+     * @return 集合
+     */
+    List<String> loadMenuKeysForRole(String roleId);
+
     /**
      * List查找
      *

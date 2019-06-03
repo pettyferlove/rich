@@ -21,7 +21,10 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Key;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,6 +48,17 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
+    @Cacheable(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#roleId", condition = "#roleId!=null")
+    public List<String> loadMenuKeysForRole(String roleId) {
+        List<String> keys = new LinkedList<>();
+        List<SystemRoleMenu> list = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getRoleId, roleId));
+        for (SystemRoleMenu roleMenu: list) {
+            keys.add(roleMenu.getMenuId());
+        }
+        return keys;
+    }
+
+    @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#role.toString())")
     public IPage<SystemRole> page(SystemRole role, Page<SystemRole> page) {
         return this.page(page, Wrappers.lambdaQuery(role));
@@ -62,6 +76,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
             @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#id", condition = "#id!=null")
     })
     public Boolean delete(String id) {
         try {

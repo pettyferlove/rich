@@ -26,7 +26,7 @@ public class DictItemController {
         this.systemDictItemService = systemDictItemService;
     }
 
-    @ApiOperation(value = "获取字典项列表", notes = "无需权限")
+    @ApiOperation(value = "获取字典项列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "object", name = "page", value = "Page", dataTypeClass = Page.class),
             @ApiImplicitParam(paramType = "query", name = "typeId", value = "TypeId", dataTypeClass = String.class)
@@ -36,7 +36,7 @@ public class DictItemController {
         return new R<>(systemDictItemService.page(typeId, page));
     }
 
-    @ApiOperation(value = "获取字典项详情", notes = "无需权限")
+    @ApiOperation(value = "获取字典项详情", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
