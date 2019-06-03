@@ -22,11 +22,9 @@ import java.util.List;
 public class DictTypeController {
 
     private final ISystemDictTypeService systemDictTypeService;
-    private final ISystemDictItemService systemDictItemService;
 
-    public DictTypeController(ISystemDictTypeService systemDictTypeService, ISystemDictItemService systemDictItemService) {
+    public DictTypeController(ISystemDictTypeService systemDictTypeService) {
         this.systemDictTypeService = systemDictTypeService;
-        this.systemDictItemService = systemDictItemService;
     }
 
     @ApiOperation(value = "获取字典类型列表", notes = "无需权限")
@@ -45,7 +43,7 @@ public class DictTypeController {
     })
     @GetMapping("items/{type}")
     public R<List<Dict>> items(@PathVariable String type){
-        return new R<>(systemDictItemService.list(type));
+        return new R<>(systemDictTypeService.list(type));
     }
 
     @ApiOperation(value = "获取字典类型详情", notes = "无需权限")

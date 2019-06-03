@@ -37,25 +37,6 @@ import java.util.Optional;
 @Service
 public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper, SystemDictItem> implements ISystemDictItemService {
 
-    /**
-     * ISystemDictItemService 与 ISystemDictTypeService 存在环形依赖，使用@Autowired
-     */
-    @Autowired
-    private ISystemDictTypeService systemDictTypeService;
-
-    @Override
-    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", key = "#type", condition = "#type!=null")
-    public List<Dict> list(String type) {
-        List<Dict> dicts = new ArrayList<>();
-        Optional<SystemDictType> systemDictTypeOptional = Optional.ofNullable(systemDictTypeService.getOne(Wrappers.<SystemDictType>lambdaQuery().eq(SystemDictType::getType, type)));
-        if (systemDictTypeOptional.isPresent()) {
-            List<SystemDictItem> systemDictItems = super.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, systemDictTypeOptional.get().getId()).orderByDesc(SystemDictItem::getSort));
-            Optional<List<Dict>> optionalDictList = Optional.ofNullable(ConverterUtil.convertList(SystemDictItem.class, Dict.class, systemDictItems));
-            dicts = optionalDictList.orElseGet(ArrayList::new);
-        }
-        return dicts;
-    }
-
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#typeId)")
     public IPage<SystemDictItem> page(String typeId, Page<SystemDictItem> page) {
@@ -71,7 +52,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#id", condition = "#id!=null")
     })
     public Boolean delete(String id) {
@@ -81,7 +62,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", allEntries = true)
     })
     public Boolean deleteByCodes(List<String> ids) {
@@ -91,7 +72,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true)
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true)
     })
     public String create(SystemDictItem dictItem) {
         String dictItemCode = IdUtil.simpleUUID();
@@ -104,7 +85,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-list", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#dictItem.id", condition = "#dictItem.id!=null")
     })
     public Boolean update(SystemDictItem dictItem) {

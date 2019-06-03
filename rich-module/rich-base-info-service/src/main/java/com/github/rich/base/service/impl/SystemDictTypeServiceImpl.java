@@ -37,11 +37,24 @@ import java.util.Optional;
 @Service
 public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper, SystemDictType> implements ISystemDictTypeService {
 
-    /**
-     * ISystemDictItemService 与 ISystemDictTypeService 存在环形依赖，使用@Autowired
-     */
-    @Autowired
-    private ISystemDictItemService systemDictItemService;
+    private final ISystemDictItemService systemDictItemService;
+
+    public SystemDictTypeServiceImpl(ISystemDictItemService systemDictItemService) {
+        this.systemDictItemService = systemDictItemService;
+    }
+
+    @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-item-list", key = "#type", condition = "#type!=null")
+    public List<Dict> list(String type) {
+        List<Dict> dicts = new ArrayList<>();
+        Optional<SystemDictType> systemDictTypeOptional = Optional.ofNullable(this.getOne(Wrappers.<SystemDictType>lambdaQuery().eq(SystemDictType::getType, type)));
+        if (systemDictTypeOptional.isPresent()) {
+            List<SystemDictItem> systemDictItems = systemDictItemService.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, systemDictTypeOptional.get().getId()).orderByDesc(SystemDictItem::getSort));
+            Optional<List<Dict>> optionalDictList = Optional.ofNullable(ConverterUtil.convertList(SystemDictItem.class, Dict.class, systemDictItems));
+            dicts = optionalDictList.orElseGet(ArrayList::new);
+        }
+        return dicts;
+    }
 
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#dictType.toString())")
