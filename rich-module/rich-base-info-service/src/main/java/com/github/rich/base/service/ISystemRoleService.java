@@ -19,6 +19,7 @@ public interface ISystemRoleService extends IService<SystemRole> {
 
     /**
      * 加载当前roleId已分配菜单的Keys
+     * @param roleId roleId
      * @return 集合
      */
     List<String> loadMenuKeysForRole(String roleId);
