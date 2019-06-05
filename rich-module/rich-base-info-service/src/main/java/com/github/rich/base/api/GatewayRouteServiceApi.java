@@ -1,7 +1,7 @@
 package com.github.rich.base.api;
 
 import com.github.rich.base.dto.Route;
-import com.github.rich.common.core.constant.CommonConstant;
+import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 

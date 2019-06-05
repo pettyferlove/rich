@@ -3,7 +3,7 @@ package com.github.rich.auth.endpoint;
 import com.alibaba.fastjson.JSONObject;
 import com.github.rich.auth.service.CaptchaValidateService;
 import com.github.rich.auth.utils.SMSUtil;
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.common.core.model.R;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;

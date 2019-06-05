@@ -1,11 +1,10 @@
 package com.github.rich.common.core.bean.handler;
 
-import com.github.rich.common.core.constant.CommonConstant;
+import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseException;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.model.R;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

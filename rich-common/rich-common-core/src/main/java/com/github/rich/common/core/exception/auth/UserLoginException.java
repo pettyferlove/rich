@@ -1,6 +1,6 @@
 package com.github.rich.common.core.exception.auth;
 
-import com.github.rich.common.core.constant.CommonConstant;
+import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 
 /**

@@ -1,6 +1,6 @@
 package com.github.rich.common.core.utils;
 
-import com.github.rich.common.core.constant.CommonConstant;
+import com.github.rich.common.core.constants.CommonConstant;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;

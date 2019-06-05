@@ -1,14 +1,13 @@
 package com.github.rich.auth.granter;
 
 import com.github.rich.auth.service.CaptchaValidateService;
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.common.core.exception.security.CaptchaCheckException;
 import com.github.rich.security.service.RichUserDetailsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;

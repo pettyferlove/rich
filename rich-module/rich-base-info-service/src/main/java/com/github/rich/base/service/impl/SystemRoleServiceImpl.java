@@ -4,7 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.rich.base.constant.CacheConstant;
+import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemRoleMenu;
 import com.github.rich.base.entity.SystemUserRole;
@@ -21,7 +21,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Key;
 import java.time.LocalDateTime;
 import java.util.*;
 

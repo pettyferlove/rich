@@ -1,6 +1,6 @@
 package com.github.rich.auth.service;
 
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.common.core.constants.SecurityConstant;
 import lombok.SneakyThrows;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.oauth2.common.exceptions.InvalidClientException;

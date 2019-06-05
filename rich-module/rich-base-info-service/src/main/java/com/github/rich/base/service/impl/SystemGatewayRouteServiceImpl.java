@@ -1,6 +1,6 @@
 package com.github.rich.base.service.impl;
 
-import com.github.rich.base.constant.CacheConstant;
+import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.dto.Route;
 import com.github.rich.base.entity.SystemGatewayRoute;
 import com.github.rich.base.mapper.SystemGatewayRouteMapper;

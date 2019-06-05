@@ -1,7 +1,7 @@
 package com.github.rich.auth.granter;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.security.service.RichUserDetailsService;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

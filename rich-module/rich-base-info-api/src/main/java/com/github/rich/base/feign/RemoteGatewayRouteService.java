@@ -2,7 +2,7 @@ package com.github.rich.base.feign;
 
 import com.github.rich.base.dto.Route;
 import com.github.rich.base.feign.factory.RemoteGatewayRouteServiceFallbackFactory;
-import com.github.rich.common.core.constant.CommonConstant;
+import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

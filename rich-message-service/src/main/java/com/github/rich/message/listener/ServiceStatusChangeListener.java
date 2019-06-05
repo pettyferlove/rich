@@ -1,6 +1,6 @@
 package com.github.rich.message.listener;
 
-import com.github.rich.common.core.constant.MqQueueConstant;
+import com.github.rich.common.core.constants.MqQueueConstant;
 import com.github.rich.common.core.model.message.ServiceStatusChangeMessage;
 import com.github.rich.message.config.RabbitMqCustomConfig;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package com.github.rich.auth.config;
 
-import com.github.rich.common.core.constant.MqQueueConstant;
+import com.github.rich.common.core.constants.MqQueueConstant;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

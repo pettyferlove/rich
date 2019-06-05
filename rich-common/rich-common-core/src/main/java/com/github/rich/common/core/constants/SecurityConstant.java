@@ -1,4 +1,4 @@
-package com.github.rich.common.core.constant;
+package com.github.rich.common.core.constants;
 
 /**
  * @author Petty

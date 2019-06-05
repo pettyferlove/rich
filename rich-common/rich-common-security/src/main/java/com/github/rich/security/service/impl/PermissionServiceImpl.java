@@ -1,7 +1,7 @@
 package com.github.rich.security.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.security.service.PermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

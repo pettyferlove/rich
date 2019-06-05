@@ -1,6 +1,6 @@
 package com.github.rich.monitor.notifier;
 
-import com.github.rich.common.core.constant.MqQueueConstant;
+import com.github.rich.common.core.constants.MqQueueConstant;
 import com.github.rich.common.core.model.message.ServiceStatusChangeMessage;
 import com.github.rich.common.core.service.IMessageSender;
 import com.github.rich.monitor.config.MailRemindProperties;

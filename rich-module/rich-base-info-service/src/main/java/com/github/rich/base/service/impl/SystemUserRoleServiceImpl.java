@@ -1,17 +1,10 @@
 package com.github.rich.base.service.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.rich.base.constant.CacheConstant;
-import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUserRole;
 import com.github.rich.base.mapper.SystemUserRoleMapper;
-import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.base.service.ISystemUserRoleService;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package com.github.rich.base.constant;
+package com.github.rich.base.constants;
 
 /**
  * 缓存NameSpace

@@ -1,8 +1,8 @@
 package com.github.rich.security.service.impl;
 
 import com.github.rich.base.dto.User;
-import com.github.rich.common.core.constant.CommonConstant;
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.common.core.constants.CommonConstant;
+import com.github.rich.common.core.constants.SecurityConstant;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

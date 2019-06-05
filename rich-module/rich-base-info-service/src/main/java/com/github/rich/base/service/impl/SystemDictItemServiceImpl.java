@@ -4,28 +4,21 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.rich.base.constant.CacheConstant;
+import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemDictItem;
-import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.mapper.SystemDictItemMapper;
 import com.github.rich.base.service.ISystemDictItemService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.rich.base.service.ISystemDictTypeService;
-import com.github.rich.base.vo.Dict;
 import com.github.rich.common.core.exception.BaseRuntimeException;
-import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * <p>

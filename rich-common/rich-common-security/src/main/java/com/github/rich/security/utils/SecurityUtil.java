@@ -2,7 +2,7 @@ package com.github.rich.security.utils;
 
 
 import cn.hutool.core.util.StrUtil;
-import com.github.rich.common.core.constant.SecurityConstant;
+import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;

@@ -18,7 +18,7 @@ package com.github.rich.security.component;
 
 import cn.hutool.http.HttpStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.rich.common.core.constant.CommonConstant;
+import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.model.R;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
