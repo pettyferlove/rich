@@ -4,3 +4,12 @@ info:
     name: rich-attachment-service
     description: 附件服务
     version: 1.0.0-RELEASE
+attachment:
+  cloud:
+    aliyun:
+      endpoint: 1
+      access-key-id: 11
+      access-key-secret: 1
+      bucket: 1
+  local: 1
+  file-system: 1

@@ -37,6 +37,11 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${aliyun-sdk-oss.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-security</artifactId>
             <version>1.0.0-RELEASE</version>
