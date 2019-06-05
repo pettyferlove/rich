@@ -16,7 +16,7 @@
 
 package com.github.rich.security.component;
 
-import com.github.rich.common.core.config.FilterIgnorePropertiesConfig;
+import com.github.rich.common.core.config.FilterIgnoreProperties;
 import com.github.rich.security.service.impl.RichRemoteTokenServices;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -44,7 +43,7 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
     @Autowired
     protected RichRemoteTokenServices richRemoteTokenServices;
     @Autowired
-    private FilterIgnorePropertiesConfig ignorePropertiesConfig;
+    private FilterIgnoreProperties filterIgnoreProperties;
     @Autowired
     private RestTemplate richRestTemplate;
     @Autowired
@@ -72,7 +71,7 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
         registry.antMatchers("/swagger-ui.html").permitAll();
         registry.antMatchers("/**/v2/api-docs").permitAll();
         registry.antMatchers("/swagger/api-docs").permitAll();
-        ignorePropertiesConfig.getAnon()
+        filterIgnoreProperties.getAnon()
                 .forEach(url -> registry.antMatchers(url).permitAll());
         registry.anyRequest().authenticated()
                 .and().csrf().disable();

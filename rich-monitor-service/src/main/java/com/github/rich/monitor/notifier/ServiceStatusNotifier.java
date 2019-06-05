@@ -3,7 +3,7 @@ package com.github.rich.monitor.notifier;
 import com.github.rich.common.core.constant.MqQueueConstant;
 import com.github.rich.common.core.model.message.ServiceStatusChangeMessage;
 import com.github.rich.common.core.service.IMessageSender;
-import com.github.rich.monitor.config.MailRemindConfig;
+import com.github.rich.monitor.config.MailRemindProperties;
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 import de.codecentric.boot.admin.server.domain.events.InstanceEvent;
@@ -33,7 +33,7 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
     private final static String UNKNOWN_MESSAGE = "未知错误";
     private final static String DEFAULT_MESSAGE = "缺省信息";
 
-    private final MailRemindConfig mailRemindConfig;
+    private final MailRemindProperties mailRemindProperties;
 
     private final IMessageSender messageSender;
 
@@ -41,9 +41,9 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
 
     private static Map<InstanceId, Future> futureMap = new HashMap<>(10);
 
-    public ServiceStatusNotifier(InstanceRepository instanceRepository, MailRemindConfig mailRemindConfig, IMessageSender messageSender) {
+    public ServiceStatusNotifier(InstanceRepository instanceRepository, MailRemindProperties mailRemindProperties, IMessageSender messageSender) {
         super(instanceRepository);
-        this.mailRemindConfig = mailRemindConfig;
+        this.mailRemindProperties = mailRemindProperties;
         this.messageSender = messageSender;
     }
 
@@ -87,11 +87,11 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
             serviceStatusChangeMessage.setTime(simpleDateFormat.format(new Date(System.currentTimeMillis())));
             serviceStatusChangeMessage.setVersion(instance.getVersion());
             serviceStatusChangeMessage.setInfo(instance.getInfo().getValues());
-            serviceStatusChangeMessage.setFrom(mailRemindConfig.getFrom());
-            serviceStatusChangeMessage.setTo(mailRemindConfig.getTo());
+            serviceStatusChangeMessage.setFrom(mailRemindProperties.getFrom());
+            serviceStatusChangeMessage.setTo(mailRemindProperties.getTo());
             serviceStatusChangeMessage.setSubject("服务离线警告");
             messageSender.send(MqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeMessage);
-        }, mailRemindConfig.getInterval(), TimeUnit.MINUTES);
+        }, mailRemindProperties.getInterval(), TimeUnit.MINUTES);
         futureMap.put(instance.getId(), future);
     }
 }

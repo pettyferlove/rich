@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 @RefreshScope
 @ConditionalOnExpression("!'${mail-remind}'.isEmpty()")
 @ConfigurationProperties(prefix = "mail-remind")
-public class MailRemindConfig {
+public class MailRemindProperties {
     private String from;
     private String to;
     private long interval;

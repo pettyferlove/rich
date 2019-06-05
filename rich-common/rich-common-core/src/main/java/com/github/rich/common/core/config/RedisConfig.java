@@ -34,13 +34,13 @@ import java.time.Duration;
 @ConfigurationProperties(prefix = "spring.cache.redis")
 public class RedisConfig extends CachingConfigurerSupport {
 
-    private final CacheConfig cacheConfig;
+    private final CacheProperties cacheProperties;
 
     private final RedisConnectionFactory connectionFactory;
 
     @Autowired
-    public RedisConfig(CacheConfig cacheConfig, RedisConnectionFactory connectionFactory) {
-        this.cacheConfig = cacheConfig;
+    public RedisConfig(CacheProperties cacheProperties, RedisConnectionFactory connectionFactory) {
+        this.cacheProperties = cacheProperties;
         this.connectionFactory = connectionFactory;
     }
 
@@ -80,7 +80,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public RedisCacheConfiguration redisCacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(cacheConfig.getExpiration()))
+                .entryTtl(Duration.ofSeconds(cacheProperties.getExpiration()))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()));
     }

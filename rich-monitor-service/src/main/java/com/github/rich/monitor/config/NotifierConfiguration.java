@@ -12,18 +12,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class NotifierConfiguration {
 
-    private final MailRemindConfig mailRemindConfig;
+    private final MailRemindProperties mailRemindProperties;
 
     private final IMessageSender messageSender;
 
-    public NotifierConfiguration(MailRemindConfig mailRemindConfig, IMessageSender messageSender) {
-        this.mailRemindConfig = mailRemindConfig;
+    public NotifierConfiguration(MailRemindProperties mailRemindProperties, IMessageSender messageSender) {
+        this.mailRemindProperties = mailRemindProperties;
         this.messageSender = messageSender;
     }
 
     @Bean
     public ServiceStatusNotifier serviceStatusNotifier(InstanceRepository repository) {
-        return new ServiceStatusNotifier(repository, mailRemindConfig, messageSender);
+        return new ServiceStatusNotifier(repository, mailRemindProperties, messageSender);
     }
 
 }

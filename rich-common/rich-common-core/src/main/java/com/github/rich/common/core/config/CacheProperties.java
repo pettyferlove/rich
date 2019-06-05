@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 @EnableCaching(proxyTargetClass = true)
 @RefreshScope
 @ConfigurationProperties(prefix = "spring.cache")
-public class CacheConfig {
+public class CacheProperties {
 
     /**
      * 缓存过期时间
