@@ -9,7 +9,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 附件配置
+ * 附件配置（本地存储）
  * @author Petty
  */
 @Data
@@ -17,11 +17,8 @@ import org.springframework.context.annotation.Configuration;
 @AllArgsConstructor
 @Configuration
 @RefreshScope
-@ConditionalOnExpression("!'${attachment.cloud.aliyun}'.isEmpty()")
-@ConfigurationProperties(prefix = "attachment.cloud.aliyun")
-public class AttachmentAliyunCloudProperties {
-    String endpoint;
-    String accessKeyId;
-    String accessKeySecret;
-    String bucket;
+@ConditionalOnExpression("!'${attachment.local}'.isEmpty()")
+@ConfigurationProperties(prefix = "attachment.local")
+public class AttachmentLocalProperties {
+    String path;
 }

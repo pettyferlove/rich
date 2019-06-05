@@ -7,9 +7,14 @@ info:
 attachment:
   cloud:
     aliyun:
-      endpoint: 1
-      access-key-id: 11
-      access-key-secret: 1
-      bucket: 1
-  local: 1
-  file-system: 1
+      endpoint: http://oss-cn-shanghai.aliyuncs.com
+      access-key-id: ENC(fRJNh0Qn783+b9m32rQQFGdgXDRiDEgahp+Eiy/cVik=)
+      access-key-secret: ENC(Wg16nGSWPpo0C+9ot0RLuttvrxn+X+qS35FsUdifGEVItnnmnRHGmQ==)
+      bucket: rich-attachment
+  local:
+    path: D:\\
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
