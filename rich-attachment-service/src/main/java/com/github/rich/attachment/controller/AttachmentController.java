@@ -5,6 +5,7 @@ import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import com.github.rich.common.core.model.R;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class AttachmentController {
     }
 
     @PostMapping("upload")
-    public R<UploadResult> upload(Upload upload, MultipartFile file){
+    public R<UploadResult> upload(@Validated Upload upload, MultipartFile file){
         System.out.println(file.getContentType());
         System.out.println(file.getName());
         attachmentUploadService.upload(upload, file);

@@ -2,12 +2,14 @@ package com.github.rich.attachment.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.github.rich.attachment.validator.StorageTypeConstraint;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -24,10 +26,13 @@ public class Upload implements Serializable {
 
     private static final long serialVersionUID = 3346764162292691065L;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String security;
 
-    private String storeType;
+    @StorageTypeConstraint
+    private int storageType;
 
 }
