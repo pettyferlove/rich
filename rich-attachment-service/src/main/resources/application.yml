@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-attachment-service
+    name: rich-attachment-service
+    description: 附件服务
+    version: 1.0.0-RELEASE

@@ -19,6 +19,7 @@
         <module>rich-message-service</module>
         <module>rich-monitor-service</module>
         <module>rich-tx-manager-service</module>
+        <module>rich-attachment-service</module>
     </modules>
 
     <parent>
