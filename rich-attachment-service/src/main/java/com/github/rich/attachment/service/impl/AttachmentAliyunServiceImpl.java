@@ -17,8 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Date;
 
 /**
  * @author Petty
@@ -65,6 +63,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             putObjectResult = oss.putObject(aliyunProperties.getBucket(), stringBuilder.toString(), file.getInputStream(),meta);
             result.setMd5(md5);
             result.setFileId(fileId);
+            result.setStoreType(upload.getStorage().getValue());
             System.out.println(upload.getName());
             System.out.println(upload.getStorage().getValue());
         } catch (IOException e) {
