@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -81,5 +83,18 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
         } else {
             throw new BaseRuntimeException("not found file", 404);
         }
+    }
+
+    @Override
+    public Boolean delete(String id) {
+        Optional<AttachmentInfo> attachmentInfoOptional = Optional.ofNullable(attachmentInfoService.getAttachmentInfoById(id));
+        return null;
+    }
+
+    @Override
+    public Boolean deleteBatch(String[] ids) {
+        List<String> fileIds = Arrays.asList(ids);
+        List<AttachmentInfo> attachmentInfos = (List<AttachmentInfo>) attachmentInfoService.listByIds(fileIds);
+        return null;
     }
 }

@@ -35,4 +35,17 @@ public interface IAttachmentOperaService {
      */
     void view(String id, HttpServletResponse response) throws Exception;
 
+    /**
+     * 文件操作-删除文件
+     * @param id 文件ID
+     * @return Boolean
+     */
+    Boolean delete(String id);
+
+    /**
+     * 文件操作-批量删除文件
+     * @param ids 文件ID
+     * @return Boolean
+     */
+    Boolean deleteBatch(String[] ids);
 }
