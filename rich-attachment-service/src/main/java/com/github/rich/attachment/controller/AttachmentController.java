@@ -1,6 +1,7 @@
 package com.github.rich.attachment.controller;
 
-import com.github.rich.attachment.service.IAttachmentUploadService;
+import com.github.rich.attachment.factory.IAttachmentServiceFactory;
+import com.github.rich.attachment.service.IAttachmentService;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import com.github.rich.common.core.model.R;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 
 /**
  * @author Petty
@@ -21,17 +21,15 @@ import java.io.IOException;
 @RequestMapping("/attachment")
 public class AttachmentController {
 
-    private final IAttachmentUploadService attachmentUploadService;
+    private final IAttachmentServiceFactory factory;
 
-    public AttachmentController(IAttachmentUploadService attachmentUploadService) {
-        this.attachmentUploadService = attachmentUploadService;
+    public AttachmentController(IAttachmentServiceFactory factory) {
+        this.factory = factory;
     }
 
     @PostMapping("upload")
     public R<UploadResult> upload(@Validated Upload upload, MultipartFile file){
-        System.out.println(file.getContentType());
-        System.out.println(file.getName());
-        attachmentUploadService.upload(upload, file);
-        return null;
+        IAttachmentService iAttachmentUploadService = factory.create(upload.getStorage());
+        return new R<>(iAttachmentUploadService.upload(upload, file));
     }
 }

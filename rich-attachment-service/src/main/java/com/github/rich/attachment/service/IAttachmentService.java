@@ -4,13 +4,10 @@ import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
-
 /**
- * 附件上传
  * @author Petty
  */
-public interface IAttachmentUploadService {
+public interface IAttachmentService {
 
     /**
      * 文件上传
@@ -19,5 +16,10 @@ public interface IAttachmentUploadService {
      * @return UploadResult
      */
     UploadResult upload(Upload upload, MultipartFile file);
+
+    /**
+     * 下载
+     */
+    void download();
 
 }

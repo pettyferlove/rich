@@ -7,7 +7,8 @@ info:
 attachment:
   cloud:
     aliyun:
-      endpoint: http://oss-cn-shanghai.aliyuncs.com
+      root: rich
+      endpoint: oss-cn-shanghai.aliyuncs.com
       access-key-id: ENC(fRJNh0Qn783+b9m32rQQFGdgXDRiDEgahp+Eiy/cVik=)
       access-key-secret: ENC(Wg16nGSWPpo0C+9ot0RLuttvrxn+X+qS35FsUdifGEVItnnmnRHGmQ==)
       bucket: rich-attachment

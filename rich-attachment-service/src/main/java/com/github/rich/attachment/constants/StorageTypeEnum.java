@@ -9,34 +9,36 @@ public enum StorageTypeEnum {
     /**
      * 阿里云OSS储存方案
      */
-    CLOUD_OSS("Aliyun Cloud OSS", 1001),
+    CloudAliyunOSS("Aliyun Cloud OSS","aliyun", 1001),
 
     /**
      * 七牛云对象储存方案
      */
-    CLOUD_QINIU("Qiniu Cloud", 1002),
+    CloudQiniu("Qiniu Cloud", "qiniu",1002),
 
 
     /**
      * 腾讯云COS方案
      */
-    CLOUD_TENCENT("Tencent Cloud COS", 1003),
+    CloudTencent("Tencent Cloud COS", "tencent",1003),
 
     /**
      * 百度云BOS方案
      */
-    CLOUD_BAIDU("Baidu Cloud BOS", 1004),
+    CloudBaidu("Baidu Cloud BOS","baidu", 1004),
 
     /**
      * 本地文件储存
      */
-    FILE_LOCAL("Local File", 2001);
+    FileLocal("Local File","local", 2001);
 
     private String type;
+    private String service;
     private int value;
 
-    StorageTypeEnum(String type, int value) {
+    StorageTypeEnum(String type, String service, int value) {
         this.type = type;
+        this.service = service;
         this.value = value;
     }
 
@@ -44,20 +46,16 @@ public enum StorageTypeEnum {
         return value;
     }
 
-    @Override
-    public String toString() {
-        return "StorageType{" +
-                "type='" + type + '\'' +
-                ", value=" + value +
-                '}';
+    public String getService() {
+        return service;
     }
 
-    public static boolean isInEnum(int value) {
-        for (StorageTypeEnum userType : StorageTypeEnum.values()) {
-            if (userType.getValue() == value) {
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public String toString() {
+        return "StorageTypeEnum{" +
+                "type='" + type + '\'' +
+                ", service='" + service + '\'' +
+                ", value=" + value +
+                '}';
     }
 }

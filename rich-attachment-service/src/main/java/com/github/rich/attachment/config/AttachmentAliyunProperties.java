@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnExpression("!'${attachment.cloud.aliyun}'.isEmpty()")
 @ConfigurationProperties(prefix = "attachment.cloud.aliyun")
 public class AttachmentAliyunProperties {
+    private String root;
     private String endpoint;
     private String accessKeyId;
     private String accessKeySecret;
