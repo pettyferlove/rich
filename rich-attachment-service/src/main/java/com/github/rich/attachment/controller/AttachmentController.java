@@ -1,6 +1,9 @@
 package com.github.rich.attachment.controller;
 
+import com.github.rich.attachment.constants.StorageTypeEnum;
+import com.github.rich.attachment.entity.AttachmentInfo;
 import com.github.rich.attachment.factory.IAttachmentServiceFactory;
+import com.github.rich.attachment.service.IAttachmentInfoService;
 import com.github.rich.attachment.service.IAttachmentService;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
@@ -23,8 +26,11 @@ public class AttachmentController {
 
     private final IAttachmentServiceFactory factory;
 
-    public AttachmentController(IAttachmentServiceFactory factory) {
+    private final IAttachmentInfoService attachmentInfoService;
+
+    public AttachmentController(IAttachmentServiceFactory factory, IAttachmentInfoService attachmentInfoService) {
         this.factory = factory;
+        this.attachmentInfoService = attachmentInfoService;
     }
 
     @PostMapping("upload")
@@ -35,7 +41,9 @@ public class AttachmentController {
 
     @GetMapping("download/{id}")
     public void download(@PathVariable String id, HttpServletResponse response){
-
+        AttachmentInfo attachmentInfo = attachmentInfoService.getAttachmentInfoById(id);
+        IAttachmentService attachmentService = factory.create(StorageTypeEnum.parse(attachmentInfo.getStorageType()));
+        attachmentService.download(attachmentInfo);
     }
 
 

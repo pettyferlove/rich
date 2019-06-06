@@ -27,8 +27,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value="AttachmentUploadInfo对象", description="")
-public class AttachmentUploadInfo extends Model<AttachmentUploadInfo> {
+@ApiModel(value="AttachmentInfo对象", description="")
+public class AttachmentInfo extends Model<AttachmentInfo> {
 
     private static final long serialVersionUID = 1L;
 

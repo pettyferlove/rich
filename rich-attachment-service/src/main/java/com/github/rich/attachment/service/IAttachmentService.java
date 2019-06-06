@@ -1,5 +1,6 @@
 package com.github.rich.attachment.service;
 
+import com.github.rich.attachment.entity.AttachmentInfo;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,8 @@ public interface IAttachmentService {
 
     /**
      * 下载
+     * @param attachmentInfo  文件信息
      */
-    void download();
+    void download(AttachmentInfo attachmentInfo);
 
 }

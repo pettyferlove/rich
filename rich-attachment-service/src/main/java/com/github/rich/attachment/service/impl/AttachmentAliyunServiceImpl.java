@@ -4,12 +4,14 @@ import cn.hutool.core.util.IdUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.CannedAccessControlList;
+import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.github.rich.attachment.config.AttachmentAliyunProperties;
 import com.github.rich.attachment.constants.FileTypeEnum;
 import com.github.rich.attachment.constants.SecurityTypeEnum;
+import com.github.rich.attachment.entity.AttachmentInfo;
+import com.github.rich.attachment.service.IAttachmentInfoService;
 import com.github.rich.attachment.service.IAttachmentService;
-import com.github.rich.attachment.service.IAttachmentUploadInfoService;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import com.github.rich.common.core.exception.BaseRuntimeException;
@@ -29,7 +31,7 @@ import java.io.IOException;
 @Service("aliyun")
 public class AttachmentAliyunServiceImpl implements IAttachmentService {
 
-    private final IAttachmentUploadInfoService attachmentUploadInfoService;
+    private final IAttachmentInfoService attachmentInfoService;
 
     private final AttachmentAliyunProperties aliyunProperties;
 
@@ -37,8 +39,8 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
 
     private final String URL_STR = "https://%s.%s/%s";
 
-    public AttachmentAliyunServiceImpl(IAttachmentUploadInfoService attachmentUploadInfoService, AttachmentAliyunProperties aliyunProperties, OSS oss) {
-        this.attachmentUploadInfoService = attachmentUploadInfoService;
+    public AttachmentAliyunServiceImpl(IAttachmentInfoService attachmentInfoService, AttachmentAliyunProperties aliyunProperties, OSS oss) {
+        this.attachmentInfoService = attachmentInfoService;
         this.aliyunProperties = aliyunProperties;
         this.oss = oss;
     }
@@ -61,16 +63,18 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             ObjectMetadata meta = new ObjectMetadata();
             String md5 = BinaryUtil.toBase64String(BinaryUtil.calculateMd5(file.getBytes()));
             meta.setContentMD5(md5);
-            @NotNull SecurityTypeEnum security = upload.getSecurity();
-            if (security == SecurityTypeEnum.Private) {
-                meta.setObjectAcl(CannedAccessControlList.Private);
-            } else if (security == SecurityTypeEnum.PublicRead) {
-                result.setUrl(String.format(URL_STR, aliyunProperties.getBucket(), aliyunProperties.getEndpoint(), filePath.toString()));
-                meta.setObjectAcl(CannedAccessControlList.PublicRead);
-            }
-            oss.putObject(aliyunProperties.getBucket(), filePath.toString(), file.getInputStream(), meta);
-
-            if(attachmentUploadInfoService.save(fileId,file.getOriginalFilename(),md5,filePath.toString(),upload,file.getContentType(),file.getSize())){
+            if(attachmentInfoService.save(fileId,file.getOriginalFilename(),md5,filePath.toString(),upload,file.getContentType(),file.getSize())){
+                result.setMd5(md5);
+                result.setFileId(fileId);
+                result.setStoreType(upload.getStorage().getValue());
+                @NotNull SecurityTypeEnum security = upload.getSecurity();
+                if (security == SecurityTypeEnum.Private) {
+                    meta.setObjectAcl(CannedAccessControlList.Private);
+                } else if (security == SecurityTypeEnum.PublicRead) {
+                    result.setUrl(String.format(URL_STR, aliyunProperties.getBucket(), aliyunProperties.getEndpoint(), filePath.toString()));
+                    meta.setObjectAcl(CannedAccessControlList.PublicRead);
+                }
+                oss.putObject(aliyunProperties.getBucket(), filePath.toString(), file.getInputStream(), meta);
                 result.setMd5(md5);
                 result.setFileId(fileId);
                 result.setStoreType(upload.getStorage().getValue());
@@ -86,7 +90,8 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
     }
 
     @Override
-    public void download() {
-
+    public void download(AttachmentInfo attachmentInfo) {
+        OSSObject ossObject = oss.getObject(aliyunProperties.getBucket(),attachmentInfo.getPath());
+        System.out.println(ossObject);
     }
 }

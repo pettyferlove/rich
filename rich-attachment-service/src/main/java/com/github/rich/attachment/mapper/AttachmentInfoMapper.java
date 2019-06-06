@@ -1,6 +1,6 @@
 package com.github.rich.attachment.mapper;
 
-import com.github.rich.attachment.entity.AttachmentUploadInfo;
+import com.github.rich.attachment.entity.AttachmentInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Petty
  * @since 2019-06-06
  */
-public interface AttachmentUploadInfoMapper extends BaseMapper<AttachmentUploadInfo> {
+public interface AttachmentInfoMapper extends BaseMapper<AttachmentInfo> {
 
 }
