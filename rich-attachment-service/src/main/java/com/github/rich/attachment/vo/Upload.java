@@ -26,14 +26,6 @@ import java.io.Serializable;
 public class Upload implements Serializable {
 
     private static final long serialVersionUID = 3346764162292691065L;
-
-
-    /**
-     * 文件名
-     */
-    @NotNull
-    private String name;
-
     /**
      * 文件组，分组区分
      */
