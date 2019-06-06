@@ -9,6 +9,7 @@ import com.aliyun.oss.model.ObjectMetadata;
 import com.github.rich.attachment.config.AttachmentAliyunProperties;
 import com.github.rich.attachment.constants.FileTypeEnum;
 import com.github.rich.attachment.constants.SecurityTypeEnum;
+import com.github.rich.attachment.dto.Download;
 import com.github.rich.attachment.entity.AttachmentInfo;
 import com.github.rich.attachment.service.IAttachmentInfoService;
 import com.github.rich.attachment.service.IAttachmentService;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author Petty
@@ -48,7 +50,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UploadResult upload(Upload upload, MultipartFile file) {
-        Assert.notNull(file,"上传文件不可为空");
+        Assert.notNull(file, "上传文件不可为空");
         UploadResult result = new UploadResult();
         String fileId = IdUtil.simpleUUID();
         FileTypeEnum parse = FileTypeEnum.parse(file.getContentType());
@@ -63,7 +65,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             ObjectMetadata meta = new ObjectMetadata();
             String md5 = BinaryUtil.toBase64String(BinaryUtil.calculateMd5(file.getBytes()));
             meta.setContentMD5(md5);
-            if(attachmentInfoService.save(fileId,file.getOriginalFilename(),md5,filePath.toString(),upload,file.getContentType(),file.getSize())){
+            if (attachmentInfoService.save(fileId, file.getOriginalFilename(), md5, filePath.toString(), upload, file.getContentType(), file.getSize())) {
                 result.setMd5(md5);
                 result.setFileId(fileId);
                 result.setStoreType(upload.getStorage().getValue());
@@ -78,7 +80,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
                 result.setMd5(md5);
                 result.setFileId(fileId);
                 result.setStoreType(upload.getStorage().getValue());
-            }else{
+            } else {
                 log.error("file upload info save error -->params:{},{}", upload, file);
                 throw new BaseRuntimeException("file upload info save error");
             }
@@ -90,8 +92,16 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
     }
 
     @Override
-    public void download(AttachmentInfo attachmentInfo) {
-        OSSObject ossObject = oss.getObject(aliyunProperties.getBucket(),attachmentInfo.getPath());
-        System.out.println(ossObject);
+    public void download(AttachmentInfo attachmentInfo, OutputStream outputStream) {
+        try {
+            OSSObject ossObject = oss.getObject(aliyunProperties.getBucket(), attachmentInfo.getPath());
+            int ch;
+            while ((ch = ossObject.getObjectContent().read()) != -1) {
+                outputStream.write(ch);
+            }
+        } catch (Exception e) {
+            log.error("file download error -->params:{}", attachmentInfo);
+            throw new BaseRuntimeException("file download error");
+        }
     }
 }

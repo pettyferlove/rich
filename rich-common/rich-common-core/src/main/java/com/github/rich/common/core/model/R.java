@@ -63,4 +63,6 @@ public class R<T> implements Serializable {
         this.status = code;
         this.timestamp = System.currentTimeMillis();
     }
+
+
 }

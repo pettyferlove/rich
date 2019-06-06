@@ -1,14 +1,13 @@
 package com.github.rich.attachment.constants;
 
-import com.aliyun.oss.model.CannedAccessControlList;
-
 public enum FileTypeEnum {
 
     /**
      * JPEG
      */
     IMAGE_JPEG("image/jpeg",".jpeg"),
-    IMAGE_JPG("image/jpg",".jpg");
+    IMAGE_JPG("image/jpg",".jpg"),
+    EXCEL_XLSX("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",".xlsx");
     private String contentType;
 
     private String expansionName;
