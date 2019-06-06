@@ -41,13 +41,13 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
         PutObjectResult putObjectResult = null;
         String fileId = IdUtil.simpleUUID();
         FileTypeEnum parse = FileTypeEnum.parse(file.getContentType());
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(aliyunProperties.getRoot());
-        stringBuilder.append("/");
-        stringBuilder.append(upload.getGroup());
-        stringBuilder.append("/");
-        stringBuilder.append(fileId);
-        stringBuilder.append(parse.getExpansionName());
+        StringBuilder filePath = new StringBuilder();
+        filePath.append(aliyunProperties.getRoot());
+        filePath.append("/");
+        filePath.append(upload.getGroup());
+        filePath.append("/");
+        filePath.append(fileId);
+        filePath.append(parse.getExpansionName());
 
         try {
             ObjectMetadata meta = new ObjectMetadata();
@@ -57,15 +57,16 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             if(security ==SecurityTypeEnum.Private){
                 meta.setObjectAcl(CannedAccessControlList.Private);
             } else if(security ==SecurityTypeEnum.PublicRead){
-                result.setUrl(String.format(URL_STR,aliyunProperties.getBucket(),aliyunProperties.getEndpoint(),stringBuilder.toString()));
+                result.setUrl(String.format(URL_STR,aliyunProperties.getBucket(),aliyunProperties.getEndpoint(),filePath.toString()));
                 meta.setObjectAcl(CannedAccessControlList.PublicRead);
             }
-            putObjectResult = oss.putObject(aliyunProperties.getBucket(), stringBuilder.toString(), file.getInputStream(),meta);
+            putObjectResult = oss.putObject(aliyunProperties.getBucket(), filePath.toString(), file.getInputStream(),meta);
             result.setMd5(md5);
             result.setFileId(fileId);
             result.setStoreType(upload.getStorage().getValue());
             System.out.println(upload.getName());
             System.out.println(upload.getStorage().getValue());
+            System.out.println(filePath.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
