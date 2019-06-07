@@ -50,7 +50,6 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentId",condition = "#menu.parentId!=null")
     })
     public String createNode(SystemMenuResource menu) {
@@ -82,9 +81,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#id"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, allEntries = true)
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true)
     })
     public Boolean deleteNode(String id) throws Exception {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentId, id));
@@ -98,7 +95,6 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#menu.id",condition = "#menu.id!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentId",condition = "#menu.parentId!=null")
     })
     public Boolean updateNode(SystemMenuResource menu) {
@@ -115,7 +111,6 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     }
 
     @Override
-    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-menu", key = "#userId", condition = "#userId!=null")
     public List<SystemMenuResource> loadPermissionsByUserId(String userId) {
         List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId,userId));
         List<String> roleIds = new ArrayList<>();

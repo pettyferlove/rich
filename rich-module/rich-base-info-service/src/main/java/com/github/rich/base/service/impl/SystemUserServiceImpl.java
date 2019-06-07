@@ -171,7 +171,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
-            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#id", condition = "#id!=null")
     })
     public Boolean delete(String id) {

@@ -45,7 +45,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
-    @Cacheable(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#roleId", condition = "#roleId!=null")
     public List<String> loadMenuKeysForRole(String roleId) {
         List<String> keys = new LinkedList<>();
         List<SystemRoleMenu> list = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getRoleId, roleId));
@@ -57,11 +56,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @Caching(evict = {
-            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
-            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#roleId", condition = "#roleId!=null")
-    })
     public Boolean updateMenuForRole(String roleId, String[] addIds, String[] removeIds) {
         try{
             List<String> addIdList = Arrays.asList(addIds);
@@ -88,14 +82,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
-            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true),
-            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
-            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#id", condition = "#id!=null")
-    })
+    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true)
     public Boolean delete(String id) {
         try {
             this.removeById(id);
@@ -124,7 +111,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#role.id", condition = "#role.id!=null")
     })
     public Boolean update(SystemRole role) {
@@ -134,7 +120,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
-    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-role", key = "#userId", condition = "#userId!=null")
     public List<SystemRole> findRoleByUserId(String userId) {
         List<SystemRole> systemRoles = new ArrayList<>();
         List<SystemUserRole> systemUserRoles = Optional.ofNullable(systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId))).orElseGet(ArrayList::new);
@@ -158,12 +143,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @Caching(evict = {
-            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
-            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
-            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true)
-    })
+    @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true)
     public Boolean addUserRole(String userId, String[] roleIds) {
         try {
             systemUserRoleService.addBatch(userId,Arrays.asList(roleIds));
@@ -175,12 +155,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @Caching(evict = {
-            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
-            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
-            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true)
-    })
+    @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true)
     public Boolean deleteUserRole(String userId, String[] roleIds) {
         try {
             systemUserRoleService.removeBatch(userId,Arrays.asList(roleIds));
