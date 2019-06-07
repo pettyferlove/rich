@@ -7,6 +7,7 @@ import com.github.rich.attachment.vo.UploadResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.OutputStream;
+import java.util.List;
 
 /**
  * @author Petty
@@ -27,5 +28,15 @@ public interface IAttachmentService {
      * @param outputStream  输出流
      */
     void download(AttachmentInfo attachmentInfo, OutputStream outputStream);
+
+
+    /**
+     * 删除文件（同时删除数据记录）
+     * @param attachmentInfo 文件信息
+     * @return Boolean
+     */
+    Boolean delete(AttachmentInfo attachmentInfo);
+
+    Boolean deleteBatch(List<AttachmentInfo> attachmentInfos);
 
 }

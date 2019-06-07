@@ -42,4 +42,14 @@ public class AttachmentController {
         attachmentOperaService.view(id, response);
     }
 
+    @DeleteMapping("/{id}")
+    public R<Boolean> delete(@PathVariable String id){
+        return new R<>(attachmentOperaService.delete(id));
+    }
+
+    @PostMapping("/batch/delete")
+    public R<Boolean> deleteBatch(String[] ids){
+        return new R<>(attachmentOperaService.deleteBatch(ids));
+    }
+
 }

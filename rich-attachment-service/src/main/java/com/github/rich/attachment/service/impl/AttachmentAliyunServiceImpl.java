@@ -3,9 +3,7 @@ package com.github.rich.attachment.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.common.utils.BinaryUtil;
-import com.aliyun.oss.model.CannedAccessControlList;
-import com.aliyun.oss.model.OSSObject;
-import com.aliyun.oss.model.ObjectMetadata;
+import com.aliyun.oss.model.*;
 import com.github.rich.attachment.config.AttachmentAliyunProperties;
 import com.github.rich.attachment.constants.FileTypeEnum;
 import com.github.rich.attachment.constants.SecurityTypeEnum;
@@ -25,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Petty
@@ -102,6 +102,35 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
         } catch (Exception e) {
             log.error("file download error -->params:{}", attachmentInfo);
             throw new BaseRuntimeException("file download error");
+        }
+    }
+
+    @Override
+    public Boolean delete(AttachmentInfo attachmentInfo) {
+        try {
+            oss.deleteObject(aliyunProperties.getBucket(),attachmentInfo.getPath());
+            return true;
+        } catch (Exception e){
+            log.error("file delete error -->params:{}", attachmentInfo);
+            throw new BaseRuntimeException("file delete error");
+        }
+    }
+
+    @Override
+    public Boolean deleteBatch(List<AttachmentInfo> attachmentInfos) {
+        try {
+            List<String> keys = new ArrayList<String>();
+            for(AttachmentInfo attachmentInfo: attachmentInfos){
+                keys.add(attachmentInfo.getPath());
+            }
+            if(keys.size()>0){
+                DeleteObjectsResult deleteObjectsResult = oss.deleteObjects(new DeleteObjectsRequest(aliyunProperties.getBucket()).withKeys(keys));
+                List<String> deletedObjects = deleteObjectsResult.getDeletedObjects();
+            }
+            return true;
+        } catch (Exception e){
+            log.error("file delete batch error -->params:{}", attachmentInfos);
+            throw new BaseRuntimeException("file delete batch error");
         }
     }
 }

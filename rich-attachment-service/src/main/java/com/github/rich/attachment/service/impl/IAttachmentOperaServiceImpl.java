@@ -13,6 +13,7 @@ import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.model.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -86,15 +87,41 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean delete(String id) {
-        Optional<AttachmentInfo> attachmentInfoOptional = Optional.ofNullable(attachmentInfoService.getAttachmentInfoById(id));
-        return null;
+        try {
+            boolean result = false;
+            Optional<AttachmentInfo> attachmentInfoOptional = Optional.ofNullable(attachmentInfoService.getAttachmentInfoById(id));
+            if (attachmentInfoOptional.isPresent()) {
+                AttachmentInfo attachmentInfo = attachmentInfoOptional.get();
+                IAttachmentService attachmentService = factory.create(StorageTypeEnum.parse(attachmentInfo.getStorageType()));
+                if(attachmentService.delete(attachmentInfo)){
+                    result = attachmentInfoService.removeById(attachmentInfo.getId());
+                }
+
+            }
+            return result;
+        } catch (Exception e){
+            throw new BaseRuntimeException("delete file error", 500);
+        }
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteBatch(String[] ids) {
-        List<String> fileIds = Arrays.asList(ids);
-        List<AttachmentInfo> attachmentInfos = (List<AttachmentInfo>) attachmentInfoService.listByIds(fileIds);
-        return null;
+        try{
+            boolean result = false;
+            List<String> fileIds = Arrays.asList(ids);
+            List<AttachmentInfo> attachmentInfos = (List<AttachmentInfo>) attachmentInfoService.listByIds(fileIds);
+            for(AttachmentInfo attachmentInfo: attachmentInfos){
+                IAttachmentService attachmentService = factory.create(StorageTypeEnum.parse(attachmentInfo.getStorageType()));
+                if(attachmentService.delete(attachmentInfo)){
+                    result = attachmentInfoService.removeById(attachmentInfo.getId());
+                }
+            }
+            return result;
+        }catch (Exception e){
+            throw new BaseRuntimeException("batch delete file error", 500);
+        }
     }
 }
