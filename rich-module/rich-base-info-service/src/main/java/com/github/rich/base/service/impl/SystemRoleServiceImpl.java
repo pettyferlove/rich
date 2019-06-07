@@ -153,4 +153,34 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         }
         return keys;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
+            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true)
+    })
+    public Boolean addUserRole(String userId, String[] roleIds) {
+        try {
+            systemUserRoleService.addBatch(userId,Arrays.asList(roleIds));
+            return true;
+        } catch (Exception e) {
+            throw new BaseRuntimeException("添加失败");
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
+            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true)
+    })
+    public Boolean deleteUserRole(String userId, String[] roleIds) {
+        try {
+            systemUserRoleService.removeBatch(userId,Arrays.asList(roleIds));
+            return true;
+        } catch (Exception e) {
+            throw new BaseRuntimeException("删除失败");
+        }
+    }
 }

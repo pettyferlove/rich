@@ -87,4 +87,8 @@ public interface ISystemRoleService extends IService<SystemRole> {
      * @return 集合
      */
     List<String> findRoleKeyByUserId(String userID);
+
+    Boolean addUserRole(String userId, String[] roleIds);
+
+    Boolean deleteUserRole(String userId, String[] roleIds);
 }

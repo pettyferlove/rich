@@ -84,20 +84,21 @@ public class RoleController {
         return new R<>(systemRoleService.loadMenuKeysForRole(roleId));
     }
 
-    @ApiOperation(value = "更新角色下已绑定资源（菜单）", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "更新角色下已绑定资源（菜单）", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "roleId", value = "roleId", dataTypeClass = String.class),
             @ApiImplicitParam(paramType = "query", name = "addIds", value = "addIds", dataTypeClass = String[].class),
             @ApiImplicitParam(paramType = "query", name = "removeIds", value = "removeIds", dataTypeClass = String[].class)
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/authority")
-    public R<Boolean> authorityUpdate(String roleId, String[] addIds, String[] removeIds){
-        return new R<>(systemRoleService.updateMenuForRole(roleId,addIds,removeIds));
+    public R<Boolean> authorityUpdate(String roleId, String[] addIds, String[] removeIds) {
+        return new R<>(systemRoleService.updateMenuForRole(roleId, addIds, removeIds));
     }
 
     @ApiOperation(value = "获取当前全部角色", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("/all")
-    public R<List<SystemRole>> all(){
+    public R<List<SystemRole>> all() {
         return new R<>(systemRoleService.list());
     }
 
@@ -106,8 +107,30 @@ public class RoleController {
             @ApiImplicitParam(paramType = "path", name = "userId", value = "userId", dataTypeClass = String.class)
     })
     @GetMapping("/user/{userId}")
-    public R<List<String>> user(@PathVariable String userId){
+    public R<List<String>> user(@PathVariable String userId) {
         return new R<>(systemRoleService.findRoleKeyByUserId(userId));
+    }
+
+    @ApiOperation(value = "为用户增加角色", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "userId", dataTypeClass = String.class),
+            @ApiImplicitParam(paramType = "query", name = "ids", value = "ids", dataTypeClass = String[].class)
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/user/add")
+    public R<Boolean> userAdd(String userId, String[] ids) {
+        return new R<>(systemRoleService.addUserRole(userId, ids));
+    }
+
+    @ApiOperation(value = "为用户删除角色", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "userId", value = "userId", dataTypeClass = String.class),
+            @ApiImplicitParam(paramType = "query", name = "ids", value = "ids", dataTypeClass = String[].class)
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/user/delete")
+    public R<Boolean> userDelete(String userId, String[] ids) {
+        return new R<>(systemRoleService.deleteUserRole(userId, ids));
     }
 
 
