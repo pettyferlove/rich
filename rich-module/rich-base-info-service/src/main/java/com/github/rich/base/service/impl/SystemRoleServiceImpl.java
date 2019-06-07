@@ -56,6 +56,24 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#roleId", condition = "#roleId!=null")
+    })
+    public Boolean updateMenuForRole(String roleId, String[] addIds, String[] removeIds) {
+        try{
+            List<String> addIdList = Arrays.asList(addIds);
+            List<String> removeIdList = Arrays.asList(removeIds);
+            systemRoleMenuService.addBatch(roleId,addIdList);
+            systemRoleMenuService.removeBatch(roleId,removeIdList);
+            return true;
+        } catch (Exception e){
+            throw new BaseRuntimeException("更新失败");
+        }
+    }
+
+    @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#role.toString())")
     public IPage<SystemRole> page(SystemRole role, Page<SystemRole> page) {
         return this.page(page, Wrappers.lambdaQuery(role));

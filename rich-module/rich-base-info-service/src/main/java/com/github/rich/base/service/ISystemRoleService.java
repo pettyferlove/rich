@@ -25,6 +25,15 @@ public interface ISystemRoleService extends IService<SystemRole> {
     List<String> loadMenuKeysForRole(String roleId);
 
     /**
+     * 更绝角色菜单关联信息
+     * @param roleId 角色ID
+     * @param addIds 需要添加的ID集合
+     * @param removeIds 需要删除的ID集合
+     * @return Boolean
+     */
+    Boolean updateMenuForRole(String roleId, String[] addIds, String[] removeIds);
+
+    /**
      * List查找
      *
      * @param role 查询参数对象
