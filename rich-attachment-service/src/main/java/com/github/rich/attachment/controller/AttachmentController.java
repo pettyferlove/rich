@@ -1,6 +1,5 @@
 package com.github.rich.attachment.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.attachment.service.IAttachmentOperaService;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
@@ -70,6 +69,7 @@ public class AttachmentController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "ids", value = "ids", dataTypeClass = String[].class)
     })
+    @Deprecated
     @PostMapping("/batch/delete")
     public R<Boolean> deleteBatch(String[] ids){
         return new R<>(attachmentOperaService.deleteBatch(ids));
