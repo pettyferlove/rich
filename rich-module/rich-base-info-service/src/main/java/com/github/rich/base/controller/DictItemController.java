@@ -28,7 +28,7 @@ public class DictItemController {
 
     @ApiOperation(value = "获取字典项列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "page", value = "Page", dataTypeClass = Page.class),
+            @ApiImplicitParam(paramType = "query", name = "page", value = "Page", dataTypeClass = Page.class),
             @ApiImplicitParam(paramType = "query", name = "typeId", value = "TypeId", dataTypeClass = String.class)
     })
     @GetMapping("page")
@@ -47,7 +47,7 @@ public class DictItemController {
 
     @ApiOperation(value = "创建字典项", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "dictItem", value = "DictItem", dataTypeClass = SystemDictItem.class)
+            @ApiImplicitParam(paramType = "query", name = "dictItem", value = "DictItem", dataTypeClass = SystemDictItem.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
@@ -57,7 +57,7 @@ public class DictItemController {
 
     @ApiOperation(value = "更新字典项", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "dictItem", value = "DictItem", dataTypeClass = SystemDictItem.class)
+            @ApiImplicitParam(paramType = "query", name = "dictItem", value = "DictItem", dataTypeClass = SystemDictItem.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping

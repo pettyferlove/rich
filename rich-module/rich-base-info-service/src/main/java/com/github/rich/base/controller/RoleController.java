@@ -27,8 +27,8 @@ public class RoleController {
 
     @ApiOperation(value = "获取角色列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class),
-            @ApiImplicitParam(paramType = "object", name = "page", value = "Page", dataTypeClass = Page.class)
+            @ApiImplicitParam(paramType = "query", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class),
+            @ApiImplicitParam(paramType = "query", name = "page", value = "Page", dataTypeClass = Page.class)
     })
     @GetMapping("page")
     public R<IPage> page(SystemRole systemRole, Page<SystemRole> page) {
@@ -46,7 +46,7 @@ public class RoleController {
 
     @ApiOperation(value = "创建角色", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class)
+            @ApiImplicitParam(paramType = "query", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
@@ -56,7 +56,7 @@ public class RoleController {
 
     @ApiOperation(value = "更新角色", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class)
+            @ApiImplicitParam(paramType = "query", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping

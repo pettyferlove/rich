@@ -36,7 +36,7 @@ public class MenuController {
 
     @ApiOperation(value = "创建菜单节点", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
+            @ApiImplicitParam(paramType = "query", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/node/create")
@@ -71,7 +71,7 @@ public class MenuController {
 
     @ApiOperation(value = "更新菜单节点", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "object", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
+            @ApiImplicitParam(paramType = "query", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/node")
