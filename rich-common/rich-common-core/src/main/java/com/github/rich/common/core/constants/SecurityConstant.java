@@ -4,6 +4,9 @@ package com.github.rich.common.core.constants;
  * @author Petty
  */
 public interface SecurityConstant {
+
+    String ADMIN_ACCOUNT_NUMBER = "administrator";
+
     /**
      * 角色前缀
      */
