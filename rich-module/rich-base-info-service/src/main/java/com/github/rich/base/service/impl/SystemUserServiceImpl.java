@@ -16,7 +16,9 @@ import com.github.rich.base.service.ISystemUserService;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -136,6 +138,12 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#id", condition = "#id!=null")
+    })
     public Boolean delete(String id) {
         try {
             this.removeById(id);
@@ -147,6 +155,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true)
     public String create(SystemUser user) {
         String userId = IdUtil.simpleUUID();
         user.setId(userId);
@@ -160,6 +169,11 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#user.id", condition = "#user.id!=null")
+    })
     public Boolean update(SystemUser user) {
         user.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         user.setModifierTime(LocalDateTime.now());

@@ -57,6 +57,9 @@ public class SystemUser extends Model<SystemUser> {
     private Integer userSex;
 
     @ApiModelProperty(value = "生日")
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime userBorn;
 
     @ApiModelProperty(value = "用户头像")
