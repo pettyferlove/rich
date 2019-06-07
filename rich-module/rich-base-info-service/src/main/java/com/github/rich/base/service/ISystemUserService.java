@@ -1,5 +1,7 @@
 package com.github.rich.base.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -49,4 +51,47 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @return Boolean
      */
     Boolean registerByWeChatOpenID(String openid,String unionid);
+
+
+    /**
+     * List查找
+     *
+     * @param user 查询参数对象
+     * @param page     Page分页对象
+     * @return IPage 返回结果
+     */
+    IPage<SystemUser> page(SystemUser user, Page<SystemUser> page);
+
+    /**
+     * 通过Id查询Role信息
+     *
+     * @param id 业务主键
+     * @return 对象
+     */
+    SystemUser get(String id);
+
+    /**
+     * 通过Id删除信息
+     *
+     * @param id 业务主键
+     * @return Boolean
+     */
+    Boolean delete(String id);
+
+    /**
+     * 创建数据
+     *
+     * @param user 要创建的对象
+     * @return Boolean
+     */
+    String create(SystemUser user);
+
+    /**
+     * 更新数据（必须带Code）
+     *
+     * @param user 对象
+     * @return Boolean
+     */
+    Boolean update(SystemUser user);
+
 }

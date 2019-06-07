@@ -91,7 +91,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
         if(this.save(dictType)){
             return dictTypeId;
         }else {
-            throw new BaseRuntimeException("save error");
+            throw new BaseRuntimeException("新增失败");
         }
     }
 

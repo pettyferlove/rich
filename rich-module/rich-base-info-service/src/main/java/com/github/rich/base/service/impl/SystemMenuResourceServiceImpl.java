@@ -47,7 +47,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
         if(this.save(menu)){
             return menuId;
         }else {
-            throw new BaseRuntimeException("save error");
+            throw new BaseRuntimeException("新增失败");
         }
     }
 

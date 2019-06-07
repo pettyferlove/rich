@@ -76,7 +76,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
         if(this.save(dictItem)){
             return dictItemId;
         }else {
-            throw new BaseRuntimeException("save error");
+            throw new BaseRuntimeException("新增失败");
         }
     }
 

@@ -97,7 +97,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         if (this.save(role)) {
             return roleId;
         } else {
-            throw new BaseRuntimeException("save error");
+            throw new BaseRuntimeException("新增失败");
         }
     }
 

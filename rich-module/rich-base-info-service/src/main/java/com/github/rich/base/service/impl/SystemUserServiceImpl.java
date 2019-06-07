@@ -1,19 +1,21 @@
 package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.dto.User;
-import com.github.rich.base.entity.SystemRole;
-import com.github.rich.base.entity.SystemUser;
-import com.github.rich.base.entity.SystemUserExtend;
+import com.github.rich.base.entity.*;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.base.service.ISystemUserExtendService;
+import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.service.ISystemUserService;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
+import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -35,10 +37,13 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     private final ISystemRoleService systemRoleService;
 
+    private final ISystemUserRoleService systemUserRoleService;
+
     private final ISystemUserExtendService systemUserExtendService;
 
-    public SystemUserServiceImpl(ISystemRoleService systemRoleService, ISystemUserExtendService systemUserExtendService) {
+    public SystemUserServiceImpl(ISystemRoleService systemRoleService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService) {
         this.systemRoleService = systemRoleService;
+        this.systemUserRoleService = systemUserRoleService;
         this.systemUserExtendService = systemUserExtendService;
     }
 
@@ -115,6 +120,50 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             throw new BaseRuntimeException("注册失败");
         }
         return result;
+    }
+
+    @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#user.toString())")
+    public IPage<SystemUser> page(SystemUser user, Page<SystemUser> page) {
+        return this.page(page, Wrappers.lambdaQuery(user));
+    }
+
+    @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#id", condition = "#id!=null")
+    public SystemUser get(String id) {
+        return this.getById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean delete(String id) {
+        try {
+            this.removeById(id);
+            systemUserRoleService.remove(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, id));
+            return true;
+        } catch (Exception e) {
+            throw new BaseRuntimeException("删除失败");
+        }
+    }
+
+    @Override
+    public String create(SystemUser user) {
+        String userId = IdUtil.simpleUUID();
+        user.setId(userId);
+        user.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        user.setCreateTime(LocalDateTime.now());
+        if (this.save(user)) {
+            return userId;
+        } else {
+            throw new BaseRuntimeException("新增失败");
+        }
+    }
+
+    @Override
+    public Boolean update(SystemUser user) {
+        user.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        user.setModifierTime(LocalDateTime.now());
+        return this.updateById(user);
     }
 
     private List<String> loadRoles(String userId) {
