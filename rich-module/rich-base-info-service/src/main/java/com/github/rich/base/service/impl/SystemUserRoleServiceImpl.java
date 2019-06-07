@@ -1,10 +1,16 @@
 package com.github.rich.base.service.impl;
 
+import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.base.entity.SystemRoleMenu;
 import com.github.rich.base.entity.SystemUserRole;
 import com.github.rich.base.mapper.SystemUserRoleMapper;
 import com.github.rich.base.service.ISystemUserRoleService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +23,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper, SystemUserRole> implements ISystemUserRoleService {
 
+    @Override
+    public void addBatch(String userId, List<String> addIdList) {
+        List<SystemUserRole> systemUserRoles = new ArrayList<>();
+        for (String roleId : addIdList) {
+            SystemUserRole systemUserRole = new SystemUserRole();
+            systemUserRole.setId(IdUtil.simpleUUID());
+            systemUserRole.setRoleId(roleId);
+            systemUserRole.setUserId(userId);
+            systemUserRoles.add(systemUserRole);
+        }
+        if (systemUserRoles.size() != 0) {
+            this.saveBatch(systemUserRoles);
+        }
+    }
+
+    @Override
+    public void removeBatch(String userId, List<String> removeIdList) {
+        if (removeIdList.size() > 0) {
+            List<SystemUserRole> systemUserRoles = this.list(Wrappers.<SystemUserRole>lambdaQuery().in(SystemUserRole::getRoleId, removeIdList));
+            List<String> ids = new ArrayList<>();
+            for (SystemUserRole systemUserRole : systemUserRoles) {
+                ids.add(systemUserRole.getId());
+            }
+            if (ids.size() > 0) {
+                this.removeByIds(ids);
+            }
+        }
+    }
 }

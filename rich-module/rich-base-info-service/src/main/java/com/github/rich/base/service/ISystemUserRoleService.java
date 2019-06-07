@@ -16,4 +16,18 @@ import java.util.List;
  */
 public interface ISystemUserRoleService extends IService<SystemUserRole> {
 
+    /**
+     * 批量增加
+     * @param userId 用户ID
+     * @param addIdList Role ID集合
+     */
+    void addBatch(String userId, List<String> addIdList);
+
+    /**
+     * 批量删除
+     * @param userId 用户ID
+     * @param removeIdList Role ID集合
+     */
+    void removeBatch(String userId, List<String> removeIdList);
+
 }

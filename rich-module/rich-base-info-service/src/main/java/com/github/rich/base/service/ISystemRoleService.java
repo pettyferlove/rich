@@ -80,4 +80,11 @@ public interface ISystemRoleService extends IService<SystemRole> {
      * @return 集合
      */
     List<SystemRole> findRoleByUserId(String userId);
+
+    /**
+     * 通过用户名查询角色ID集合
+     * @param userID 用户ID
+     * @return 集合
+     */
+    List<String> findRoleKeyByUserId(String userID);
 }

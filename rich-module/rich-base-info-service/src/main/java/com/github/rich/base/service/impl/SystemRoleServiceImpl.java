@@ -143,4 +143,14 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         }
         return systemRoles;
     }
+
+    @Override
+    public List<String> findRoleKeyByUserId(String userID) {
+        List<String> keys = new ArrayList<>();
+        List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userID));
+        for (SystemUserRole systemUserRole: systemUserRoles) {
+            keys.add(systemUserRole.getRoleId());
+        }
+        return keys;
+    }
 }
