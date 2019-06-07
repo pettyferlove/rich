@@ -60,10 +60,6 @@ public class UserDetailsImpl implements UserDetails {
         //增加基础用户角色 ROLE_USER
         //如果用户自身具备 ROLE_USER则通过Set唯一性保留一个
         authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.BASE_ROLE));
-        //对管理员账号进行处理，默认设置Admin权限
-        if(SecurityConstant.ADMIN_ACCOUNT_NUMBER.equals(getPassword())){
-            authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ADMIN_ROLE));
-        }
         return authoritySet;
     }
 
