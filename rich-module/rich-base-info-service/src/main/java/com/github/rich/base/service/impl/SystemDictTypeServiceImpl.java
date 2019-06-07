@@ -71,7 +71,8 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#id", condition = "#id!=null")
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#id", condition = "#id!=null"),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true)
     })
     public Integer delete(String id) {
         List<SystemDictItem> dictItems = systemDictItemService.list(Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, id));
@@ -98,7 +99,8 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#dictType.id", condition = "#dictType.id!=null")
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#dictType.id", condition = "#dictType.id!=null"),
+            @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, key = "#dictType.type", condition = "#dictType.type!=null")
     })
     public Boolean update(SystemDictType dictType) {
         dictType.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
