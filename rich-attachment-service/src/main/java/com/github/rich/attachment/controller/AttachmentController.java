@@ -30,7 +30,7 @@ public class AttachmentController {
 
     @ApiOperation(value = "上传附件", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "upload", value = "upload", dataTypeClass = Upload.class),
+            @ApiImplicitParam(paramType = "form", name = "upload", value = "upload", dataTypeClass = Upload.class),
             @ApiImplicitParam(paramType = "query", name = "file", value = "file", dataTypeClass = MultipartFile.class)
     })
     @PostMapping("upload")
