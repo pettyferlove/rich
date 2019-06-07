@@ -115,22 +115,4 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             throw new BaseRuntimeException("file delete error");
         }
     }
-
-    @Override
-    public Boolean deleteBatch(List<AttachmentInfo> attachmentInfos) {
-        try {
-            List<String> keys = new ArrayList<String>();
-            for(AttachmentInfo attachmentInfo: attachmentInfos){
-                keys.add(attachmentInfo.getPath());
-            }
-            if(keys.size()>0){
-                DeleteObjectsResult deleteObjectsResult = oss.deleteObjects(new DeleteObjectsRequest(aliyunProperties.getBucket()).withKeys(keys));
-                List<String> deletedObjects = deleteObjectsResult.getDeletedObjects();
-            }
-            return true;
-        } catch (Exception e){
-            log.error("file delete batch error -->params:{}", attachmentInfos);
-            throw new BaseRuntimeException("file delete batch error");
-        }
-    }
 }

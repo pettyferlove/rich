@@ -37,6 +37,4 @@ public interface IAttachmentService {
      */
     Boolean delete(AttachmentInfo attachmentInfo);
 
-    Boolean deleteBatch(List<AttachmentInfo> attachmentInfos);
-
 }
