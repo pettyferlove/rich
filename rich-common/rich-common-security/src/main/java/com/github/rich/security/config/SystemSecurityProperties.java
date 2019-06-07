@@ -24,5 +24,4 @@ import java.util.List;
 public class SystemSecurityProperties {
     private String adminName;
     private String adminPassword;
-    private List<String> authorities = new ArrayList<>();
 }

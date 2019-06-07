@@ -58,4 +58,6 @@ public interface ISystemMenuResourceService extends IService<SystemMenuResource>
      * @return 集合
      */
     List<MenuNode> loadChildrenNodes(String parentId);
+
+    List<SystemMenuResource> loadPermissionsByUserId(String userId);
 }

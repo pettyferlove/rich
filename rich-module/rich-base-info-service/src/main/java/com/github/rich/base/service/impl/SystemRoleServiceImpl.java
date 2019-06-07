@@ -59,6 +59,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
             @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#roleId", condition = "#roleId!=null")
     })
     public Boolean updateMenuForRole(String roleId, String[] addIds, String[] removeIds) {
@@ -90,6 +91,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
             @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.MENU_ROLE_RELEVANCE_KEYS_CACHE, key = "#id", condition = "#id!=null")
@@ -159,6 +161,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
             @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true)
     })
     public Boolean addUserRole(String userId, String[] roleIds) {
@@ -175,6 +178,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-role", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-api-menu", allEntries = true),
             @CacheEvict(value = CacheConstant.USER_ROLE_RELEVANCE_CACHE, allEntries = true)
     })
     public Boolean deleteUserRole(String userId, String[] roleIds) {
