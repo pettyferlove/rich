@@ -38,7 +38,6 @@ public class UserDetailsImpl implements UserDetails {
         this.username = user.getLoginName();
         this.password = user.getPassword();
         this.status = user.getStatus();
-        this.type = user.getUserType();
         this.name = user.getUserName();
         this.roles = user.getRoles();
         this.permissions = user.getPermissions();

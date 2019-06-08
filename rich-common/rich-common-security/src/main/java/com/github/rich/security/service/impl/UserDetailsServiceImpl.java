@@ -1,10 +1,7 @@
 package com.github.rich.security.service.impl;
 
-import cn.hutool.core.util.StrUtil;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.RemoteUserService;
-import com.github.rich.common.core.constants.CommonConstant;
-import com.github.rich.security.config.SystemSecurityProperties;
 import com.github.rich.security.service.RichUserDetailsService;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;

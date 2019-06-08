@@ -32,9 +32,6 @@ public class User implements Serializable {
      */
     private String userName;
     private String password;
-    private Integer userType;
-    private String email;
-    private String mobileTel;
     private Integer status;
     /**
      * 角色
