@@ -119,12 +119,12 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
         }
         if(roleIds.size()>0){
             List<String> menuIds = new ArrayList<>();
-            List<SystemRoleMenu> systemRoleMenus = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getRoleId,roleIds));
+            List<SystemRoleMenu> systemRoleMenus = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().in(SystemRoleMenu::getRoleId,roleIds));
             for (SystemRoleMenu systemRoleMenu: systemRoleMenus){
                 menuIds.add(systemRoleMenu.getMenuId());
             }
             if(menuIds.size()>0){
-                return this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getId,menuIds).eq(SystemMenuResource::getPermissionType,1));
+                return this.list(Wrappers.<SystemMenuResource>lambdaQuery().in(SystemMenuResource::getId,menuIds).eq(SystemMenuResource::getPermissionType,1));
             }
         }
         return new ArrayList<>();

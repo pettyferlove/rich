@@ -231,7 +231,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     private List<String> loadAllPermissions() {
-        List<SystemMenuResource> systemMenuResources = systemMenuResourceService.list();
+        List<SystemMenuResource> systemMenuResources = systemMenuResourceService.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getPermissionType,1));
         Set<String> permissions = new HashSet<>();
         systemMenuResources.forEach(menu -> permissions.add(menu.getPermission()));
         return new ArrayList<>(permissions);
