@@ -96,7 +96,7 @@ public class RoleController {
         return new R<>(systemRoleService.updateMenuForRole(roleId, addIds, removeIds));
     }
 
-    @ApiOperation(value = "获取当前全部角色", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "获取系统全部角色", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("/all")
     public R<List<SystemRole>> all() {
         return new R<>(systemRoleService.list());
