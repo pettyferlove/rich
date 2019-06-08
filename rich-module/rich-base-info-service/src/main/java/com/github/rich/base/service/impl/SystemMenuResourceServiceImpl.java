@@ -50,16 +50,16 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentId",condition = "#menu.parentId!=null")
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#menu.parentId", condition = "#menu.parentId!=null")
     })
     public String createNode(SystemMenuResource menu) {
         String menuId = IdUtil.simpleUUID();
         menu.setId(menuId);
         menu.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         menu.setCreateTime(LocalDateTime.now());
-        if(this.save(menu)){
+        if (this.save(menu)) {
             return menuId;
-        }else {
+        } else {
             throw new BaseRuntimeException("新增失败");
         }
     }
@@ -93,9 +93,9 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#menu.id",condition = "#menu.id!=null"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#menu.id", condition = "#menu.id!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#menu.parentId",condition = "#menu.parentId!=null")
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#menu.parentId", condition = "#menu.parentId!=null")
     })
     public Boolean updateNode(SystemMenuResource menu) {
         menu.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
@@ -104,7 +104,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     }
 
     @Override
-    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree",key = "#parentId",condition = "#parentId!=null")
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#parentId", condition = "#parentId!=null")
     public List<MenuNode> loadChildrenNodes(String parentId) {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByAsc(SystemMenuResource::getSort));
         return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), parentId);
@@ -112,19 +112,19 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
 
     @Override
     public List<SystemMenuResource> loadPermissionsByUserId(String userId) {
-        List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId,userId));
+        List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId));
         List<String> roleIds = new ArrayList<>();
-        for (SystemUserRole systemUserRole: systemUserRoles){
+        for (SystemUserRole systemUserRole : systemUserRoles) {
             roleIds.add(systemUserRole.getRoleId());
         }
-        if(roleIds.size()>0){
+        if (roleIds.size() > 0) {
             List<String> menuIds = new ArrayList<>();
-            List<SystemRoleMenu> systemRoleMenus = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().in(SystemRoleMenu::getRoleId,roleIds));
-            for (SystemRoleMenu systemRoleMenu: systemRoleMenus){
+            List<SystemRoleMenu> systemRoleMenus = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().in(SystemRoleMenu::getRoleId, roleIds));
+            for (SystemRoleMenu systemRoleMenu : systemRoleMenus) {
                 menuIds.add(systemRoleMenu.getMenuId());
             }
-            if(menuIds.size()>0){
-                return this.list(Wrappers.<SystemMenuResource>lambdaQuery().in(SystemMenuResource::getId,menuIds).eq(SystemMenuResource::getPermissionType,1));
+            if (menuIds.size() > 0) {
+                return this.list(Wrappers.<SystemMenuResource>lambdaQuery().in(SystemMenuResource::getId, menuIds).eq(SystemMenuResource::getPermissionType, 1));
             }
         }
         return new ArrayList<>();
