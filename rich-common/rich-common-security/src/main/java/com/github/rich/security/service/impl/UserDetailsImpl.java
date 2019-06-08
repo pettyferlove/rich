@@ -1,5 +1,6 @@
 package com.github.rich.security.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.rich.base.dto.User;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.constants.SecurityConstant;
@@ -45,16 +46,21 @@ public class UserDetailsImpl implements UserDetails {
 
     /**
      * 将角色和资源授权加入到 OAuth2授权集合
+     *
      * @return 授权集合
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> authoritySet = new HashSet<>();
         for (String permission : permissions) {
-            authoritySet.add(new SimpleGrantedAuthority(permission));
+            if (StrUtil.isNotEmpty(permission)) {
+                authoritySet.add(new SimpleGrantedAuthority(permission));
+            }
         }
         for (String role : roles) {
-            authoritySet.add(new SimpleGrantedAuthority(role));
+            if (StrUtil.isNotEmpty(role)) {
+                authoritySet.add(new SimpleGrantedAuthority(role));
+            }
         }
         //增加基础用户角色 ROLE_USER
         //如果用户自身具备 ROLE_USER则通过Set唯一性保留一个
@@ -74,7 +80,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return !Objects.equals(CommonConstant.STATUS_INVALID,status);
+        return !Objects.equals(CommonConstant.STATUS_INVALID, status);
     }
 
     /**
@@ -84,7 +90,7 @@ public class UserDetailsImpl implements UserDetails {
      */
     @Override
     public boolean isAccountNonLocked() {
-        return !Objects.equals(CommonConstant.STATUS_LOCK,status);
+        return !Objects.equals(CommonConstant.STATUS_LOCK, status);
     }
 
     @Override
@@ -99,6 +105,6 @@ public class UserDetailsImpl implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return Objects.equals(CommonConstant.STATUS_NORMAL,status);
+        return Objects.equals(CommonConstant.STATUS_NORMAL, status);
     }
 }
