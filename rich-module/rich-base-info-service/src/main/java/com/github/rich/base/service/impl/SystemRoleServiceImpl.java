@@ -48,7 +48,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     public List<String> loadMenuKeysForRole(String roleId) {
         List<String> keys = new LinkedList<>();
         List<SystemRoleMenu> list = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getRoleId, roleId));
-        for (SystemRoleMenu roleMenu: list) {
+        for (SystemRoleMenu roleMenu : list) {
             keys.add(roleMenu.getMenuId());
         }
         return keys;
@@ -57,13 +57,13 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean updateMenuForRole(String roleId, String[] addIds, String[] removeIds) {
-        try{
+        try {
             List<String> addIdList = Arrays.asList(addIds);
             List<String> removeIdList = Arrays.asList(removeIds);
-            systemRoleMenuService.addBatch(roleId,addIdList);
-            systemRoleMenuService.removeBatch(roleId,removeIdList);
+            systemRoleMenuService.addBatch(roleId, addIdList);
+            systemRoleMenuService.removeBatch(roleId, removeIdList);
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new BaseRuntimeException("更新失败");
         }
     }
@@ -135,7 +135,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     public List<String> findRoleKeyByUserId(String userID) {
         List<String> keys = new ArrayList<>();
         List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userID));
-        for (SystemUserRole systemUserRole: systemUserRoles) {
+        for (SystemUserRole systemUserRole : systemUserRoles) {
             keys.add(systemUserRole.getRoleId());
         }
         return keys;
@@ -143,10 +143,13 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true)
+    })
     public Boolean addUserRole(String userId, String[] roleIds) {
         try {
-            systemUserRoleService.addBatch(userId,Arrays.asList(roleIds));
+            systemUserRoleService.addBatch(userId, Arrays.asList(roleIds));
             return true;
         } catch (Exception e) {
             throw new BaseRuntimeException("添加失败");
@@ -155,10 +158,13 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true)
+    })
     public Boolean deleteUserRole(String userId, String[] roleIds) {
         try {
-            systemUserRoleService.removeBatch(userId,Arrays.asList(roleIds));
+            systemUserRoleService.removeBatch(userId, Arrays.asList(roleIds));
             return true;
         } catch (Exception e) {
             throw new BaseRuntimeException("删除失败");

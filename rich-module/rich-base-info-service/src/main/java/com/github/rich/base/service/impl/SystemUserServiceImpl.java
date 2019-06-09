@@ -174,6 +174,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#id", condition = "#id!=null")
     })
     public Boolean delete(String id) {
@@ -204,6 +205,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#user.id", condition = "#user.id!=null")
     })
     public Boolean update(SystemUser user) {
@@ -213,8 +215,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    public UserInfoVO getUserInfo() {
-        UserDetailsImpl userDetails = SecurityUtil.getUser();
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null")
+    public UserInfoVO getUserInfo(UserDetailsImpl userDetails) {
         if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
             assert userDetails != null;
             if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
@@ -239,7 +241,32 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             userInfoVO.setPermissions(this.loadPermissions(systemUser.getId()));
             return userInfoVO;
         }
-        throw new BaseRuntimeException("查询用户详情异常");
+        throw new BaseRuntimeException("查询用户信息异常");
+    }
+
+    @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
+    })
+    public Boolean updateUserInfo(UserDetailsImpl userDetails, UserDetailVO detail) {
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            assert userDetails != null;
+            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                return true;
+            }
+        }
+        assert userDetails != null;
+        String userId = userDetails.getUserId();
+        Optional<SystemUser> systemUserOptional = Optional.ofNullable(ConverterUtil.convert(detail, new SystemUser()));
+        if(systemUserOptional.isPresent()){
+            SystemUser systemUser = systemUserOptional.get();
+            systemUser.setId(userId);
+            return this.updateById(systemUser);
+        }
+        throw new BaseRuntimeException("更新用户详情异常");
     }
 
     private List<String> loadRoles(String userId) {

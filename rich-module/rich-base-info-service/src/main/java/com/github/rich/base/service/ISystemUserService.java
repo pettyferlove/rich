@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
+import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.security.utils.SecurityUtil;
 
 /**
  * <p>
@@ -95,6 +98,19 @@ public interface ISystemUserService extends IService<SystemUser> {
      */
     Boolean update(SystemUser user);
 
-    UserInfoVO getUserInfo();
+    /**
+     * 获取用户信息
+     * @param userDetails UserDetailsImpl
+     * @return UserInfoVO
+     */
+    UserInfoVO getUserInfo(UserDetailsImpl userDetails);
+
+    /**
+     * 更新用户详情
+     * @param userDetails UserDetailsImpl
+     * @param detail UserDetailVO
+     * @return Boolean
+     */
+    Boolean updateUserInfo(UserDetailsImpl userDetails,UserDetailVO detail);
 
 }

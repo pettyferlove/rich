@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.service.ISystemUserService;
+import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.model.R;
+import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -94,10 +97,16 @@ public class UserController {
         return new R<>(systemUserService.delete(id));
     }
 
-    @ApiOperation(value = "获取用户详情", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "获取用户信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("/info")
-    public R<UserInfoVO> info() {
-        return new R<>(systemUserService.getUserInfo());
+    public R<UserInfoVO> getInfo() {
+        return new R<>(systemUserService.getUserInfo(SecurityUtil.getUser()));
+    }
+
+    @ApiOperation(value = "更新用户详情", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @PutMapping("/info")
+    public R<Boolean> updateInfo(UserDetailVO detail) {
+        return new R<>(systemUserService.updateUserInfo(SecurityUtil.getUser(), detail));
     }
 
 }
