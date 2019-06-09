@@ -231,7 +231,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         }
         assert userDetails != null;
         Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
-        if(systemUserOptional.isPresent()){
+        if (systemUserOptional.isPresent()) {
             SystemUser systemUser = systemUserOptional.get();
             Optional<UserDetailVO> userDetailVOOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new UserDetailVO()));
             UserDetailVO userDetailVO = userDetailVOOptional.orElseGet(UserDetailVO::new);
@@ -261,7 +261,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         assert userDetails != null;
         String userId = userDetails.getUserId();
         Optional<SystemUser> systemUserOptional = Optional.ofNullable(ConverterUtil.convert(detail, new SystemUser()));
-        if(systemUserOptional.isPresent()){
+        if (systemUserOptional.isPresent()) {
             SystemUser systemUser = systemUserOptional.get();
             systemUser.setId(userId);
             return this.updateById(systemUser);
