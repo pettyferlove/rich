@@ -59,5 +59,10 @@ public interface ISystemMenuResourceService extends IService<SystemMenuResource>
      */
     List<MenuNode> loadChildrenNodes(String parentId);
 
+    /**
+     * 更绝UserID查询拥有的资源标识
+     * @param userId userId
+     * @return 集合
+     */
     List<SystemMenuResource> loadPermissionsByUserId(String userId);
 }

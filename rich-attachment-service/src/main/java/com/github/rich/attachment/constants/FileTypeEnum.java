@@ -7,6 +7,7 @@ public enum FileTypeEnum {
      */
     IMAGE_JPEG("image/jpeg",".jpeg"),
     IMAGE_JPG("image/jpg",".jpg"),
+    IMAGE_PNG("image/png",".png"),
     EXCEL_XLSX("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",".xlsx");
     private String contentType;
 

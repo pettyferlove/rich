@@ -11,10 +11,13 @@ import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.*;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.*;
+import com.github.rich.base.vo.UserDetailVO;
+import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.config.SystemSecurityProperties;
+import com.github.rich.security.service.impl.UserDetailsImpl;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -207,6 +210,36 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         user.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         user.setModifierTime(LocalDateTime.now());
         return this.updateById(user);
+    }
+
+    @Override
+    public UserInfoVO getUserInfo() {
+        UserDetailsImpl userDetails = SecurityUtil.getUser();
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            assert userDetails != null;
+            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                UserInfoVO userInfoVO = new UserInfoVO();
+                UserDetailVO userDetailVO = new UserDetailVO();
+                userDetailVO.setUserName("系统管理员");
+                userInfoVO.setRoles(loadAllRoles());
+                userInfoVO.setPermissions(loadAllPermissions());
+                userInfoVO.setUser(userDetailVO);
+                return userInfoVO;
+            }
+        }
+        assert userDetails != null;
+        Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
+        if(systemUserOptional.isPresent()){
+            SystemUser systemUser = systemUserOptional.get();
+            Optional<UserDetailVO> userDetailVOOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new UserDetailVO()));
+            UserDetailVO userDetailVO = userDetailVOOptional.orElseGet(UserDetailVO::new);
+            UserInfoVO userInfoVO = new UserInfoVO();
+            userInfoVO.setUser(userDetailVO);
+            userInfoVO.setRoles(this.loadRoles(systemUser.getId()));
+            userInfoVO.setPermissions(this.loadPermissions(systemUser.getId()));
+            return userInfoVO;
+        }
+        throw new BaseRuntimeException("查询用户详情异常");
     }
 
     private List<String> loadRoles(String userId) {

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.service.ISystemUserService;
+import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.model.R;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
@@ -54,7 +55,7 @@ public class UserController {
         return new R<>(systemUserService.page(systemUser, page));
     }
 
-    @ApiOperation(value = "获取用户详情", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiOperation(value = "获取用户信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
@@ -93,5 +94,10 @@ public class UserController {
         return new R<>(systemUserService.delete(id));
     }
 
+    @ApiOperation(value = "获取用户详情", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @GetMapping("/info")
+    public R<UserInfoVO> info() {
+        return new R<>(systemUserService.getUserInfo());
+    }
 
 }

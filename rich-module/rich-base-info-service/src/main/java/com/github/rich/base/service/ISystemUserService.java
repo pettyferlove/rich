@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.vo.UserInfoVO;
 
 /**
  * <p>
@@ -93,5 +94,7 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @return Boolean
      */
     Boolean update(SystemUser user);
+
+    UserInfoVO getUserInfo();
 
 }
