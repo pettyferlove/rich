@@ -1,6 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
@@ -13,8 +14,12 @@ import com.github.rich.base.service.ISystemRoleMenuService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.utils.TreeUtils;
 import com.github.rich.base.vo.MenuNode;
+import com.github.rich.base.vo.UserDetailVO;
+import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
+import com.github.rich.security.config.SystemSecurityProperties;
+import com.github.rich.security.service.impl.UserDetailsImpl;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,10 +27,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * <p>
@@ -38,11 +40,14 @@ import java.util.Optional;
 @Service
 public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourceMapper, SystemMenuResource> implements ISystemMenuResourceService {
 
+    private final SystemSecurityProperties systemSecurityProperties;
+
     private final ISystemUserRoleService systemUserRoleService;
 
     private final ISystemRoleMenuService systemRoleMenuService;
 
-    public SystemMenuResourceServiceImpl(ISystemUserRoleService systemUserRoleService, ISystemRoleMenuService systemRoleMenuService) {
+    public SystemMenuResourceServiceImpl(SystemSecurityProperties systemSecurityProperties, ISystemUserRoleService systemUserRoleService, ISystemRoleMenuService systemRoleMenuService) {
+        this.systemSecurityProperties = systemSecurityProperties;
         this.systemUserRoleService = systemUserRoleService;
         this.systemRoleMenuService = systemRoleMenuService;
     }
@@ -50,6 +55,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#menu.parentId", condition = "#menu.parentId!=null")
     })
     public String createNode(SystemMenuResource menu) {
@@ -72,6 +78,37 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     }
 
     @Override
+    @Cacheable(value = CacheConstant.SYSTEM_MENU_USER_CACHE, key = "#userDetails.userId", condition = "#userDetails.userId!=null")
+    public List<MenuNode> loadMenu(UserDetailsImpl userDetails) {
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            assert userDetails != null;
+            List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getPermissionType, 0));
+            Set<SystemMenuResource> systemMenuResourceSet = new HashSet<>(systemMenuResources);
+            return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
+        }
+        assert userDetails != null;
+        String userId = userDetails.getUserId();
+        List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId));
+        List<String> roleIds = new ArrayList<>();
+        for (SystemUserRole systemUserRole : systemUserRoles) {
+            roleIds.add(systemUserRole.getRoleId());
+        }
+        if (roleIds.size() > 0) {
+            List<String> menuIds = new ArrayList<>();
+            List<SystemRoleMenu> systemRoleMenus = systemRoleMenuService.list(Wrappers.<SystemRoleMenu>lambdaQuery().in(SystemRoleMenu::getRoleId, roleIds));
+            for (SystemRoleMenu systemRoleMenu : systemRoleMenus) {
+                menuIds.add(systemRoleMenu.getMenuId());
+            }
+            if (menuIds.size() > 0) {
+                List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().in(SystemMenuResource::getId, menuIds).eq(SystemMenuResource::getPermissionType, 0));
+                Set<SystemMenuResource> systemMenuResourceSet = new HashSet<>(systemMenuResources);
+                return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
+            }
+        }
+        throw new BaseRuntimeException("加载用户菜单异常");
+    }
+
+    @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#id", condition = "#id!=null")
     public MenuNode getNode(String id) {
         return Optional.ofNullable(ConverterUtil.convert(this.getById(id), new MenuNode())).orElseGet(MenuNode::new);
@@ -81,6 +118,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#id"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true)
     })
     public Boolean deleteNode(String id) throws Exception {
@@ -95,6 +133,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-node-detail", key = "#menu.id", condition = "#menu.id!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#menu.parentId", condition = "#menu.parentId!=null")
     })
     public Boolean updateNode(SystemMenuResource menu) {

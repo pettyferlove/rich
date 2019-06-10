@@ -4,6 +4,7 @@ import com.github.rich.base.entity.SystemMenuResource;
 import com.github.rich.base.service.ISystemMenuResourceService;
 import com.github.rich.base.vo.MenuNode;
 import com.github.rich.common.core.model.R;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,14 +25,10 @@ public class MenuController {
         this.systemMenuResourceService = systemMenuResourceService;
     }
 
-    /**
-     * TODO 根据用户获取菜单 待开发
-     *
-     * @return null
-     */
+    @ApiOperation(value = "加载界面菜单数据", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping
-    public R<MenuNode> menu() {
-        return null;
+    public R<List<MenuNode>> menu() {
+        return new R<>(systemMenuResourceService.loadMenu(SecurityUtil.getUser()));
     }
 
     @ApiOperation(value = "创建菜单节点", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))

@@ -56,6 +56,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, allEntries = true)
     public Boolean updateMenuForRole(String roleId, String[] addIds, String[] removeIds) {
         try {
             List<String> addIdList = Arrays.asList(addIds);

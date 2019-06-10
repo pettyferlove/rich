@@ -49,15 +49,10 @@ public class SystemMenuResource extends Model<SystemMenuResource> {
 
     private String icon;
 
-    @TableField("targetType")
-    private Integer targetType;
+    @TableField("visitType")
+    private Integer visitType;
 
-    private String target;
-
-    private Integer cache;
-
-    @TableField("componentName")
-    private String componentName;
+    private String routeName;
 
     private Long sort;
 

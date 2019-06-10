@@ -10,4 +10,6 @@ public interface CacheConstant {
     String OUTER_API_PREFIX = DEFAULT_PREFIX + "base_outer:";
 
     String DICT_ITEM_RELEVANCE_CACHE = OUTER_API_PREFIX + "base-dict-type-item-relevance";
+
+    String SYSTEM_MENU_USER_CACHE = OUTER_API_PREFIX + "base-system-menu-user";
 }

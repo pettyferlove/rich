@@ -25,13 +25,9 @@ public class MenuNode extends TreeNode {
 
     private String icon;
 
-    private Integer targetType;
+    private Integer visitType;
 
-    private String target;
-
-    private Integer cache;
-
-    private String componentName;
+    private String routeName;
 
     private Long sort;
 

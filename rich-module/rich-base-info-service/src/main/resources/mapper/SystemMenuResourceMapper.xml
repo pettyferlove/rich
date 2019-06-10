@@ -8,10 +8,8 @@
         <result column="parent_id" property="parentId" />
         <result column="title" property="title" />
         <result column="icon" property="icon" />
-        <result column="targetType" property="targetType" />
-        <result column="target" property="target" />
-        <result column="cache" property="cache" />
-        <result column="componentName" property="componentName" />
+        <result column="visitType" property="visitType" />
+        <result column="routeName" property="routeName" />
         <result column="sort" property="sort" />
         <result column="permissionType" property="permissionType" />
         <result column="permission" property="permission" />
@@ -24,7 +22,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, parent_id, title, icon, targetType, target, cache, componentName, sort, permissionType, permission, del_flag, creator, create_time, modifier, modifier_time
+        id, parent_id, title, icon, visitType, routeName, cache, componentName, sort, permissionType, permission, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

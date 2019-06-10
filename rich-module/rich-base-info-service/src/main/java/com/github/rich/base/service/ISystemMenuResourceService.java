@@ -3,6 +3,7 @@ package com.github.rich.base.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.rich.base.entity.SystemMenuResource;
 import com.github.rich.base.vo.MenuNode;
+import com.github.rich.security.service.impl.UserDetailsImpl;
 
 import java.util.List;
 
@@ -28,6 +29,13 @@ public interface ISystemMenuResourceService extends IService<SystemMenuResource>
      * @return 集合
      */
     List<MenuNode> loadTree();
+
+    /**
+     * 加载用户得菜单
+     * @param userDetails 用户验证实体
+     * @return 集合
+     */
+    List<MenuNode> loadMenu(UserDetailsImpl userDetails);
 
     /**
      * 通过Id获取节点信息
