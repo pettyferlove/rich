@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -25,7 +24,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * </p>
  *
  * @author Petty
- * @since 2019-05-31
+ * @since 2019-06-10
  */
 @Data
 @NoArgsConstructor
@@ -47,17 +46,34 @@ public class SystemMenuResource extends Model<SystemMenuResource> {
     @ApiModelProperty(value = "菜单标题")
     private String title;
 
+    @ApiModelProperty(value = "菜单图标")
     private String icon;
 
-    @TableField("visitType")
-    private Integer visitType;
-
+    @ApiModelProperty(value = "路由名称")
     private String routeName;
 
+    @ApiModelProperty(value = "是否可以加入面包屑")
+    private Integer breadcrumb;
+
+    @ApiModelProperty(value = "路由组件名")
+    private String componentName;
+
+    @ApiModelProperty(value = "路由组件路径")
+    private String componentPath;
+
+    @ApiModelProperty(value = "路由地址")
+    private String path;
+
+    @ApiModelProperty(value = "路由重定向地址")
+    private String redirectPath;
+
+    @ApiModelProperty(value = "是否由前端缓存")
+    private Integer keepAlive;
+
+    @ApiModelProperty(value = "排序")
     private Long sort;
 
     @ApiModelProperty(value = "请求方法")
-    @TableField("permissionType")
     private Integer permissionType;
 
     @ApiModelProperty(value = "资源")

@@ -8,10 +8,15 @@
         <result column="parent_id" property="parentId" />
         <result column="title" property="title" />
         <result column="icon" property="icon" />
-        <result column="visitType" property="visitType" />
-        <result column="routeName" property="routeName" />
+        <result column="route_name" property="routeName" />
+        <result column="breadcrumb" property="breadcrumb" />
+        <result column="component_name" property="componentName" />
+        <result column="component_path" property="componentPath" />
+        <result column="path" property="path" />
+        <result column="redirect_path" property="redirectPath" />
+        <result column="keep_alive" property="keepAlive" />
         <result column="sort" property="sort" />
-        <result column="permissionType" property="permissionType" />
+        <result column="permission_type" property="permissionType" />
         <result column="permission" property="permission" />
         <result column="del_flag" property="delFlag" />
         <result column="creator" property="creator" />
@@ -22,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, parent_id, title, icon, visitType, routeName, cache, componentName, sort, permissionType, permission, del_flag, creator, create_time, modifier, modifier_time
+        id, parent_id, title, icon, route_name, breadcrumb, component_name, component_path, path, redirect_path, keep_alive, sort, permission_type, permission, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>
