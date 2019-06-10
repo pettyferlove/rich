@@ -147,7 +147,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#parentId", condition = "#parentId!=null")
     public List<MenuNode> loadChildrenNodes(String parentId) {
-        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByAsc(SystemMenuResource::getSort));
+        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByDesc(SystemMenuResource::getSort));
         return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), parentId);
     }
 
