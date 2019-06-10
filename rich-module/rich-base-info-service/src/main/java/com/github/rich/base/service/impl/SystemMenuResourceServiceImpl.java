@@ -82,9 +82,11 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     public List<MenuNode> loadMenu(UserDetailsImpl userDetails) {
         if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
             assert userDetails != null;
-            List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getPermissionType, 0));
-            Set<SystemMenuResource> systemMenuResourceSet = new HashSet<>(systemMenuResources);
-            return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
+            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getPermissionType, 0).orderByDesc(SystemMenuResource::getSort));
+                Set<SystemMenuResource> systemMenuResourceSet = new HashSet<>(systemMenuResources);
+                return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
+            }
         }
         assert userDetails != null;
         String userId = userDetails.getUserId();
@@ -105,7 +107,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
                 return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
             }
         }
-        throw new BaseRuntimeException("加载用户菜单异常");
+        return new ArrayList<>();
     }
 
     @Override
