@@ -73,7 +73,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-menu-tree")
     public List<MenuNode> loadTree() {
-        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByAsc(SystemMenuResource::getSort));
+        List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().orderByDesc(SystemMenuResource::getSort));
         return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, systemMenuResources)).orElseGet(ArrayList::new), "0");
     }
 
@@ -100,7 +100,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
                 menuIds.add(systemRoleMenu.getMenuId());
             }
             if (menuIds.size() > 0) {
-                List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().in(SystemMenuResource::getId, menuIds).eq(SystemMenuResource::getPermissionType, 0));
+                List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().in(SystemMenuResource::getId, menuIds).eq(SystemMenuResource::getPermissionType, 0).orderByDesc(SystemMenuResource::getSort));
                 Set<SystemMenuResource> systemMenuResourceSet = new HashSet<>(systemMenuResources);
                 return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
             }
