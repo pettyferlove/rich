@@ -1,11 +1,13 @@
 package com.github.rich.log;
 
+import com.github.rich.log.constants.LogKafkaTopicConstant;
 import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -38,5 +40,17 @@ public class RichLogServiceApplication {
     Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;
     }
+
+
+    @KafkaListener(topics = {LogKafkaTopicConstant.AUTH_LOG_TOPIC})
+    public void receiveAuthLogMessage(String message){
+        System.out.println(message);
+    }
+
+    @KafkaListener(topics = {LogKafkaTopicConstant.USER_OPERATE_LOG_TOPIC})
+    public void receiveOperateLogMessage(String message){
+        System.out.println(message);
+    }
+
 
 }
