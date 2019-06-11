@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-log-service
+    name: rich-log-service
+    description: Rich用户操作日志收集/持久化服务
+    version: 0.0.1-SNAPSHOT

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemDictItem;
 import com.github.rich.base.entity.SystemDictType;
+import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.mapper.SystemDictTypeMapper;
 import com.github.rich.base.service.ISystemDictItemService;
 import com.github.rich.base.service.ISystemDictTypeService;
@@ -59,7 +60,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#dictType.toString())")
     public IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page) {
-        return super.page(page,Wrappers.lambdaQuery(dictType));
+        return super.page(page,Wrappers.lambdaQuery(dictType).orderByDesc(SystemDictType::getCreateTime));
     }
 
     @Override

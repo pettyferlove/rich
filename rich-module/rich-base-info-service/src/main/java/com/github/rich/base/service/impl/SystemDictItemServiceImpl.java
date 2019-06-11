@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemDictItem;
+import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.mapper.SystemDictItemMapper;
 import com.github.rich.base.service.ISystemDictItemService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -34,7 +35,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#typeId)")
     public IPage<SystemDictItem> page(String typeId, Page<SystemDictItem> page) {
-        return super.page(page, Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, typeId));
+        return super.page(page, Wrappers.<SystemDictItem>lambdaQuery().eq(SystemDictItem::getTypeId, typeId).orderByDesc(SystemDictItem::getCreateTime));
     }
 
     @Override

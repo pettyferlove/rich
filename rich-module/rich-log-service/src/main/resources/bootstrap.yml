@@ -1,0 +1,51 @@
+logging:
+  level:
+    org.springframework.security: debug
+spring:
+  application:
+    name: rich-log-service
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: rich-config-service
+      label: ${spring.profiles.active}
+      fail-fast: true
+---
+spring:
+  profiles: dev
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+  client:
+    service-url:
+      defaultZone: http://10.0.100.1:10151/eureka
+---
+spring:
+  profiles: remote-dev
+eureka:
+  instance:
+    ip-address: 106.14.2.180
+    hostname: ${eureka.instance.ip-address}
+    prefer-ip-address: false
+    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 20
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:10151/eureka
+---
+spring:
+  profiles: prd
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://10.0.100.1:10151/eureka

@@ -81,6 +81,15 @@ rich
 ####分布式事务协调器
 Rich Tx Manager Service
 
+## 端口说明
+
+端口  | 服务  | 说明
+--- | ---  | --- 
+10151 | rich-eureka-service | 服务端口
+10152 | rich-config-service | 服务端口
+7970 | rich-tx-manager-service | 服务端口
+8070 | rich-tx-manager-service | 客户端连接端口
+
 ##项目开发
 后续项目开发主要依赖于：
 ~~~
@@ -108,6 +117,7 @@ Rich Tx Manager Service
 序号  | 版本号 | 日期 | 修改人 | 概述
 --- | --- | --- | --- | ---
 1 | 1.0.0 | 2019-3-21 | Petty | 初版
+2 | 1.1.0 | 2019-6-05 | Petty | 基础信息接口完成开发（后端参数验证待处理）
 
 
 

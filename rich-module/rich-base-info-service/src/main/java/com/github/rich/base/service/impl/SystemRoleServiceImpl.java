@@ -72,7 +72,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#role.toString())")
     public IPage<SystemRole> page(SystemRole role, Page<SystemRole> page) {
-        return this.page(page, Wrappers.lambdaQuery(role));
+        return this.page(page, Wrappers.lambdaQuery(role).orderByDesc(SystemRole::getCreateTime));
     }
 
     @Override

@@ -160,7 +160,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#user.toString())")
     public IPage<SystemUser> page(SystemUser user, Page<SystemUser> page) {
-        return this.page(page, Wrappers.lambdaQuery(user));
+        return this.page(page, Wrappers.lambdaQuery(user).orderByDesc(SystemUser::getCreateTime));
     }
 
     @Override
