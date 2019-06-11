@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AuthLog implements Serializable {
+public class AuthLogInfo implements Serializable {
     private static final long serialVersionUID = -7348389195027603683L;
 
     private String userId;

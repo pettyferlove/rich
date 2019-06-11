@@ -16,8 +16,9 @@
 
 package com.github.rich.log;
 
-import com.github.rich.log.service.AuthLogService;
-import com.github.rich.log.service.impl.AuthLogServiceImpl;
+import com.github.rich.log.aop.UserOperateLogAop;
+import com.github.rich.log.service.OperateLogService;
+import com.github.rich.log.service.impl.OperateLogServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +37,13 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class LogAutoConfiguration {
 
 	@Bean
-	public AuthLogService authLogService(){
-		return new AuthLogServiceImpl();
+	public OperateLogService operateLogService(){
+		return new OperateLogServiceImpl();
+	}
+
+	@Bean
+	public UserOperateLogAop userOperateLogAop(){
+		return new UserOperateLogAop(operateLogService());
 	}
 
 }

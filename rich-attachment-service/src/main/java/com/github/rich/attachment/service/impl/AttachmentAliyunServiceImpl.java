@@ -5,9 +5,8 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.*;
 import com.github.rich.attachment.config.AttachmentAliyunProperties;
-import com.github.rich.attachment.constants.FileTypeEnum;
-import com.github.rich.attachment.constants.SecurityTypeEnum;
-import com.github.rich.attachment.dto.Download;
+import com.github.rich.attachment.constants.FileType;
+import com.github.rich.attachment.constants.SecurityType;
 import com.github.rich.attachment.entity.AttachmentInfo;
 import com.github.rich.attachment.service.IAttachmentInfoService;
 import com.github.rich.attachment.service.IAttachmentService;
@@ -23,8 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Petty
@@ -53,7 +50,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
         Assert.notNull(file, "上传文件不可为空");
         UploadResult result = new UploadResult();
         String fileId = IdUtil.simpleUUID();
-        FileTypeEnum parse = FileTypeEnum.parse(file.getContentType());
+        FileType parse = FileType.parse(file.getContentType());
         StringBuilder filePath = new StringBuilder();
         filePath.append(aliyunProperties.getRoot());
         filePath.append("/");
@@ -69,10 +66,10 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
                 result.setMd5(md5);
                 result.setFileId(fileId);
                 result.setStoreType(upload.getStorage().getValue());
-                @NotNull SecurityTypeEnum security = upload.getSecurity();
-                if (security == SecurityTypeEnum.Private) {
+                @NotNull SecurityType security = upload.getSecurity();
+                if (security == SecurityType.Private) {
                     meta.setObjectAcl(CannedAccessControlList.Private);
-                } else if (security == SecurityTypeEnum.PublicRead) {
+                } else if (security == SecurityType.PublicRead) {
                     result.setUrl(String.format(URL_STR, aliyunProperties.getBucket(), aliyunProperties.getEndpoint(), filePath.toString()));
                     meta.setObjectAcl(CannedAccessControlList.PublicRead);
                 }

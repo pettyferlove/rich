@@ -2,8 +2,8 @@ package com.github.rich.attachment.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.rich.attachment.constants.SecurityTypeEnum;
-import com.github.rich.attachment.constants.StorageTypeEnum;
+import com.github.rich.attachment.constants.SecurityType;
+import com.github.rich.attachment.constants.StorageType;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,12 +36,12 @@ public class Upload implements Serializable {
      * 安全类型
      */
     @NotNull
-    private SecurityTypeEnum security;
+    private SecurityType security;
 
     /**
      * 存储类型
      */
     @NotNull
-    private StorageTypeEnum storage;
+    private StorageType storage;
 
 }

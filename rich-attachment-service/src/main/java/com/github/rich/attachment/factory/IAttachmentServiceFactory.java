@@ -1,6 +1,6 @@
 package com.github.rich.attachment.factory;
 
-import com.github.rich.attachment.constants.StorageTypeEnum;
+import com.github.rich.attachment.constants.StorageType;
 import com.github.rich.attachment.service.IAttachmentService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContextAware;
@@ -15,6 +15,6 @@ public interface IAttachmentServiceFactory extends ApplicationContextAware, Init
      * @param type 枚举
      * @return 上传服务或下载服务
      */
-    IAttachmentService create(StorageTypeEnum type);
+    IAttachmentService create(StorageType type);
 
 }

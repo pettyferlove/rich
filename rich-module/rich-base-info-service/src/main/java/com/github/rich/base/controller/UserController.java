@@ -2,13 +2,12 @@ package com.github.rich.base.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.service.ISystemUserService;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.model.R;
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.log.annotation.UserOperateLog;
 import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
@@ -54,6 +53,7 @@ public class UserController {
             @ApiImplicitParam(paramType = "query", name = "page", value = "Page", dataTypeClass = Page.class)
     })
     @GetMapping("page")
+    @UserOperateLog
     public R<IPage> page(SystemUser systemUser, Page<SystemUser> page) {
         return new R<>(systemUserService.page(systemUser, page));
     }

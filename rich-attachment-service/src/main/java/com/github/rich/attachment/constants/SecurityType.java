@@ -4,7 +4,7 @@ package com.github.rich.attachment.constants;
  * @author Petty
  */
 
-public enum SecurityTypeEnum {
+public enum SecurityType {
 
     /**
      * 文件私有读写
@@ -20,7 +20,7 @@ public enum SecurityTypeEnum {
     private String acl;
     private int value;
 
-    SecurityTypeEnum(String acl, int value) {
+    SecurityType(String acl, int value) {
         this.acl = acl;
         this.value = value;
     }
@@ -31,7 +31,7 @@ public enum SecurityTypeEnum {
 
     @Override
     public String toString() {
-        return "SecurityTypeEnum{" +
+        return "SecurityType{" +
                 "acl='" + acl + '\'' +
                 '}';
     }

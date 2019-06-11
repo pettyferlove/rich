@@ -27,6 +27,11 @@
             <artifactId>rich-common-core</artifactId>
             <version>1.0.0-RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.rich</groupId>
+            <artifactId>rich-common-security</artifactId>
+            <version>1.0.0-RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>

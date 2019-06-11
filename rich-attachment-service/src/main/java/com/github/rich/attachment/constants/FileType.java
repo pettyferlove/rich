@@ -1,6 +1,6 @@
 package com.github.rich.attachment.constants;
 
-public enum FileTypeEnum {
+public enum FileType {
 
     /**
      * JPEG
@@ -13,7 +13,7 @@ public enum FileTypeEnum {
 
     private String expansionName;
 
-    FileTypeEnum(String contentType, String expansionName) {
+    FileType(String contentType, String expansionName) {
         this.contentType = contentType;
         this.expansionName = expansionName;
     }
@@ -27,8 +27,8 @@ public enum FileTypeEnum {
         return expansionName;
     }
 
-    public static FileTypeEnum parse(String contentType) {
-        for(FileTypeEnum cacl : FileTypeEnum.values()) {
+    public static FileType parse(String contentType) {
+        for(FileType cacl : FileType.values()) {
             if (cacl.toString().equals(contentType)) {
                 return cacl;
             }

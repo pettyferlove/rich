@@ -1,6 +1,6 @@
 package com.github.rich.attachment.factory.impl;
 
-import com.github.rich.attachment.constants.StorageTypeEnum;
+import com.github.rich.attachment.constants.StorageType;
 import com.github.rich.attachment.factory.IAttachmentServiceFactory;
 import com.github.rich.attachment.service.IAttachmentService;
 import com.github.rich.common.core.exception.BaseRuntimeException;
@@ -32,7 +32,7 @@ public class AttachmentServiceFactoryImpl implements IAttachmentServiceFactory {
     }
 
     @Override
-    public IAttachmentService create(StorageTypeEnum type) {
+    public IAttachmentService create(StorageType type) {
         if(serviceMap.containsKey(type.getService())){
             return serviceMap.get(type.getService());
         }else{

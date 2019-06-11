@@ -1,7 +1,7 @@
 package com.github.rich.attachment.service.impl;
 
-import com.github.rich.attachment.constants.FileTypeEnum;
-import com.github.rich.attachment.constants.StorageTypeEnum;
+import com.github.rich.attachment.constants.FileType;
+import com.github.rich.attachment.constants.StorageType;
 import com.github.rich.attachment.entity.AttachmentInfo;
 import com.github.rich.attachment.factory.IAttachmentServiceFactory;
 import com.github.rich.attachment.service.IAttachmentInfoService;
@@ -10,7 +10,6 @@ import com.github.rich.attachment.service.IAttachmentService;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import com.github.rich.common.core.exception.BaseRuntimeException;
-import com.github.rich.common.core.model.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +50,7 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
         Optional<AttachmentInfo> attachmentInfoOptional = Optional.ofNullable(attachmentInfoService.getAttachmentInfoById(id));
         if (attachmentInfoOptional.isPresent()) {
             AttachmentInfo attachmentInfo = attachmentInfoOptional.get();
-            IAttachmentService attachmentService = factory.create(StorageTypeEnum.parse(attachmentInfo.getStorageType()));
+            IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
             attachmentService.download(attachmentInfo, response.getOutputStream());
             response.setCharacterEncoding("utf-8");
             response.setContentType(attachmentInfo.getFileType());
@@ -73,8 +72,8 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
         if (attachmentInfoOptional.isPresent()) {
             AttachmentInfo attachmentInfo = attachmentInfoOptional.get();
             String fileType = attachmentInfo.getFileType();
-            if (FileTypeEnum.IMAGE_JPEG == FileTypeEnum.parse(fileType) || FileTypeEnum.IMAGE_JPG == FileTypeEnum.parse(fileType)) {
-                IAttachmentService attachmentService = factory.create(StorageTypeEnum.parse(attachmentInfo.getStorageType()));
+            if (FileType.IMAGE_JPEG == FileType.parse(fileType) || FileType.IMAGE_JPG == FileType.parse(fileType)) {
+                IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
                 response.setCharacterEncoding("utf-8");
                 response.setContentType(attachmentInfo.getFileType());
                 attachmentService.download(attachmentInfo, response.getOutputStream());
@@ -94,7 +93,7 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
             Optional<AttachmentInfo> attachmentInfoOptional = Optional.ofNullable(attachmentInfoService.getAttachmentInfoById(id));
             if (attachmentInfoOptional.isPresent()) {
                 AttachmentInfo attachmentInfo = attachmentInfoOptional.get();
-                IAttachmentService attachmentService = factory.create(StorageTypeEnum.parse(attachmentInfo.getStorageType()));
+                IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
                 if(attachmentService.delete(attachmentInfo)){
                     result = attachmentInfoService.removeById(attachmentInfo.getId());
                 }
@@ -114,7 +113,7 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
             List<String> fileIds = Arrays.asList(ids);
             List<AttachmentInfo> attachmentInfos = (List<AttachmentInfo>) attachmentInfoService.listByIds(fileIds);
             for(AttachmentInfo attachmentInfo: attachmentInfos){
-                IAttachmentService attachmentService = factory.create(StorageTypeEnum.parse(attachmentInfo.getStorageType()));
+                IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
                 if(attachmentService.delete(attachmentInfo)){
                     result = attachmentInfoService.removeById(attachmentInfo.getId());
                 }

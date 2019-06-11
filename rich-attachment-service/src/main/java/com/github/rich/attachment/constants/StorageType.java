@@ -4,7 +4,7 @@ package com.github.rich.attachment.constants;
  * @author Petty
  */
 
-public enum StorageTypeEnum {
+public enum StorageType {
 
     /**
      * 阿里云OSS储存方案
@@ -36,7 +36,7 @@ public enum StorageTypeEnum {
     private String service;
     private int value;
 
-    StorageTypeEnum(String type, String service, int value) {
+    StorageType(String type, String service, int value) {
         this.type = type;
         this.service = service;
         this.value = value;
@@ -52,17 +52,17 @@ public enum StorageTypeEnum {
 
     @Override
     public String toString() {
-        return "StorageTypeEnum{" +
+        return "StorageType{" +
                 "type='" + type + '\'' +
                 ", service='" + service + '\'' +
                 ", value=" + value +
                 '}';
     }
 
-    public static StorageTypeEnum parse(int value) {
-        for (StorageTypeEnum storageTypeEnum : StorageTypeEnum.values()) {
-            if (storageTypeEnum.getValue() == value) {
-                return storageTypeEnum;
+    public static StorageType parse(int value) {
+        for (StorageType storageType : StorageType.values()) {
+            if (storageType.getValue() == value) {
+                return storageType;
             }
         }
 
