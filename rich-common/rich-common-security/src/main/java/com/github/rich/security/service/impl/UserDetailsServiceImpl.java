@@ -2,6 +2,7 @@ package com.github.rich.security.service.impl;
 
 import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.RemoteUserService;
+import com.github.rich.log.service.AuthLogService;
 import com.github.rich.security.service.RichUserDetailsService;
 import com.google.common.base.Preconditions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,19 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
 
     private final RemoteUserService remoteUserService;
 
+    private final AuthLogService authLogService;
+
     @Autowired
-    public UserDetailsServiceImpl(RemoteUserService remoteUserService) {
+    public UserDetailsServiceImpl(RemoteUserService remoteUserService, AuthLogService authLogService) {
         this.remoteUserService = remoteUserService;
+        this.authLogService = authLogService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = remoteUserService.findUserByLoginName(username);
         Preconditions.checkNotNull(user.getId(), "没有找到该用户");
+        authLogService.sendLoginLog(user.getId(), user.getUserName(),"账号密码登录");
         return new UserDetailsImpl(user);
     }
 
@@ -38,6 +43,7 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
     public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
         User user = remoteUserService.findUserByMobile(mobile);
         Preconditions.checkNotNull(user.getId(), "手机号码没有注册或者未与账号绑定");
+        authLogService.sendLoginLog(user.getId(), user.getUserName(),"手机号码登录");
         return new UserDetailsImpl(user);
     }
 
@@ -45,6 +51,7 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
     public UserDetails loadUserByWeChatOpenID(String openid) {
         User user = remoteUserService.findByWeChatOpenID(openid);
         Preconditions.checkNotNull(user.getId(), "微信号未绑定");
+        authLogService.sendLoginLog(user.getId(), user.getUserName(),"微信扫码登录");
         return new UserDetailsImpl(user);
     }
 
@@ -52,6 +59,7 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
     public UserDetails loadUserByWeChatUnionID(String unionid) {
         User user = remoteUserService.findByWeChatUnionID(unionid);
         Preconditions.checkNotNull(user.getId(), "微信号未绑定");
+        authLogService.sendLoginLog(user.getId(), user.getUserName(),"微信扫码登录");
         return new UserDetailsImpl(user);
     }
 }

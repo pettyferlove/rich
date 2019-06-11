@@ -8,15 +8,11 @@
         <version>1.0.0-RELEASE</version>
     </parent>
     <artifactId>rich-common-log</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <name>rich-common-log</name>
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-streams</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
