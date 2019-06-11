@@ -1,5 +1,6 @@
 package com.github.rich.gateway.filter;
 
+import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -33,8 +34,9 @@ public class RequestGlobalFilter  implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         addOriginalRequestUrl(exchange, request.getURI());
         String rawPath = request.getURI().getRawPath();
-        String newPath = "/" + Arrays.stream(StringUtils.tokenizeToStringArray(rawPath, "/"))
-                .skip(2L).collect(Collectors.joining("/"));
+        String newPath = rawPath.replaceAll(CommonConstant.OUTER_SERVICE_PREFIX_REGEX,"/");
+        /*String newPath = "/" + Arrays.stream(StringUtils.tokenizeToStringArray(rawPath, "/"))
+                .skip(3L).collect(Collectors.joining("/"));*/
         ServerHttpRequest newRequest = request.mutate()
                 .path(newPath)
                 .build();

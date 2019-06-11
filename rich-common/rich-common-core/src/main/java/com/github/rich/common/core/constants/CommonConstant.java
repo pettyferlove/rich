@@ -6,9 +6,11 @@ package com.github.rich.common.core.constants;
  */
 public interface CommonConstant {
 
-    String INNER_SERVICE_PREFIX = "api/inner/v1";
+    String INNER_SERVICE_PREFIX = "/api/inner/v1";
 
-    String OUTER_SERVICE_PREFIX = "api/v1";
+    String OUTER_SERVICE_PREFIX = "/api/v1";
+
+    String OUTER_SERVICE_PREFIX_REGEX = OUTER_SERVICE_PREFIX + "/.[0-9a-zA-Z_]*/";
 
     /**
      * 请求成功
