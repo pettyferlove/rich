@@ -42,15 +42,15 @@ https://gitee.com/union_tech_company/rich.git
 1. Docker IP配置 10.0.100.0
 2. Windows Route 加入桥接 route -p add 172.17.0.0 MASK 255.255.255.0 10.0.100.2;
 
-##启动顺序
-####必须服务
+## 启动顺序
+#### 必须服务
 1. Rich Eureka Service 服务注册中心
 2. Rich Config Service 服务配置中心
 2. Rich Gateway Service 网关服务
 3. Rich Auth Service 授权服务
 4. Rich Base Info Service 基础信息服务
 5. Other业务服务
-####辅助服务
+#### 辅助服务
 1. Rich Message Service 消息发送服务
 2. Rich Monitor Service 服务监控
 
@@ -90,7 +90,7 @@ Rich Tx Manager Service
 7970 | rich-tx-manager-service | 服务端口
 8070 | rich-tx-manager-service | 客户端连接端口
 
-##项目开发
+## 项目开发
 后续项目开发主要依赖于：
 ~~~
 **建议使用**
@@ -108,7 +108,7 @@ Rich Tx Manager Service
 </parent>
 ~~~
 
-##注意事项
+## 注意事项
 由于现阶段没有私服，所以至少需要拉去Rich项目执行一次mvn package，
 后续可以另行开启项目并设置好相关依赖即可开始开发
 
