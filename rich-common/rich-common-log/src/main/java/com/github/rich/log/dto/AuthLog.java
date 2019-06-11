@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 public class AuthLog implements Serializable {
     private static final long serialVersionUID = -7348389195027603683L;
 
+    private String userId;
 
     private String loginName;
 

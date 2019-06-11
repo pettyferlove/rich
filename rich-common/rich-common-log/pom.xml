@@ -22,6 +22,11 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.rich</groupId>
+            <artifactId>rich-common-core</artifactId>
+            <version>1.0.0-RELEASE</version>
+        </dependency>
     </dependencies>
 
 </project>
