@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemDictItem;
 import com.github.rich.base.service.ISystemDictItemService;
 import com.github.rich.common.core.model.R;
+import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.constants.OperateType;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +53,7 @@ public class DictItemController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
+    @UserOperateLog(type = OperateType.ADD, description = "创建字典项")
     public R<String> create(SystemDictItem systemDictItem) {
         return new R<>(systemDictItemService.create(systemDictItem));
     }
@@ -61,6 +64,7 @@ public class DictItemController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新字典项")
     public R<Boolean> update(SystemDictItem systemDictItem) {
         return new R<>(systemDictItemService.update(systemDictItem));
     }
@@ -71,6 +75,7 @@ public class DictItemController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
+    @UserOperateLog(type = OperateType.DELETE, description = "删除字典项")
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(systemDictItemService.delete(id));
     }
@@ -82,6 +87,7 @@ public class DictItemController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/batch")
     @Deprecated
+    @UserOperateLog(type = OperateType.DELETE, description = "批量删除字典项")
     public R<Boolean> deleteByCodes(String[] ids) {
         return new R<>(systemDictItemService.deleteByCodes(Arrays.asList(ids)));
     }

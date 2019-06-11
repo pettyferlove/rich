@@ -8,6 +8,7 @@ import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.model.R;
 import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
@@ -53,7 +54,6 @@ public class UserController {
             @ApiImplicitParam(paramType = "query", name = "page", value = "Page", dataTypeClass = Page.class)
     })
     @GetMapping("page")
-    @UserOperateLog
     public R<IPage> page(SystemUser systemUser, Page<SystemUser> page) {
         return new R<>(systemUserService.page(systemUser, page));
     }
@@ -73,6 +73,7 @@ public class UserController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
+    @UserOperateLog(type = OperateType.ADD, description = "创建用户")
     public R<String> create(SystemUser systemUser) {
         return new R<>(systemUserService.create(systemUser));
     }
@@ -83,6 +84,7 @@ public class UserController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新用户")
     public R<Boolean> update(SystemUser systemUser) {
         return new R<>(systemUserService.update(systemUser));
     }
@@ -93,6 +95,7 @@ public class UserController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
+    @UserOperateLog(type = OperateType.DELETE, description = "删除用户")
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(systemUserService.delete(id));
     }
@@ -105,6 +108,7 @@ public class UserController {
 
     @ApiOperation(value = "更新用户详情", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @PutMapping("/info")
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新用户详情-用户个人操作")
     public R<Boolean> updateInfo(UserDetailVO detail) {
         return new R<>(systemUserService.updateUserInfo(SecurityUtil.getUser(), detail));
     }

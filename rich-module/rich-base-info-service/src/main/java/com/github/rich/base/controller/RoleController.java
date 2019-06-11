@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.common.core.model.R;
+import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.constants.OperateType;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +52,7 @@ public class RoleController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
+    @UserOperateLog(type = OperateType.ADD, description = "创建角色")
     public R<String> create(SystemRole systemRole) {
         return new R<>(systemRoleService.create(systemRole));
     }
@@ -60,6 +63,7 @@ public class RoleController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新角色")
     public R<Boolean> update(SystemRole systemRole) {
         return new R<>(systemRoleService.update(systemRole));
     }
@@ -70,6 +74,7 @@ public class RoleController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
+    @UserOperateLog(type = OperateType.DELETE, description = "删除角色")
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(systemRoleService.delete(id));
     }
@@ -92,6 +97,7 @@ public class RoleController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/authority")
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新角色下已绑定资源（菜单）")
     public R<Boolean> authorityUpdate(String roleId, String[] addIds, String[] removeIds) {
         return new R<>(systemRoleService.updateMenuForRole(roleId, addIds, removeIds));
     }
@@ -118,6 +124,7 @@ public class RoleController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/user/add")
+    @UserOperateLog(type = OperateType.ADD, description = "为用户增加角色")
     public R<Boolean> userAdd(String userId, String[] ids) {
         return new R<>(systemRoleService.addUserRole(userId, ids));
     }
@@ -129,6 +136,7 @@ public class RoleController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/user/delete")
+    @UserOperateLog(type = OperateType.DELETE, description = "为用户删除角色")
     public R<Boolean> userDelete(String userId, String[] ids) {
         return new R<>(systemRoleService.deleteUserRole(userId, ids));
     }

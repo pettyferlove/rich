@@ -4,6 +4,8 @@ import com.github.rich.base.entity.SystemMenuResource;
 import com.github.rich.base.service.ISystemMenuResourceService;
 import com.github.rich.base.vo.MenuNode;
 import com.github.rich.common.core.model.R;
+import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,6 +39,7 @@ public class MenuController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/node/create")
+    @UserOperateLog(type = OperateType.ADD, description = "创建菜单节点")
     public R<String> createNode(SystemMenuResource menu) {
         return new R<>(systemMenuResourceService.createNode(menu));
     }
@@ -62,6 +65,7 @@ public class MenuController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/node/{id}")
+    @UserOperateLog(type = OperateType.DELETE, description = "删除菜单节点")
     public R<Boolean> deleteNode(@PathVariable String id) throws Exception {
         return new R<>(systemMenuResourceService.deleteNode(id));
     }
@@ -72,6 +76,7 @@ public class MenuController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/node")
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新菜单节点")
     public R<Boolean> updateNode(SystemMenuResource menu) {
         return new R<>(systemMenuResourceService.updateNode(menu));
     }
