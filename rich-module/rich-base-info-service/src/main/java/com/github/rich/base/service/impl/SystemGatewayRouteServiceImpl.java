@@ -1,5 +1,6 @@
 package com.github.rich.base.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.dto.Route;
 import com.github.rich.base.entity.SystemGatewayRoute;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author Petty
@@ -28,7 +29,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-routes")
     public List<Route> loadAll() {
-        List<SystemGatewayRoute> systemGatewayRoutes = this.list();
+        List<SystemGatewayRoute> systemGatewayRoutes = this.list(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getStatus, "1"));
         Optional<List<Route>> optionalRoutes = Optional.ofNullable(ConverterUtil.convertList(SystemGatewayRoute.class, Route.class, systemGatewayRoutes));
         return optionalRoutes.orElseGet(ArrayList::new);
     }
