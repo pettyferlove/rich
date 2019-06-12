@@ -31,19 +31,12 @@ public class RichLogServiceApplication {
     }
 
     /**
-     * 开启Feign Debug模式
+     * Feign 日志模式
      *
      * @return Logger.Level
      */
     @Bean
     Logger.Level feignLoggerLevel() {
-        return Logger.Level.FULL;
+        return Logger.Level.NONE;
     }
-
-    @KafkaListener(topics = {LogKafkaTopicConstant.USER_OPERATE_LOG_TOPIC})
-    public void receiveOperateLogMessage(String message){
-        System.out.println(message);
-    }
-
-
 }
