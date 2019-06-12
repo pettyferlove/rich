@@ -6,8 +6,8 @@
     <resultMap id="BaseResultMap" type="com.github.rich.log.entity.UserOperateLog">
         <id column="id" property="id" />
         <result column="user_id" property="userId" />
-        <result column="operation_time" property="operationTime" />
-        <result column="operation_type" property="operationType" />
+        <result column="operate_time" property="operateTime" />
+        <result column="operate_type" property="operateType" />
         <result column="description" property="description" />
         <result column="request_ip" property="requestIp" />
         <result column="user_agent" property="userAgent" />
@@ -19,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, operation_time, operation_type, description, request_ip, user_agent, request_method, del_flag, create_time, modifier_time
+        id, user_id, operate_time, operate_type, description, request_ip, user_agent, request_method, del_flag, create_time, modifier_time
     </sql>
 
 </mapper>
