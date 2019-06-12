@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.service.ISystemRoleService;
-import com.github.rich.common.core.model.R;
+import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserOperateLog;
 import com.github.rich.log.constants.OperateType;
 import io.swagger.annotations.*;

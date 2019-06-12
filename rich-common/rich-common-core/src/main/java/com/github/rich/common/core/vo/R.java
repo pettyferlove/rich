@@ -1,4 +1,4 @@
-package com.github.rich.common.core.model;
+package com.github.rich.common.core.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

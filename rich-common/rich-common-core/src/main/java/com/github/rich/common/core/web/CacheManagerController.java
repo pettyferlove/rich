@@ -1,6 +1,6 @@
 package com.github.rich.common.core.web;
 
-import com.github.rich.common.core.model.R;
+import com.github.rich.common.core.vo.R;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;

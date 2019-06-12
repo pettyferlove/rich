@@ -3,7 +3,7 @@ package com.github.rich.attachment.controller;
 import com.github.rich.attachment.service.IAttachmentOperaService;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
-import com.github.rich.common.core.model.R;
+import com.github.rich.common.core.vo.R;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;

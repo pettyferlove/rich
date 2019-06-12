@@ -3,7 +3,7 @@ package com.github.rich.auth.service.impl;
 import com.github.rich.auth.service.AbstractCaptchaValidateService;
 import com.github.rich.common.core.constants.MqQueueConstant;
 import com.github.rich.common.core.constants.SecurityConstant;
-import com.github.rich.common.core.model.message.CaptchaMessage;
+import com.github.rich.common.core.dto.message.CaptchaMessage;
 import com.github.rich.common.core.service.IMessageSender;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

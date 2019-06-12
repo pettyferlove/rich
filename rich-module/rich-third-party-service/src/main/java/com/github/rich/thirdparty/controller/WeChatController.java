@@ -1,6 +1,6 @@
 package com.github.rich.thirdparty.controller;
 
-import com.github.rich.common.core.model.R;
+import com.github.rich.common.core.vo.R;
 import com.github.rich.thirdparty.model.WeChatCode2SessionCallback;
 import com.github.rich.thirdparty.model.WeChatUserInfoDecryptedData;
 import com.github.rich.thirdparty.service.WeChatAuthService;

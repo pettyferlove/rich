@@ -1,4 +1,4 @@
-package com.github.rich.common.core.model;
+package com.github.rich.common.core.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

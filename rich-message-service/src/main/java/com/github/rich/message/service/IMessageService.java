@@ -1,6 +1,6 @@
 package com.github.rich.message.service;
 
-import com.github.rich.common.core.model.Message;
+import com.github.rich.common.core.dto.Message;
 
 /**
  * @author Petty

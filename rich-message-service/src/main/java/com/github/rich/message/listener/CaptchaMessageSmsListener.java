@@ -1,7 +1,7 @@
 package com.github.rich.message.listener;
 
 import com.github.rich.common.core.constants.MqQueueConstant;
-import com.github.rich.common.core.model.message.CaptchaMessage;
+import com.github.rich.common.core.dto.message.CaptchaMessage;
 import com.github.rich.message.config.RabbitMqCustomConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

@@ -32,7 +32,7 @@ import java.util.Objects;
 @Slf4j
 public class ControllerAop {
 
-    @Pointcut("execution(public com.github.rich.common.core.model.R *(..))" )
+    @Pointcut("execution(public com.github.rich.common.core.vo.R *(..))" )
     public void pointCut() {
     }
 

@@ -6,7 +6,7 @@ import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.service.ISystemUserService;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
-import com.github.rich.common.core.model.R;
+import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserOperateLog;
 import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.utils.SecurityUtil;
