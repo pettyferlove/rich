@@ -42,7 +42,7 @@ public class UserOperateLog extends Model<UserOperateLog> {
     private LocalDateTime operateTime;
 
     @ApiModelProperty(value = "操作类型")
-    private String operateType;
+    private Integer operateType;
 
     @ApiModelProperty(value = "描述")
     private String description;

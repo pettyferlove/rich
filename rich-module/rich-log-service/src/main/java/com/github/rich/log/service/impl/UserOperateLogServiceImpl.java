@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper,
         if (convert.isPresent()) {
             UserOperateLog userOperateLog = convert.get();
             userOperateLog.setId(IdUtil.simpleUUID());
+            userOperateLog.setCreateTime(LocalDateTime.now());
             this.save(userOperateLog);
         }
     }
