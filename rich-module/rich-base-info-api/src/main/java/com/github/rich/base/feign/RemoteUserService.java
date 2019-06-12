@@ -1,6 +1,7 @@
 package com.github.rich.base.feign;
 
 import com.github.rich.base.dto.User;
+import com.github.rich.base.dto.UserDetailDTO;
 import com.github.rich.base.feign.factory.RemoteUserServiceFallbackFactory;
 import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -49,4 +50,13 @@ public interface RemoteUserService {
      */
     @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/union/{unionid}")
     User findByWeChatUnionID(@PathVariable("unionid") String unionid);
+
+    /**
+     * 通过用户ID获取用户信息详情
+     *
+     * @param userId 用户ID
+     * @return UserDetailDTO
+     */
+    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/detail/{userId}")
+    UserDetailDTO getUserDetail(@PathVariable("userId") String userId);
 }

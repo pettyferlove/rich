@@ -2,8 +2,13 @@ package com.github.rich.base.api.impl;
 
 import com.github.rich.base.api.UserServiceApi;
 import com.github.rich.base.dto.User;
+import com.github.rich.base.dto.UserDetailDTO;
+import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.service.ISystemUserService;
+import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 /**
  * @author Petty
@@ -35,5 +40,12 @@ public class UserServiceApiImpl implements UserServiceApi {
     @Override
     public User getByWeChatUnionID(String unionid) {
         return systemUserService.findByWeChatUnionID(unionid);
+    }
+
+    @Override
+    public UserDetailDTO getUserDetail(String userId) {
+        SystemUser systemUser = systemUserService.get(userId);
+        Optional<UserDetailDTO> userDetailDTOOptional = Optional.ofNullable(ConverterUtil.convert(systemUser,new UserDetailDTO()));
+        return userDetailDTOOptional.orElseGet(UserDetailDTO::new);
     }
 }

@@ -1,6 +1,7 @@
 package com.github.rich.base.feign.fallback;
 
 import com.github.rich.base.dto.User;
+import com.github.rich.base.dto.UserDetailDTO;
 import com.github.rich.base.feign.RemoteUserService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,12 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
     @Override
     public User findByWeChatUnionID(String unionid) {
         log.error("Feign---RemoteUserService->findByWeChatUnionID Hystrix Fusing->Params:{},Date:{},Cause:{}", unionid, System.currentTimeMillis(), cause);
+        return null;
+    }
+
+    @Override
+    public UserDetailDTO getUserDetail(String userId) {
+        log.error("Feign---RemoteUserService->getUserDetail Hystrix Fusing->Params:{},Date:{},Cause:{}", userId, System.currentTimeMillis(), cause);
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.github.rich.base.api;
 
 import com.github.rich.base.dto.User;
+import com.github.rich.base.dto.UserDetailDTO;
 import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,4 +48,13 @@ public interface UserServiceApi {
      */
     @GetMapping("/wechat/union/{unionid}")
     User getByWeChatUnionID(@PathVariable String unionid);
+
+    /**
+     * 通过用户ID获取用户信息详情
+     *
+     * @param userId 用户ID
+     * @return UserDetailDTO
+     */
+    @GetMapping("/detail/{userId}")
+    UserDetailDTO getUserDetail(@PathVariable String userId);
 }
