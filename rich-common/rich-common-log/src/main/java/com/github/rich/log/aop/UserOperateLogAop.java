@@ -50,7 +50,7 @@ public class UserOperateLogAop {
         operateLogInfo.setDescription(userOperateLog.description());
         operateLogInfo.setOperateType(userOperateLog.type().getValue());
         operateLogInfo.setUserId(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
-        operateLogInfo.setOperationTime(LocalDateTime.now());
+        operateLogInfo.setOperateTime(LocalDateTime.now());
         operateLogInfo.setRequestIp(ip);
         operateLogInfo.setRequestMethod(method);
         operateLogInfo.setUserAgent(userAgent);

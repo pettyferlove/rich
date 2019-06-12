@@ -27,7 +27,7 @@ public class OperateLogInfo implements Serializable {
 
     private String description;
 
-    private LocalDateTime operationTime;
+    private LocalDateTime operateTime;
 
     private String requestIp;
 
