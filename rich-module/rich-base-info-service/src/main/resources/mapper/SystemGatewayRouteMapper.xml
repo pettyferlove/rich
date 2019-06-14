@@ -8,6 +8,7 @@
         <result column="name" property="name" />
         <result column="route" property="route" />
         <result column="status" property="status" />
+        <result column="remark" property="remark" />
         <result column="del_flag" property="delFlag" />
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
@@ -17,7 +18,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, route, status, del_flag, creator, create_time, modifier, modifier_time
+        id, name, route, status, remark, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>
