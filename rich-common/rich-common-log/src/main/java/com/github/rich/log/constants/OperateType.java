@@ -16,7 +16,7 @@ public enum OperateType {
     ATTACH_DOWNLOAD("download operate",6),
     ATTACH_VIEW("view operate",7),
     ATTACH_DELETE("view operate",8),
-    OTHER("other operate",4);
+    OTHER("other operate",9);
 
 
     private String type;
