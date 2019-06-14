@@ -12,6 +12,10 @@ public enum OperateType {
     DELETE("delete operate",2),
     UPDATE("update operate",3),
     QUERY("query operate",4),
+    ATTACH_UPLOAD("upload operate",5),
+    ATTACH_DOWNLOAD("download operate",6),
+    ATTACH_VIEW("view operate",7),
+    ATTACH_DELETE("view operate",8),
     OTHER("other operate",4);
 
 

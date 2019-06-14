@@ -4,6 +4,8 @@ import com.github.rich.attachment.service.IAttachmentOperaService;
 import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import com.github.rich.common.core.vo.R;
+import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.constants.OperateType;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +36,7 @@ public class AttachmentController {
             @ApiImplicitParam(paramType = "query", name = "file", value = "file", dataTypeClass = MultipartFile.class)
     })
     @PostMapping("upload")
+    @UserOperateLog(type = OperateType.ATTACH_UPLOAD, description = "用户附件上传")
     public R<UploadResult> upload(@Validated Upload upload, MultipartFile file) {
         return new R<>(attachmentOperaService.upload(upload, file));
     }
@@ -43,6 +46,7 @@ public class AttachmentController {
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @GetMapping("download/{id}")
+    @UserOperateLog(type = OperateType.ATTACH_DOWNLOAD, description = "用户附件下载")
     public void download(@PathVariable String id, HttpServletResponse response) throws Exception {
         attachmentOperaService.download(id, response);
     }
@@ -52,6 +56,7 @@ public class AttachmentController {
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @GetMapping("view/{id}")
+    @UserOperateLog(type = OperateType.ATTACH_VIEW, description = "用户文件查看")
     public void view(@PathVariable String id, HttpServletResponse response) throws Exception {
         attachmentOperaService.view(id, response);
     }
@@ -61,7 +66,8 @@ public class AttachmentController {
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @DeleteMapping("/{id}")
-    public R<Boolean> delete(@PathVariable String id){
+    @UserOperateLog(type = OperateType.ATTACH_DELETE, description = "用户文件删除")
+    public R<Boolean> delete(@PathVariable String id) {
         return new R<>(attachmentOperaService.delete(id));
     }
 
@@ -71,7 +77,8 @@ public class AttachmentController {
     })
     @Deprecated
     @PostMapping("/batch/delete")
-    public R<Boolean> deleteBatch(String[] ids){
+    @UserOperateLog(type = OperateType.ATTACH_DELETE, description = "用户文件批量删除")
+    public R<Boolean> deleteBatch(String[] ids) {
         return new R<>(attachmentOperaService.deleteBatch(ids));
     }
 
