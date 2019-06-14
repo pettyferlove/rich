@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-06-12
+ * @since 2019-06-14
  */
 @Data
 @NoArgsConstructor
@@ -37,6 +37,9 @@ public class UserOperateLog extends Model<UserOperateLog> {
 
     @ApiModelProperty(value = "用户ID")
     private String userId;
+
+    @ApiModelProperty(value = "客户端ID")
+    private String clientId;
 
     @ApiModelProperty(value = "操作时间")
     private LocalDateTime operateTime;
