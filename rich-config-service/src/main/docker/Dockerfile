@@ -1,6 +1,5 @@
-FROM pettyfer/jre-8:latest
+FROM pettyfer/alpine-jre-8:latest
 RUN mkdir -p /home
-RUN echo "Asia/shanghai" > /etc/timezone;
 WORKDIR /home
 EXPOSE 10152
 ADD /rich-config-service-1.0.0-RELEASE.jar app.jar
