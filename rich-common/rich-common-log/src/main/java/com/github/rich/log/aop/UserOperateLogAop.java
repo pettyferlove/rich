@@ -17,7 +17,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 /**
  * @author Petty
@@ -49,7 +48,8 @@ public class UserOperateLogAop {
         OperateLogInfo operateLogInfo = new OperateLogInfo();
         operateLogInfo.setDescription(userOperateLog.description());
         operateLogInfo.setOperateType(userOperateLog.type().getValue());
-        operateLogInfo.setUserId(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        operateLogInfo.setUserId(SecurityUtil.getUser() == null ? "anonymousUser" : SecurityUtil.getUser().getUserId());
+        operateLogInfo.setClientId(SecurityUtil.getOAuth2Request() == null ? "anonymousClient" : SecurityUtil.getOAuth2Request().getClientId());
         operateLogInfo.setOperateTime(LocalDateTime.now());
         operateLogInfo.setRequestIp(ip);
         operateLogInfo.setRequestMethod(method);
