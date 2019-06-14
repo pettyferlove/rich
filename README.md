@@ -49,7 +49,8 @@ https://gitee.com/union_tech_company/rich.git
 2. Rich Gateway Service 网关服务
 3. Rich Auth Service 授权服务
 4. Rich Base Info Service 基础信息服务
-5. Other业务服务
+5. Rich Log Service 用户日志收集服务
+6. Other业务服务
 #### 辅助服务
 1. Rich Message Service 消息发送服务
 2. Rich Monitor Service 服务监控
@@ -73,6 +74,7 @@ rich
   ├─rich-base-info-service 基础信息服务
   ├─rich-code-generator 代码生成器
   ├─rich-demo-servcie Demo服务
+  ├─rich-log-servcie 用户日志收集服务
   ├─rich-third-party-servcie 第三方互联网平台对接服务
 ├─rich-monitor-service 监控服务
 ├─rich-tx-manager-service 分布式事务协调中心服务
@@ -87,11 +89,13 @@ Rich Tx Manager Service
 --- | ---  | --- 
 10151 | rich-eureka-service | 服务端口
 10152 | rich-config-service | 服务端口
+10153 | rich-log-service | 服务端口
 7970 | rich-tx-manager-service | 服务端口
 8070 | rich-tx-manager-service | 客户端连接端口
+9020 | kafka | 客户端连接端口
 
 ## 项目开发
-后续项目开发主要依赖于：
+后续项目开发主要在一下模块下开发：
 ~~~
 **建议使用**
 <parent>
