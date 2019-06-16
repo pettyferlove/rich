@@ -20,6 +20,7 @@
         <module>rich-monitor-service</module>
         <module>rich-tx-manager-service</module>
         <module>rich-attachment-service</module>
+        <module>rich-log-service</module>
     </modules>
 
     <parent>

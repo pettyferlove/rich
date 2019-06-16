@@ -9,7 +9,7 @@
 
     <parent>
         <groupId>com.github.rich</groupId>
-        <artifactId>rich-module</artifactId>
+        <artifactId>rich</artifactId>
         <version>1.0.0-RELEASE</version>
     </parent>
 
