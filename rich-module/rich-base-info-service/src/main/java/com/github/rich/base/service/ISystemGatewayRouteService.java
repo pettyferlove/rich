@@ -25,6 +25,13 @@ public interface ISystemGatewayRouteService extends IService<SystemGatewayRoute>
     List<Route> loadAll();
 
     /**
+     * 通过ID查询路由
+     * @param routeId routeId
+     * @return Route
+     */
+    Route load(String routeId);
+
+    /**
      * 查询Route列表
      * @param route SystemGatewayRoute
      * @param page Page

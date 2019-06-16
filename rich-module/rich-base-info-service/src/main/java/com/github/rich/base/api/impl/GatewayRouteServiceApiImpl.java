@@ -23,4 +23,9 @@ public class GatewayRouteServiceApiImpl implements GatewayRouteServiceApi {
     public List<Route> loadRoutes() {
         return systemGatewayRouteService.loadAll();
     }
+
+    @Override
+    public Route load(String routeId) {
+        return systemGatewayRouteService.load(routeId);
+    }
 }

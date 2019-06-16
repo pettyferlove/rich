@@ -36,12 +36,19 @@ import java.util.Optional;
 public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRouteMapper, SystemGatewayRoute> implements ISystemGatewayRouteService {
 
     @Override
-    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-routes")
     public List<Route> loadAll() {
         List<SystemGatewayRoute> systemGatewayRoutes = this.list(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getStatus, "1"));
         Optional<List<Route>> optionalRoutes = Optional.ofNullable(ConverterUtil.convertList(SystemGatewayRoute.class, Route.class, systemGatewayRoutes));
         return optionalRoutes.orElseGet(ArrayList::new);
     }
+
+    @Override
+    public Route load(String routeId) {
+        SystemGatewayRoute systemGatewayRoute = this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getId, routeId).eq(SystemGatewayRoute::getStatus, "1"));
+        Optional<Route> routeOptional = Optional.ofNullable(ConverterUtil.convert(systemGatewayRoute, new Route()));
+        return routeOptional.orElseGet(Route::new);
+    }
+
 
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#route.toString())")
@@ -94,7 +101,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
     @Override
     public Boolean changeStatus(SystemGatewayRoute route) {
         Integer status = route.getStatus();
-        route.setStatus(status==0?1:0);
+        route.setStatus(status == 0 ? 1 : 0);
         return this.update(route);
     }
 

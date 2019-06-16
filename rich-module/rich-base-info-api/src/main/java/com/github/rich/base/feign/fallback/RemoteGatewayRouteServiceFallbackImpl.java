@@ -23,4 +23,10 @@ public class RemoteGatewayRouteServiceFallbackImpl implements RemoteGatewayRoute
         log.error("Feign---RemoteGatewayRouteService->loadRoutes Hystrix Fusing->Params:{},Date:{},Cause:{}", null, System.currentTimeMillis(), cause);
         return null;
     }
+
+    @Override
+    public Route load(String routeId) {
+        log.error("Feign---RemoteGatewayRouteService->load Hystrix Fusing->Params:{},Date:{},Cause:{}", routeId, System.currentTimeMillis(), cause);
+        return null;
+    }
 }
