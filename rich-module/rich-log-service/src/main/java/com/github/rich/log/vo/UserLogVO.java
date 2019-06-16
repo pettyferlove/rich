@@ -1,30 +1,27 @@
-package com.github.rich.log.entity;
+package com.github.rich.log.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import java.io.Serializable;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.rich.common.core.datatype.CustomLocalDateTimeDeserializer;
 import com.github.rich.common.core.datatype.CustomLocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
- * <p>
- * 
- * </p>
- *
  * @author Petty
- * @since 2019-06-14
  */
 @Data
 @NoArgsConstructor
@@ -32,17 +29,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ApiModel(value="UserOperateLog对象", description="")
-public class UserOperateLog extends Model<UserOperateLog> {
+@ApiModel(value="UserLogVO对象", description="用户日志")
+public class UserLogVO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 742010797500857020L;
     @ApiModelProperty(value = "数据ID")
-    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "用户ID")
-    private String userId;
+    @ApiModelProperty(value = "用户姓名")
+    private String userName;
 
     @ApiModelProperty(value = "客户端ID")
     private String clientId;
@@ -68,26 +63,5 @@ public class UserOperateLog extends Model<UserOperateLog> {
     @ApiModelProperty(value = "请求方法")
     private String requestMethod;
 
-    @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
-    @TableLogic
-    private Integer delFlag;
-
-    @ApiModelProperty(value = "创建时间")
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
-    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty(value = "修改时间")
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
-    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime modifierTime;
-
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
 
 }

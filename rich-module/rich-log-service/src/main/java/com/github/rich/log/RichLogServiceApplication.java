@@ -1,7 +1,11 @@
 package com.github.rich.log;
 
+import com.github.rich.common.core.annotation.EnableRichFeignClients;
+import com.github.rich.common.core.annotation.EnableSwaggerDoc;
 import com.github.rich.log.constants.LogKafkaTopicConstant;
+import com.github.rich.security.annotation.EnableRichResourceServer;
 import feign.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -12,7 +16,11 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author Petty
  */
+@Slf4j
+@EnableRichResourceServer
+@EnableRichFeignClients
 @SpringCloudApplication
+@EnableSwaggerDoc
 public class RichLogServiceApplication {
 
     /**
