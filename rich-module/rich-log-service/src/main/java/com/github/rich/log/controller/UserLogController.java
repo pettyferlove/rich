@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(value = "用户日志信息", tags = {"用户日志信息接口"})
 @RestController
-@RequestMapping("/log/user")
+@RequestMapping("/user")
 public class UserLogController {
 
     private final IUserOperateLogService userOperateLogService;
