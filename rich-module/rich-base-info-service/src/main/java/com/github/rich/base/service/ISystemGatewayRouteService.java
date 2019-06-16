@@ -60,4 +60,11 @@ public interface ISystemGatewayRouteService extends IService<SystemGatewayRoute>
      */
     Boolean update(SystemGatewayRoute route);
 
+    /**
+     * 修改状态
+     * @param route SystemGatewayRoute
+     * @return Boolean
+     */
+    Boolean changeStatus(SystemGatewayRoute route);
+
 }

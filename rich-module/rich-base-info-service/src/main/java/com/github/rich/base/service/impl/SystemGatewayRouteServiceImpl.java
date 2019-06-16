@@ -90,4 +90,13 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
         route.setModifierTime(LocalDateTime.now());
         return this.updateById(route);
     }
+
+    @Override
+    public Boolean changeStatus(SystemGatewayRoute route) {
+        Integer status = route.getStatus();
+        route.setStatus(status==0?1:0);
+        return this.update(route);
+    }
+
+
 }

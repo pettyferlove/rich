@@ -77,4 +77,15 @@ public class GatewayRouteController {
         return new R<>(systemGatewayRouteService.delete(id));
     }
 
+    @ApiOperation(value = "更新路由状态", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "gatewayRoute", value = "GatewayRoute", dataTypeClass = SystemGatewayRoute.class)
+    })
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping(value = "/status")
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新路由状态")
+    public R<Boolean> changeStatus(SystemGatewayRoute gatewayRoute) {
+        return new R<>(systemGatewayRouteService.changeStatus(gatewayRoute));
+    }
+
 }
