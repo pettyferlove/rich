@@ -68,13 +68,13 @@ rich
 ├─rich-config-service 配置中心服务
 ├─rich-eureka-service 服务注册中心
 ├─rich-gateway-service 对外访问网关
+├─rich-log-servcie 用户日志收集服务
 ├─rich-message-service 消息服务
 ├─rich-module 业务模块父级目录
   ├─rich-base-info-api 基础信息服务Api
   ├─rich-base-info-service 基础信息服务
   ├─rich-code-generator 代码生成器
   ├─rich-demo-servcie Demo服务
-  ├─rich-log-servcie 用户日志收集服务
   ├─rich-third-party-servcie 第三方互联网平台对接服务
 ├─rich-monitor-service 监控服务
 ├─rich-tx-manager-service 分布式事务协调中心服务
