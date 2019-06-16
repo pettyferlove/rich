@@ -58,7 +58,6 @@ public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper,
     }
 
     @Override
-    @Cacheable(value = "log-user-operate-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#userOperateLog.toString())")
     public IPage<UserLogVO> page(UserOperateLog userOperateLog, Page<UserOperateLog> page) {
         IPage<UserLogVO> userLogPage = new Page<>();
         IPage<UserOperateLog> userOperateLogPage = this.page(page, Wrappers.lambdaQuery(userOperateLog).orderByDesc(UserOperateLog::getCreateTime));
@@ -79,17 +78,12 @@ public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper,
     }
 
     @Override
-    @Cacheable(value = "log-user-operate-detail", key = "#id", condition = "#id!=null")
     public UserLogVO get(String id) {
         Optional<UserLogVO> userLogVO = Optional.ofNullable(ConverterUtil.convert(this.getById(id), new UserLogVO()));
         return userLogVO.orElseGet(UserLogVO::new);
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "log-user-operate-page", allEntries = true),
-            @CacheEvict(value = "log-user-operate-detail", key = "#id", condition = "#id!=null")
-    })
     public Boolean delete(String id) {
         return this.removeById(id);
     }
