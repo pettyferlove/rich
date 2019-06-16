@@ -99,6 +99,11 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-routes", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-detail", key = "#route.id", condition = "#route.id!=null")
+    })
     public Boolean changeStatus(SystemGatewayRoute route) {
         Integer status = route.getStatus();
         route.setStatus(status == 0 ? 1 : 0);
