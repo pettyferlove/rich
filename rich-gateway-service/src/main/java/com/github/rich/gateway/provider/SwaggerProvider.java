@@ -2,13 +2,9 @@ package com.github.rich.gateway.provider;
 
 import com.github.rich.gateway.route.RichInMemoryRouteDefinitionRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.cloud.gateway.config.GatewayProperties;
-import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.support.NameUtils;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
