@@ -21,6 +21,7 @@
         <module>rich-tx-manager-service</module>
         <module>rich-attachment-service</module>
         <module>rich-log-service</module>
+        <module>rich-zipkin-service</module>
     </modules>
 
     <parent>
@@ -45,6 +46,7 @@
         <docker.image.prefix>rich</docker.image.prefix>
         <docker.plugin.version>0.4.13</docker.plugin.version>
         <swagger.version>2.9.2</swagger.version>
+        <zipkin.version>2.12.2</zipkin.version>
         <junit.version>4.12</junit.version>
         <druid.version>1.1.16</druid.version>
         <mysql.version>8.0.9-rc</mysql.version>
@@ -67,6 +69,14 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

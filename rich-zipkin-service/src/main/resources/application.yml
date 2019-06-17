@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-zipkin-service
+    name: rich-zipkin-service
+    description: Zipkin布式跟踪系统服务
+    version: 1.0.0-RELEASE
