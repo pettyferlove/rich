@@ -42,16 +42,17 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-messaging</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
-            <artifactId>rich-common-core</artifactId>
+            <artifactId>rich-base-info-api</artifactId>
+            <version>1.0.0-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.rich</groupId>
+            <artifactId>rich-common-security</artifactId>
             <version>1.0.0-RELEASE</version>
         </dependency>
     </dependencies>
