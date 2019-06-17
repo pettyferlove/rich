@@ -25,6 +25,15 @@ public class SecurityConfig {
         }
     }
 
+    @Profile("remote-dev")
+    @EnableWebSecurity
+    public static class SecurityRemoteDevPermitAllConfig extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests().anyRequest().permitAll().and().csrf().disable();
+        }
+    }
+
     @Profile("test")
     @EnableWebSecurity
     public static class SecurityTestPermitAllConfig extends WebSecurityConfigurerAdapter {
