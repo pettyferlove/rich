@@ -1,4 +1,4 @@
-FROM pettyfer/alpine-jre-8:latest
+FROM pettyfer/apline-open-jre8:latest
 RUN mkdir -p /home
 WORKDIR /home
 EXPOSE 10151
