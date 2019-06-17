@@ -9,39 +9,34 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import springfox.documentation.swagger.web.*;
 
-import java.util.Optional;
-
 /**
  * @author Petty
  */
 @RestController
 @RequestMapping("/swagger-resources")
 public class SwaggerController {
-    private final SecurityConfiguration securityConfiguration;
-    private final UiConfiguration uiConfiguration;
+
     private final SwaggerResourcesProvider swaggerResources;
 
     @Autowired
-    public SwaggerController(SwaggerResourcesProvider swaggerResources, SecurityConfiguration securityConfiguration, UiConfiguration uiConfiguration) {
+    public SwaggerController(SwaggerResourcesProvider swaggerResources) {
         this.swaggerResources = swaggerResources;
-        this.securityConfiguration = securityConfiguration;
-        this.uiConfiguration = uiConfiguration;
     }
 
 
     @GetMapping("/configuration/security")
     public Mono<ResponseEntity<SecurityConfiguration>> securityConfiguration() {
         return Mono.just(new ResponseEntity<>(
-                Optional.ofNullable(securityConfiguration).orElse(SecurityConfigurationBuilder.builder().build()), HttpStatus.OK));
+                SecurityConfigurationBuilder.builder().build(), HttpStatus.OK));
     }
 
     @GetMapping("/configuration/ui")
     public Mono<ResponseEntity<UiConfiguration>> uiConfiguration() {
         return Mono.just(new ResponseEntity<>(
-                Optional.ofNullable(uiConfiguration).orElse(UiConfigurationBuilder.builder().build()), HttpStatus.OK));
+                UiConfigurationBuilder.builder().build(), HttpStatus.OK));
     }
 
-    @GetMapping("")
+    @GetMapping
     public Mono<ResponseEntity> swaggerResources() {
         return Mono.just((new ResponseEntity<>(swaggerResources.get(), HttpStatus.OK)));
     }
