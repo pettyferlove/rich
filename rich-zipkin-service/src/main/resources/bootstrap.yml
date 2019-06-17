@@ -36,7 +36,7 @@ spring:
   profiles: remote-dev
 eureka:
   instance:
-    ip-address: 106.14.2.180
+    ip-address: 192.168.7.8
     hostname: ${eureka.instance.ip-address}
     prefer-ip-address: false
     instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}

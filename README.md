@@ -90,6 +90,7 @@ Rich Tx Manager Service
 10151 | rich-eureka-service | 服务端口
 10152 | rich-config-service | 服务端口
 10153 | rich-log-service | 服务端口
+9411 | rich-zipkin-service | 服务端口
 7970 | rich-tx-manager-service | 服务端口
 8070 | rich-tx-manager-service | 客户端连接端口
 9020 | kafka | 客户端连接端口
