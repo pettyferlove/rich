@@ -7,6 +7,11 @@ spring:
     active: dev
   cloud:
     config:
+      retry:
+        initial-interval: 1000
+        max-attempts: 6
+        max-interval: 2000
+        multiplier: 1.1
       discovery:
         enabled: true
         service-id: rich-config-service
