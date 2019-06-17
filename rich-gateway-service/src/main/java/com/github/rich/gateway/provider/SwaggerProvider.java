@@ -25,7 +25,6 @@ public class SwaggerProvider implements SwaggerResourcesProvider {
 
     @Override
     public List<SwaggerResource> get() {
-
         List<SwaggerResource> resources = new ArrayList<>();
         List<String> routes = new ArrayList<>();
         routeLocator.getRoutes().subscribe(route -> routes.add(route.getId()));
