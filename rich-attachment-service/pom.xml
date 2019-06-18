@@ -67,6 +67,11 @@
             <artifactId>rich-common-log</artifactId>
             <version>1.0.0-RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.rich</groupId>
+            <artifactId>rich-common-sleuth-zipkin</artifactId>
+            <version>1.0.0-RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
