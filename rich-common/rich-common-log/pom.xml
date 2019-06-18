@@ -10,6 +10,7 @@
     <artifactId>rich-common-log</artifactId>
     <version>1.0.0-RELEASE</version>
     <name>rich-common-log</name>
+    <packaging>jar</packaging>
     <description>日志公共依赖</description>
 
     <dependencies>
