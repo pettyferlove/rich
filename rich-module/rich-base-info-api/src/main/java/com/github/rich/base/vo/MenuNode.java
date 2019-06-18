@@ -32,6 +32,9 @@ public class MenuNode extends TreeNode {
     @ApiModelProperty(value = "菜单图标")
     private String icon;
 
+    @ApiModelProperty(value = "访问类型")
+    private Integer visitType;
+
     @ApiModelProperty(value = "路由名称")
     private String routeName;
 
@@ -52,6 +55,9 @@ public class MenuNode extends TreeNode {
 
     @ApiModelProperty(value = "是否由前端缓存")
     private Integer keepAlive;
+
+    @ApiModelProperty(value = "跳转页面地址")
+    private String pageLink;
 
     @ApiModelProperty(value = "排序")
     private Long sort;
