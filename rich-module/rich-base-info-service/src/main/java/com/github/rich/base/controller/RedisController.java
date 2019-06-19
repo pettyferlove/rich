@@ -40,24 +40,45 @@ public class RedisController {
             info = optional.get().getConnection().info();
             optional.get().getConnection().hyperLogLogCommands();
         }
-        List<Object> slowlogs = (List<Object>) redisTemplate.execute(new RedisCallback<List<Object>>() {
-            @Override
-            public List<Object> doInRedis(RedisConnection connection) throws DataAccessException {
-                System.out.println(connection.getClass());
-                RedisAsyncCommands redisAsyncCommands = (RedisAsyncCommands) connection.getNativeConnection();
-                RedisFuture<List<Object>> future = redisAsyncCommands.slowlogGet(10);
-                try {
-                    return future.get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-                return null;
+        Object slowlogs = redisTemplate.execute((RedisCallback<List<Object>>) connection -> {
+            System.out.println(connection.getClass());
+            RedisAsyncCommands redisAsyncCommands = (RedisAsyncCommands) connection.getNativeConnection();
+            RedisFuture<List<Object>> future = redisAsyncCommands.slowlogGet(1000);
+            try {
+                return future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
             }
+            return null;
+        });
+
+        Object logLen = redisTemplate.execute((RedisCallback<Long>) connection -> {
+            System.out.println(connection.getClass());
+            RedisAsyncCommands redisAsyncCommands = (RedisAsyncCommands) connection.getNativeConnection();
+            RedisFuture<Long> future = redisAsyncCommands.slowlogLen();
+            try {
+                return future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+
+        Object dbSize = redisTemplate.execute((RedisCallback<Long>) connection -> {
+            System.out.println(connection.getClass());
+            RedisAsyncCommands redisAsyncCommands = (RedisAsyncCommands) connection.getNativeConnection();
+            RedisFuture<Long> future = redisAsyncCommands.dbsize();
+            try {
+                return future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+            return null;
         });
 
         System.out.println(slowlogs);
+        System.out.println(dbSize);
+        System.out.println(logLen);
         return new R<>(info);
     }
 }
