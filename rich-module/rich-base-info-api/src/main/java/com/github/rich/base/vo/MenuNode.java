@@ -20,7 +20,7 @@ import lombok.*;
 public class MenuNode extends TreeNode {
     private static final long serialVersionUID = 8890625026946419517L;
 
-    @ApiModelProperty(value = "Api资源code")
+    @ApiModelProperty(value = "菜单资源code")
     private String id;
 
     @ApiModelProperty(value = "父级CODE")
@@ -38,26 +38,8 @@ public class MenuNode extends TreeNode {
     @ApiModelProperty(value = "路由名称")
     private String routeName;
 
-    @ApiModelProperty(value = "是否可以加入面包屑")
-    private Integer breadcrumb;
-
-    @ApiModelProperty(value = "路由组件名")
-    private String componentName;
-
-    @ApiModelProperty(value = "路由组件路径")
-    private String componentPath;
-
-    @ApiModelProperty(value = "路由地址")
-    private String path;
-
-    @ApiModelProperty(value = "路由重定向地址")
-    private String redirectPath;
-
-    @ApiModelProperty(value = "是否由前端缓存")
-    private Integer keepAlive;
-
     @ApiModelProperty(value = "跳转页面地址")
-    private String pageLink;
+    private String link;
 
     @ApiModelProperty(value = "排序")
     private Long sort;
