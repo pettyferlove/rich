@@ -17,6 +17,8 @@ public interface CommonConstant {
      */
     int SUCCESS = 200;
 
+    int WS_SUCCESS = 200001;
+
     int FAIL = 500;
 
     /**

@@ -1,6 +1,3 @@
-logging:
-  level:
-    org.springframework.security: debug
 spring:
   application:
     name: rich-message-service

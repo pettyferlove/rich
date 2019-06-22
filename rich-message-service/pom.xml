@@ -55,11 +55,12 @@
             <artifactId>rich-common-security</artifactId>
             <version>1.0.0-RELEASE</version>
         </dependency>
-        <dependency>
+        <!--不可依赖sleuth，与websocket冲突-->
+        <!--<dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-sleuth-zipkin</artifactId>
             <version>1.0.0-RELEASE</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
