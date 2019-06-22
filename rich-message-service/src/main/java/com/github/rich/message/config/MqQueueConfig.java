@@ -18,7 +18,7 @@ public class MqQueueConfig {
     }
 
     @Bean
-    public Queue createSMSQueue(){
+    public Queue createSmsQueue(){
         return new Queue(MqQueueConstant.SERVICE_SMS_QUEUE);
     }
 }
