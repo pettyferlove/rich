@@ -27,6 +27,7 @@ public class ServiceStatusChangeListener extends AbstractMessageListener<Service
      */
     @Override
     public boolean send(ServiceStatusChangeEmailMessage message) {
-        return super.send(message);
+        System.out.println(message);
+        return false;
     }
 }

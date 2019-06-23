@@ -26,6 +26,7 @@ public class CaptchaMessageSmsListener extends AbstractMessageListener<CaptchaMe
      */
     @Override
     public boolean send(CaptchaMessage message) {
-        return super.send(message);
+        System.out.println(message);
+        return false;
     }
 }

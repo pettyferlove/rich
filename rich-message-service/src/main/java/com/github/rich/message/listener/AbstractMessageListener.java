@@ -94,9 +94,7 @@ abstract class AbstractMessageListener<T extends Message> implements MessageList
      * @return 是否成功
      */
     @Override
-    public boolean send(T message) {
-        return false;
-    }
+    public abstract boolean send(T message);
 
     /**
      * 消息重试
