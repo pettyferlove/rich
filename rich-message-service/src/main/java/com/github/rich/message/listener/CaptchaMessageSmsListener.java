@@ -4,6 +4,7 @@ import com.github.rich.common.core.constants.MqQueueConstant;
 import com.github.rich.common.core.dto.message.CaptchaMessage;
 import com.github.rich.message.config.RabbitMqCustomConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -28,5 +29,10 @@ public class CaptchaMessageSmsListener extends AbstractMessageListener<CaptchaMe
     public boolean send(CaptchaMessage message) {
         System.out.println(message);
         return false;
+    }
+
+    @Override
+    public void aboveAgain(CaptchaMessage message, Message amqpMessage) {
+        log.info("超出重试次数");
     }
 }

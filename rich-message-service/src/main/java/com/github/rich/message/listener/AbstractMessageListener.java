@@ -103,7 +103,5 @@ abstract class AbstractMessageListener<T extends Message> implements MessageList
      * @param amqpMessage 消息队列消息
      */
     @Override
-    public void aboveAgain(T message, org.springframework.amqp.core.Message amqpMessage) {
-        log.info("超过重试次数，直接忽略");
-    }
+    public abstract void aboveAgain(T message, org.springframework.amqp.core.Message amqpMessage);
 }
