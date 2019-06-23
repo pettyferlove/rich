@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class ServiceStatusChangeMessage extends Message implements Serializable{
+public class ServiceStatusChangeEmailMessage extends EmailMessage implements Serializable{
     private static final long serialVersionUID = 8703554218364207017L;
     private String serviceId;
     private String exception;

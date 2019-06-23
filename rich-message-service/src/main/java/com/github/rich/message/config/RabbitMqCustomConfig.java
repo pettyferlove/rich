@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "spring.rabbitmq")
 public class RabbitMqCustomConfig {
 
+    /**
+     * 消息消费失败重试次数
+     */
     @Value("${spring.rabbitmq.retry:10}")
     Integer retry;
 

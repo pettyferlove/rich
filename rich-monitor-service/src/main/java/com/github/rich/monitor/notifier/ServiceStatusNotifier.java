@@ -1,7 +1,7 @@
 package com.github.rich.monitor.notifier;
 
 import com.github.rich.common.core.constants.MqQueueConstant;
-import com.github.rich.common.core.dto.message.ServiceStatusChangeMessage;
+import com.github.rich.common.core.dto.message.ServiceStatusChangeEmailMessage;
 import com.github.rich.common.core.service.IMessageSender;
 import com.github.rich.monitor.config.MailRemindProperties;
 import de.codecentric.boot.admin.server.domain.entities.Instance;
@@ -78,19 +78,19 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Future future = scheduled.schedule(() -> {
             log.error("Service {} (instance->{}) is {}", instance.getRegistration().getName(), instance.getId(), instance.getStatusInfo().getStatus());
-            ServiceStatusChangeMessage serviceStatusChangeMessage = new ServiceStatusChangeMessage();
-            serviceStatusChangeMessage.setServiceId(instance.getId().getValue());
-            serviceStatusChangeMessage.setMessage(message);
-            serviceStatusChangeMessage.setException((String) instance.getStatusInfo().getDetails().get("exception"));
-            serviceStatusChangeMessage.setExceptionMessage((String) instance.getStatusInfo().getDetails().get("message"));
-            serviceStatusChangeMessage.setStatus(instance.getStatusInfo().getStatus());
-            serviceStatusChangeMessage.setTime(simpleDateFormat.format(new Date(System.currentTimeMillis())));
-            serviceStatusChangeMessage.setVersion(instance.getVersion());
-            serviceStatusChangeMessage.setInfo(instance.getInfo().getValues());
-            serviceStatusChangeMessage.setFrom(mailRemindProperties.getFrom());
-            serviceStatusChangeMessage.setTo(mailRemindProperties.getTo());
-            serviceStatusChangeMessage.setSubject("服务离线警告");
-            messageSender.send(MqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeMessage);
+            ServiceStatusChangeEmailMessage serviceStatusChangeEmailMessage = new ServiceStatusChangeEmailMessage();
+            serviceStatusChangeEmailMessage.setServiceId(instance.getId().getValue());
+            serviceStatusChangeEmailMessage.setMessage(message);
+            serviceStatusChangeEmailMessage.setException((String) instance.getStatusInfo().getDetails().get("exception"));
+            serviceStatusChangeEmailMessage.setExceptionMessage((String) instance.getStatusInfo().getDetails().get("message"));
+            serviceStatusChangeEmailMessage.setStatus(instance.getStatusInfo().getStatus());
+            serviceStatusChangeEmailMessage.setTime(simpleDateFormat.format(new Date(System.currentTimeMillis())));
+            serviceStatusChangeEmailMessage.setVersion(instance.getVersion());
+            serviceStatusChangeEmailMessage.setInfo(instance.getInfo().getValues());
+            serviceStatusChangeEmailMessage.setDeliver(mailRemindProperties.getFrom());
+            serviceStatusChangeEmailMessage.setReceiver(mailRemindProperties.getTo());
+            serviceStatusChangeEmailMessage.setSubject("服务离线警告");
+            messageSender.send(MqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeEmailMessage);
         }, mailRemindProperties.getInterval(), TimeUnit.MINUTES);
         futureMap.put(instance.getId(), future);
     }

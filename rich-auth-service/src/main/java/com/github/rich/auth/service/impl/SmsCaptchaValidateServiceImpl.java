@@ -37,7 +37,7 @@ public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateServic
         try {
             redisTemplate.opsForValue().set(stringBuffer.toString(), captcha, timeout, TimeUnit.SECONDS);
             CaptchaMessage captchaMessage = new CaptchaMessage();
-            captchaMessage.setTo(code);
+            captchaMessage.setReceiver(code);
             StringBuilder str = new StringBuilder();
             str.append("登陆账号验证码：");
             str.append(captcha);

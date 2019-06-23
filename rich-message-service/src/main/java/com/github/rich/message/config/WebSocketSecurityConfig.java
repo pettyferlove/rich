@@ -1,6 +1,10 @@
 package com.github.rich.message.config;
 
+import com.github.rich.message.interceptor.SessionAuthHandshakeInterceptor;
+import com.github.rich.message.interceptor.UserChannelInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -18,13 +22,21 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
      */
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/ws").setAllowedOrigins("*")
+                //.addInterceptors(new SessionAuthHandshakeInterceptor())
+                .withSockJS();
+    }
+
+    @Override
+    protected void customizeClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(channelInterceptor());
+        super.customizeClientInboundChannel(registration);
     }
 
     /**
      * 配置消息代理(message broker)
      *
-     * @param registry
+     * @param registry MessageBrokerRegistry
      */
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -39,5 +51,10 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
     @Override
     protected boolean sameOriginDisabled() {
         return true;
+    }
+
+    @Bean
+    public UserChannelInterceptor channelInterceptor(){
+        return new UserChannelInterceptor();
     }
 }
