@@ -1,11 +1,12 @@
 package com.github.rich.auth.service.impl;
 
 import com.github.rich.auth.service.AbstractCaptchaValidateService;
-import com.github.rich.common.core.constants.RabbitMqQueueConstant;
+import com.github.rich.auth.stream.AuthProcessor;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.common.core.dto.message.CaptchaMessage;
-import com.github.rich.common.core.service.IMessageSender;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -16,16 +17,17 @@ import java.util.concurrent.TimeUnit;
  * @author Petty
  */
 @Service("smsCaptchaValidateService")
+@EnableBinding(AuthProcessor.class)
 public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateService {
 
     private final RedisTemplate redisTemplate;
 
-    private final IMessageSender messageSender;
+    private final AuthProcessor processor;
 
-    public SmsCaptchaValidateServiceImpl(RedisTemplate redisTemplate, IMessageSender messageSender) {
+    public SmsCaptchaValidateServiceImpl(RedisTemplate redisTemplate, AuthProcessor processor) {
         super(redisTemplate);
         this.redisTemplate = redisTemplate;
-        this.messageSender = messageSender;
+        this.processor = processor;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateServic
             str.append(captcha);
             str.append("，请勿转发，转发可能导致盗号。本次验证码有效期为5分钟有效。");
             captchaMessage.setMessage(str.toString());
-            messageSender.send(RabbitMqQueueConstant.SERVICE_SMS_QUEUE, captchaMessage);
+            processor.output().send(new GenericMessage<>(captchaMessage));
             result = true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,8 +1,8 @@
 package com.github.rich.monitor.notifier;
 
-import com.github.rich.common.core.constants.RabbitMqQueueConstant;
 import com.github.rich.common.core.dto.message.ServiceStatusChangeEmailMessage;
 import com.github.rich.common.core.service.IMessageSender;
+import com.github.rich.monitor.stream.MonitorProcessor;
 import com.github.rich.monitor.config.MailRemindProperties;
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
@@ -11,6 +11,8 @@ import de.codecentric.boot.admin.server.domain.values.InstanceId;
 import de.codecentric.boot.admin.server.domain.values.StatusInfo;
 import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.messaging.support.GenericMessage;
 import reactor.core.publisher.Mono;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @author Petty
  */
 @Slf4j
+@EnableBinding(MonitorProcessor.class)
 public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
 
     private final static String DOWN_MESSAGE = "服务生命检查失败";
@@ -33,18 +36,18 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
     private final static String UNKNOWN_MESSAGE = "未知错误";
     private final static String DEFAULT_MESSAGE = "缺省信息";
 
-    private final MailRemindProperties mailRemindProperties;
+    private final MonitorProcessor processor;
 
-    private final IMessageSender messageSender;
+    private final MailRemindProperties mailRemindProperties;
 
     private final ScheduledExecutorService scheduled = new ScheduledThreadPoolExecutor(10, r -> new Thread(r, "ServiceStatusNotifierThread"));
 
     private static Map<InstanceId, Future> futureMap = new HashMap<>(10);
 
-    public ServiceStatusNotifier(InstanceRepository instanceRepository, MailRemindProperties mailRemindProperties, IMessageSender messageSender) {
+    public ServiceStatusNotifier(InstanceRepository instanceRepository, MonitorProcessor processor, MailRemindProperties mailRemindProperties) {
         super(instanceRepository);
+        this.processor = processor;
         this.mailRemindProperties = mailRemindProperties;
-        this.messageSender = messageSender;
     }
 
     @Override
@@ -75,6 +78,9 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
     }
 
     private void processStatus(Instance instance, String message) {
+        // 设置默认重试头
+        Map<String, Object> headers = new HashMap<>(1);
+        headers.put("x-custom-retry",0);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Future future = scheduled.schedule(() -> {
             log.error("Service {} (instance->{}) is {}", instance.getRegistration().getName(), instance.getId(), instance.getStatusInfo().getStatus());
@@ -90,7 +96,7 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
             serviceStatusChangeEmailMessage.setDeliver(mailRemindProperties.getFrom());
             serviceStatusChangeEmailMessage.setReceiver(mailRemindProperties.getTo());
             serviceStatusChangeEmailMessage.setSubject("服务离线警告");
-            messageSender.send(RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_EXCHANGE, RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeEmailMessage);
+            processor.output().send(new GenericMessage<>(serviceStatusChangeEmailMessage,headers));
         }, mailRemindProperties.getInterval(), TimeUnit.SECONDS);
         futureMap.put(instance.getId(), future);
     }

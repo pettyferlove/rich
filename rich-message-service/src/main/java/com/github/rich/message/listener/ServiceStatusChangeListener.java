@@ -1,47 +1,56 @@
 package com.github.rich.message.listener;
 
-import com.github.rich.common.core.constants.RabbitMqQueueConstant;
 import com.github.rich.common.core.dto.message.ServiceStatusChangeEmailMessage;
 import com.github.rich.message.config.RabbitMqCustomConfig;
+import com.github.rich.message.stream.MessageProcessor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.Exchange;
-import org.springframework.amqp.rabbit.annotation.Queue;
-import org.springframework.amqp.rabbit.annotation.QueueBinding;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Petty
  */
 @Slf4j
 @Component
-@RabbitListener(
-        bindings = @QueueBinding(
-                value = @Queue(value = RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE),
-                exchange = @Exchange(value = RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_EXCHANGE)
-        )
-)
-public class ServiceStatusChangeListener extends AbstractMessageListener<ServiceStatusChangeEmailMessage> {
+@EnableBinding(MessageProcessor.class)
+public class ServiceStatusChangeListener {
 
-    public ServiceStatusChangeListener(RabbitMqCustomConfig rabbitMqCustomConfig) {
-        super(rabbitMqCustomConfig);
+    private final MessageProcessor processor;
+
+    private final RabbitMqCustomConfig rabbitMqCustomConfig;
+
+    public ServiceStatusChangeListener(MessageProcessor processor, RabbitMqCustomConfig rabbitMqCustomConfig) {
+        this.processor = processor;
+        this.rabbitMqCustomConfig = rabbitMqCustomConfig;
     }
 
-    /**
-     * 消息发送
-     *
-     * @param message 封装自定义消息
-     * @return 是否成功
-     */
-    @Override
-    public boolean send(ServiceStatusChangeEmailMessage message) {
-        System.out.println(message);
-        return false;
+    @StreamListener(MessageProcessor.SERVICE_CHANGE_MESSAGE_INPUT)
+    public void handle(ServiceStatusChangeEmailMessage serviceStatusChangeEmailMessage, @Header("x-custom-retry") Integer retry) {
+        if (true) {
+            System.out.println("send success");
+        } else {
+            retry(serviceStatusChangeEmailMessage, retry);
+        }
+        System.out.println("Received: " + serviceStatusChangeEmailMessage);
     }
 
-    @Override
-    public void aboveAgain(ServiceStatusChangeEmailMessage message, Message amqpMessage) {
-        log.info("超出重试次数");
+    public void retry(ServiceStatusChangeEmailMessage serviceStatusChangeEmailMessage, Integer retry) {
+        Map<String, Object> headers = new HashMap<>(1);
+        if (retry <= rabbitMqCustomConfig.getRetry()) {
+            headers.put("x-custom-retry", retry + 1);
+            processor.serviceChangeMessageOutput().send(new GenericMessage<>(serviceStatusChangeEmailMessage, headers));
+        } else {
+            aboveAgain(serviceStatusChangeEmailMessage);
+        }
+    }
+
+    public void aboveAgain(ServiceStatusChangeEmailMessage serviceStatusChangeEmailMessage) {
+        System.out.println("重试结束");
     }
 }
