@@ -57,25 +57,3 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://10.0.100.1:10151/eureka
----
-server:
-  port: 20155
-spring:
-  profiles: node-1
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    serviceUrl:
-      defaultZone: http://10.0.100.1:10151/eureka
----
-server:
-  port: 20156
-spring:
-  profiles: node-2
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    serviceUrl:
-      defaultZone: http://10.0.100.1:10151/eureka
