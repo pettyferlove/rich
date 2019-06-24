@@ -14,10 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableBinding(MessageProcessor.class)
 public class CaptchaMessageSmsListener {
-
     @StreamListener(MessageProcessor.CAPTCHA_SMS_MESSAGE_INPUT)
     public void handle(CaptchaMessage captchaMessage) {
         System.out.println("Received: " + captchaMessage);
     }
-
 }

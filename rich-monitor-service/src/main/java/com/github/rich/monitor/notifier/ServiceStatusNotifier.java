@@ -78,9 +78,6 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
     }
 
     private void processStatus(Instance instance, String message) {
-        // 设置默认重试头
-        Map<String, Object> headers = new HashMap<>(1);
-        headers.put("x-custom-retry",0);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Future future = scheduled.schedule(() -> {
             log.error("Service {} (instance->{}) is {}", instance.getRegistration().getName(), instance.getId(), instance.getStatusInfo().getStatus());
@@ -96,7 +93,7 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
             serviceStatusChangeEmailMessage.setDeliver(mailRemindProperties.getFrom());
             serviceStatusChangeEmailMessage.setReceiver(mailRemindProperties.getTo());
             serviceStatusChangeEmailMessage.setSubject("服务离线警告");
-            processor.output().send(new GenericMessage<>(serviceStatusChangeEmailMessage,headers));
+            processor.output().send(new GenericMessage<>(serviceStatusChangeEmailMessage));
         }, mailRemindProperties.getInterval(), TimeUnit.SECONDS);
         futureMap.put(instance.getId(), future);
     }
