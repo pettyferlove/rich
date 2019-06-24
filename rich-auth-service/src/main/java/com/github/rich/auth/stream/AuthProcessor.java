@@ -8,7 +8,7 @@ import org.springframework.messaging.MessageChannel;
  */
 public interface AuthProcessor {
 
-    String OUTPUT = "rich-auth-output";
+    String OUTPUT = "captcha-sms-output";
 
     /**
      * 输出通道

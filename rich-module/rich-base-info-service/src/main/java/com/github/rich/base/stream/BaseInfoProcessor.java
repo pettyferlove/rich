@@ -1,4 +1,4 @@
-package com.github.rich.monitor.stream;
+package com.github.rich.base.stream;
 
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
@@ -6,15 +6,15 @@ import org.springframework.messaging.MessageChannel;
 /**
  * @author Petty
  */
-public interface MonitorProcessor {
+public interface BaseInfoProcessor {
 
-    String OUTPUT = "service-status-change-output";
+    String OUTPUT = "gateway-change-output";
 
     /**
      * 输出通道
      *
      * @return MessageChannel
      */
-    @Output(MonitorProcessor.OUTPUT)
-    MessageChannel serviceStatusChangeOutput();
+    @Output(BaseInfoProcessor.OUTPUT)
+    MessageChannel gatewayChangeOutput();
 }

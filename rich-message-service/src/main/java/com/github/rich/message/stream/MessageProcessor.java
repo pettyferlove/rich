@@ -10,9 +10,9 @@ import org.springframework.messaging.SubscribableChannel;
  */
 public interface MessageProcessor {
 
-    String SERVICE_CHANGE_MESSAGE_INPUT = "rich-service-change-message-input";
+    String SERVICE_CHANGE_MESSAGE_INPUT = "service-change-message-input";
 
-    String CAPTCHA_SMS_MESSAGE_INPUT = "rich-captcha-sms-message-input";
+    String CAPTCHA_SMS_MESSAGE_INPUT = "captcha-sms-message-input";
 
     /**
      * 服务状态变更消息订阅
