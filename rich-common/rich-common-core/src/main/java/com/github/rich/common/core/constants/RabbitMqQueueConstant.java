@@ -3,7 +3,7 @@ package com.github.rich.common.core.constants;
 /**
  * @author Petty
  */
-public interface MqQueueConstant {
+public interface RabbitMqQueueConstant {
 
     /**
      * 服务状态变更消息队列

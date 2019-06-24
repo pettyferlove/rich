@@ -1,6 +1,6 @@
 package com.github.rich.monitor.notifier;
 
-import com.github.rich.common.core.constants.MqQueueConstant;
+import com.github.rich.common.core.constants.RabbitMqQueueConstant;
 import com.github.rich.common.core.dto.message.ServiceStatusChangeEmailMessage;
 import com.github.rich.common.core.service.IMessageSender;
 import com.github.rich.monitor.config.MailRemindProperties;
@@ -90,7 +90,7 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
             serviceStatusChangeEmailMessage.setDeliver(mailRemindProperties.getFrom());
             serviceStatusChangeEmailMessage.setReceiver(mailRemindProperties.getTo());
             serviceStatusChangeEmailMessage.setSubject("服务离线警告");
-            messageSender.send(MqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeEmailMessage);
+            messageSender.send(RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeEmailMessage);
         }, mailRemindProperties.getInterval(), TimeUnit.MINUTES);
         futureMap.put(instance.getId(), future);
     }

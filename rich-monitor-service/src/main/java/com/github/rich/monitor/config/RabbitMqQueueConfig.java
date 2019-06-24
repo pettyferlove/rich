@@ -1,6 +1,6 @@
 package com.github.rich.monitor.config;
 
-import com.github.rich.common.core.constants.MqQueueConstant;
+import com.github.rich.common.core.constants.RabbitMqQueueConstant;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
  * @author Petty
  */
 @Configuration
-public class MqQueueConfig {
+public class RabbitMqQueueConfig {
 
     @Bean
     public Queue createStatusChangeQueue(){
-        return new Queue(MqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE);
+        return new Queue(RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.github.rich.auth.service.impl;
 
 import com.github.rich.auth.service.AbstractCaptchaValidateService;
-import com.github.rich.common.core.constants.MqQueueConstant;
+import com.github.rich.common.core.constants.RabbitMqQueueConstant;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.common.core.dto.message.CaptchaMessage;
 import com.github.rich.common.core.service.IMessageSender;
@@ -43,7 +43,7 @@ public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateServic
             str.append(captcha);
             str.append("，请勿转发，转发可能导致盗号。本次验证码有效期为5分钟有效。");
             captchaMessage.setMessage(str.toString());
-            messageSender.send(MqQueueConstant.SERVICE_SMS_QUEUE, captchaMessage);
+            messageSender.send(RabbitMqQueueConstant.SERVICE_SMS_QUEUE, captchaMessage);
             result = true;
         } catch (Exception e) {
             e.printStackTrace();

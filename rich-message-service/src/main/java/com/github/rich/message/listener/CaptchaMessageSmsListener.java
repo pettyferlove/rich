@@ -1,6 +1,6 @@
 package com.github.rich.message.listener;
 
-import com.github.rich.common.core.constants.MqQueueConstant;
+import com.github.rich.common.core.constants.RabbitMqQueueConstant;
 import com.github.rich.common.core.dto.message.CaptchaMessage;
 import com.github.rich.message.config.RabbitMqCustomConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@RabbitListener(queues = MqQueueConstant.SERVICE_SMS_QUEUE)
+@RabbitListener(queues = RabbitMqQueueConstant.SERVICE_SMS_QUEUE)
 public class CaptchaMessageSmsListener extends AbstractMessageListener<CaptchaMessage> {
 
     public CaptchaMessageSmsListener(RabbitMqCustomConfig rabbitMqCustomConfig) {

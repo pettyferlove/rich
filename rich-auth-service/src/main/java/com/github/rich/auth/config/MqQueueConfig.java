@@ -1,6 +1,6 @@
 package com.github.rich.auth.config;
 
-import com.github.rich.common.core.constants.MqQueueConstant;
+import com.github.rich.common.core.constants.RabbitMqQueueConstant;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class MqQueueConfig {
 
     @Bean
     public Queue createSmsQueue(){
-        return new Queue(MqQueueConstant.SERVICE_SMS_QUEUE);
+        return new Queue(RabbitMqQueueConstant.SERVICE_SMS_QUEUE);
     }
 
 }
