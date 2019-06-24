@@ -22,6 +22,8 @@ spring:
         enabled: true
       enabled: true
 ---
+server:
+  port: 8020
 spring:
   profiles: dev
 eureka:
@@ -33,6 +35,8 @@ eureka:
     service-url:
       defaultZone: http://10.0.100.1:10151/eureka
 ---
+server:
+  port: 8020
 spring:
   profiles: remote-dev
 eureka:
@@ -47,6 +51,8 @@ eureka:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:10151/eureka
 ---
+server:
+  port: 8020
 spring:
   profiles: prd
 eureka:
