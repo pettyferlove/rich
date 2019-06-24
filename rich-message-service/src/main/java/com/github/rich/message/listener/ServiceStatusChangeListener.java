@@ -1,11 +1,13 @@
 package com.github.rich.message.listener;
 
 import com.github.rich.common.core.constants.MqQueueConstant;
-import com.github.rich.common.core.dto.message.CaptchaMessage;
 import com.github.rich.common.core.dto.message.ServiceStatusChangeEmailMessage;
 import com.github.rich.message.config.RabbitMqCustomConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,12 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@RabbitListener(queues = MqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE)
+@RabbitListener(
+        bindings = @QueueBinding(
+                value = @Queue(value = MqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE),
+                exchange = @Exchange(value = MqQueueConstant.SERVICE_STATUS_CHANGE_EXCHANGE)
+        )
+)
 public class ServiceStatusChangeListener extends AbstractMessageListener<ServiceStatusChangeEmailMessage> {
 
     public ServiceStatusChangeListener(RabbitMqCustomConfig rabbitMqCustomConfig) {
