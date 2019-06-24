@@ -94,7 +94,7 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
             serviceStatusChangeEmailMessage.setReceiver(mailRemindProperties.getTo());
             serviceStatusChangeEmailMessage.setSubject("服务离线警告");
             processor.output().send(new GenericMessage<>(serviceStatusChangeEmailMessage));
-        }, mailRemindProperties.getInterval(), TimeUnit.SECONDS);
+        }, mailRemindProperties.getInterval(), TimeUnit.MINUTES);
         futureMap.put(instance.getId(), future);
     }
 }
