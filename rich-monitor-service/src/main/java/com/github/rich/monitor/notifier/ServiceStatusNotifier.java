@@ -90,8 +90,8 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
             serviceStatusChangeEmailMessage.setDeliver(mailRemindProperties.getFrom());
             serviceStatusChangeEmailMessage.setReceiver(mailRemindProperties.getTo());
             serviceStatusChangeEmailMessage.setSubject("服务离线警告");
-            messageSender.send(RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeEmailMessage);
-        }, mailRemindProperties.getInterval(), TimeUnit.MINUTES);
+            messageSender.send(RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_EXCHANGE, RabbitMqQueueConstant.SERVICE_STATUS_CHANGE_QUEUE, serviceStatusChangeEmailMessage);
+        }, mailRemindProperties.getInterval(), TimeUnit.SECONDS);
         futureMap.put(instance.getId(), future);
     }
 }

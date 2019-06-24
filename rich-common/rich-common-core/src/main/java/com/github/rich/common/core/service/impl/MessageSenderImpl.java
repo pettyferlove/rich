@@ -31,7 +31,7 @@ public class MessageSenderImpl implements IMessageSender {
      */
     @Override
     public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-        System.out.println("sender return success" + message.toString()+"==="+replyCode+"==="+exchange+"==="+routingKey);
+        System.out.println("sender return success" + message.toString() + "===" + replyCode + "===" + exchange + "===" + routingKey);
     }
 
     @Override
@@ -41,11 +41,26 @@ public class MessageSenderImpl implements IMessageSender {
             if (!ack) {
                 log.error("消息发送失败" + cause + correlationData.toString());
             } else {
-                if(log.isDebugEnabled()){
+                if (log.isDebugEnabled()) {
                     System.out.println("消息发送成功 ");
                 }
             }
         });
         this.rabbitTemplate.convertAndSend(routerKey, message);
+    }
+
+    @Override
+    public void send(String exchange, String routerKey, com.github.rich.common.core.dto.Message message) {
+        this.rabbitTemplate.setReturnCallback(this);
+        this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            if (!ack) {
+                log.error("消息发送失败" + cause + correlationData.toString());
+            } else {
+                if (log.isDebugEnabled()) {
+                    System.out.println("消息发送成功 ");
+                }
+            }
+        });
+        this.rabbitTemplate.convertAndSend(exchange, routerKey, message);
     }
 }
