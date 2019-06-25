@@ -5,6 +5,7 @@ import com.github.rich.base.feign.RemoteGatewayRouteService;
 import com.github.rich.common.core.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.gateway.stream.GatewayProcessor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.serviceregistry.Registration;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -20,10 +21,13 @@ public class GatewayChangeListener {
 
     private final RemoteGatewayRouteService remoteGatewayRouteService;
 
+    private final Registration registration;
+
     private final RouteDefinitionWriter routeDefinitionWriter;
 
-    public GatewayChangeListener(RemoteGatewayRouteService remoteGatewayRouteService, RouteDefinitionWriter routeDefinitionWriter) {
+    public GatewayChangeListener(RemoteGatewayRouteService remoteGatewayRouteService, Registration registration, RouteDefinitionWriter routeDefinitionWriter) {
         this.remoteGatewayRouteService = remoteGatewayRouteService;
+        this.registration = registration;
         this.routeDefinitionWriter = routeDefinitionWriter;
     }
 
@@ -32,6 +36,11 @@ public class GatewayChangeListener {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         System.out.println(route);
         System.out.println(message);
+        System.out.println(registration.getInstanceId());
+        System.out.println(registration.getHost());
+        System.out.println(registration.getScheme());
+        System.out.println(registration.getServiceId());
+        System.out.println(registration.getPort());
     }
 
     @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='turnOn'")
@@ -39,6 +48,11 @@ public class GatewayChangeListener {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         System.out.println(route);
         System.out.println(message);
+        System.out.println(registration.getInstanceId());
+        System.out.println(registration.getHost());
+        System.out.println(registration.getScheme());
+        System.out.println(registration.getServiceId());
+        System.out.println(registration.getPort());
     }
 
     @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='shutDown'")
@@ -46,6 +60,11 @@ public class GatewayChangeListener {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         System.out.println(route);
         System.out.println(message);
+        System.out.println(registration.getInstanceId());
+        System.out.println(registration.getHost());
+        System.out.println(registration.getScheme());
+        System.out.println(registration.getServiceId());
+        System.out.println(registration.getPort());
     }
 
 }
