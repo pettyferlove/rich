@@ -10,12 +10,16 @@ import com.github.rich.base.entity.SystemGatewayRoute;
 import com.github.rich.base.mapper.SystemGatewayRouteMapper;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.base.stream.BaseInfoProcessor;
+import com.github.rich.common.core.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,7 +37,14 @@ import java.util.Optional;
  * @since 2019-05-14
  */
 @Service
+@EnableBinding(BaseInfoProcessor.class)
 public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRouteMapper, SystemGatewayRoute> implements ISystemGatewayRouteService {
+
+    private final BaseInfoProcessor processor;
+
+    public SystemGatewayRouteServiceImpl(BaseInfoProcessor processor) {
+        this.processor = processor;
+    }
 
     @Override
     public List<Route> loadAll() {
@@ -93,9 +104,18 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-detail", key = "#route.id", condition = "#route.id!=null")
     })
     public Boolean update(SystemGatewayRoute route) {
+        boolean result = false;
         route.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         route.setModifierTime(LocalDateTime.now());
-        return this.updateById(route);
+        result = this.updateById(route);
+        if(route.getStatus()==1&&result){
+            GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
+            message.setRouteId(route.getId());
+            message.setReceiver(SecurityUtil.getUser().getUserId());
+            message.setDeliver("system");
+            processor.gatewayChangeOutput().send(MessageBuilder.withPayload(message).setHeader("operate-type","update").build());
+        }
+        return result;
     }
 
     @Override
@@ -105,9 +125,22 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-detail", key = "#route.id", condition = "#route.id!=null")
     })
     public Boolean changeStatus(SystemGatewayRoute route) {
+        boolean result = false;
         Integer status = route.getStatus();
         route.setStatus(status == 0 ? 1 : 0);
-        return this.update(route);
+        route.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        route.setModifierTime(LocalDateTime.now());
+        result = this.updateById(route);
+        GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
+        message.setRouteId(route.getId());
+        message.setReceiver(SecurityUtil.getUser().getUserId());
+        message.setDeliver("system");
+        String operateType = "shutDown";
+        if(status==0&&result){
+            operateType = "turnOn";
+        }
+        processor.gatewayChangeOutput().send(MessageBuilder.withPayload(message).setHeader("operate-type",operateType).build());
+        return result;
     }
 
 
