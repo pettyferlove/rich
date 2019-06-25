@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 /**
  * Mybatis相关资源生成器
@@ -15,6 +16,7 @@ public class MybatisGenerator {
     public static void main(String[] args) {
         String outputDir = "D:/Pettyfer";
         AutoGenerator mpg = new AutoGenerator();
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         gc.setSwagger2(true);
@@ -43,7 +45,10 @@ public class MybatisGenerator {
 
 
         TemplateConfig tc = new TemplateConfig();
-        tc.setEntity("/templates/entity.java.vm");
+        tc.setController("/templates/controller.java");
+        tc.setEntity("/templates/entity.java");
+        tc.setService("/templates/service.java");
+        tc.setServiceImpl("/templates/serviceImpl.java");
         mpg.setTemplate(tc);
 
         // 策略配置
@@ -53,7 +58,7 @@ public class MybatisGenerator {
         strategy.setLogicDeleteFieldName("del_flag");
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         // 表名生成策略
-        strategy.setInclude();
+        strategy.setInclude("system_dict_type");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setEntityBuilderModel(false);
