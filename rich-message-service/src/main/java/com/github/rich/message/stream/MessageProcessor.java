@@ -14,6 +14,8 @@ public interface MessageProcessor {
 
     String CAPTCHA_SMS_MESSAGE_INPUT = "captcha-sms-message-input";
 
+    String GATEWAY_CHANGE_MESSAGE_INPUT = "gateway-change-message-input";
+
     /**
      * 服务状态变更消息订阅
      * @return SubscribableChannel
@@ -27,4 +29,11 @@ public interface MessageProcessor {
      */
     @Input(MessageProcessor.CAPTCHA_SMS_MESSAGE_INPUT)
     SubscribableChannel captchaSmsMessageInput();
+
+    /**
+     * 路由变更成功用户提醒订阅
+     * @return SubscribableChannel
+     */
+    @Input(MessageProcessor.GATEWAY_CHANGE_MESSAGE_INPUT)
+    SubscribableChannel gatewayChangeMessageInput();
 }
