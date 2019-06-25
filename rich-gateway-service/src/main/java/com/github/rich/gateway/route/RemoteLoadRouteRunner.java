@@ -6,19 +6,13 @@ import com.github.rich.base.feign.RemoteGatewayRouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.cloud.gateway.filter.FilterDefinition;
-import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Gateway启动自动加载Route - Remote
@@ -34,6 +28,8 @@ public class RemoteLoadRouteRunner implements CommandLineRunner {
 
     private final RouteDefinitionWriter routeDefinitionWriter;
 
+    private volatile boolean noInit = true;
+
     public RemoteLoadRouteRunner(RemoteGatewayRouteService remoteGatewayRouteService, @Qualifier("richInMemoryRouteDefinitionRepository") RouteDefinitionWriter routeDefinitionWriter) {
         this.remoteGatewayRouteService = remoteGatewayRouteService;
         this.routeDefinitionWriter = routeDefinitionWriter;
@@ -41,10 +37,26 @@ public class RemoteLoadRouteRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        List<Route> routes = remoteGatewayRouteService.loadRoutes();
-        routes.forEach(route -> {
-            RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
-            routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
-        });
+        while (noInit) {
+            try {
+                log.info("start load route");
+                List<Route> routes = remoteGatewayRouteService.loadRoutes();
+                routes.forEach(route -> {
+                    RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
+                    routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
+                });
+                log.info("end load route");
+                noInit = false;
+            } catch (Exception e) {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                log.info("load route error,start retry");
+                noInit = true;
+            }
+        }
+
     }
 }
