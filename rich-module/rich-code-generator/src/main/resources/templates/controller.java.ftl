@@ -98,7 +98,7 @@ public class ${table.controllerName} {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @UserOperateLog(type = OperateType.DELETE, description = "删除${table.comment}")
-    public R<Integer> delete(@PathVariable String id) {
+    public R<Boolean> delete(@PathVariable String id) {
         return new R<>(${entity?uncap_first}Service.delete(id));
     }
 }
