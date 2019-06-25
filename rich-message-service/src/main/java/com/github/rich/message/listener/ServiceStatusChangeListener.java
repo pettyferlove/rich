@@ -17,6 +17,5 @@ public class ServiceStatusChangeListener {
     @StreamListener(MessageProcessor.SERVICE_CHANGE_MESSAGE_INPUT)
     public void handle(ServiceStatusChangeEmailMessage serviceStatusChangeEmailMessage) {
         System.out.println("Received: " + serviceStatusChangeEmailMessage);
-        throw new RuntimeException("11");
     }
 }
