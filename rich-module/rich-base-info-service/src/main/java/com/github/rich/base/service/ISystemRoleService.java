@@ -62,12 +62,12 @@ public interface ISystemRoleService extends IService<SystemRole> {
      * 创建数据
      *
      * @param role 要创建的对象
-     * @return Boolean
+     * @return String
      */
     String create(SystemRole role);
 
     /**
-     * 更新数据（必须带Code）
+     * 更新数据（必须带Id）
      *
      * @param role 对象
      * @return Boolean
