@@ -75,4 +75,24 @@ public interface CommonConstant {
      * 未知客户端请求来源IP
      */
     String UN_KNOWN_CLIENT_IP = "unKnown";
+
+    /**
+     * 路由更新成功
+     */
+    int GATEWAY_ROUTE_UPDATE_OK = 1;
+
+    /**
+     * 路由添加成功
+     */
+    int GATEWAY_ROUTE_ADD_OK = 2;
+
+    /**
+     * 路由删除成功
+     */
+    int GATEWAY_ROUTE_DELETE_OK = 3;
+
+    /**
+     * 路由变更失败
+     */
+    int GATEWAY_ROUTE_CHANGE_FAIL = 4;
 }

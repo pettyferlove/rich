@@ -25,4 +25,6 @@ public class Route implements Serializable {
      */
     private String route;
 
+    private Integer status;
+
 }

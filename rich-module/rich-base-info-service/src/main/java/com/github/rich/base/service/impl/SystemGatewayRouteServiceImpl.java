@@ -55,7 +55,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
 
     @Override
     public Route load(String routeId) {
-        SystemGatewayRoute systemGatewayRoute = this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getId, routeId).eq(SystemGatewayRoute::getStatus, "1"));
+        SystemGatewayRoute systemGatewayRoute = this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getId, routeId));
         Optional<Route> routeOptional = Optional.ofNullable(ConverterUtil.convert(systemGatewayRoute, new Route()));
         return routeOptional.orElseGet(Route::new);
     }
