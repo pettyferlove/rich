@@ -49,6 +49,8 @@ public class GatewayChangeListener {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         GatewayRouteChangeStatusMessage gatewayRouteChangeStatusMessage = new GatewayRouteChangeStatusMessage();
         gatewayRouteChangeStatusMessage.setReceiver(message.getReceiver());
+        gatewayRouteChangeStatusMessage.setDeliver("system");
+        gatewayRouteChangeStatusMessage.setMessage("更新成功");
         gatewayRouteChangeStatusMessage.setRouteName(route.getName());
         gatewayRouteChangeStatusMessage.setTime(DateUtil.now());
         gatewayRouteChangeStatusMessage.setInstanceId(registration.getInstanceId());
@@ -75,6 +77,8 @@ public class GatewayChangeListener {
     public void routeTurnOn(GatewayRouteChangeMessage message){
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         GatewayRouteChangeStatusMessage gatewayRouteChangeStatusMessage = new GatewayRouteChangeStatusMessage();
+        gatewayRouteChangeStatusMessage.setDeliver("system");
+        gatewayRouteChangeStatusMessage.setMessage("开启成功");
         gatewayRouteChangeStatusMessage.setReceiver(message.getReceiver());
         gatewayRouteChangeStatusMessage.setRouteName(route.getName());
         gatewayRouteChangeStatusMessage.setTime(DateUtil.now());
@@ -103,6 +107,8 @@ public class GatewayChangeListener {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         GatewayRouteChangeStatusMessage gatewayRouteChangeStatusMessage = new GatewayRouteChangeStatusMessage();
         gatewayRouteChangeStatusMessage.setReceiver(message.getReceiver());
+        gatewayRouteChangeStatusMessage.setDeliver("system");
+        gatewayRouteChangeStatusMessage.setMessage("关闭成功");
         gatewayRouteChangeStatusMessage.setRouteName(route.getName());
         gatewayRouteChangeStatusMessage.setTime(DateUtil.now());
         gatewayRouteChangeStatusMessage.setInstanceId(registration.getInstanceId());
