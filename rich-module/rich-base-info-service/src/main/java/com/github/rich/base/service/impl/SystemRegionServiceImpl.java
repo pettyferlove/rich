@@ -81,7 +81,7 @@ public class SystemRegionServiceImpl extends ServiceImpl<SystemRegionMapper, Sys
             return systemRegion.getId();
         } catch (Exception e) {
             if(e instanceof DuplicateKeyException){
-                throw new BaseRuntimeException("主键冲突");
+                throw new BaseRuntimeException("已穿在该区划代码");
             }
             throw new BaseRuntimeException("新增失败");
         }

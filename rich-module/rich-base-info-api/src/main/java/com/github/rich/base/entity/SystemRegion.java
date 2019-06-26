@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -38,7 +37,7 @@ public class SystemRegion extends Model<SystemRegion> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "行政区划编码")
-    @TableId
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
 
     @ApiModelProperty(value = "行政区划父级编码")
@@ -50,9 +49,8 @@ public class SystemRegion extends Model<SystemRegion> {
     @ApiModelProperty(value = "行政区划类型：0=国家；1=省；2=市；3=区／县")
     private Integer regionType;
 
-    @ApiModelProperty(value = "删除标记")
-    @TableLogic
-    private Integer delFlag;
+    @ApiModelProperty(value = "是否最后一级区划")
+    private Integer leaf;
 
     @ApiModelProperty(value = "创建人")
     private String creator;

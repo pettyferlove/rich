@@ -35,5 +35,8 @@ public class RegionNode extends TreeNode {
     @ApiModelProperty(value = "行政区划类型：0=国家；1=省；2=市；3=区／县")
     private Integer regionType;
 
+    @ApiModelProperty(value = "是否最后一级区划")
+    private Integer leaf;
+
 
 }
