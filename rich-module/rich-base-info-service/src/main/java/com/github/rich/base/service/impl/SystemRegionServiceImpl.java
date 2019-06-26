@@ -2,6 +2,7 @@ package com.github.rich.base.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemRegion;
 import com.github.rich.base.mapper.SystemRegionMapper;
 import com.github.rich.base.service.ISystemRegionService;
@@ -10,8 +11,13 @@ import com.github.rich.base.vo.RegionNode;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,22 +36,30 @@ import java.util.Optional;
 public class SystemRegionServiceImpl extends ServiceImpl<SystemRegionMapper, SystemRegion> implements ISystemRegionService {
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-region-tree")
     public List<RegionNode> loadTree() {
         List<SystemRegion> systemMenuResources = this.list(Wrappers.<SystemRegion>lambdaQuery().orderByAsc(SystemRegion::getId));
         return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemRegion.class, RegionNode.class, systemMenuResources)).orElseGet(ArrayList::new), "86");
     }
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-region-nodes", key = "#id", condition = "#id!=null")
     public List<SystemRegion> loadNodes(String id) {
         return this.list(Wrappers.<SystemRegion>lambdaQuery().eq(SystemRegion::getParentId, id));
     }
 
     @Override
+    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-region-detail", key = "#id", condition = "#id!=null")
     public SystemRegion get(String id) {
         return this.getById(id);
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-detail", key = "#id", condition = "#id!=null"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-nodes", allEntries = true)
+    })
     public Boolean delete(String id) {
         List<SystemRegion> systemMenuResources = this.list(Wrappers.<SystemRegion>lambdaQuery().eq(SystemRegion::getParentId, id));
         if (!systemMenuResources.isEmpty()) {
@@ -55,17 +69,30 @@ public class SystemRegionServiceImpl extends ServiceImpl<SystemRegionMapper, Sys
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-nodes", key = "#systemRegion.parentId", condition = "#systemRegion.parentId!=null")
+    })
     public String create(SystemRegion systemRegion) {
-        systemRegion.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
-        systemRegion.setCreateTime(LocalDateTime.now());
-        if (this.save(systemRegion)) {
+        try {
+            systemRegion.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+            systemRegion.setCreateTime(LocalDateTime.now());
+            this.save(systemRegion);
             return systemRegion.getId();
-        } else {
+        } catch (Exception e) {
+            if(e instanceof DuplicateKeyException){
+                throw new BaseRuntimeException("主键冲突");
+            }
             throw new BaseRuntimeException("新增失败");
         }
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-detail", key = "#systemRegion.id", condition = "#systemRegion.id!=null"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-tree", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-nodes", key = "#systemRegion.parentId", condition = "#systemRegion.parentId!=null")
+    })
     public Boolean update(SystemRegion systemRegion) {
         systemRegion.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         systemRegion.setModifierTime(LocalDateTime.now());
