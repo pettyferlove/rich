@@ -6,6 +6,7 @@
     <resultMap id="BaseResultMap" type="com.github.rich.message.entity.SystemMessage">
         <id column="id" property="id" />
         <result column="message" property="message" />
+        <result column="time" property="time" />
         <result column="type" property="type" />
         <result column="target" property="target" />
         <result column="business_name" property="businessName" />
@@ -26,7 +27,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, message, type, target, business_name, business_id, business_page_address, edit_page_address, view_page_address, receiver, deliver, level, state, del_flag, creator, create_time, modifier, modifier_time
+        id, message, time, type, target, business_name, business_id, business_page_address, edit_page_address, view_page_address, receiver, deliver, level, state, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

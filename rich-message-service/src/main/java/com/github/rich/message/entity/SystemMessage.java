@@ -38,6 +38,9 @@ public class SystemMessage extends Model<SystemMessage> {
     @ApiModelProperty(value = "消息内容")
     private String message;
 
+    @ApiModelProperty(value = "消息产生时间")
+    private String time;
+
     @ApiModelProperty(value = "消息类型 1系统消息 2业务消息（诸如处理通知等）")
     private Integer type;
 
