@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.rich</groupId>
     <artifactId>rich</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.2.0</version>
     <name>rich</name>
     <packaging>pom</packaging>
     <description>Rich</description>

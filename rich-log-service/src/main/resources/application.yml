@@ -3,4 +3,4 @@ info:
     artifact: rich-log-service
     name: rich-log-service
     description: Rich用户操作日志收集/持久化服务
-    version: 1.0.0-RELEASE
+    version: 1.2.0

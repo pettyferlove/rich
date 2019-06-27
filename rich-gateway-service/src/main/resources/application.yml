@@ -3,4 +3,4 @@ info:
     artifact: rich-gateway-service
     name: rich-gateway-service
     description: 服务网关
-    version: 1.0.0-RELEASE
+    version: 1.2.0

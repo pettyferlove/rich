@@ -3,4 +3,4 @@ info:
     artifact: rich-monitor-service
     name: rich-monitor-service
     description: 全局服务监控
-    version: 1.0.0-RELEASE
+    version: 1.2.0

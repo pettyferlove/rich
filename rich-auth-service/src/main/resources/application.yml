@@ -3,4 +3,4 @@ info:
     artifact: rich-auth-service
     name: rich-auth-service
     description: 授权服务
-    version: 1.0.0-RELEASE
+    version: 1.2.0

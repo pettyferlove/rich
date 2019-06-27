@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rich-gateway-service</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.2.0</version>
     <name>rich-gateway-service</name>
     <packaging>jar</packaging>
     <description>服务网关</description>
@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.github.rich</groupId>
         <artifactId>rich</artifactId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.2.0</version>
     </parent>
 
     <dependencies>
@@ -26,22 +26,22 @@
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-core</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-message</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-base-info-api</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-sleuth-zipkin</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
 

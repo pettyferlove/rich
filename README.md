@@ -106,14 +106,14 @@ Rich Tx Manager Service
 <parent>
     <groupId>com.github.rich</groupId>
     <artifactId>rich-module</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.2.0</version>
 </parent>
 
 **支撑整个Rich生态的服务使用该依赖**
 <parent>
     <groupId>com.github.rich</groupId>
     <artifactId>rich</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.2.0</version>
 </parent>
 ~~~
 
@@ -140,6 +140,7 @@ Rich Tx Manager Service
 --- | --- | --- | --- | ---
 1 | 1.0.0 | 2019-3-21 | Petty | 初版
 2 | 1.1.0 | 2019-6-05 | Petty | 基础信息接口完成开发（后端参数验证待处理）
+3 | 1.2.0 | 2019-6-27 | Petty | 动态路由接口实现，WebSocket主动推送
 
 
 

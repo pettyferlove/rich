@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.github.rich</groupId>
         <artifactId>rich</artifactId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.2.0</version>
     </parent>
     <artifactId>rich-attachment-service</artifactId>
-    <version>1.0.0-RELEASE</version>
+    <version>1.2.0</version>
     <name>rich-attachment-service</name>
     <description>附件服务</description>
 
@@ -55,22 +55,22 @@
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-core</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-security</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-log</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-sleuth-zipkin</artifactId>
-            <version>1.0.0-RELEASE</version>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
 
