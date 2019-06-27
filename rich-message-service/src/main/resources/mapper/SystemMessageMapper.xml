@@ -14,6 +14,7 @@
         <result column="view_page_address" property="viewPageAddress" />
         <result column="receiver" property="receiver" />
         <result column="deliver" property="deliver" />
+        <result column="level" property="level" />
         <result column="state" property="state" />
         <result column="del_flag" property="delFlag" />
         <result column="creator" property="creator" />
@@ -24,7 +25,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, message, type, business_name, business_id, business_page_address, edit_page_address, view_page_address, receiver, deliver, state, del_flag, creator, create_time, modifier, modifier_time
+        id, message, type, business_name, business_id, business_page_address, edit_page_address, view_page_address, receiver, deliver, level, state, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

@@ -7,6 +7,7 @@ import lombok.ToString;
 
 /**
  * @author Petty
+ * @see com.github.rich.message.entity.SystemMessage
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -16,6 +17,8 @@ public class UserGeneralMessage extends Message {
     private static final long serialVersionUID = 3246234137698968545L;
 
     private Integer type;
+
+    private Integer level;
 
     private String businessName;
 

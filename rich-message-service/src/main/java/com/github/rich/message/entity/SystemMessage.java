@@ -62,6 +62,9 @@ public class SystemMessage extends Model<SystemMessage> {
     @ApiModelProperty(value = "发送人UUID，如果是系统消息则同意为system")
     private String deliver;
 
+    @ApiModelProperty(value = "消息级别 1 普通 2警告 3错误")
+    private Integer level;
+
     @ApiModelProperty(value = "状态 1已读 0未读 默认为0")
     private Integer state;
 
