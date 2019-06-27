@@ -1,7 +1,7 @@
 package com.github.rich.auth.service.impl;
 
 import com.github.rich.auth.service.AbstractCaptchaValidateService;
-import com.github.rich.message.stream.AuthProcessor;
+import com.github.rich.message.stream.CaptchaSmsProcessor;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.message.dto.message.CaptchaMessage;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -17,14 +17,14 @@ import java.util.concurrent.TimeUnit;
  * @author Petty
  */
 @Service("smsCaptchaValidateService")
-@EnableBinding(AuthProcessor.class)
+@EnableBinding(CaptchaSmsProcessor.class)
 public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateService {
 
     private final RedisTemplate redisTemplate;
 
-    private final AuthProcessor processor;
+    private final CaptchaSmsProcessor processor;
 
-    public SmsCaptchaValidateServiceImpl(RedisTemplate redisTemplate, AuthProcessor processor) {
+    public SmsCaptchaValidateServiceImpl(RedisTemplate redisTemplate, CaptchaSmsProcessor processor) {
         super(redisTemplate);
         this.redisTemplate = redisTemplate;
         this.processor = processor;

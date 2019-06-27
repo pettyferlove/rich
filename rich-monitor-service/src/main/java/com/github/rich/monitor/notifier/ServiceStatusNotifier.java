@@ -1,7 +1,7 @@
 package com.github.rich.monitor.notifier;
 
 import com.github.rich.message.dto.message.ServiceStatusChangeEmailMessage;
-import com.github.rich.message.stream.MonitorProcessor;
+import com.github.rich.message.stream.ServiceMonitorProcessor;
 import com.github.rich.monitor.config.MailRemindProperties;
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @author Petty
  */
 @Slf4j
-@EnableBinding(MonitorProcessor.class)
+@EnableBinding(ServiceMonitorProcessor.class)
 public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
 
     private final static String DOWN_MESSAGE = "服务生命检查失败";
@@ -35,7 +35,7 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
     private final static String UNKNOWN_MESSAGE = "未知错误";
     private final static String DEFAULT_MESSAGE = "缺省信息";
 
-    private final MonitorProcessor processor;
+    private final ServiceMonitorProcessor processor;
 
     private final MailRemindProperties mailRemindProperties;
 
@@ -43,7 +43,7 @@ public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
 
     private static Map<InstanceId, Future> futureMap = new HashMap<>(10);
 
-    public ServiceStatusNotifier(InstanceRepository instanceRepository, MonitorProcessor processor, MailRemindProperties mailRemindProperties) {
+    public ServiceStatusNotifier(InstanceRepository instanceRepository, ServiceMonitorProcessor processor, MailRemindProperties mailRemindProperties) {
         super(instanceRepository);
         this.processor = processor;
         this.mailRemindProperties = mailRemindProperties;

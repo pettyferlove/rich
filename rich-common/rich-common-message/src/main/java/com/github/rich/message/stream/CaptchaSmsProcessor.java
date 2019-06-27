@@ -8,25 +8,25 @@ import org.springframework.messaging.SubscribableChannel;
 /**
  * @author Petty
  */
-public interface MonitorProcessor {
-    String INPUT = "service-change-message-input";
-    String OUTPUT = "service-status-change-output";
+public interface CaptchaSmsProcessor {
 
-    /**
-     * 服务状态变更消息订阅
-     *
-     * @return SubscribableChannel
-     */
-    @Input(MonitorProcessor.INPUT)
-    SubscribableChannel input();
+    String OUTPUT = "captcha-sms-output";
+
+    String INPUT = "captcha-sms-input";
 
     /**
      * 输出通道
      *
      * @return MessageChannel
      */
-    @Output(MonitorProcessor.OUTPUT)
+    @Output(CaptchaSmsProcessor.OUTPUT)
     MessageChannel output();
 
-
+    /**
+     * 验证码短信消息订阅
+     *
+     * @return SubscribableChannel
+     */
+    @Input(CaptchaSmsProcessor.INPUT)
+    SubscribableChannel input();
 }
