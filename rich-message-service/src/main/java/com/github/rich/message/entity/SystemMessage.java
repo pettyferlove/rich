@@ -44,9 +44,6 @@ public class SystemMessage extends Model<SystemMessage> {
     @ApiModelProperty(value = "消息类型 1系统消息 2业务消息（诸如处理通知等）")
     private Integer type;
 
-    @ApiModelProperty(value = "1 PC通知 2 微信通知 3 全部")
-    private Integer target;
-
     @ApiModelProperty(value = "业务名称")
     private String businessName;
 
