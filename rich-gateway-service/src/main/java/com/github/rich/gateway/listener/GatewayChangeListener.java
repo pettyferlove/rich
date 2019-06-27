@@ -7,8 +7,8 @@ import com.github.rich.base.dto.Route;
 import com.github.rich.base.feign.RemoteGatewayRouteService;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.message.dto.message.UserGeneralMessage;
-import com.github.rich.message.stream.UserMessageProcessor;
 import com.github.rich.message.stream.GatewayProcessor;
+import com.github.rich.message.stream.UserMessageProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.client.serviceregistry.Registration;
@@ -26,7 +26,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-@EnableBinding(GatewayProcessor.class)
+@EnableBinding({GatewayProcessor.class, UserMessageProcessor.class})
 public class GatewayChangeListener {
 
     private final RemoteGatewayRouteService remoteGatewayRouteService;
@@ -44,7 +44,7 @@ public class GatewayChangeListener {
         this.processor = processor;
     }
 
-    @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='update'")
+    @StreamListener(value = GatewayProcessor.INPUT, condition = "headers['operate-type']=='update'")
     public void routeUpdate(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
@@ -79,7 +79,7 @@ public class GatewayChangeListener {
         processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 
-    @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='turnOn'")
+    @StreamListener(value = GatewayProcessor.INPUT, condition = "headers['operate-type']=='turnOn'")
     public void routeTurnOn(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
@@ -114,7 +114,7 @@ public class GatewayChangeListener {
         processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 
-    @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='shutDown'")
+    @StreamListener(value = GatewayProcessor.INPUT, condition = "headers['operate-type']=='shutDown'")
     public void routeShutDown(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");

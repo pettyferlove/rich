@@ -10,10 +10,10 @@ import com.github.rich.base.entity.SystemGatewayRoute;
 import com.github.rich.base.mapper.SystemGatewayRouteMapper;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.rich.base.stream.BaseInfoProcessor;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
+import com.github.rich.message.stream.GatewayProcessor;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -37,12 +37,12 @@ import java.util.Optional;
  * @since 2019-05-14
  */
 @Service
-@EnableBinding(BaseInfoProcessor.class)
+@EnableBinding(GatewayProcessor.class)
 public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRouteMapper, SystemGatewayRoute> implements ISystemGatewayRouteService {
 
-    private final BaseInfoProcessor processor;
+    private final GatewayProcessor processor;
 
-    public SystemGatewayRouteServiceImpl(BaseInfoProcessor processor) {
+    public SystemGatewayRouteServiceImpl(GatewayProcessor processor) {
         this.processor = processor;
     }
 
@@ -113,7 +113,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             message.setRouteId(route.getId());
             message.setReceiver(SecurityUtil.getUser().getUserId());
             message.setDeliver("system");
-            processor.gatewayChangeOutput().send(MessageBuilder.withPayload(message).setHeader("operate-type","update").build());
+            processor.output().send(MessageBuilder.withPayload(message).setHeader("operate-type","update").build());
         }
         return result;
     }
@@ -139,7 +139,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
         if(status==0&&result){
             operateType = "turnOn";
         }
-        processor.gatewayChangeOutput().send(MessageBuilder.withPayload(message).setHeader("operate-type",operateType).build());
+        processor.output().send(MessageBuilder.withPayload(message).setHeader("operate-type",operateType).build());
         return result;
     }
 
