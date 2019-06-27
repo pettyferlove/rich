@@ -1,6 +1,7 @@
 package com.github.rich.message.listener;
 
 import com.github.rich.message.dto.message.UserGeneralMessage;
+import com.github.rich.message.service.ISystemMessageService;
 import com.github.rich.message.stream.UserMessageProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -14,6 +15,13 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableBinding(UserMessageProcessor.class)
 public class UserGeneralMessageListener {
+
+    private final ISystemMessageService systemMessageService;
+
+    public UserGeneralMessageListener(ISystemMessageService systemMessageService) {
+        this.systemMessageService = systemMessageService;
+    }
+
     @StreamListener(UserMessageProcessor.USER_GENERAL_MESSAGE_INPUT)
     public void handle(UserGeneralMessage message) {
         System.out.println(message);

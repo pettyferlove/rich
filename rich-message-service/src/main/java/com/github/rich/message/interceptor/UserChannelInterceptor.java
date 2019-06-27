@@ -25,6 +25,7 @@ public class UserChannelInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
+        assert accessor != null;
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
             OAuth2Authentication authentication = (OAuth2Authentication) accessor.getHeader(StompHeaderAccessor.USER_HEADER);
             assert authentication != null;

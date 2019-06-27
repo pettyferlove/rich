@@ -6,6 +6,7 @@
 - [目录结构说明](#目录结构说明)
 - [项目开发](#项目开发)
 - [注意事项](#注意事项)
+- [命名规范](#命名规范)
 
 ## 项目基本说明
 
@@ -50,10 +51,10 @@ https://gitee.com/union_tech_company/rich.git
 3. Rich Auth Service 授权服务
 4. Rich Base Info Service 基础信息服务
 5. Rich Log Service 用户日志收集服务
-6. Other业务服务
+6. Rich Message Service 消息发送服务
+7. Other业务服务
 #### 辅助服务
-1. Rich Message Service 消息发送服务
-2. Rich Monitor Service 服务监控
+1. Rich Monitor Service 服务监控
 
 ## 目录结构说明
 
@@ -61,10 +62,12 @@ https://gitee.com/union_tech_company/rich.git
 rich
 ├─rich-attachment-service 附件服务
 ├─rich-auth-service 授权服务（Server端）
-├─rich-common
+├─rich-common 公共依赖
   ├─rich-common-core 公共依赖核心模块
   ├─rich-common-log 公共日志模块
+  ├─rich-common-message 消息流公共对象封装
   ├─rich-common-security 公共安全模块
+  ├─rich-common-sleuth-zipkin 服务链路最终公共依赖
 ├─rich-config-service 配置中心服务
 ├─rich-eureka-service 服务注册中心
 ├─rich-gateway-service 对外访问网关
@@ -78,6 +81,7 @@ rich
   ├─rich-third-party-servcie 第三方互联网平台对接服务
 ├─rich-monitor-service 监控服务
 ├─rich-tx-manager-service 分布式事务协调中心服务
+├─rich-zipkin-service 服务链路追踪信息聚合服务
 ```
 
 ####分布式事务协调器
@@ -116,6 +120,19 @@ Rich Tx Manager Service
 ## 注意事项
 由于现阶段没有私服，所以至少需要拉去Rich项目执行一次mvn package，
 后续可以另行开启项目并设置好相关依赖即可开始开发
+
+## 命名规范
+### Service接口命名
+1. Feign远程调用消费者接口必须是 RemoteXxxService 样式，用于区分本地调用与远程调用
+2. Feign远程调用生产者必须在服务api包下进行开发，需定义 XxxServiceApi 接口，并实现.用于区分对外访问接口与对内远程调用接口
+3. 持久层Service 则必须是 IXxxService 样式
+### DTO命名
+> 数据传输对象，这个概念来源于J2EE的设计模式，原来的目的是为了EJB的分布式应用提供粗粒度的数据实体，以减少分布式调用的次数，从而提高分布式调用的性能和降低网络负载，但在这里，我泛指用于服务层之间的数据传输对象。
+用于服务内部调用过程中的传输对象
+1. 对象命名均为 XxxDTO样式
+### VO命名
+> 视图对象，用于展示层，它的作用是把某个指定页面（或组件）的所有数据封装起来
+1. 对象命名均为 XxxVO样式
 
 ## 更新日志
 
