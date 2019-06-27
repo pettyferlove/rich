@@ -55,7 +55,6 @@ public class GatewayChangeListener {
         sb.append(registration.getInstanceId());
         UserGeneralMessage userMessage = new UserGeneralMessage();
         userMessage.setDeliver("system");
-        userMessage.setTarget(1);
         userMessage.setReceiver(message.getReceiver());
         try {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
@@ -91,7 +90,6 @@ public class GatewayChangeListener {
         sb.append(registration.getInstanceId());
         UserGeneralMessage userMessage = new UserGeneralMessage();
         userMessage.setDeliver("system");
-        userMessage.setTarget(1);
         userMessage.setReceiver(message.getReceiver());
         try {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
@@ -127,7 +125,6 @@ public class GatewayChangeListener {
         sb.append(registration.getInstanceId());
         UserGeneralMessage userMessage = new UserGeneralMessage();
         userMessage.setDeliver("system");
-        userMessage.setTarget(1);
         userMessage.setReceiver(message.getReceiver());
         try {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
