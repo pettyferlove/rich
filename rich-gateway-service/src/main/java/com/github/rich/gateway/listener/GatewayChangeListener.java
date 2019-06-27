@@ -5,9 +5,9 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.rich.base.dto.Route;
 import com.github.rich.base.feign.RemoteGatewayRouteService;
-import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.dto.message.GatewayRouteChangeMessage;
-import com.github.rich.common.core.dto.message.GatewayRouteChangeStatusMessage;
+import com.github.rich.common.core.dto.message.UserGeneralMessage;
+import com.github.rich.common.core.stream.UserMessageProcessor;
 import com.github.rich.gateway.stream.GatewayProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-@EnableBinding(GatewayProcessor.class)
+@EnableBinding({GatewayProcessor.class, UserMessageProcessor.class})
 public class GatewayChangeListener {
 
     private final RemoteGatewayRouteService remoteGatewayRouteService;
@@ -35,9 +35,9 @@ public class GatewayChangeListener {
 
     private final RouteDefinitionWriter routeDefinitionWriter;
 
-    private final GatewayProcessor processor;
+    private final UserMessageProcessor processor;
 
-    public GatewayChangeListener(RemoteGatewayRouteService remoteGatewayRouteService, Registration registration, RouteDefinitionWriter routeDefinitionWriter, GatewayProcessor processor) {
+    public GatewayChangeListener(RemoteGatewayRouteService remoteGatewayRouteService, Registration registration, RouteDefinitionWriter routeDefinitionWriter, UserMessageProcessor processor) {
         this.remoteGatewayRouteService = remoteGatewayRouteService;
         this.registration = registration;
         this.routeDefinitionWriter = routeDefinitionWriter;
@@ -45,90 +45,108 @@ public class GatewayChangeListener {
     }
 
     @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='update'")
-    public void routeUpdate(GatewayRouteChangeMessage message){
+    public void routeUpdate(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
-        GatewayRouteChangeStatusMessage gatewayRouteChangeStatusMessage = new GatewayRouteChangeStatusMessage();
-        gatewayRouteChangeStatusMessage.setReceiver(message.getReceiver());
-        gatewayRouteChangeStatusMessage.setDeliver("system");
-        gatewayRouteChangeStatusMessage.setMessage("更新成功");
-        gatewayRouteChangeStatusMessage.setRouteName(route.getName());
-        gatewayRouteChangeStatusMessage.setTime(DateUtil.now());
-        gatewayRouteChangeStatusMessage.setInstanceId(registration.getInstanceId());
-        gatewayRouteChangeStatusMessage.setServiceId(registration.getServiceId());
-        gatewayRouteChangeStatusMessage.setPort(String.valueOf(registration.getPort()));
-        gatewayRouteChangeStatusMessage.setHost(registration.getHost());
-        try{
-            if(ObjectUtil.isNotNull(route)&& StringUtils.isNotEmpty(route.getRoute())){
-                if(route.getStatus()==1){
+        StringBuilder sb = new StringBuilder("主机名：");
+        sb.append(registration.getHost());
+        sb.append("，服务名：");
+        sb.append(registration.getServiceId());
+        sb.append("，实例名：");
+        sb.append(registration.getInstanceId());
+        UserGeneralMessage userMessage = new UserGeneralMessage();
+        userMessage.setDeliver("system");
+        userMessage.setReceiver(message.getReceiver());
+        try {
+            if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
+                if (route.getStatus() == 1) {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
                     routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
-                }else{
+                } else {
                     throw new RuntimeException("route invalid");
                 }
             }
-            gatewayRouteChangeStatusMessage.setStatus(CommonConstant.GATEWAY_ROUTE_UPDATE_OK);
-        }catch (Exception e){
-            gatewayRouteChangeStatusMessage.setStatus(CommonConstant.GATEWAY_ROUTE_CHANGE_FAIL);
+            sb.append("网关更新路由：");
+            sb.append(route.getName());
+            sb.append("请等待待处理请求执行完毕即可生效");
+            userMessage.setLevel(1);
+        } catch (Exception e) {
+            sb.append("路由处理失败");
+            userMessage.setLevel(3);
         }
-        processor.gatewayChangeMessageOutput().send(new GenericMessage<>(gatewayRouteChangeStatusMessage));
+        userMessage.setTime(DateUtil.now());
+        userMessage.setType(1);
+        userMessage.setMessage(sb.toString());
+        processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 
     @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='turnOn'")
-    public void routeTurnOn(GatewayRouteChangeMessage message){
+    public void routeTurnOn(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
-        GatewayRouteChangeStatusMessage gatewayRouteChangeStatusMessage = new GatewayRouteChangeStatusMessage();
-        gatewayRouteChangeStatusMessage.setDeliver("system");
-        gatewayRouteChangeStatusMessage.setMessage("开启成功");
-        gatewayRouteChangeStatusMessage.setReceiver(message.getReceiver());
-        gatewayRouteChangeStatusMessage.setRouteName(route.getName());
-        gatewayRouteChangeStatusMessage.setTime(DateUtil.now());
-        gatewayRouteChangeStatusMessage.setInstanceId(registration.getInstanceId());
-        gatewayRouteChangeStatusMessage.setServiceId(registration.getServiceId());
-        gatewayRouteChangeStatusMessage.setPort(String.valueOf(registration.getPort()));
-        gatewayRouteChangeStatusMessage.setHost(registration.getHost());
-        try{
-            if(ObjectUtil.isNotNull(route)&& StringUtils.isNotEmpty(route.getRoute())){
-                if(route.getStatus()==1){
+        StringBuilder sb = new StringBuilder("主机名：");
+        sb.append(registration.getHost());
+        sb.append("，服务名：");
+        sb.append(registration.getServiceId());
+        sb.append("，实例名：");
+        sb.append(registration.getInstanceId());
+        UserGeneralMessage userMessage = new UserGeneralMessage();
+        userMessage.setDeliver("system");
+        userMessage.setReceiver(message.getReceiver());
+        try {
+            if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
+                if (route.getStatus() == 1) {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
                     routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
-                }else{
+                } else {
                     throw new RuntimeException("route invalid");
                 }
             }
-            gatewayRouteChangeStatusMessage.setStatus(CommonConstant.GATEWAY_ROUTE_ADD_OK);
-        }catch (Exception e){
-            gatewayRouteChangeStatusMessage.setStatus(CommonConstant.GATEWAY_ROUTE_CHANGE_FAIL);
+            sb.append("网关添加路由：");
+            sb.append(route.getName());
+            sb.append("请等待待处理请求执行完毕即可生效");
+            userMessage.setLevel(1);
+        } catch (Exception e) {
+            sb.append("路由处理失败");
+            userMessage.setLevel(3);
         }
-        processor.gatewayChangeMessageOutput().send(new GenericMessage<>(gatewayRouteChangeStatusMessage));
+        userMessage.setTime(DateUtil.now());
+        userMessage.setType(1);
+        userMessage.setMessage(sb.toString());
+        processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 
     @StreamListener(value = GatewayProcessor.GATEWAY_CHANGE_INPUT, condition = "headers['operate-type']=='shutDown'")
-    public void routeShutDown(GatewayRouteChangeMessage message){
+    public void routeShutDown(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
-        GatewayRouteChangeStatusMessage gatewayRouteChangeStatusMessage = new GatewayRouteChangeStatusMessage();
-        gatewayRouteChangeStatusMessage.setReceiver(message.getReceiver());
-        gatewayRouteChangeStatusMessage.setDeliver("system");
-        gatewayRouteChangeStatusMessage.setMessage("关闭成功");
-        gatewayRouteChangeStatusMessage.setRouteName(route.getName());
-        gatewayRouteChangeStatusMessage.setTime(DateUtil.now());
-        gatewayRouteChangeStatusMessage.setInstanceId(registration.getInstanceId());
-        gatewayRouteChangeStatusMessage.setServiceId(registration.getServiceId());
-        gatewayRouteChangeStatusMessage.setPort(String.valueOf(registration.getPort()));
-        gatewayRouteChangeStatusMessage.setHost(registration.getHost());
-        try{
-            if(ObjectUtil.isNotNull(route)&& StringUtils.isNotEmpty(route.getRoute())){
-                if(route.getStatus()==0){
+        StringBuilder sb = new StringBuilder("主机名：");
+        sb.append(registration.getHost());
+        sb.append("，服务名：");
+        sb.append(registration.getServiceId());
+        sb.append("，实例名：");
+        sb.append(registration.getInstanceId());
+        UserGeneralMessage userMessage = new UserGeneralMessage();
+        userMessage.setDeliver("system");
+        userMessage.setReceiver(message.getReceiver());
+        try {
+            if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
+                if (route.getStatus() == 0) {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
                     routeDefinitionWriter.delete(Mono.just(routeDefinition.getId())).subscribe();
-                }else{
+                } else {
                     throw new RuntimeException("route no shutdown");
                 }
             }
-            gatewayRouteChangeStatusMessage.setStatus(CommonConstant.GATEWAY_ROUTE_DELETE_OK);
-        }catch (Exception e){
-            gatewayRouteChangeStatusMessage.setStatus(CommonConstant.GATEWAY_ROUTE_CHANGE_FAIL);
+            sb.append("网关删除路由：");
+            sb.append(route.getName());
+            sb.append("请等待待处理请求执行完毕即可生效");
+            userMessage.setLevel(1);
+        } catch (Exception e) {
+            sb.append("路由处理失败");
+            userMessage.setLevel(3);
         }
-        processor.gatewayChangeMessageOutput().send(new GenericMessage<>(gatewayRouteChangeStatusMessage));
+        userMessage.setTime(DateUtil.now());
+        userMessage.setType(1);
+        userMessage.setMessage(sb.toString());
+        processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 
 }
