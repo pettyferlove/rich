@@ -1,4 +1,4 @@
-package com.github.rich.common.core.stream;
+package com.github.rich.message.stream;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;

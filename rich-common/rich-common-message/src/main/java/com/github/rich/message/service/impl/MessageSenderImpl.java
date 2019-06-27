@@ -1,6 +1,6 @@
-package com.github.rich.common.core.service.impl;
+package com.github.rich.message.service.impl;
 
-import com.github.rich.common.core.service.IMessageSender;
+import com.github.rich.message.service.IMessageSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -35,7 +35,7 @@ public class MessageSenderImpl implements IMessageSender {
     }
 
     @Override
-    public void send(String routerKey, com.github.rich.common.core.dto.Message message) {
+    public void send(String routerKey, com.github.rich.message.dto.Message message) {
         this.rabbitTemplate.setReturnCallback(this);
         this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {
@@ -50,7 +50,7 @@ public class MessageSenderImpl implements IMessageSender {
     }
 
     @Override
-    public void send(String exchange, String routerKey, com.github.rich.common.core.dto.Message message) {
+    public void send(String exchange, String routerKey, com.github.rich.message.dto.Message message) {
         this.rabbitTemplate.setReturnCallback(this);
         this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {

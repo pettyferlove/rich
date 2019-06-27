@@ -1,6 +1,5 @@
-package com.github.rich.common.core.dto.message;
+package com.github.rich.message.dto.message;
 
-import com.github.rich.common.core.dto.Message;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

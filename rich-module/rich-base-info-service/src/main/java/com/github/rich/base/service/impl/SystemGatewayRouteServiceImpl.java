@@ -11,7 +11,7 @@ import com.github.rich.base.mapper.SystemGatewayRouteMapper;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.stream.BaseInfoProcessor;
-import com.github.rich.common.core.dto.message.GatewayRouteChangeMessage;
+import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;

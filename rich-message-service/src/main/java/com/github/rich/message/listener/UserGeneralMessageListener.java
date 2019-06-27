@@ -1,7 +1,7 @@
 package com.github.rich.message.listener;
 
-import com.github.rich.common.core.dto.message.UserGeneralMessage;
-import com.github.rich.common.core.stream.UserMessageProcessor;
+import com.github.rich.message.dto.message.UserGeneralMessage;
+import com.github.rich.message.stream.UserMessageProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;

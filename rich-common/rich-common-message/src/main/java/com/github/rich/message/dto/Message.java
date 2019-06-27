@@ -1,4 +1,4 @@
-package com.github.rich.common.core.dto;
+package com.github.rich.message.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
