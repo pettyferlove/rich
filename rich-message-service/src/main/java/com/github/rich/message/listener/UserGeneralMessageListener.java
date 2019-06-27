@@ -30,6 +30,6 @@ public class UserGeneralMessageListener {
     @StreamListener(UserMessageProcessor.USER_GENERAL_MESSAGE_INPUT)
     public void handle(UserGeneralMessage message) {
         System.out.println(message);
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe" ,new ServerMessage(message.getMessage()));
+        simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe", new ServerMessage(message.getMessage(), message.getLevel(), message.getTime()));
     }
 }

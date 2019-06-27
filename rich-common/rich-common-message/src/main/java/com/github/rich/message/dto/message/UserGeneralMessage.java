@@ -20,6 +20,8 @@ public class UserGeneralMessage extends Message {
 
     private Integer level;
 
+    private Integer target;
+
     private String businessName;
 
     private String businessId;
