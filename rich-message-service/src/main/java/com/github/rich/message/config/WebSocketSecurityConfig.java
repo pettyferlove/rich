@@ -1,6 +1,5 @@
 package com.github.rich.message.config;
 
-import com.github.rich.message.interceptor.SessionAuthHandshakeInterceptor;
 import com.github.rich.message.interceptor.UserChannelInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +22,6 @@ public class WebSocketSecurityConfig extends AbstractSecurityWebSocketMessageBro
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws").setAllowedOrigins("*")
-                //.addInterceptors(new SessionAuthHandshakeInterceptor())
                 .withSockJS();
     }
 

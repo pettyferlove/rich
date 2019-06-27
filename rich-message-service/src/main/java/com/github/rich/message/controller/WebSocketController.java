@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +44,8 @@ public class WebSocketController {
 
     @GetMapping("demo/{msg}")
     public void demo(Principal principal, @PathVariable String msg) {
-        simpMessagingTemplate.convertAndSendToUser(principal.getName(),
+        System.out.println(principal);
+        simpMessagingTemplate.convertAndSendToUser("123456",
                 "/topic/subscribe", new ServerMessage(msg)
         );
     }
