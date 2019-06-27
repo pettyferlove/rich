@@ -1,4 +1,4 @@
-package com.github.rich.gateway.stream;
+package com.github.rich.message.stream;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.SubscribableChannel;

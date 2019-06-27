@@ -8,7 +8,7 @@ import com.github.rich.base.feign.RemoteGatewayRouteService;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.stream.UserMessageProcessor;
-import com.github.rich.gateway.stream.GatewayProcessor;
+import com.github.rich.message.stream.GatewayProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.client.serviceregistry.Registration;
@@ -26,7 +26,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-@EnableBinding({GatewayProcessor.class, UserMessageProcessor.class})
+@EnableBinding(GatewayProcessor.class)
 public class GatewayChangeListener {
 
     private final RemoteGatewayRouteService remoteGatewayRouteService;

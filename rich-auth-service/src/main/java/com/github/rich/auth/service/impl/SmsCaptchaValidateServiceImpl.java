@@ -1,7 +1,7 @@
 package com.github.rich.auth.service.impl;
 
 import com.github.rich.auth.service.AbstractCaptchaValidateService;
-import com.github.rich.auth.stream.AuthProcessor;
+import com.github.rich.message.stream.AuthProcessor;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.message.dto.message.CaptchaMessage;
 import org.springframework.cloud.stream.annotation.EnableBinding;

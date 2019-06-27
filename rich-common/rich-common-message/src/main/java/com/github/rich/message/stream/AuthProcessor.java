@@ -1,4 +1,4 @@
-package com.github.rich.auth.stream;
+package com.github.rich.message.stream;
 
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;

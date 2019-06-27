@@ -1,7 +1,7 @@
 package com.github.rich.monitor.config;
 
 import com.github.rich.monitor.notifier.ServiceStatusNotifier;
-import com.github.rich.monitor.stream.MonitorProcessor;
+import com.github.rich.message.stream.MonitorProcessor;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,7 +1,7 @@
 package com.github.rich.monitor.notifier;
 
 import com.github.rich.message.dto.message.ServiceStatusChangeEmailMessage;
-import com.github.rich.monitor.stream.MonitorProcessor;
+import com.github.rich.message.stream.MonitorProcessor;
 import com.github.rich.monitor.config.MailRemindProperties;
 import de.codecentric.boot.admin.server.domain.entities.Instance;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
