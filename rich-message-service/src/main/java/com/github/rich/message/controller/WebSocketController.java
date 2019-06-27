@@ -2,6 +2,7 @@ package com.github.rich.message.controller;
 
 import com.github.rich.message.vo.ClientMessage;
 import com.github.rich.message.vo.ServerMessage;
+import com.github.rich.security.service.impl.UserDetailsImpl;
 import com.github.rich.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,5 @@ public class WebSocketController {
     @SubscribeMapping("/subscribe")
     public ServerMessage subscribe(Principal principal) {
         return new ServerMessage("welcome " + principal.getName());
-    }
-
-    @GetMapping("demo/{msg}")
-    public void demo(Principal principal, @PathVariable String msg) {
-        System.out.println(principal);
-        simpMessagingTemplate.convertAndSendToUser("123456",
-                "/topic/subscribe", new ServerMessage(msg)
-        );
     }
 }
