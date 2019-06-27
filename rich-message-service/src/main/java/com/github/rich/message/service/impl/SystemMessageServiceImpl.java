@@ -1,5 +1,6 @@
 package com.github.rich.message.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -30,5 +31,10 @@ public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, S
         return this.getById(id);
     }
 
+    @Override
+    public Boolean create(SystemMessage systemMessage) {
+        systemMessage.setId(IdUtil.simpleUUID());
+        return this.save(systemMessage);
+    }
 
 }

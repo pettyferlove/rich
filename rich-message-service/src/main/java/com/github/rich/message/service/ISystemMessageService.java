@@ -32,4 +32,12 @@ public interface ISystemMessageService extends IService<SystemMessage> {
      */
     SystemMessage get(String id);
 
+    /**
+     * 创建数据
+     *
+     * @param systemMessage 要创建的对象
+     * @return Boolean
+     */
+    Boolean create(SystemMessage systemMessage);
+
 }

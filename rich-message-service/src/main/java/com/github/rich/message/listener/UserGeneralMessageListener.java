@@ -36,7 +36,10 @@ public class UserGeneralMessageListener {
         SystemMessage systemMessage = ConverterUtil.convert(message, new SystemMessage());
         systemMessage.setCreator("system");
         systemMessage.setCreateTime(LocalDateTime.now());
-        System.out.println(systemMessage);
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe", new ServerMessage(message.getMessage(), message.getLevel(), message.getTime()));
+        if(systemMessageService.create(systemMessage)){
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe", new ServerMessage(message.getMessage(), message.getLevel(), message.getTime()));
+        }else{
+            throw new RuntimeException("持久化消息失败");
+        }
     }
 }
