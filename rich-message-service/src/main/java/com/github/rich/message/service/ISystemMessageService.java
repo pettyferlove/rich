@@ -21,10 +21,9 @@ public interface ISystemMessageService extends IService<SystemMessage> {
     /**
      * List查找
      *
-     * @param page Page分页对象
      * @return List 返回结果
      */
-    List<UserGeneralMessage> load(Page<SystemMessage> page);
+    List<UserGeneralMessage> load();
 
     /**
      * 创建数据

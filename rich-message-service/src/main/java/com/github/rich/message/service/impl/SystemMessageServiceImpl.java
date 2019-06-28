@@ -1,9 +1,7 @@
 package com.github.rich.message.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
@@ -31,9 +29,9 @@ import java.util.Optional;
 public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, SystemMessage> implements ISystemMessageService {
 
     @Override
-    public List<UserGeneralMessage> load(Page<SystemMessage> page) {
-        IPage<SystemMessage> systemMessagePage = this.page(page, Wrappers.<SystemMessage>lambdaQuery().orderByDesc(SystemMessage::getCreateTime).eq(SystemMessage::getReceiver, Objects.requireNonNull(SecurityUtil.getUser()).getUserId()));
-        Optional<List<UserGeneralMessage>> optionalUserGeneralMessages = Optional.ofNullable(ConverterUtil.convertList(SystemMessage.class, UserGeneralMessage.class, systemMessagePage.getRecords()));
+    public List<UserGeneralMessage> load() {
+        List<SystemMessage> list = this.list(Wrappers.<SystemMessage>lambdaQuery().orderByDesc(SystemMessage::getCreateTime).eq(SystemMessage::getReceiver, Objects.requireNonNull(SecurityUtil.getUser()).getUserId()));
+        Optional<List<UserGeneralMessage>> optionalUserGeneralMessages = Optional.ofNullable(ConverterUtil.convertList(SystemMessage.class, UserGeneralMessage.class, list));
         return optionalUserGeneralMessages.orElseGet(ArrayList::new);
     }
 

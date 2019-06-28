@@ -29,9 +29,10 @@ public class MessageController {
         this.systemMessageService = systemMessageService;
     }
 
+    @ApiOperation(value = "获取用户消息列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("load")
-    public R<List<UserGeneralMessage>> page(Page<SystemMessage> page) {
-        return new R<>(systemMessageService.load(page));
+    public R<List<UserGeneralMessage>> load() {
+        return new R<>(systemMessageService.load());
     }
 
 
