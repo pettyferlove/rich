@@ -29,8 +29,10 @@ import java.util.Optional;
 public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, SystemMessage> implements ISystemMessageService {
 
     @Override
-    public List<UserGeneralMessage> load() {
-        List<SystemMessage> list = this.list(Wrappers.<SystemMessage>lambdaQuery().orderByDesc(SystemMessage::getCreateTime).eq(SystemMessage::getReceiver, Objects.requireNonNull(SecurityUtil.getUser()).getUserId()));
+    public List<UserGeneralMessage> loadUnread() {
+        List<SystemMessage> list = this.list(Wrappers.<SystemMessage>lambdaQuery().orderByDesc(SystemMessage::getCreateTime)
+                .eq(SystemMessage::getReceiver, Objects.requireNonNull(SecurityUtil.getUser()).getUserId())
+                .eq(SystemMessage::getState,0));
         Optional<List<UserGeneralMessage>> optionalUserGeneralMessages = Optional.ofNullable(ConverterUtil.convertList(SystemMessage.class, UserGeneralMessage.class, list));
         return optionalUserGeneralMessages.orElseGet(ArrayList::new);
     }

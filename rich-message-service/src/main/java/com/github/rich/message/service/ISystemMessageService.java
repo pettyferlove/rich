@@ -23,7 +23,7 @@ public interface ISystemMessageService extends IService<SystemMessage> {
      *
      * @return List 返回结果
      */
-    List<UserGeneralMessage> load();
+    List<UserGeneralMessage> loadUnread();
 
     /**
      * 创建数据

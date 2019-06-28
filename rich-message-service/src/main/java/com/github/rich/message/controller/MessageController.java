@@ -29,10 +29,10 @@ public class MessageController {
         this.systemMessageService = systemMessageService;
     }
 
-    @ApiOperation(value = "获取用户消息列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
-    @GetMapping("load")
-    public R<List<UserGeneralMessage>> load() {
-        return new R<>(systemMessageService.load());
+    @ApiOperation(value = "获取用户未读消息列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @GetMapping("load/unread")
+    public R<List<UserGeneralMessage>> loadUnread() {
+        return new R<>(systemMessageService.loadUnread());
     }
 
 
