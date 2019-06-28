@@ -16,6 +16,8 @@ public class UserGeneralMessage extends Message {
 
     private static final long serialVersionUID = 3246234137698968545L;
 
+    private String id;
+
     private Integer type;
 
     private Integer level;

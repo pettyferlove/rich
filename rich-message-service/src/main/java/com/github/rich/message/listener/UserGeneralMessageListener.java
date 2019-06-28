@@ -44,9 +44,11 @@ public class UserGeneralMessageListener {
         if(!CommonConstant.SYSTEM_USER_ID.equals(message.getDeliver())){
             message.setAvatar(remoteUserService.getUserDetail(message.getDeliver()).getUserAvatar());
         }
-        if(systemMessageService.create(systemMessage)){
+        try{
+            String id = systemMessageService.create(systemMessage);
+            message.setId(id);
             simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe", new ServerMessage<>(message));
-        }else{
+        }catch (Exception e){
             throw new RuntimeException("持久化消息失败");
         }
     }

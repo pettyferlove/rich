@@ -5,10 +5,19 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.common.core.exception.BaseRuntimeException;
+import com.github.rich.common.core.utils.ConverterUtil;
+import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.mapper.SystemMessageMapper;
 import com.github.rich.message.service.ISystemMessageService;
+import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <p>
@@ -22,19 +31,30 @@ import org.springframework.stereotype.Service;
 public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, SystemMessage> implements ISystemMessageService {
 
     @Override
-    public IPage<SystemMessage> page(SystemMessage systemMessage, Page<SystemMessage> page) {
-        return this.page(page, Wrappers.lambdaQuery(systemMessage).orderByDesc(SystemMessage::getCreateTime));
+    public List<UserGeneralMessage> load(Page<SystemMessage> page) {
+        IPage<SystemMessage> systemMessagePage = this.page(page, Wrappers.<SystemMessage>lambdaQuery().orderByDesc(SystemMessage::getCreateTime).eq(SystemMessage::getReceiver, Objects.requireNonNull(SecurityUtil.getUser()).getUserId()));
+        Optional<List<UserGeneralMessage>> optionalUserGeneralMessages = Optional.ofNullable(ConverterUtil.convertList(SystemMessage.class, UserGeneralMessage.class, systemMessagePage.getRecords()));
+        return optionalUserGeneralMessages.orElseGet(ArrayList::new);
     }
 
     @Override
-    public SystemMessage get(String id) {
-        return this.getById(id);
+    public String create(SystemMessage systemMessage) {
+        String systemMessageId = IdUtil.simpleUUID();
+        systemMessage.setId(systemMessageId);
+        if (this.save(systemMessage)) {
+            return systemMessageId;
+        } else {
+            throw new BaseRuntimeException("新增失败");
+        }
     }
 
     @Override
-    public Boolean create(SystemMessage systemMessage) {
-        systemMessage.setId(IdUtil.simpleUUID());
-        return this.save(systemMessage);
+    public Boolean read(String id) {
+        SystemMessage systemMessage = new SystemMessage();
+        systemMessage.setId(id);
+        systemMessage.setState(1);
+        return this.updateById(systemMessage);
     }
+
 
 }

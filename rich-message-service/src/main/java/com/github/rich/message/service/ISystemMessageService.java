@@ -3,7 +3,10 @@ package com.github.rich.message.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,19 +21,10 @@ public interface ISystemMessageService extends IService<SystemMessage> {
     /**
      * List查找
      *
-     * @param systemMessage 查询参数对象
-     * @param page          Page分页对象
-     * @return IPage 返回结果
+     * @param page Page分页对象
+     * @return List 返回结果
      */
-    IPage<SystemMessage> page(SystemMessage systemMessage, Page<SystemMessage> page);
-
-    /**
-     * 通过Id查询SystemMessage信息
-     *
-     * @param id 业务主键
-     * @return 对象
-     */
-    SystemMessage get(String id);
+    List<UserGeneralMessage> load(Page<SystemMessage> page);
 
     /**
      * 创建数据
@@ -38,6 +32,14 @@ public interface ISystemMessageService extends IService<SystemMessage> {
      * @param systemMessage 要创建的对象
      * @return Boolean
      */
-    Boolean create(SystemMessage systemMessage);
+    String create(SystemMessage systemMessage);
+
+    /**
+     * 变更状态为已读
+     *
+     * @param id 消息ID
+     * @return Boolean
+     */
+    Boolean read(String id);
 
 }
