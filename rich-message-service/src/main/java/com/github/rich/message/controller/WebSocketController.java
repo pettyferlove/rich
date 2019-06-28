@@ -34,12 +34,12 @@ public class WebSocketController {
     @MessageMapping("/send")
     public void send(Principal principal, ClientMessage message) {
         simpMessagingTemplate.convertAndSendToUser(principal.getName(),
-                "/topic/subscribe", new ServerMessage(message.getName())
+                "/topic/subscribe", new ServerMessage<>(message.getName())
         );
     }
 
     @SubscribeMapping("/subscribe")
     public ServerMessage subscribe(Principal principal) {
-        return new ServerMessage("welcome " + principal.getName());
+        return new ServerMessage<>("welcome " + principal.getName());
     }
 }

@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.rich.base.dto.Route;
 import com.github.rich.base.feign.RemoteGatewayRouteService;
+import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.stream.GatewayProcessor;
@@ -54,7 +55,7 @@ public class GatewayChangeListener {
         sb.append("，实例名：");
         sb.append(registration.getInstanceId());
         UserGeneralMessage userMessage = new UserGeneralMessage();
-        userMessage.setDeliver("system");
+        userMessage.setDeliver(CommonConstant.SYSTEM_USER_ID);
         userMessage.setReceiver(message.getReceiver());
         try {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
@@ -89,7 +90,7 @@ public class GatewayChangeListener {
         sb.append("，实例名：");
         sb.append(registration.getInstanceId());
         UserGeneralMessage userMessage = new UserGeneralMessage();
-        userMessage.setDeliver("system");
+        userMessage.setDeliver(CommonConstant.SYSTEM_USER_ID);
         userMessage.setReceiver(message.getReceiver());
         try {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
@@ -124,7 +125,7 @@ public class GatewayChangeListener {
         sb.append("，实例名：");
         sb.append(registration.getInstanceId());
         UserGeneralMessage userMessage = new UserGeneralMessage();
-        userMessage.setDeliver("system");
+        userMessage.setDeliver(CommonConstant.SYSTEM_USER_ID);
         userMessage.setReceiver(message.getReceiver());
         try {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {

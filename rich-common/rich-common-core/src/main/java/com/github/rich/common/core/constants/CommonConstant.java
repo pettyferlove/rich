@@ -6,6 +6,11 @@ package com.github.rich.common.core.constants;
  */
 public interface CommonConstant {
 
+    /**
+     * 系统默认用户ID
+     */
+    String SYSTEM_USER_ID = "system";
+
     String INNER_SERVICE_PREFIX = "/api/inner/v1";
 
     String OUTER_SERVICE_PREFIX = "/api/v1";

@@ -13,34 +13,17 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServerMessage implements Serializable {
+public class ServerMessage<T> implements Serializable {
     private static final long serialVersionUID = -4144501047469456841L;
 
     private int status = CommonConstant.WS_SUCCESS;
 
     private long timestamp;
 
-    private String message;
+    private T content;
 
-    private int level;
-
-    private String date;
-
-    public ServerMessage(String message) {
+    public ServerMessage(T message) {
         this.timestamp = System.currentTimeMillis();
-        this.message = message;
-    }
-
-    public ServerMessage(String message, int level) {
-        this.timestamp = System.currentTimeMillis();
-        this.message = message;
-        this.level = level;
-    }
-
-    public ServerMessage(String message, int level, String date) {
-        this.timestamp = System.currentTimeMillis();
-        this.message = message;
-        this.level = level;
-        this.date = date;
+        this.content = message;
     }
 }

@@ -10,6 +10,7 @@ import com.github.rich.base.entity.SystemGatewayRoute;
 import com.github.rich.base.mapper.SystemGatewayRouteMapper;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
@@ -112,7 +113,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
             message.setRouteId(route.getId());
             message.setReceiver(SecurityUtil.getUser().getUserId());
-            message.setDeliver("system");
+            message.setDeliver(CommonConstant.SYSTEM_USER_ID);
             processor.output().send(MessageBuilder.withPayload(message).setHeader("operate-type","update").build());
         }
         return result;
@@ -134,7 +135,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
         GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
         message.setRouteId(route.getId());
         message.setReceiver(SecurityUtil.getUser().getUserId());
-        message.setDeliver("system");
+        message.setDeliver(CommonConstant.SYSTEM_USER_ID);
         String operateType = "shutDown";
         if(status==0&&result){
             operateType = "turnOn";
