@@ -6,7 +6,7 @@ import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.service.ISystemMessageService;
-import com.github.rich.message.stream.UserMessageBroadcastProcessor;
+import com.github.rich.message.stream.UserMessageBroadcastSource;
 import com.github.rich.message.stream.UserMessageSink;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Component
-@EnableBinding({UserMessageSink.class, UserMessageBroadcastProcessor.class})
+@EnableBinding({UserMessageSink.class, UserMessageBroadcastSource.class})
 public class UserGeneralMessagePersistentListener {
 
     private final ISystemMessageService systemMessageService;
@@ -40,7 +40,7 @@ public class UserGeneralMessagePersistentListener {
      * @return UserGeneralMessage
      */
     @StreamListener(UserMessageSink.INPUT)
-    @SendTo(UserMessageBroadcastProcessor.OUTPUT)
+    @SendTo(UserMessageBroadcastSource.OUTPUT)
     public UserGeneralMessage handle(UserGeneralMessage message) {
         SystemMessage systemMessage = ConverterUtil.convert(message, new SystemMessage());
         systemMessage.setCreator(CommonConstant.SYSTEM_USER_ID);

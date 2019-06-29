@@ -2,7 +2,7 @@ package com.github.rich.message.listener;
 
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.message.dto.message.UserGeneralMessage;
-import com.github.rich.message.stream.UserMessageBroadcastProcessor;
+import com.github.rich.message.stream.UserMessageBroadcastSink;
 import com.github.rich.message.vo.base.ServerMessage;
 import com.github.rich.message.vo.message.UserMessageVO;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@EnableBinding(UserMessageBroadcastProcessor.class)
+@EnableBinding(UserMessageBroadcastSink.class)
 public class UserMessageBroadcastListener {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -26,7 +26,7 @@ public class UserMessageBroadcastListener {
     }
 
 
-    @StreamListener(UserMessageBroadcastProcessor.INPUT)
+    @StreamListener(UserMessageBroadcastSink.INPUT)
     public void handle(UserGeneralMessage message) {
         simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe", new ServerMessage<>(ConverterUtil.convert(message, new UserMessageVO())));
     }
