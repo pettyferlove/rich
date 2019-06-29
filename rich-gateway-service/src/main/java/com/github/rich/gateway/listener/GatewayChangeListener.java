@@ -49,6 +49,7 @@ public class GatewayChangeListener {
     public void routeUpdate(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
+        StringBuilder messageSb = new StringBuilder("路由更新");
         sb.append(registration.getHost());
         sb.append("，服务名：");
         sb.append(registration.getServiceId());
@@ -69,14 +70,17 @@ public class GatewayChangeListener {
             sb.append("网关更新路由：");
             sb.append(route.getName());
             sb.append("请等待待处理请求执行完毕即可生效");
+            messageSb.append("成功");
             userMessage.setLevel(1);
         } catch (Exception e) {
             sb.append("路由处理失败");
+            messageSb.append("失败");
             userMessage.setLevel(3);
         }
         userMessage.setTime(DateUtil.now());
         userMessage.setType(1);
-        userMessage.setMessage(sb.toString());
+        userMessage.setMessage(messageSb.toString());
+        userMessage.setContent(sb.toString());
         processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 
@@ -84,6 +88,7 @@ public class GatewayChangeListener {
     public void routeTurnOn(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
+        StringBuilder messageSb = new StringBuilder("路由开启");
         sb.append(registration.getHost());
         sb.append("，服务名：");
         sb.append(registration.getServiceId());
@@ -104,14 +109,17 @@ public class GatewayChangeListener {
             sb.append("网关添加路由：");
             sb.append(route.getName());
             sb.append("请等待待处理请求执行完毕即可生效");
+            messageSb.append("成功");
             userMessage.setLevel(1);
         } catch (Exception e) {
             sb.append("路由处理失败");
+            messageSb.append("失败");
             userMessage.setLevel(3);
         }
         userMessage.setTime(DateUtil.now());
         userMessage.setType(1);
-        userMessage.setMessage(sb.toString());
+        userMessage.setMessage(messageSb.toString());
+        userMessage.setContent(sb.toString());
         processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 
@@ -119,6 +127,7 @@ public class GatewayChangeListener {
     public void routeShutDown(GatewayRouteChangeMessage message) {
         Route route = remoteGatewayRouteService.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
+        StringBuilder messageSb = new StringBuilder("路由关闭");
         sb.append(registration.getHost());
         sb.append("，服务名：");
         sb.append(registration.getServiceId());
@@ -139,14 +148,17 @@ public class GatewayChangeListener {
             sb.append("网关删除路由：");
             sb.append(route.getName());
             sb.append("请等待待处理请求执行完毕即可生效");
+            messageSb.append("成功");
             userMessage.setLevel(1);
         } catch (Exception e) {
             sb.append("路由处理失败");
+            messageSb.append("失败");
             userMessage.setLevel(3);
         }
         userMessage.setTime(DateUtil.now());
         userMessage.setType(1);
-        userMessage.setMessage(sb.toString());
+        userMessage.setMessage(messageSb.toString());
+        userMessage.setContent(sb.toString());
         processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
     }
 

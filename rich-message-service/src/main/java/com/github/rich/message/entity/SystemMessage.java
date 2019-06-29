@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * </p>
  *
  * @author Petty
- * @since 2019-06-27
+ * @since 2019-06-29
  */
 @Data
 @NoArgsConstructor
@@ -35,8 +35,11 @@ public class SystemMessage extends Model<SystemMessage> {
     @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "消息内容")
+    @ApiModelProperty(value = "消息")
     private String message;
+
+    @ApiModelProperty(value = "具体内容")
+    private String content;
 
     @ApiModelProperty(value = "消息产生时间")
     private String time;
