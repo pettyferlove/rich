@@ -273,7 +273,7 @@
                     <version>${docker.plugin.version}</version>
                     <configuration>
                         <imageTags>
-                            <imageTag>latest</imageTag>
+                            <imageTag>${project.version}</imageTag>
                         </imageTags>
                         <forceTags>true</forceTags>
                         <imageName>${docker.image.prefix}/${project.name}</imageName>
