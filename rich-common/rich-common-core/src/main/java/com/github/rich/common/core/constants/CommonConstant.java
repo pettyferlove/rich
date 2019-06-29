@@ -22,9 +22,20 @@ public interface CommonConstant {
      */
     int SUCCESS = 200;
 
+    /**
+     * WebSocket 处理成功
+     */
     int WS_SUCCESS = 200001;
 
+    /**
+     * WebSocket 订阅成功
+     */
     int WS_WELCOME = 200000;
+
+    /**
+     * WebSocket 处理失败
+     */
+    int WS_FAIL = 200005;
 
     int FAIL = 500;
 
