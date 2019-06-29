@@ -81,7 +81,7 @@ public class GatewayChangeListener {
         userMessage.setType(1);
         userMessage.setMessage(messageSb.toString());
         userMessage.setContent(sb.toString());
-        processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
+        processor.output().send(new GenericMessage<>(userMessage));
     }
 
     @StreamListener(value = GatewayProcessor.INPUT, condition = "headers['operate-type']=='turnOn'")
@@ -120,7 +120,7 @@ public class GatewayChangeListener {
         userMessage.setType(1);
         userMessage.setMessage(messageSb.toString());
         userMessage.setContent(sb.toString());
-        processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
+        processor.output().send(new GenericMessage<>(userMessage));
     }
 
     @StreamListener(value = GatewayProcessor.INPUT, condition = "headers['operate-type']=='shutDown'")
@@ -159,7 +159,7 @@ public class GatewayChangeListener {
         userMessage.setType(1);
         userMessage.setMessage(messageSb.toString());
         userMessage.setContent(sb.toString());
-        processor.userGeneralMessageOutput().send(new GenericMessage<>(userMessage));
+        processor.output().send(new GenericMessage<>(userMessage));
     }
 
 }

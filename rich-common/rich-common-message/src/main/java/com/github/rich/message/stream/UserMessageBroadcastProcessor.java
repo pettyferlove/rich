@@ -8,25 +8,24 @@ import org.springframework.messaging.SubscribableChannel;
 /**
  * @author Petty
  */
-public interface UserMessageProcessor {
+public interface UserMessageBroadcastProcessor {
 
+    String OUTPUT = "user-message-broadcast-output";
 
-    String OUTPUT = "user-general-message-output";
-
-    String INPUT = "user-general-message-input";
+    String INPUT = "user-message-broadcast-input";
 
     /**
-     * 用户消息输出
+     * 消息广播输出
      *
      * @return MessageChannel
      */
-    @Output(UserMessageProcessor.OUTPUT)
+    @Output(UserMessageBroadcastProcessor.OUTPUT)
     MessageChannel output();
 
     /**
-     * 用户消息接受订阅
+     * 消息广播输入
      * @return SubscribableChannel
      */
-    @Input(UserMessageProcessor.INPUT)
+    @Input(UserMessageBroadcastProcessor.INPUT)
     SubscribableChannel input();
 }
