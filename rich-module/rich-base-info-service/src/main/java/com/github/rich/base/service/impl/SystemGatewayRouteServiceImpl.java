@@ -14,7 +14,7 @@ import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
-import com.github.rich.message.stream.GatewaySource;
+import com.github.rich.message.stream.source.GatewaySource;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

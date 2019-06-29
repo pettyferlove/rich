@@ -1,4 +1,4 @@
-package com.github.rich.message.stream;
+package com.github.rich.message.stream.source;
 
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
@@ -6,16 +6,16 @@ import org.springframework.messaging.MessageChannel;
 /**
  * @author Petty
  */
-public interface CaptchaSmsSource {
+public interface ServiceMonitorSource {
 
-    String OUTPUT = "captcha-sms-output";
+    String OUTPUT = "service-status-change-output";
 
     /**
      * 输出通道
      *
      * @return MessageChannel
      */
-    @Output(CaptchaSmsSource.OUTPUT)
+    @Output(ServiceMonitorSource.OUTPUT)
     MessageChannel output();
 
 }

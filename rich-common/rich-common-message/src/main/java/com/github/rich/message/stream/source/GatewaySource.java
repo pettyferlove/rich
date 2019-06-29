@@ -1,4 +1,4 @@
-package com.github.rich.message.stream;
+package com.github.rich.message.stream.source;
 
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
@@ -6,16 +6,17 @@ import org.springframework.messaging.MessageChannel;
 /**
  * @author Petty
  */
-public interface ServiceMonitorSource {
+public interface GatewaySource {
 
-    String OUTPUT = "service-status-change-output";
+    String OUTPUT = "gateway-change-output";
 
     /**
      * 输出通道
      *
      * @return MessageChannel
      */
-    @Output(ServiceMonitorSource.OUTPUT)
+    @Output(GatewaySource.OUTPUT)
     MessageChannel output();
+
 
 }

@@ -1,4 +1,4 @@
-package com.github.rich.message.stream;
+package com.github.rich.message.stream.sink;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.SubscribableChannel;
@@ -6,15 +6,18 @@ import org.springframework.messaging.SubscribableChannel;
 /**
  * @author Petty
  */
-public interface CaptchaSmsSink {
+public interface GatewaySink {
 
-    String INPUT = "captcha-sms-input";
+    String INPUT = "gateway-change-input";
+
 
     /**
-     * 验证码短信消息订阅
+     * 网关路由变更订阅
      *
      * @return SubscribableChannel
      */
-    @Input(CaptchaSmsSink.INPUT)
+    @Input(GatewaySink.INPUT)
     SubscribableChannel input();
+
+
 }

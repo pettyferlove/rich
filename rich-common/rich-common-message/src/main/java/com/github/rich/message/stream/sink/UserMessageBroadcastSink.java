@@ -1,4 +1,4 @@
-package com.github.rich.message.stream;
+package com.github.rich.message.stream.sink;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.SubscribableChannel;
@@ -6,16 +6,15 @@ import org.springframework.messaging.SubscribableChannel;
 /**
  * @author Petty
  */
-public interface UserMessageSink {
+public interface UserMessageBroadcastSink {
 
-    String INPUT = "user-general-message-input";
+    String INPUT = "user-message-broadcast-input";
 
     /**
-     * 用户消息接受订阅
+     * 消息广播输入
      *
      * @return SubscribableChannel
      */
-    @Input(UserMessageSink.INPUT)
+    @Input(UserMessageBroadcastSink.INPUT)
     SubscribableChannel input();
-
 }

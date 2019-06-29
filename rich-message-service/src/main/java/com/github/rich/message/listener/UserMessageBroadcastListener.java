@@ -2,7 +2,7 @@ package com.github.rich.message.listener;
 
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.message.dto.message.UserGeneralMessage;
-import com.github.rich.message.stream.UserMessageBroadcastSink;
+import com.github.rich.message.stream.sink.UserMessageBroadcastSink;
 import com.github.rich.message.vo.base.ServerMessage;
 import com.github.rich.message.vo.message.UserMessageVO;
 import lombok.extern.slf4j.Slf4j;

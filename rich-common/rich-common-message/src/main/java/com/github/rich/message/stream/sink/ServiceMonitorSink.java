@@ -1,4 +1,4 @@
-package com.github.rich.message.stream;
+package com.github.rich.message.stream.sink;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.messaging.SubscribableChannel;
@@ -6,17 +6,16 @@ import org.springframework.messaging.SubscribableChannel;
 /**
  * @author Petty
  */
-public interface GatewaySink {
+public interface ServiceMonitorSink {
 
-    String INPUT = "gateway-change-input";
-
+    String INPUT = "service-status-change-input";
 
     /**
-     * 网关路由变更订阅
+     * 服务状态变更消息订阅
      *
      * @return SubscribableChannel
      */
-    @Input(GatewaySink.INPUT)
+    @Input(ServiceMonitorSink.INPUT)
     SubscribableChannel input();
 
 
