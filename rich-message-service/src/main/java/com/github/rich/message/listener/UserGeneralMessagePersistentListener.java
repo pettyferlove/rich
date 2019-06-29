@@ -7,7 +7,6 @@ import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.service.ISystemMessageService;
 import com.github.rich.message.stream.UserMessageBroadcastProcessor;
-import com.github.rich.message.stream.UserMessageProcessor;
 import com.github.rich.message.stream.UserMessageSink;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -36,6 +35,7 @@ public class UserGeneralMessagePersistentListener {
 
     /**
      * 多实例情况下用户订阅哪一个服务未知，持久化之后将消息广播至多个实例，进行消息推送
+     *
      * @param message UserGeneralMessage
      * @return UserGeneralMessage
      */

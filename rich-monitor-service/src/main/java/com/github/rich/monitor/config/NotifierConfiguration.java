@@ -1,7 +1,7 @@
 package com.github.rich.monitor.config;
 
+import com.github.rich.message.stream.ServiceMonitorSource;
 import com.github.rich.monitor.notifier.ServiceStatusNotifier;
-import com.github.rich.message.stream.ServiceMonitorProcessor;
 import de.codecentric.boot.admin.server.domain.entities.InstanceRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,16 +14,16 @@ public class NotifierConfiguration {
 
     private final MailRemindProperties mailRemindProperties;
 
-    private final ServiceMonitorProcessor processor;
+    private final ServiceMonitorSource source;
 
-    public NotifierConfiguration(MailRemindProperties mailRemindProperties, ServiceMonitorProcessor processor) {
+    public NotifierConfiguration(MailRemindProperties mailRemindProperties, ServiceMonitorSource source) {
         this.mailRemindProperties = mailRemindProperties;
-        this.processor = processor;
+        this.source = source;
     }
 
     @Bean
     public ServiceStatusNotifier serviceStatusNotifier(InstanceRepository repository) {
-        return new ServiceStatusNotifier(repository, processor, mailRemindProperties);
+        return new ServiceStatusNotifier(repository, source, mailRemindProperties);
     }
 
 }
