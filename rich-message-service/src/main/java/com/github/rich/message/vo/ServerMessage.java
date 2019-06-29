@@ -26,4 +26,9 @@ public class ServerMessage<T> implements Serializable {
         this.timestamp = System.currentTimeMillis();
         this.content = message;
     }
+
+    public ServerMessage(int status, T content) {
+        this.status = status;
+        this.content = content;
+    }
 }

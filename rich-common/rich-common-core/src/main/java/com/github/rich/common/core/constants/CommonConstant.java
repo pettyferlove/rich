@@ -24,6 +24,8 @@ public interface CommonConstant {
 
     int WS_SUCCESS = 200001;
 
+    int WS_WELCOME = 200000;
+
     int FAIL = 500;
 
     /**
