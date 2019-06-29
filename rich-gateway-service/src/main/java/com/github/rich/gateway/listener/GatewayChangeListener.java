@@ -9,7 +9,7 @@ import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.stream.GatewaySink;
-import com.github.rich.message.stream.UserMessageProcessor;
+import com.github.rich.message.stream.UserMessageSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.client.serviceregistry.Registration;
@@ -27,7 +27,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-@EnableBinding({GatewaySink.class, UserMessageProcessor.class})
+@EnableBinding({GatewaySink.class, UserMessageSource.class})
 public class GatewayChangeListener {
 
     private final RemoteGatewayRouteService remoteGatewayRouteService;
@@ -36,13 +36,13 @@ public class GatewayChangeListener {
 
     private final RouteDefinitionWriter routeDefinitionWriter;
 
-    private final UserMessageProcessor processor;
+    private final UserMessageSource source;
 
-    public GatewayChangeListener(RemoteGatewayRouteService remoteGatewayRouteService, Registration registration, RouteDefinitionWriter routeDefinitionWriter, UserMessageProcessor processor) {
+    public GatewayChangeListener(RemoteGatewayRouteService remoteGatewayRouteService, Registration registration, RouteDefinitionWriter routeDefinitionWriter, UserMessageSource source) {
         this.remoteGatewayRouteService = remoteGatewayRouteService;
         this.registration = registration;
         this.routeDefinitionWriter = routeDefinitionWriter;
-        this.processor = processor;
+        this.source = source;
     }
 
     @StreamListener(value = GatewaySink.INPUT, condition = "headers['operate-type']=='update'")
@@ -81,7 +81,7 @@ public class GatewayChangeListener {
         userMessage.setType(1);
         userMessage.setMessage(messageSb.toString());
         userMessage.setContent(sb.toString());
-        processor.output().send(new GenericMessage<>(userMessage));
+        source.output().send(new GenericMessage<>(userMessage));
     }
 
     @StreamListener(value = GatewaySink.INPUT, condition = "headers['operate-type']=='turnOn'")
@@ -120,7 +120,7 @@ public class GatewayChangeListener {
         userMessage.setType(1);
         userMessage.setMessage(messageSb.toString());
         userMessage.setContent(sb.toString());
-        processor.output().send(new GenericMessage<>(userMessage));
+        source.output().send(new GenericMessage<>(userMessage));
     }
 
     @StreamListener(value = GatewaySink.INPUT, condition = "headers['operate-type']=='shutDown'")
@@ -159,7 +159,7 @@ public class GatewayChangeListener {
         userMessage.setType(1);
         userMessage.setMessage(messageSb.toString());
         userMessage.setContent(sb.toString());
-        processor.output().send(new GenericMessage<>(userMessage));
+        source.output().send(new GenericMessage<>(userMessage));
     }
 
 }
