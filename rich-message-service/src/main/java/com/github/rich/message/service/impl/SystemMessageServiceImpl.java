@@ -53,6 +53,7 @@ public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, S
         SystemMessage systemMessage = new SystemMessage();
         systemMessage.setId(id);
         systemMessage.setState(1);
+        systemMessage.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         return this.updateById(systemMessage);
     }
 
