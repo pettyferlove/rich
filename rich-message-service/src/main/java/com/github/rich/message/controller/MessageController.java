@@ -1,11 +1,9 @@
 package com.github.rich.message.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.common.core.vo.R;
-import com.github.rich.message.dto.message.UserGeneralMessage;
-import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.service.ISystemMessageService;
+import com.github.rich.message.vo.message.UserMessageVO;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +29,7 @@ public class MessageController {
 
     @ApiOperation(value = "获取用户未读消息列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("load/unread")
-    public R<List<UserGeneralMessage>> loadUnread() {
+    public R<List<UserMessageVO>> loadUnread() {
         return new R<>(systemMessageService.loadUnread());
     }
 

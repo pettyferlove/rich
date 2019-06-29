@@ -7,7 +7,8 @@ import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.service.ISystemMessageService;
 import com.github.rich.message.stream.UserMessageProcessor;
-import com.github.rich.message.vo.ServerMessage;
+import com.github.rich.message.vo.base.ServerMessage;
+import com.github.rich.message.vo.message.UserMessageVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -47,7 +48,7 @@ public class UserGeneralMessageListener {
         try{
             String id = systemMessageService.create(systemMessage);
             message.setId(id);
-            simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe", new ServerMessage<>(message));
+            simpMessagingTemplate.convertAndSendToUser(message.getReceiver(), "/topic/subscribe", new ServerMessage<>(ConverterUtil.convert(message,new UserMessageVO())));
         }catch (Exception e){
             throw new RuntimeException("持久化消息失败");
         }

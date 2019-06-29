@@ -1,8 +1,8 @@
 package com.github.rich.message.controller;
 
 import com.github.rich.common.core.constants.CommonConstant;
-import com.github.rich.message.vo.ClientMessage;
-import com.github.rich.message.vo.ServerMessage;
+import com.github.rich.message.vo.base.ClientMessage;
+import com.github.rich.message.vo.base.ServerMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;

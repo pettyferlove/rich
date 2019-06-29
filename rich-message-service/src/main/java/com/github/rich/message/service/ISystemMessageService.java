@@ -1,10 +1,8 @@
 package com.github.rich.message.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.rich.message.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
+import com.github.rich.message.vo.message.UserMessageVO;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public interface ISystemMessageService extends IService<SystemMessage> {
      *
      * @return List 返回结果
      */
-    List<UserGeneralMessage> loadUnread();
+    List<UserMessageVO> loadUnread();
 
     /**
      * 创建数据
