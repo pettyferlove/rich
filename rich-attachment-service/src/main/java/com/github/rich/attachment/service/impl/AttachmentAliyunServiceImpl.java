@@ -78,11 +78,9 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
                 result.setFileId(fileId);
                 result.setStoreType(upload.getStorage().getValue());
             } else {
-                log.error("file upload info save error -->params:{},{}", upload, file);
                 throw new BaseRuntimeException("file upload info save error");
             }
         } catch (IOException e) {
-            log.error("file upload error -->params:{},{}", upload, file);
             throw new BaseRuntimeException("file upload error");
         }
         return result;
@@ -97,7 +95,6 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
                 outputStream.write(ch);
             }
         } catch (Exception e) {
-            log.error("file download error -->params:{}", attachmentInfo);
             throw new BaseRuntimeException("file download error");
         }
     }
@@ -108,7 +105,6 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             oss.deleteObject(aliyunProperties.getBucket(),attachmentInfo.getPath());
             return true;
         } catch (Exception e){
-            log.error("file delete error -->params:{}", attachmentInfo);
             throw new BaseRuntimeException("file delete error");
         }
     }
