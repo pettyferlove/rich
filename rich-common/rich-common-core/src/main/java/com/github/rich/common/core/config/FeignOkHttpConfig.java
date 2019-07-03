@@ -54,6 +54,6 @@ public class FeignOkHttpConfig {
      */
     @Bean
     public ConnectionPool connectionPool() {
-        return new ConnectionPool(300, 10, TimeUnit.SECONDS);
+        return new ConnectionPool(300, 30, TimeUnit.SECONDS);
     }
 }
