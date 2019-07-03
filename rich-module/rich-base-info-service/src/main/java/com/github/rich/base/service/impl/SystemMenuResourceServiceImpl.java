@@ -14,8 +14,6 @@ import com.github.rich.base.service.ISystemRoleMenuService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.utils.TreeUtils;
 import com.github.rich.base.vo.MenuNode;
-import com.github.rich.base.vo.UserDetailVO;
-import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.config.SystemSecurityProperties;

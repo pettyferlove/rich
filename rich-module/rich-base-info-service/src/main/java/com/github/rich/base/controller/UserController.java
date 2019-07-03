@@ -102,15 +102,15 @@ public class UserController {
 
     @ApiOperation(value = "获取个人信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("/info")
-    public R<UserInfoVO> getInfo() {
-        return new R<>(systemUserService.getUserInfo(SecurityUtil.getUser()));
+    public R<UserDetailVO> getInfo() {
+        return new R<>(systemUserService.getUserDetail(SecurityUtil.getUser()));
     }
 
     @ApiOperation(value = "更新个人信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @PutMapping("/info")
     @UserOperateLog(type = OperateType.UPDATE, description = "更新个人信息-用户个人操作")
-    public R<Boolean> updateInfo(UserDetailVO detail) {
-        return new R<>(systemUserService.updateUserInfo(SecurityUtil.getUser(), detail));
+    public R<Boolean> updateInfo(UserInfoVO info) {
+        return new R<>(systemUserService.updateUserInfo(SecurityUtil.getUser(), info));
     }
 
 }

@@ -216,30 +216,30 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null")
-    public UserInfoVO getUserInfo(UserDetailsImpl userDetails) {
+    public UserDetailVO getUserDetail(UserDetailsImpl userDetails) {
         if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
             assert userDetails != null;
             if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                UserInfoVO userInfoVO = new UserInfoVO();
                 UserDetailVO userDetailVO = new UserDetailVO();
-                userDetailVO.setUserName("系统管理员");
-                userInfoVO.setRoles(loadAllRoles());
-                userInfoVO.setPermissions(loadAllPermissions());
-                userInfoVO.setUser(userDetailVO);
-                return userInfoVO;
+                UserInfoVO userInfoVO = new UserInfoVO();
+                userInfoVO.setUserName("系统管理员");
+                userDetailVO.setRoles(loadAllRoles());
+                userDetailVO.setPermissions(loadAllPermissions());
+                userDetailVO.setUser(userInfoVO);
+                return userDetailVO;
             }
         }
         assert userDetails != null;
         Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
         if (systemUserOptional.isPresent()) {
             SystemUser systemUser = systemUserOptional.get();
-            Optional<UserDetailVO> userDetailVOOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new UserDetailVO()));
-            UserDetailVO userDetailVO = userDetailVOOptional.orElseGet(UserDetailVO::new);
-            UserInfoVO userInfoVO = new UserInfoVO();
-            userInfoVO.setUser(userDetailVO);
-            userInfoVO.setRoles(this.loadRoles(systemUser.getId()));
-            userInfoVO.setPermissions(this.loadPermissions(systemUser.getId()));
-            return userInfoVO;
+            Optional<UserInfoVO> userDetailOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new UserInfoVO()));
+            UserInfoVO userInfoVO = userDetailOptional.orElseGet(UserInfoVO::new);
+            UserDetailVO userDetailVO = new UserDetailVO();
+            userDetailVO.setUser(userInfoVO);
+            userDetailVO.setRoles(this.loadRoles(systemUser.getId()));
+            userDetailVO.setPermissions(this.loadPermissions(systemUser.getId()));
+            return userDetailVO;
         }
         throw new BaseRuntimeException("查询用户信息异常");
     }
@@ -251,7 +251,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     })
-    public Boolean updateUserInfo(UserDetailsImpl userDetails, UserDetailVO detail) {
+    public Boolean updateUserInfo(UserDetailsImpl userDetails, UserInfoVO info) {
         if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
             assert userDetails != null;
             if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
@@ -260,7 +260,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         }
         assert userDetails != null;
         String userId = userDetails.getUserId();
-        Optional<SystemUser> systemUserOptional = Optional.ofNullable(ConverterUtil.convert(detail, new SystemUser()));
+        Optional<SystemUser> systemUserOptional = Optional.ofNullable(ConverterUtil.convert(info, new SystemUser()));
         if (systemUserOptional.isPresent()) {
             SystemUser systemUser = systemUserOptional.get();
             systemUser.setId(userId);
