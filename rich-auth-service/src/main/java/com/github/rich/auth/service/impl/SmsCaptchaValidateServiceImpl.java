@@ -37,11 +37,12 @@ public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateServic
         stringBuffer.append(":");
         stringBuffer.append(code);
         try {
-            redisTemplate.opsForValue().set(stringBuffer.toString(), captcha, timeout, TimeUnit.SECONDS);
-            CaptchaMessage captchaMessage = new CaptchaMessage();
-            captchaMessage.setReceiver(code);
-            captchaMessage.setCaptchaCode(captcha);
-            source.output().send(new GenericMessage<>(captchaMessage));
+            if(redisTemplate.opsForValue().setIfAbsent(stringBuffer.toString(), captcha, timeout, TimeUnit.SECONDS)){
+                CaptchaMessage captchaMessage = new CaptchaMessage();
+                captchaMessage.setReceiver(code);
+                captchaMessage.setCaptchaCode(captcha);
+                source.output().send(new GenericMessage<>(captchaMessage));
+            }
             result = true;
         } catch (Exception e) {
             e.printStackTrace();

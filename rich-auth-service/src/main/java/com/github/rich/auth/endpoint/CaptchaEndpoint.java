@@ -62,7 +62,7 @@ public class CaptchaEndpoint {
             response.setStatus(200);
             response.setContentType("application/json");
             response.setCharacterEncoding("utf-8");
-            response.getWriter().print(JSONObject.toJSON(new R<>("send success")));
+            response.getWriter().print(JSONObject.toJSON(new R<>()));
         } catch (IOException e) {
             e.printStackTrace();
         }

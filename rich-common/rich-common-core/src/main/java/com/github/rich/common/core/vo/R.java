@@ -29,6 +29,7 @@ public class R<T> implements Serializable {
 
     public R() {
         super();
+        this.timestamp = System.currentTimeMillis();
     }
 
     public R(T data) {
