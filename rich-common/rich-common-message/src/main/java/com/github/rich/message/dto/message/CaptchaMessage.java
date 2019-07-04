@@ -13,4 +13,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class CaptchaMessage extends Message {
     private static final long serialVersionUID = -7579802995588252306L;
+
+    private String captchaCode;
 }

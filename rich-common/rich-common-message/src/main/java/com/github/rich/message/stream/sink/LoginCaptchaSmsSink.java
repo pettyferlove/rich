@@ -6,15 +6,15 @@ import org.springframework.messaging.SubscribableChannel;
 /**
  * @author Petty
  */
-public interface CaptchaSmsSink {
+public interface LoginCaptchaSmsSink {
 
-    String INPUT = "captcha-sms-input";
+    String INPUT = "login-captcha-sms-input";
 
     /**
      * 验证码短信消息订阅
      *
      * @return SubscribableChannel
      */
-    @Input(CaptchaSmsSink.INPUT)
+    @Input(LoginCaptchaSmsSink.INPUT)
     SubscribableChannel input();
 }
