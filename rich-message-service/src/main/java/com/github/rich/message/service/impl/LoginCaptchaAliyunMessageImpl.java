@@ -8,17 +8,15 @@ import org.springframework.stereotype.Service;
 /**
  * @author Petty
  */
-@Service("captchaAliyunMessage")
-public class CaptchaAliyunMessageImpl extends AbstractAliyunMessageImpl {
+@Service("loginCaptchaAliyunMessage")
+public class LoginCaptchaAliyunMessageImpl extends AbstractAliyunMessageImpl {
 
-    public CaptchaAliyunMessageImpl(SmsAliyunProperties aliyunProperties) {
+    public LoginCaptchaAliyunMessageImpl(SmsAliyunProperties aliyunProperties) {
         super(aliyunProperties);
     }
 
     @Override
     public boolean send(CaptchaMessage message) {
-        return this.sendSms(message,"SMS_169870160");
+        return this.sendSms(message,"SMS_169870184");
     }
-
-
 }
