@@ -57,6 +57,7 @@
         <guava.version>23.0</guava.version>
         <jasypt.version>1.18</jasypt.version>
         <hutool.version>4.5.1</hutool.version>
+        <aliyun-core.version>4.1.0</aliyun-core.version>
         <aliyun-sdk-oss.version>2.8.3</aliyun-sdk-oss.version>
         <skipTests>true</skipTests>
     </properties>

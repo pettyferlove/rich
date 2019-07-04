@@ -62,6 +62,11 @@
             <artifactId>spring-security-messaging</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>${aliyun-core.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-core</artifactId>
             <version>1.2.0</version>
