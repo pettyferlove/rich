@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 
 /**
+ * 登录验证码发送
  * @author Petty
  */
 @Service("loginCaptchaAliyunMessage")

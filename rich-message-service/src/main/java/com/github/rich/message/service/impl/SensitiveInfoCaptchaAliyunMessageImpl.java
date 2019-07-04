@@ -6,12 +6,13 @@ import org.springframework.stereotype.Service;
 
 
 /**
+ * 用户敏感数据修改验证码
  * @author Petty
  */
-@Service("captchaAliyunMessage")
-public class CaptchaAliyunMessageImpl extends AbstractAliyunMessageImpl {
+@Service("sensitiveInfoCaptchaAliyunMessage")
+public class SensitiveInfoCaptchaAliyunMessageImpl extends AbstractAliyunMessageImpl {
 
-    public CaptchaAliyunMessageImpl(SmsAliyunProperties aliyunProperties) {
+    public SensitiveInfoCaptchaAliyunMessageImpl(SmsAliyunProperties aliyunProperties) {
         super(aliyunProperties);
     }
 
