@@ -6,16 +6,16 @@ import org.springframework.messaging.MessageChannel;
 /**
  * @author Petty
  */
-public interface CaptchaSmsSource {
+public interface SensitiveInfoCaptchaSmsSource {
 
-    String OUTPUT = "captcha-sms-output";
+    String OUTPUT = "sensitive-info-captcha-sms-output";
 
     /**
-     * 输出通道
+     * 敏感信息验证码通道
      *
      * @return MessageChannel
      */
-    @Output(CaptchaSmsSource.OUTPUT)
+    @Output(SensitiveInfoCaptchaSmsSource.OUTPUT)
     MessageChannel output();
 
 }
