@@ -6,5 +6,5 @@ import com.github.rich.message.stream.source.LoginCaptchaSmsSource;
 /**
  * @author Petty
  */
-public interface LoginLoginLoginCaptchaSmsProcessor extends LoginCaptchaSmsSink, LoginCaptchaSmsSource {
+public interface LoginCaptchaSmsProcessor extends LoginCaptchaSmsSink, LoginCaptchaSmsSource {
 }
