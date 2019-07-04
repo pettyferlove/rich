@@ -4,3 +4,9 @@ info:
     name: rich-message-service
     description: 消息发送服务
     version: 1.2.0
+sms:
+  cloud:
+    aliyun:
+      sign-name: Rich基础平台短信验证
+      access-key-id: ENC(COKPpQDfHp4Q49E/SqKe4PNXLrvx/a4ec0YmnfNeM+s=)
+      access-key-secret: ENC(j3qSlX2b8DpRBr7ggNXnhxmJLRt5smPHdCKVxdjnTXS781LQcUSKtg==)

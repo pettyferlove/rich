@@ -5,12 +5,12 @@ import com.github.rich.message.dto.Message;
 /**
  * @author Petty
  */
-public interface IMessageService {
+public interface IMessageService<T extends Message> {
 
     /**
      * 消息发送
      * @param message 消息封装类
      * @return Boolean
      */
-    boolean send(Message message);
+    boolean send(T message);
 }
