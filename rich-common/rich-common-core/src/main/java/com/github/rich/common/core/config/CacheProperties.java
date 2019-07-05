@@ -26,6 +26,6 @@ public class CacheProperties {
     /**
      * 缓存过期时间
      */
-    @Value("${spring.cache.expire:3600}")
+    @Value("${spring.cache.expire:0}")
     private Long expiration;
 }
