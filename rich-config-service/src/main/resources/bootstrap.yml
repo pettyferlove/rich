@@ -98,3 +98,28 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://10.0.100.1:10151/eureka
+---
+spring:
+  profiles: test
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/union_tech_company/rich-cloud-config.git
+          username: pettyferlove@live.cn
+          password: ENC(svG0ecjDmqadkzNiUF78e32+b0ObmhBY)
+    bus:
+      trace:
+        enabled: true
+      enabled: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: rich
+    password: ENC(4sVYGbF1iKxTo92qDT8kpQ==)
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:10151/eureka

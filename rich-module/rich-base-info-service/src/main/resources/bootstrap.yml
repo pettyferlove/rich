@@ -60,3 +60,14 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://10.0.100.1:10151/eureka
+---
+server:
+  port: 10149
+spring:
+  profiles: test
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:10151/eureka
