@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.github.rich.base.dto.User;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.constants.SecurityConstant;
+import com.github.rich.security.constants.EncryptionConstant;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -70,7 +71,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.password;
+        return EncryptionConstant.SIGNATURE+this.password;
     }
 
     @Override
