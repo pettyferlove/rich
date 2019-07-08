@@ -315,9 +315,15 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    public Boolean check(String loginName) {
+    public Boolean checkLoginName(String loginName) {
         return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName,loginName)));
     }
+
+    @Override
+    public Boolean checkMobile(String mobile) {
+        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel,mobile)));
+    }
+
 
     private List<String> loadRoles(String userId) {
         List<SystemRole> systemRoles = systemRoleService.findRoleByUserId(userId);

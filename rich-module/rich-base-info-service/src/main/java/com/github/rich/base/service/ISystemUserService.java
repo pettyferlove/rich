@@ -127,6 +127,13 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @param loginName 登录名
      * @return 存在True 不存在False
      */
-    Boolean check(String loginName);
+    Boolean checkLoginName(String loginName);
+
+    /**
+     * 检查手机号码是否存在
+     * @param mobile 手机号码
+     * @return 存在True 不存在False
+     */
+    Boolean checkMobile(String mobile);
 
 }

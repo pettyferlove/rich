@@ -134,8 +134,17 @@ public class UserController {
             @ApiImplicitParam(paramType = "path", name = "loginName", value = "loginName", dataTypeClass = String.class)
     })
     @GetMapping("/check/name/{loginName}")
-    public R<Boolean> check(@PathVariable String loginName) {
-        return new R<>(systemUserService.check(loginName));
+    public R<Boolean> checkLoginName(@PathVariable String loginName) {
+        return new R<>(systemUserService.checkLoginName(loginName));
+    }
+
+    @ApiOperation(value = "检测手机号码是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "mobile", value = "mobile", dataTypeClass = String.class)
+    })
+    @GetMapping("/check/mobile/{mobile}")
+    public R<Boolean> checkMobile(@PathVariable String mobile) {
+        return new R<>(systemUserService.checkMobile(mobile));
     }
 
 }
