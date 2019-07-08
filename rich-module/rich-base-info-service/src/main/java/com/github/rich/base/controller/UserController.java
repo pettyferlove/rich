@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.service.ISystemUserService;
+import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.vo.R;
@@ -13,6 +14,7 @@ import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -107,10 +109,24 @@ public class UserController {
     }
 
     @ApiOperation(value = "更新个人信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "info", value = "info", dataTypeClass = UserInfoVO.class)
+    })
     @PutMapping("/info")
     @UserOperateLog(type = OperateType.UPDATE, description = "更新个人信息-用户个人操作")
     public R<Boolean> updateInfo(UserInfoVO info) {
         return new R<>(systemUserService.updateUserInfo(SecurityUtil.getUser(), info));
+    }
+
+
+    @ApiOperation(value = "更新密码", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "changePassword", value = "changePassword", dataTypeClass = ChangePasswordVO.class)
+    })
+    @PutMapping("/change/password")
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新密码-用户个人操作")
+    public R<Integer> changePassword(@Validated ChangePasswordVO changePassword) {
+        return new R<>(systemUserService.changePassword(SecurityUtil.getUser(), changePassword));
     }
 
 }

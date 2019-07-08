@@ -11,6 +11,7 @@ import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.*;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.*;
+import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.constants.CommonConstant;
@@ -23,6 +24,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,12 +52,18 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     private final ISystemUserExtendService systemUserExtendService;
 
-    public SystemUserServiceImpl(SystemSecurityProperties systemSecurityProperties, ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService) {
+    private final PasswordEncoder passwordEncoder;
+
+    private final PasswordEncoder userPasswordEncoder;
+
+    public SystemUserServiceImpl(SystemSecurityProperties systemSecurityProperties, ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService, PasswordEncoder passwordEncoder, PasswordEncoder userPasswordEncoder) {
         this.systemSecurityProperties = systemSecurityProperties;
         this.systemRoleService = systemRoleService;
         this.systemMenuResourceService = systemMenuResourceService;
         this.systemUserRoleService = systemUserRoleService;
         this.systemUserExtendService = systemUserExtendService;
+        this.passwordEncoder = passwordEncoder;
+        this.userPasswordEncoder = userPasswordEncoder;
     }
 
     @Override
@@ -255,7 +263,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
             assert userDetails != null;
             if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                return true;
+                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行个人信息修改");
             }
         }
         assert userDetails != null;
@@ -267,6 +275,42 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             return this.updateById(systemUser);
         }
         throw new BaseRuntimeException("更新用户详情异常");
+    }
+
+    @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
+            @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null"),
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
+    })
+    public Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword) {
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            assert userDetails != null;
+            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行密码修改");
+            }
+        }
+        if (!changePassword.getNewPassword().equals(changePassword.getRepeatPassword())) {
+            return 2;
+        } else {
+            Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
+            if (systemUserOptional.isPresent()) {
+                SystemUser systemUser = systemUserOptional.get();
+                if (!passwordEncoder.matches(changePassword.getNewPassword(), systemUser.getPassword())) {
+                    return 3;
+                } else {
+                    systemUser.setPassword(userPasswordEncoder.encode(changePassword.getNewPassword()));
+                    systemUser.setModifier(userDetails.getUserId());
+                    systemUser.setModifierTime(LocalDateTime.now());
+                    if (!this.update(systemUser)) {
+                        return 0;
+                    }
+                }
+            }
+
+        }
+        return 1;
     }
 
     private List<String> loadRoles(String userId) {

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.security.service.impl.UserDetailsImpl;
@@ -111,5 +112,14 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @return Boolean
      */
     Boolean updateUserInfo(UserDetailsImpl userDetails, UserInfoVO info);
+
+
+    /**
+     * 变更用户密码
+     * @param userDetails UserDetailsImpl
+     * @param changePassword 密码变更类
+     * @return 1 变更成功 0 变更失败 2 两次输入的密码不一致 3 原始密码错误
+     */
+    Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword);
 
 }
