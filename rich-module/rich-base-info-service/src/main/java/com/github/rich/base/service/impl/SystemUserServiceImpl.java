@@ -1,6 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -311,6 +312,11 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
         }
         return 1;
+    }
+
+    @Override
+    public Boolean check(String loginName) {
+        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName,loginName)));
     }
 
     private List<String> loadRoles(String userId) {

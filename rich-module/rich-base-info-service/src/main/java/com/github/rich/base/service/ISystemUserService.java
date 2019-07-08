@@ -122,4 +122,11 @@ public interface ISystemUserService extends IService<SystemUser> {
      */
     Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword);
 
+    /**
+     * 检查登录名是否存在
+     * @param loginName 登录名
+     * @return 存在True 不存在False
+     */
+    Boolean check(String loginName);
+
 }

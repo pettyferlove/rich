@@ -129,4 +129,13 @@ public class UserController {
         return new R<>(systemUserService.changePassword(SecurityUtil.getUser(), changePassword));
     }
 
+    @ApiOperation(value = "检测登录名是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "loginName", value = "loginName", dataTypeClass = String.class)
+    })
+    @GetMapping("/check/name/{loginName}")
+    public R<Boolean> check(@PathVariable String loginName) {
+        return new R<>(systemUserService.check(loginName));
+    }
+
 }
