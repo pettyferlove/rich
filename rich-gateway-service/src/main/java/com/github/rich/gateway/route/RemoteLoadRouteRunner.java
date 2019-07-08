@@ -43,6 +43,7 @@ public class RemoteLoadRouteRunner implements CommandLineRunner {
                 List<Route> routes = remoteGatewayRouteService.loadRoutes();
                 routes.forEach(route -> {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
+                    routeDefinition.setId(route.getName());
                     routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
                 });
                 log.info("end load route");

@@ -1,6 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.dto.Route;
 import com.github.rich.base.entity.SystemGatewayRoute;
+import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.mapper.SystemGatewayRouteMapper;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.github.rich.common.core.constants.CommonConstant;
@@ -142,6 +144,11 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
         }
         source.output().send(MessageBuilder.withPayload(message).setHeader("operate-type", operateType).build());
         return result;
+    }
+
+    @Override
+    public Boolean check(String name) {
+        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getName,name)));
     }
 
 

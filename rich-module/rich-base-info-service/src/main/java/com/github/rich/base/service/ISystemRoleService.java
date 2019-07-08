@@ -103,4 +103,11 @@ public interface ISystemRoleService extends IService<SystemRole> {
      * @return Boolean
      */
     Boolean deleteUserRole(String userId, String[] roleIds);
+
+    /**
+     * 检查角色是否存在
+     * @param role 角色名（CODE）
+     * @return 存在True 不存在False
+     */
+    Boolean check(String role);
 }

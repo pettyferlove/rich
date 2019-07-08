@@ -142,4 +142,13 @@ public class RoleController {
     }
 
 
+    @ApiOperation(value = "检测角色是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "role", value = "role", dataTypeClass = String.class)
+    })
+    @GetMapping("/check/{role}")
+    public R<Boolean> check(@PathVariable String role) {
+        return new R<>(systemRoleService.check(role));
+    }
+
 }

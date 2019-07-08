@@ -41,7 +41,7 @@ public class SystemGatewayRoute extends Model<SystemGatewayRoute> {
     @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "网关CODE")
+    @ApiModelProperty(value = "网关名")
     private String name;
 
     @ApiModelProperty(value = "Route JSON")

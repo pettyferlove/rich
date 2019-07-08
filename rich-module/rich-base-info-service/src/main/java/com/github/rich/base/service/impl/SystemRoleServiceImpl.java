@@ -1,6 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -170,5 +171,10 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
         } catch (Exception e) {
             throw new BaseRuntimeException("删除失败");
         }
+    }
+
+    @Override
+    public Boolean check(String role) {
+        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemRole>lambdaQuery().eq(SystemRole::getRole,role)));
     }
 }

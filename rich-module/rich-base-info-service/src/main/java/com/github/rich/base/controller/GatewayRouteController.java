@@ -88,4 +88,13 @@ public class GatewayRouteController {
         return new R<>(systemGatewayRouteService.changeStatus(gatewayRoute));
     }
 
+    @ApiOperation(value = "检测路由是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "name", value = "name", dataTypeClass = String.class)
+    })
+    @GetMapping("/check/{name}")
+    public R<Boolean> check(@PathVariable String name) {
+        return new R<>(systemGatewayRouteService.check(name));
+    }
+
 }

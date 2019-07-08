@@ -74,4 +74,11 @@ public interface ISystemGatewayRouteService extends IService<SystemGatewayRoute>
      */
     Boolean changeStatus(SystemGatewayRoute route);
 
+    /**
+     * 检查路由是否存在
+     * @param name 路由名（CODE）
+     * @return 存在True 不存在False
+     */
+    Boolean check(String name);
+
 }

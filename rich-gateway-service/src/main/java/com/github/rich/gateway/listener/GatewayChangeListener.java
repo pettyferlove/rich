@@ -62,6 +62,7 @@ public class GatewayChangeListener {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
                 if (route.getStatus() == 1) {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
+                    routeDefinition.setId(route.getName());
                     routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
                 } else {
                     throw new RuntimeException("route invalid");
@@ -101,6 +102,7 @@ public class GatewayChangeListener {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
                 if (route.getStatus() == 1) {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
+                    routeDefinition.setId(route.getName());
                     routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
                 } else {
                     throw new RuntimeException("route invalid");
@@ -140,6 +142,7 @@ public class GatewayChangeListener {
             if (ObjectUtil.isNotNull(route) && StringUtils.isNotEmpty(route.getRoute())) {
                 if (route.getStatus() == 0) {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
+                    routeDefinition.setId(route.getName());
                     routeDefinitionWriter.delete(Mono.just(routeDefinition.getId())).subscribe();
                 } else {
                     throw new RuntimeException("route no shutdown");
