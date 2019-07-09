@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.SystemUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.vo.ChangeMobileVO;
 import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.base.vo.UserDetailVO;
@@ -121,6 +122,16 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @return 1 变更成功 0 变更失败 2 两次输入的密码不一致 3 原始密码错误
      */
     Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword);
+
+
+    /**
+     * 变更用户手机号
+     * @param userDetails UserDetailsImpl
+     * @param changeMobile 手机号码变更类
+     * @return 1 变更成功 0 变更失败 2 验证码错误
+     */
+    Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile);
+
 
     /**
      * 检查登录名是否存在

@@ -12,6 +12,7 @@ import com.github.rich.base.dto.User;
 import com.github.rich.base.entity.*;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.*;
+import com.github.rich.base.vo.ChangeMobileVO;
 import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
@@ -19,6 +20,7 @@ import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.config.SystemSecurityProperties;
+import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
@@ -57,7 +59,9 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     private final PasswordEncoder userPasswordEncoder;
 
-    public SystemUserServiceImpl(SystemSecurityProperties systemSecurityProperties, ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService, PasswordEncoder passwordEncoder, PasswordEncoder userPasswordEncoder) {
+    private final CaptchaValidateService sensitiveInfoCaptchaValidateService;
+
+    public SystemUserServiceImpl(SystemSecurityProperties systemSecurityProperties, ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService, PasswordEncoder passwordEncoder, PasswordEncoder userPasswordEncoder, CaptchaValidateService sensitiveInfoCaptchaValidateService) {
         this.systemSecurityProperties = systemSecurityProperties;
         this.systemRoleService = systemRoleService;
         this.systemMenuResourceService = systemMenuResourceService;
@@ -65,6 +69,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         this.systemUserExtendService = systemUserExtendService;
         this.passwordEncoder = passwordEncoder;
         this.userPasswordEncoder = userPasswordEncoder;
+        this.sensitiveInfoCaptchaValidateService = sensitiveInfoCaptchaValidateService;
     }
 
     @Override
@@ -310,6 +315,31 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
                 }
             }
 
+        }
+        return 1;
+    }
+
+    @Override
+    public Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile) {
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            assert userDetails != null;
+            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行手机号码修改");
+            }
+        }
+        if(!sensitiveInfoCaptchaValidateService.validate(changeMobile.getMobileTel(),changeMobile.getCaptcha())){
+            return 2;
+        }else{
+            Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
+            if (systemUserOptional.isPresent()) {
+                SystemUser systemUser = systemUserOptional.get();
+                systemUser.setMobileTel(changeMobile.getMobileTel());
+                systemUser.setModifier(userDetails.getUserId());
+                systemUser.setModifierTime(LocalDateTime.now());
+                if (!this.update(systemUser)) {
+                    return 0;
+                }
+            }
         }
         return 1;
     }

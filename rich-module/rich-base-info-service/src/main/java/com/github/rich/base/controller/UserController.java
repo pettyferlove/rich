@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.service.ISystemUserService;
+import com.github.rich.base.vo.ChangeMobileVO;
 import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
@@ -133,6 +134,16 @@ public class UserController {
     @UserOperateLog(type = OperateType.UPDATE, description = "更新密码-用户个人操作")
     public R<Integer> changePassword(@Validated ChangePasswordVO changePassword) {
         return new R<>(systemUserService.changePassword(SecurityUtil.getUser(), changePassword));
+    }
+
+    @ApiOperation(value = "更新手机号码", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "changeMobile", value = "changeMobile", dataTypeClass = ChangeMobileVO.class)
+    })
+    @PutMapping("/change/mobile")
+    @UserOperateLog(type = OperateType.UPDATE, description = "更新手机号码-用户个人操作")
+    public R<Integer> changeMobile(@Validated ChangeMobileVO changeMobile) {
+        return new R<>(systemUserService.changeMobile(SecurityUtil.getUser(), changeMobile));
     }
 
     @ApiOperation(value = "检测登录名是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
