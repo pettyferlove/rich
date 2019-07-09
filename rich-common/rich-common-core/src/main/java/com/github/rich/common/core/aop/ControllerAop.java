@@ -1,7 +1,6 @@
 package com.github.rich.common.core.aop;
 
 import com.github.rich.common.core.constants.CommonConstant;
-import com.github.rich.common.core.exception.BaseException;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -32,7 +31,7 @@ import java.util.Objects;
 @Slf4j
 public class ControllerAop {
 
-    @Pointcut("execution(public com.github.rich.common.core.vo.R *(..))" )
+    @Pointcut("execution(public com.github.rich.common.core.vo.R *(..))")
     public void pointCut() {
     }
 
@@ -42,12 +41,12 @@ public class ControllerAop {
      * @param pjp ProceedingJoinPoint
      * @return Object
      */
-    @Around("pointCut()" )
-    public Object methodAroundHandler(ProceedingJoinPoint pjp) {
+    @Around("pointCut()")
+    public Object methodAroundHandler(ProceedingJoinPoint pjp) throws Throwable {
         return methodHandler(pjp);
     }
 
-    private Object methodHandler(ProceedingJoinPoint pjp) {
+    private Object methodHandler(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.currentTimeMillis();
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = Objects.requireNonNull(attributes).getRequest();
@@ -61,22 +60,16 @@ public class ControllerAop {
         log.info("IP : " + request.getRemoteAddr());
         log.info("CLASS_METHOD : " + pjp.getSignature().getDeclaringTypeName() + "." + pjp.getSignature().getName());
         log.info("ARGS : " + Arrays.toString(pjp.getArgs()));
-        Object result;
         try {
-            result = pjp.proceed();
             log.info(pjp.getSignature() + "use time:" + (System.currentTimeMillis() - startTime));
+            return pjp.proceed();
         } catch (Throwable e) {
-            log.error("Error：" , e);
+            log.error("Error：", e);
             if (e instanceof AccessDeniedException) {
                 throw new BaseRuntimeException(e.getMessage(), CommonConstant.FORBIDDEN);
-            } else if (e instanceof BaseRuntimeException) {
-                throw new BaseRuntimeException(e.getMessage(), ((BaseRuntimeException) e).getStatus());
-            } else if (e instanceof BaseException) {
-                throw new BaseRuntimeException(e.getMessage(), ((BaseException) e).getStatus());
             } else {
-                throw new BaseRuntimeException(e.getMessage());
+                throw e;
             }
         }
-        return result;
     }
 }

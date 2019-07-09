@@ -292,13 +292,13 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     })
     public Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword) {
-        try {
-            if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-                assert userDetails != null;
-                if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                    throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行密码修改");
-                }
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            assert userDetails != null;
+            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行密码修改");
             }
+        }
+        try {
             if (!changePassword.getNewPassword().equals(changePassword.getRepeatPassword())) {
                 return 2;
             } else {
@@ -326,13 +326,13 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     public Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile) {
-        try {
-            if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-                assert userDetails != null;
-                if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                    throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行手机号码修改");
-                }
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            assert userDetails != null;
+            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行手机号码修改");
             }
+        }
+        try {
             if (!sensitiveInfoCaptchaValidateService.validate(changeMobile.getMobileTel(), changeMobile.getCaptcha())) {
                 return 2;
             } else {
