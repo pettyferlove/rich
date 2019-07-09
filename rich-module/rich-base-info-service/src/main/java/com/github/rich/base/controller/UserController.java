@@ -156,13 +156,12 @@ public class UserController {
 
     @ApiOperation(value = "创建短信验证码", notes = "用于用户更改手机，无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "mobile", value = "mobile", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "query", name = "mobileTel", value = "mobileTel", dataTypeClass = String.class)
     })
-    @PostMapping("/change/mobile/captcha")
-    public R<Boolean> mobileCaptcha(String mobile) {
-        assert mobile != null;
+    @PostMapping("/captcha/mobile/{mobileTel}")
+    public R<Boolean> mobileCaptcha(@PathVariable String mobileTel) {
         String randomStr = SMSUtil.createRandomVcode();
-        return new R<>(sensitiveInfoCaptchaValidateService.create(mobile, randomStr, SecurityConstant.SMS_VALIDATE_CODE_EXPIRY));
+        return new R<>(sensitiveInfoCaptchaValidateService.create(mobileTel, randomStr, SecurityConstant.SMS_VALIDATE_CODE_EXPIRY));
     }
 
 }
