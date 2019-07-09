@@ -65,4 +65,11 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
      * @return Boolean
      */
     Boolean update(SystemDictType dictType);
+
+    /**
+     * 检查字典类型是否存在
+     * @param type 类型（CODE）
+     * @return 存在True 不存在False
+     */
+    Boolean check(String type);
 }

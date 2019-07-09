@@ -63,4 +63,11 @@ public interface ISystemRegionService extends IService<SystemRegion> {
      */
     Boolean update(SystemRegion systemRegion);
 
+    /**
+     * 检查区域编号是否存在
+     * @param region 区域编号（CODE）
+     * @return 存在True 不存在False
+     */
+    Boolean check(String region);
+
 }

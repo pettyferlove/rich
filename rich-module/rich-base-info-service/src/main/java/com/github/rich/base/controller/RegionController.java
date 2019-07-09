@@ -87,4 +87,14 @@ public class RegionController {
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(systemRegionService.delete(id));
     }
+
+    @ApiOperation(value = "检测区域编码是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "region", value = "region", dataTypeClass = String.class)
+    })
+    @GetMapping("/check/{region}")
+    public R<Boolean> check(@PathVariable String region) {
+        return new R<>(systemRegionService.check(region));
+    }
+
 }

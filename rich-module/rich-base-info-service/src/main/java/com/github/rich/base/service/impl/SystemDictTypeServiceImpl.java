@@ -1,17 +1,17 @@
 package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemDictItem;
 import com.github.rich.base.entity.SystemDictType;
-import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.mapper.SystemDictTypeMapper;
 import com.github.rich.base.service.ISystemDictItemService;
 import com.github.rich.base.service.ISystemDictTypeService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.vo.Dict;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
@@ -60,7 +60,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#dictType.toString())")
     public IPage<SystemDictType> page(SystemDictType dictType, Page<SystemDictType> page) {
-        return super.page(page,Wrappers.lambdaQuery(dictType).orderByDesc(SystemDictType::getCreateTime));
+        return super.page(page, Wrappers.lambdaQuery(dictType).orderByDesc(SystemDictType::getCreateTime));
     }
 
     @Override
@@ -90,9 +90,9 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
         dictType.setId(dictTypeId);
         dictType.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictType.setCreateTime(LocalDateTime.now());
-        if(this.save(dictType)){
+        if (this.save(dictType)) {
             return dictTypeId;
-        }else {
+        } else {
             throw new BaseRuntimeException("新增失败");
         }
     }
@@ -107,5 +107,10 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
         dictType.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         dictType.setModifierTime(LocalDateTime.now());
         return this.updateById(dictType);
+    }
+
+    @Override
+    public Boolean check(String type) {
+        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemDictType>lambdaQuery().eq(SystemDictType::getType, type)));
     }
 }

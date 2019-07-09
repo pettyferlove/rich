@@ -88,4 +88,14 @@ public class DictTypeController {
     public R<Integer> delete(@PathVariable String id) {
         return new R<>(systemDictTypeService.delete(id));
     }
+
+    @ApiOperation(value = "检测字典类型是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "path", name = "region", value = "region", dataTypeClass = String.class)
+    })
+    @GetMapping("/check/{type}")
+    public R<Boolean> check(@PathVariable String type) {
+        return new R<>(systemDictTypeService.check(type));
+    }
+
 }

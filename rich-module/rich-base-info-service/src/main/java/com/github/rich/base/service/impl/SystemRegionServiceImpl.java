@@ -1,8 +1,10 @@
 package com.github.rich.base.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
+import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.entity.SystemRegion;
 import com.github.rich.base.mapper.SystemRegionMapper;
 import com.github.rich.base.service.ISystemRegionService;
@@ -97,6 +99,11 @@ public class SystemRegionServiceImpl extends ServiceImpl<SystemRegionMapper, Sys
         systemRegion.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         systemRegion.setModifierTime(LocalDateTime.now());
         return this.updateById(systemRegion);
+    }
+
+    @Override
+    public Boolean check(String region) {
+        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemRegion>lambdaQuery().eq(SystemRegion::getId, region)));
     }
 
 }
