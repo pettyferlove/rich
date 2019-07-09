@@ -20,6 +20,7 @@ import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.config.SystemSecurityProperties;
+import com.github.rich.security.constants.EncryptionConstant;
 import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 import com.github.rich.security.utils.SecurityUtil;
@@ -291,22 +292,54 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     })
     public Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            assert userDetails != null;
-            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行密码修改");
+        try {
+            if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+                assert userDetails != null;
+                if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                    throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行密码修改");
+                }
             }
+            if (!changePassword.getNewPassword().equals(changePassword.getRepeatPassword())) {
+                return 2;
+            } else {
+                Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
+                if (systemUserOptional.isPresent()) {
+                    SystemUser systemUser = systemUserOptional.get();
+                    if (!passwordEncoder.matches(changePassword.getOldPassword(), EncryptionConstant.SIGNATURE + systemUser.getPassword())) {
+                        return 3;
+                    } else {
+                        systemUser.setPassword(userPasswordEncoder.encode(changePassword.getNewPassword()));
+                        systemUser.setModifier(userDetails.getUserId());
+                        systemUser.setModifierTime(LocalDateTime.now());
+                        if (!this.update(systemUser)) {
+                            return 0;
+                        }
+                    }
+                }
+
+            }
+            return 1;
+        } catch (Exception e) {
+            throw new BaseRuntimeException("更新用户密码异常");
         }
-        if (!changePassword.getNewPassword().equals(changePassword.getRepeatPassword())) {
-            return 2;
-        } else {
-            Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
-            if (systemUserOptional.isPresent()) {
-                SystemUser systemUser = systemUserOptional.get();
-                if (!passwordEncoder.matches(changePassword.getNewPassword(), systemUser.getPassword())) {
-                    return 3;
-                } else {
-                    systemUser.setPassword(userPasswordEncoder.encode(changePassword.getNewPassword()));
+    }
+
+    @Override
+    public Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile) {
+        try {
+            if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+                assert userDetails != null;
+                if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
+                    throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行手机号码修改");
+                }
+            }
+            if (!sensitiveInfoCaptchaValidateService.validate(changeMobile.getMobileTel(), changeMobile.getCaptcha())) {
+                return 2;
+            } else {
+                Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
+                if (systemUserOptional.isPresent()) {
+                    SystemUser systemUser = systemUserOptional.get();
+                    systemUser.setMobileTel(changeMobile.getMobileTel());
                     systemUser.setModifier(userDetails.getUserId());
                     systemUser.setModifierTime(LocalDateTime.now());
                     if (!this.update(systemUser)) {
@@ -314,44 +347,20 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
                     }
                 }
             }
-
+            return 1;
+        } catch (Exception e) {
+            throw new BaseRuntimeException("更新用户手机号码异常");
         }
-        return 1;
-    }
-
-    @Override
-    public Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            assert userDetails != null;
-            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行手机号码修改");
-            }
-        }
-        if(!sensitiveInfoCaptchaValidateService.validate(changeMobile.getMobileTel(),changeMobile.getCaptcha())){
-            return 2;
-        }else{
-            Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
-            if (systemUserOptional.isPresent()) {
-                SystemUser systemUser = systemUserOptional.get();
-                systemUser.setMobileTel(changeMobile.getMobileTel());
-                systemUser.setModifier(userDetails.getUserId());
-                systemUser.setModifierTime(LocalDateTime.now());
-                if (!this.update(systemUser)) {
-                    return 0;
-                }
-            }
-        }
-        return 1;
     }
 
     @Override
     public Boolean checkLoginName(String loginName) {
-        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName,loginName)));
+        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, loginName)));
     }
 
     @Override
     public Boolean checkMobile(String mobile) {
-        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel,mobile)));
+        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile)));
     }
 
 
