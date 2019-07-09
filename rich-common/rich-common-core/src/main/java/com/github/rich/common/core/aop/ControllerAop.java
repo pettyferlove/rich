@@ -31,7 +31,7 @@ import java.util.Objects;
 @Slf4j
 public class ControllerAop {
 
-    @Pointcut("execution(public com.github.rich.common.core.vo.R *(..))")
+    @Pointcut("execution(public com.github.rich.common.core.vo.R *(..)) && !@annotation(org.springframework.web.bind.annotation.ExceptionHandler)")
     public void pointCut() {
     }
 
