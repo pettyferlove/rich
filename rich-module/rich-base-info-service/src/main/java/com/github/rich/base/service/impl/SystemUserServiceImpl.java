@@ -355,12 +355,12 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     public Boolean checkLoginName(String loginName) {
-        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, loginName)));
+        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, loginName)));
     }
 
     @Override
     public Boolean checkMobile(String mobile) {
-        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile)));
+        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile)));
     }
 
 

@@ -148,7 +148,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
 
     @Override
     public Boolean check(String name) {
-        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getName,name)));
+        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getName,name)));
     }
 
 

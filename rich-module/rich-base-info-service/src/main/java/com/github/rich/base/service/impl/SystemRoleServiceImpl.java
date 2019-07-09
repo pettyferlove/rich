@@ -175,6 +175,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     public Boolean check(String role) {
-        return ObjectUtil.isNull(this.getOne(Wrappers.<SystemRole>lambdaQuery().eq(SystemRole::getRole,role)));
+        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemRole>lambdaQuery().eq(SystemRole::getRole,role)));
     }
 }
