@@ -1,9 +1,9 @@
-package com.github.rich.auth.service.impl;
+package com.github.rich.base.service.impl;
 
-import com.github.rich.security.service.AbstractCaptchaValidateService;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.message.dto.message.CaptchaMessage;
-import com.github.rich.message.stream.source.LoginCaptchaSmsSource;
+import com.github.rich.message.stream.source.SensitiveInfoCaptchaSmsSource;
+import com.github.rich.security.service.AbstractCaptchaValidateService;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.support.GenericMessage;
@@ -16,15 +16,15 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Petty
  */
-@Service("smsCaptchaValidateService")
-@EnableBinding(LoginCaptchaSmsSource.class)
-public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateService {
+@Service("sensitiveInfoCaptchaValidateService")
+@EnableBinding(SensitiveInfoCaptchaSmsSource.class)
+public class SensitiveInfoCaptchaValidateServiceImpl extends AbstractCaptchaValidateService {
 
     private final RedisTemplate redisTemplate;
 
-    private final LoginCaptchaSmsSource source;
+    private final SensitiveInfoCaptchaSmsSource source;
 
-    public SmsCaptchaValidateServiceImpl(RedisTemplate redisTemplate, LoginCaptchaSmsSource source) {
+    public SensitiveInfoCaptchaValidateServiceImpl(RedisTemplate redisTemplate, SensitiveInfoCaptchaSmsSource source) {
         super(redisTemplate);
         this.redisTemplate = redisTemplate;
         this.source = source;
@@ -33,11 +33,11 @@ public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateServic
     @Override
     public Boolean create(String code, String captcha, long timeout) {
         boolean result = false;
-        StringBuilder stringBuffer = new StringBuilder(SecurityConstant.LOGIN_SMS_CAPTCHA_CODE_KEY);
+        StringBuilder stringBuffer = new StringBuilder(SecurityConstant.SENSITIVE_INFO_CAPTCHA_CODE_KEY);
         stringBuffer.append(":");
         stringBuffer.append(code);
         try {
-            if(redisTemplate.opsForValue().setIfAbsent(stringBuffer.toString(), captcha, timeout, TimeUnit.SECONDS)){
+            if (redisTemplate.opsForValue().setIfAbsent(stringBuffer.toString(), captcha, timeout, TimeUnit.SECONDS)) {
                 CaptchaMessage captchaMessage = new CaptchaMessage();
                 captchaMessage.setReceiver(code);
                 captchaMessage.setCaptchaCode(captcha);
@@ -55,6 +55,6 @@ public class SmsCaptchaValidateServiceImpl extends AbstractCaptchaValidateServic
 
     @Override
     public Boolean validate(String code, String captcha) {
-        return super.validate(SecurityConstant.LOGIN_SMS_CAPTCHA_CODE_KEY, code, captcha);
+        return super.validate(SecurityConstant.SENSITIVE_INFO_CAPTCHA_CODE_KEY, code, captcha);
     }
 }

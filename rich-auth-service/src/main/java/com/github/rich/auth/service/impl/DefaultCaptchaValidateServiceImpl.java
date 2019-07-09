@@ -1,6 +1,6 @@
 package com.github.rich.auth.service.impl;
 
-import com.github.rich.auth.service.AbstractCaptchaValidateService;
+import com.github.rich.security.service.AbstractCaptchaValidateService;
 import com.github.rich.common.core.constants.SecurityConstant;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

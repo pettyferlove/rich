@@ -7,9 +7,12 @@ import com.github.rich.base.service.ISystemUserService;
 import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
+import com.github.rich.common.core.constants.SecurityConstant;
+import com.github.rich.common.core.utils.SMSUtil;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserOperateLog;
 import com.github.rich.log.constants.OperateType;
+import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
@@ -27,8 +30,11 @@ public class UserController {
 
     private final ISystemUserService systemUserService;
 
-    public UserController(ISystemUserService systemUserService) {
+    private final CaptchaValidateService sensitiveInfoCaptchaValidateService;
+
+    public UserController(ISystemUserService systemUserService, CaptchaValidateService sensitiveInfoCaptchaValidateService) {
         this.systemUserService = systemUserService;
+        this.sensitiveInfoCaptchaValidateService = sensitiveInfoCaptchaValidateService;
     }
 
     /**
@@ -150,13 +156,13 @@ public class UserController {
 
     @ApiOperation(value = "创建短信验证码", notes = "用于用户更改手机，无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-            @ApiImplicitParam(paramType = "query", name = "machineCode", value = "machineCode", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "query", name = "mobile", value = "mobile", dataTypeClass = String.class)
     })
     @PostMapping("/change/mobile/captcha")
-    public R<Integer> mobileCaptcha(String machineCode) {
-        assert machineCode != null;
-
-        return null;
+    public R<Boolean> mobileCaptcha(String mobile) {
+        assert mobile != null;
+        String randomStr = SMSUtil.createRandomVcode();
+        return new R<>(sensitiveInfoCaptchaValidateService.create(mobile, randomStr, SecurityConstant.SMS_VALIDATE_CODE_EXPIRY));
     }
 
 }

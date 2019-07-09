@@ -1,4 +1,4 @@
-package com.github.rich.auth.service;
+package com.github.rich.security.service;
 
 /**
  * 验证码校验

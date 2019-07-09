@@ -2,7 +2,7 @@ package com.github.rich.auth.config;
 
 import com.github.rich.auth.granter.MobileTokenGranter;
 import com.github.rich.auth.granter.WeChatTokenGranter;
-import com.github.rich.auth.service.CaptchaValidateService;
+import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.auth.service.RichClientDetailsService;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.security.component.ResponseExceptionTranslator;

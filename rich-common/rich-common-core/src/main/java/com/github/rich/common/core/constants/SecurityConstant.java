@@ -69,6 +69,8 @@ public interface SecurityConstant {
 
     String LOGIN_SMS_CAPTCHA_CODE_KEY = "login-sms-captcha-code-key";
 
+    String SENSITIVE_INFO_CAPTCHA_CODE_KEY = "sensitive-info-captcha-code-key";
+
     /**
      * 验证码过期时间
      */

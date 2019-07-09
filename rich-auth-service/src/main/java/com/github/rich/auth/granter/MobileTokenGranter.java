@@ -1,6 +1,6 @@
 package com.github.rich.auth.granter;
 
-import com.github.rich.auth.service.CaptchaValidateService;
+import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.common.core.exception.security.CaptchaCheckException;
 import com.github.rich.security.service.RichUserDetailsService;

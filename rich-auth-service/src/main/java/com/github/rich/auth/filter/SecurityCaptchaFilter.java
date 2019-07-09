@@ -1,7 +1,7 @@
 package com.github.rich.auth.filter;
 
 import com.github.rich.auth.config.CaptchaFilterConfig;
-import com.github.rich.auth.service.CaptchaValidateService;
+import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.common.core.exception.security.CaptchaCheckException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
