@@ -147,4 +147,16 @@ public class UserController {
         return new R<>(systemUserService.checkMobile(mobile));
     }
 
+
+    @ApiOperation(value = "创建短信验证码", notes = "用于用户更改手机，无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "query", name = "machineCode", value = "machineCode", dataTypeClass = String.class)
+    })
+    @PostMapping("/change/mobile/captcha")
+    public R<Integer> mobileCaptcha(String machineCode) {
+        assert machineCode != null;
+
+        return null;
+    }
+
 }

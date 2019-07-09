@@ -1,4 +1,4 @@
-package com.github.rich.auth.utils;
+package com.github.rich.common.core.utils;
 
 import java.util.Random;
 import java.util.regex.Matcher;

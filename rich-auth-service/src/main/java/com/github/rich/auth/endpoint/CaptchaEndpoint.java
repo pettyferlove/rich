@@ -2,7 +2,7 @@ package com.github.rich.auth.endpoint;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.rich.auth.service.CaptchaValidateService;
-import com.github.rich.auth.utils.SMSUtil;
+import com.github.rich.common.core.utils.SMSUtil;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.common.core.vo.R;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
