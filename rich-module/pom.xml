@@ -19,6 +19,7 @@
         <module>rich-base-info-service</module>
         <module>rich-code-generator</module>
         <module>rich-third-party-service</module>
+        <module>rich-workflow-service</module>
         <module>rich-demo-service</module>
     </modules>
 

@@ -1,0 +1,6 @@
+info:
+  build:
+    artifact: rich-workflow-service
+    name: rich-workflow-service
+    description: 工作流服务
+    version: 0.0.1-SNAPSHOT
