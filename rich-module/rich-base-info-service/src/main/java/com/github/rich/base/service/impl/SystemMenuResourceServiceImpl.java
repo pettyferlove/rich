@@ -82,7 +82,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
             assert userDetails != null;
             if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
                 List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getPermissionType, 0).orderByDesc(SystemMenuResource::getSort));
-                Set<SystemMenuResource> systemMenuResourceSet = new HashSet<>(systemMenuResources);
+                Set<SystemMenuResource> systemMenuResourceSet = new LinkedHashSet<>(systemMenuResources);
                 return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
             }
         }
