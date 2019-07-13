@@ -23,6 +23,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -121,8 +122,10 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
             @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", allEntries = true)
     })
-    public Boolean deleteNode(String id) throws Exception {
+    @Transactional(rollbackFor = Throwable.class)
+    public Boolean deleteNode(String id) {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentId, id));
+        systemRoleMenuService.remove(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getMenuId,id));
         if (!systemMenuResources.isEmpty()) {
             throw new BaseRuntimeException("存在子节点，无法删除");
         }
