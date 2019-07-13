@@ -48,10 +48,10 @@ public class SystemTenant extends Model<SystemTenant> {
     private String contactNumber;
 
     @ApiModelProperty(value = "地址")
-    private Integer address;
+    private String address;
 
     @ApiModelProperty(value = "备注")
-    private LocalDateTime remark;
+    private String remark;
 
     @ApiModelProperty(value = "电子邮件")
     private String email;
