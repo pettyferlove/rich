@@ -4,8 +4,8 @@ package com.github.rich.base.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.common.core.vo.R;
+import com.github.rich.log.annotation.UserLog;
 import org.springframework.web.bind.annotation.*;
-import com.github.rich.log.annotation.UserOperateLog;
 import com.github.rich.log.constants.OperateType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,7 +57,7 @@ public class TenantController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @UserOperateLog(type = OperateType.ADD, description = "创建租户信息")
+    @UserLog(type = OperateType.ADD, description = "创建租户信息")
     public R<String> create(SystemTenant systemTenant) {
         return new R<>(systemTenantService.create(systemTenant));
     }
@@ -68,7 +68,7 @@ public class TenantController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新租户信息")
+    @UserLog(type = OperateType.UPDATE, description = "更新租户信息")
     public R<Boolean> update(SystemTenant systemTenant) {
         return new R<>(systemTenantService.update(systemTenant));
     }
@@ -79,7 +79,7 @@ public class TenantController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @UserOperateLog(type = OperateType.DELETE, description = "删除租户信息")
+    @UserLog(type = OperateType.DELETE, description = "删除租户信息")
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(systemTenantService.delete(id));
     }
@@ -91,7 +91,7 @@ public class TenantController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(value = "/status")
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新路由状态")
+    @UserLog(type = OperateType.UPDATE, description = "更新路由状态")
     public R<Boolean> changeStatus(SystemTenant tenant) {
         return new R<>(systemTenantService.changeStatus(tenant));
     }

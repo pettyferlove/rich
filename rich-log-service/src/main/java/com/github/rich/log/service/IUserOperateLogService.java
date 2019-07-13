@@ -24,7 +24,7 @@ public interface IUserOperateLogService extends IService<UserOperateLog> {
 
     /**
      * 查询日志列表
-     * @param userOperateLog UserOperateLog
+     * @param userOperateLog UserLog
      * @param page Page
      * @return IPage
      */

@@ -1,7 +1,7 @@
 package com.github.rich.log.aop;
 
 import com.github.rich.common.core.utils.CommonUtils;
-import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.dto.OperateLogInfo;
 import com.github.rich.log.service.OperateLogService;
 import com.github.rich.security.utils.SecurityUtil;
@@ -26,21 +26,21 @@ import java.time.LocalDateTime;
 @Order(1)
 @Component
 @Slf4j
-public class UserOperateLogAop {
+public class UserLogAop {
 
     private final OperateLogService operateLogService;
 
-    public UserOperateLogAop(OperateLogService operateLogService) {
+    public UserLogAop(OperateLogService operateLogService) {
         this.operateLogService = operateLogService;
     }
 
-    @Pointcut("@annotation(com.github.rich.log.annotation.UserOperateLog)")
+    @Pointcut("@annotation(com.github.rich.log.annotation.UserLog)")
     public void pointCut() {
     }
 
-    @Around(value = "pointCut()&&@annotation(userOperateLog)")
+    @Around(value = "pointCut()&&@annotation(userLog)")
     @SneakyThrows
-    public Object around(ProceedingJoinPoint pjp, UserOperateLog userOperateLog) {
+    public Object around(ProceedingJoinPoint pjp, UserLog userLog) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert requestAttributes != null;
         HttpServletRequest request = requestAttributes.getRequest();
@@ -48,8 +48,8 @@ public class UserOperateLogAop {
         String userAgent = request.getHeader("user-agent");
         String method = request.getMethod();
         OperateLogInfo operateLogInfo = new OperateLogInfo();
-        operateLogInfo.setDescription(userOperateLog.description());
-        operateLogInfo.setOperateType(userOperateLog.type().getValue());
+        operateLogInfo.setDescription(userLog.description());
+        operateLogInfo.setOperateType(userLog.type().getValue());
         operateLogInfo.setUserId(SecurityUtil.getUser() == null ? "anonymousUser" : SecurityUtil.getUser().getUserId());
         operateLogInfo.setClientId(SecurityUtil.getOAuth2Request() == null ? "anonymousClient" : SecurityUtil.getOAuth2Request().getClientId());
         operateLogInfo.setOperateTime(LocalDateTime.now());

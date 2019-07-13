@@ -6,7 +6,7 @@ import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.service.ISystemDictTypeService;
 import com.github.rich.base.vo.Dict;
 import com.github.rich.common.core.vo.R;
-import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -62,7 +62,7 @@ public class DictTypeController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @UserOperateLog(type = OperateType.ADD, description = "创建字典类型")
+    @UserLog(type = OperateType.ADD, description = "创建字典类型")
     public R<String> create(SystemDictType systemDictType) {
         return new R<>(systemDictTypeService.create(systemDictType));
     }
@@ -73,7 +73,7 @@ public class DictTypeController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新字典类型")
+    @UserLog(type = OperateType.UPDATE, description = "更新字典类型")
     public R<Boolean> update(SystemDictType systemDictType) {
         return new R<>(systemDictTypeService.update(systemDictType));
     }
@@ -84,7 +84,7 @@ public class DictTypeController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @UserOperateLog(type = OperateType.DELETE, description = "删除字典类型")
+    @UserLog(type = OperateType.DELETE, description = "删除字典类型")
     public R<Integer> delete(@PathVariable String id) {
         return new R<>(systemDictTypeService.delete(id));
     }

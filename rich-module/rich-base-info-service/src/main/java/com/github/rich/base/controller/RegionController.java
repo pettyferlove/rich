@@ -5,7 +5,7 @@ import com.github.rich.base.entity.SystemRegion;
 import com.github.rich.base.service.ISystemRegionService;
 import com.github.rich.base.vo.RegionNode;
 import com.github.rich.common.core.vo.R;
-import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -61,7 +61,7 @@ public class RegionController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @UserOperateLog(type = OperateType.ADD, description = "创建行政区划信息表")
+    @UserLog(type = OperateType.ADD, description = "创建行政区划信息表")
     public R<String> create(SystemRegion systemRegion) {
         return new R<>(systemRegionService.create(systemRegion));
     }
@@ -72,7 +72,7 @@ public class RegionController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新行政区划信息表")
+    @UserLog(type = OperateType.UPDATE, description = "更新行政区划信息表")
     public R<Boolean> update(SystemRegion systemRegion) {
         return new R<>(systemRegionService.update(systemRegion));
     }
@@ -83,7 +83,7 @@ public class RegionController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @UserOperateLog(type = OperateType.DELETE, description = "删除行政区划信息表")
+    @UserLog(type = OperateType.DELETE, description = "删除行政区划信息表")
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(systemRegionService.delete(id));
     }

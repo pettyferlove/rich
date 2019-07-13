@@ -16,7 +16,7 @@
 
 package com.github.rich.log;
 
-import com.github.rich.log.aop.UserOperateLogAop;
+import com.github.rich.log.aop.UserLogAop;
 import com.github.rich.log.service.OperateLogService;
 import com.github.rich.log.service.impl.OperateLogServiceImpl;
 import lombok.AllArgsConstructor;
@@ -42,8 +42,8 @@ public class LogAutoConfiguration {
 	}
 
 	@Bean
-	public UserOperateLogAop userOperateLogAop(){
-		return new UserOperateLogAop(operateLogService());
+	public UserLogAop userOperateLogAop(){
+		return new UserLogAop(operateLogService());
 	}
 
 }

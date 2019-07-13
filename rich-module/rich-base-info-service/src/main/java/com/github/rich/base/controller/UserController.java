@@ -11,7 +11,7 @@ import com.github.rich.base.vo.UserInfoVO;
 import com.github.rich.common.core.constants.SecurityConstant;
 import com.github.rich.common.core.utils.SMSUtil;
 import com.github.rich.common.core.vo.R;
-import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.security.utils.SecurityUtil;
@@ -82,7 +82,7 @@ public class UserController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    @UserOperateLog(type = OperateType.ADD, description = "创建用户")
+    @UserLog(type = OperateType.ADD, description = "创建用户")
     public R<String> create(SystemUser systemUser) {
         return new R<>(systemUserService.create(systemUser));
     }
@@ -93,7 +93,7 @@ public class UserController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新用户")
+    @UserLog(type = OperateType.UPDATE, description = "更新用户")
     public R<Boolean> update(SystemUser systemUser) {
         return new R<>(systemUserService.update(systemUser));
     }
@@ -104,7 +104,7 @@ public class UserController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @UserOperateLog(type = OperateType.DELETE, description = "删除用户")
+    @UserLog(type = OperateType.DELETE, description = "删除用户")
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(systemUserService.delete(id));
     }
@@ -120,7 +120,7 @@ public class UserController {
             @ApiImplicitParam(paramType = "query", name = "info", value = "info", dataTypeClass = UserInfoVO.class)
     })
     @PutMapping("/info")
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新个人信息-用户个人操作")
+    @UserLog(type = OperateType.UPDATE, description = "更新个人信息-用户个人操作")
     public R<Boolean> updateInfo(UserInfoVO info) {
         return new R<>(systemUserService.updateUserInfo(SecurityUtil.getUser(), info));
     }
@@ -131,7 +131,7 @@ public class UserController {
             @ApiImplicitParam(paramType = "query", name = "changePassword", value = "changePassword", dataTypeClass = ChangePasswordVO.class)
     })
     @PutMapping("/change/password")
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新密码-用户个人操作")
+    @UserLog(type = OperateType.UPDATE, description = "更新密码-用户个人操作")
     public R<Integer> changePassword(@Validated ChangePasswordVO changePassword) {
         return new R<>(systemUserService.changePassword(SecurityUtil.getUser(), changePassword));
     }
@@ -141,7 +141,7 @@ public class UserController {
             @ApiImplicitParam(paramType = "query", name = "changeMobile", value = "changeMobile", dataTypeClass = ChangeMobileVO.class)
     })
     @PutMapping("/change/mobile")
-    @UserOperateLog(type = OperateType.UPDATE, description = "更新手机号码-用户个人操作")
+    @UserLog(type = OperateType.UPDATE, description = "更新手机号码-用户个人操作")
     public R<Integer> changeMobile(@Validated ChangeMobileVO changeMobile) {
         return new R<>(systemUserService.changeMobile(SecurityUtil.getUser(), changeMobile));
     }

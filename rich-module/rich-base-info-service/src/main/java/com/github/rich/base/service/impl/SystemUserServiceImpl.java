@@ -181,6 +181,15 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#id", condition = "#id!=null")
     public SystemUser get(String id) {
+        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
+            if (systemSecurityProperties.getAdminName().equals(id)) {
+                SystemUser user = new SystemUser();
+                user.setLoginName(systemSecurityProperties.getAdminName());
+                user.setId(systemSecurityProperties.getAdminName());
+                user.setUserName("超级管理员");
+                return user;
+            }
+        }
         return this.getById(id);
     }
 

@@ -3,7 +3,7 @@ package com.github.rich.log.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.common.core.vo.R;
-import com.github.rich.log.annotation.UserOperateLog;
+import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import com.github.rich.log.service.IUserOperateLogService;
 import com.github.rich.log.vo.UserLogVO;
@@ -50,7 +50,7 @@ public class UserLogController {
     })
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    @UserOperateLog(type = OperateType.DELETE, description = "删除用户日志")
+    @UserLog(type = OperateType.DELETE, description = "删除用户日志")
     public R<Boolean> delete(@PathVariable String id) {
         return new R<>(userOperateLogService.delete(id));
     }
