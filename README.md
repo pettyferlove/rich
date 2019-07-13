@@ -89,15 +89,32 @@ Rich Tx Manager Service
 
 ## 端口说明
 
+### 服务端口
+
 端口  | 服务  | 说明
 --- | ---  | --- 
-10151 | rich-eureka-service | 服务端口
-10152 | rich-config-service | 服务端口
-10153 | rich-log-service | 服务端口
+10151 | rich-eureka-service | 服务注册中心端口
+10152 | rich-config-service | 配置服务端口
+10153 | rich-log-service | 日志服务端口
+6060 | rich-auth-service | 授权服务端口
+10150 | rich-attachment-service | 附件服务端口
+8020 | rich-gateway-service | 网关服务端口
+20155 | rich-message-service | 消息服务端口
+10149 | rich-base-info-service | 基础信息服务端口
+10160 | rich-workflow-service | 工作流服务端口
+10155 | rich-third-party-service | 第三方对接服务端口
+20154 | rich-monitor-service | 监控服务端口
 9411 | rich-zipkin-service | 服务端口
 7970 | rich-tx-manager-service | 服务端口
 8070 | rich-tx-manager-service | 客户端连接端口
-9020 | kafka | 客户端连接端口
+
+### 中间件端口
+9020 | kafka | kafka客户端连接端口
+5672 | rabbitmq | 客户端连接端口
+15672 | rabbitmq | 可视化控制台Http端口
+
+### 数据库端口
+3306 | mysql | MYSQL连接端口
 
 ## 项目开发
 后续项目开发主要在一下模块下开发：
