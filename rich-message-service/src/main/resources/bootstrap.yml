@@ -19,7 +19,7 @@ spring:
       fail-fast: true
 ---
 server:
-  port: 20155
+  port: 10156
 spring:
   profiles: dev
 eureka:
@@ -32,7 +32,7 @@ eureka:
       defaultZone: http://10.0.100.1:10151/eureka
 ---
 server:
-  port: 20155
+  port: 10156
 spring:
   profiles: remote-dev
 eureka:
@@ -48,7 +48,7 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:10151/eureka
 ---
 server:
-  port: 20155
+  port: 10156
 spring:
   profiles: prd
 eureka:

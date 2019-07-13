@@ -88,6 +88,9 @@ rich
 Rich Tx Manager Service
 
 ## 端口说明
+- 公认端口（Well Known Ports）：从0到1023，它们紧密绑定（binding）于一些服务。通常这些端口的通讯明确表明了某种服务的协议。例如：80端口实际上总是HTTP通讯。
+- 注册端口（Registered Ports）：从1024到49151。它们松散地绑定于一些服务。也就是说有许多服务绑定于这些端口，这些端口同样用于许多其它目的。例如：许多系统处理动态端口从1024左右开始。
+- 动态和/或私有端口（Dynamic and/or Private Ports）：从49152到65535。理论上，不应为服务分配这些端口。实际上，机器通常从1024起分配动态端口。但也有例外：SUN的RPC端口从32768开始。
 
 ### 服务端口
 
@@ -96,14 +99,14 @@ Rich Tx Manager Service
 10151 | rich-eureka-service | 服务注册中心端口
 10152 | rich-config-service | 配置服务端口
 10153 | rich-log-service | 日志服务端口
-6060 | rich-auth-service | 授权服务端口
-10150 | rich-attachment-service | 附件服务端口
+10154 | rich-attachment-service | 附件服务端口
+10156 | rich-message-service | 消息服务端口
+10157 | rich-workflow-service | 工作流服务端口
+10158 | rich-monitor-service | 监控服务端口
+20000 | rich-base-info-service | 基础信息服务端口
+20001 | rich-third-party-service | 第三方对接服务端口
 8020 | rich-gateway-service | 网关服务端口
-20155 | rich-message-service | 消息服务端口
-10149 | rich-base-info-service | 基础信息服务端口
-10160 | rich-workflow-service | 工作流服务端口
-10155 | rich-third-party-service | 第三方对接服务端口
-20154 | rich-monitor-service | 监控服务端口
+6060 | rich-auth-service | 授权服务端口
 9411 | rich-zipkin-service | 服务端口
 7970 | rich-tx-manager-service | 服务端口
 8070 | rich-tx-manager-service | 客户端连接端口
