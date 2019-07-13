@@ -2,12 +2,14 @@ package com.github.rich.log.aop;
 
 import com.github.rich.common.core.utils.CommonUtils;
 import com.github.rich.log.annotation.UserLog;
+import com.github.rich.log.constants.LogType;
 import com.github.rich.log.dto.OperateLogInfo;
 import com.github.rich.log.service.OperateLogService;
 import com.github.rich.security.utils.SecurityUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -17,6 +19,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 
 /**
@@ -47,6 +52,7 @@ public class UserLogAop {
         String ip = CommonUtils.getIpAdrress(request);
         String userAgent = request.getHeader("user-agent");
         String method = request.getMethod();
+        String url = request.getRequestURI();
         OperateLogInfo operateLogInfo = new OperateLogInfo();
         operateLogInfo.setDescription(userLog.description());
         operateLogInfo.setOperateType(userLog.type().getValue());
@@ -54,10 +60,34 @@ public class UserLogAop {
         operateLogInfo.setClientId(SecurityUtil.getOAuth2Request() == null ? "anonymousClient" : SecurityUtil.getOAuth2Request().getClientId());
         operateLogInfo.setOperateTime(LocalDateTime.now());
         operateLogInfo.setRequestIp(ip);
+        operateLogInfo.setRequestUrl(url);
         operateLogInfo.setRequestMethod(method);
         operateLogInfo.setUserAgent(userAgent);
-        operateLogService.sendLog(operateLogInfo);
-        return pjp.proceed();
+        try {
+            operateLogInfo.setLogType(LogType.NORMAL.getValue());
+            return pjp.proceed();
+        } catch (Throwable e) {
+            operateLogInfo.setTrace(exception(e));
+            operateLogInfo.setLogType(LogType.ERROR.getValue());
+            throw e;
+        } finally {
+            System.out.println(operateLogInfo);
+            operateLogService.sendLog(operateLogInfo);
+        }
+    }
+
+    @SneakyThrows
+    public String exception(Throwable t) {
+        if(t == null){
+            return null;
+        }
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try{
+            t.printStackTrace(new PrintStream(byteArrayOutputStream));
+        }finally{
+            byteArrayOutputStream.close();
+        }
+        return byteArrayOutputStream.toString();
     }
 
 }

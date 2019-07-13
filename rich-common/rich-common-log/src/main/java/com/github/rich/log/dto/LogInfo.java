@@ -22,8 +22,12 @@ public class LogInfo implements Serializable {
 
     private String requestIp;
 
+    private String requestUrl;
+
     private String userAgent;
 
     private String requestMethod;
+
+    private Integer logType;
 
 }

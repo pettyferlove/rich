@@ -1,11 +1,9 @@
 package com.github.rich.log.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.rich.log.constants.OperateType;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -16,6 +14,8 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class OperateLogInfo extends LogInfo {
     private static final long serialVersionUID = 3170507945353919151L;
+
+    private String trace;
 
     private Integer operateType;
 

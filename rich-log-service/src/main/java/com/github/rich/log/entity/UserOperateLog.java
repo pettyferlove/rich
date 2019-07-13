@@ -68,6 +68,12 @@ public class UserOperateLog extends Model<UserOperateLog> {
     @ApiModelProperty(value = "请求方法")
     private String requestMethod;
 
+    @ApiModelProperty(value = "日志类型")
+    private Integer logType;
+
+    @ApiModelProperty(value = "异常追踪")
+    private String trace;
+
     @ApiModelProperty(value = "删除标记 0 未删除 1 删除")
     @TableLogic
     private Integer delFlag;
