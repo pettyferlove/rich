@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.rich.base.mapper.SystemTenantMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.github.rich.base.entity.SystemTenant">
+        <id column="id" property="id" />
+        <result column="tenant_id" property="tenantId" />
+        <result column="tenant_name" property="tenantName" />
+        <result column="link_man" property="linkMan" />
+        <result column="contact_number" property="contactNumber" />
+        <result column="address" property="address" />
+        <result column="remark" property="remark" />
+        <result column="email" property="email" />
+        <result column="status" property="status" />
+        <result column="del_flag" property="delFlag" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="modifier" property="modifier" />
+        <result column="modifier_time" property="modifierTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, tenant_id, tenant_name, link_man, contact_number, address, remark, email, status, del_flag, creator, create_time, modifier, modifier_time
+    </sql>
+
+</mapper>
