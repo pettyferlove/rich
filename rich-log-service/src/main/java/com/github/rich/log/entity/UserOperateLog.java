@@ -62,6 +62,9 @@ public class UserOperateLog extends Model<UserOperateLog> {
     @ApiModelProperty(value = "ip地址")
     private String requestIp;
 
+    @ApiModelProperty(value = "请求地址")
+    private String requestUrl;
+
     @ApiModelProperty(value = "所属操作系统")
     private String userAgent;
 

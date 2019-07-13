@@ -11,6 +11,7 @@
         <result column="operate_type" property="operateType" />
         <result column="description" property="description" />
         <result column="request_ip" property="requestIp" />
+        <result column="request_url" property="requestUrl" />
         <result column="user_agent" property="userAgent" />
         <result column="request_method" property="requestMethod" />
         <result column="log_type" property="logType" />
