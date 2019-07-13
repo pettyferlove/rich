@@ -21,6 +21,7 @@
         <module>rich-tx-manager-service</module>
         <module>rich-attachment-service</module>
         <module>rich-log-service</module>
+        <module>rich-workflow-service</module>
         <module>rich-zipkin-service</module>
     </modules>
 
