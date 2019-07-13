@@ -78,9 +78,8 @@ public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper,
     }
 
     @Override
-    public UserLogVO get(String id) {
-        Optional<UserLogVO> userLogVO = Optional.ofNullable(ConverterUtil.convert(this.getById(id), new UserLogVO()));
-        return userLogVO.orElseGet(UserLogVO::new);
+    public UserOperateLog get(String id) {
+        return this.getById(id);
     }
 
     @Override

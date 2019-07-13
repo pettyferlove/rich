@@ -66,8 +66,5 @@ public class UserLogVO implements Serializable {
     @ApiModelProperty(value = "日志类型")
     private Integer logType;
 
-    @ApiModelProperty(value = "异常追踪")
-    private String trace;
-
 
 }

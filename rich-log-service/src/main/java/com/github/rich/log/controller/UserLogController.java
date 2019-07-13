@@ -40,7 +40,7 @@ public class UserLogController {
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @GetMapping("/{id}")
-    public R<UserLogVO> get(@PathVariable String id) {
+    public R<com.github.rich.log.entity.UserOperateLog> get(@PathVariable String id) {
         return new R<>(userOperateLogService.get(id));
     }
 

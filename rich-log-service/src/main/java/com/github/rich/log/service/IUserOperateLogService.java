@@ -35,7 +35,7 @@ public interface IUserOperateLogService extends IService<UserOperateLog> {
      * @param id 业务主键
      * @return 对象
      */
-    UserLogVO get(String id);
+    UserOperateLog get(String id);
 
     /**
      * 通过Id日志信息
