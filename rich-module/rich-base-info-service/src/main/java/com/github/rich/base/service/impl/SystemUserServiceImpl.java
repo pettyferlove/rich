@@ -2,7 +2,6 @@ package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,10 +15,8 @@ import com.github.rich.base.vo.ChangeMobileVO;
 import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
-import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.security.config.SystemSecurityProperties;
 import com.github.rich.security.constants.EncryptionConstant;
 import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.security.service.impl.UserDetailsImpl;
@@ -46,8 +43,6 @@ import java.util.*;
 @Service
 public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemUser> implements ISystemUserService {
 
-    private final SystemSecurityProperties systemSecurityProperties;
-
     private final ISystemRoleService systemRoleService;
 
     private final ISystemMenuResourceService systemMenuResourceService;
@@ -62,8 +57,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     private final CaptchaValidateService sensitiveInfoCaptchaValidateService;
 
-    public SystemUserServiceImpl(SystemSecurityProperties systemSecurityProperties, ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService, PasswordEncoder passwordEncoder, PasswordEncoder userPasswordEncoder, CaptchaValidateService sensitiveInfoCaptchaValidateService) {
-        this.systemSecurityProperties = systemSecurityProperties;
+    public SystemUserServiceImpl(ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService, PasswordEncoder passwordEncoder, PasswordEncoder userPasswordEncoder, CaptchaValidateService sensitiveInfoCaptchaValidateService) {
         this.systemRoleService = systemRoleService;
         this.systemMenuResourceService = systemMenuResourceService;
         this.systemUserRoleService = systemUserRoleService;
@@ -76,18 +70,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#loginName", condition = "#loginName!=null")
     public User findByLoginName(String loginName) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            if (systemSecurityProperties.getAdminName().equals(loginName)) {
-                User user = new User();
-                user.setLoginName(systemSecurityProperties.getAdminName());
-                user.setPassword(systemSecurityProperties.getAdminPassword());
-                user.setId(systemSecurityProperties.getAdminName());
-                user.setRoles(loadAllRoles());
-                user.setPermissions(loadAllPermissions());
-                user.setStatus(CommonConstant.STATUS_NORMAL);
-                return user;
-            }
-        }
         SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, loginName));
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         userOptional.ifPresent(user -> {
@@ -181,15 +163,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#id", condition = "#id!=null")
     public SystemUser get(String id) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            if (systemSecurityProperties.getAdminName().equals(id)) {
-                SystemUser user = new SystemUser();
-                user.setLoginName(systemSecurityProperties.getAdminName());
-                user.setId(systemSecurityProperties.getAdminName());
-                user.setUserName("超级管理员");
-                return user;
-            }
-        }
         return this.getById(id);
     }
 
@@ -216,6 +189,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public String create(SystemUser user) {
         String userId = IdUtil.simpleUUID();
         user.setId(userId);
+        user.setPassword(userPasswordEncoder.encode(user.getPassword()));
         user.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         user.setCreateTime(LocalDateTime.now());
         if (this.save(user)) {
@@ -241,18 +215,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null")
     public UserDetailVO getUserDetail(UserDetailsImpl userDetails) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            assert userDetails != null;
-            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                UserDetailVO userDetailVO = new UserDetailVO();
-                UserInfoVO userInfoVO = new UserInfoVO();
-                userInfoVO.setUserName("系统管理员");
-                userDetailVO.setRoles(loadAllRoles());
-                userDetailVO.setPermissions(loadAllPermissions());
-                userDetailVO.setUser(userInfoVO);
-                return userDetailVO;
-            }
-        }
         assert userDetails != null;
         Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
         if (systemUserOptional.isPresent()) {
@@ -276,12 +238,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     })
     public Boolean updateUserInfo(UserDetailsImpl userDetails, UserInfoVO info) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            assert userDetails != null;
-            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行个人信息修改");
-            }
-        }
         assert userDetails != null;
         String userId = userDetails.getUserId();
         Optional<SystemUser> systemUserOptional = Optional.ofNullable(ConverterUtil.convert(info, new SystemUser()));
@@ -301,12 +257,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     })
     public Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            assert userDetails != null;
-            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行密码修改");
-            }
-        }
         try {
             if (!changePassword.getNewPassword().equals(changePassword.getRepeatPassword())) {
                 return 2;
@@ -335,12 +285,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     public Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            assert userDetails != null;
-            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                throw new BaseRuntimeException("当前用户为系统超级管理员，无法进行手机号码修改");
-            }
-        }
         try {
             if (!sensitiveInfoCaptchaValidateService.validate(changeMobile.getMobileTel(), changeMobile.getCaptcha())) {
                 return 2;

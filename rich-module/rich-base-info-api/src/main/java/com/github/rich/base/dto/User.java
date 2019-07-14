@@ -34,6 +34,20 @@ public class User implements Serializable {
     private String password;
     private Integer status;
     /**
+     * 用户类型
+     */
+    private Integer userType;
+
+    /**
+     * 租户ID
+     */
+    private Integer tenantId;
+
+    /**
+     * 用户所属行政区划
+     */
+    private Integer region;
+    /**
      * 角色
      */
     List<String> roles = new ArrayList<>();

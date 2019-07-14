@@ -1,7 +1,6 @@
 package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
@@ -16,7 +15,6 @@ import com.github.rich.base.utils.TreeUtils;
 import com.github.rich.base.vo.MenuNode;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.security.config.SystemSecurityProperties;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
@@ -39,14 +37,11 @@ import java.util.*;
 @Service
 public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourceMapper, SystemMenuResource> implements ISystemMenuResourceService {
 
-    private final SystemSecurityProperties systemSecurityProperties;
-
     private final ISystemUserRoleService systemUserRoleService;
 
     private final ISystemRoleMenuService systemRoleMenuService;
 
-    public SystemMenuResourceServiceImpl(SystemSecurityProperties systemSecurityProperties, ISystemUserRoleService systemUserRoleService, ISystemRoleMenuService systemRoleMenuService) {
-        this.systemSecurityProperties = systemSecurityProperties;
+    public SystemMenuResourceServiceImpl(ISystemUserRoleService systemUserRoleService, ISystemRoleMenuService systemRoleMenuService) {
         this.systemUserRoleService = systemUserRoleService;
         this.systemRoleMenuService = systemRoleMenuService;
     }
@@ -79,14 +74,6 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Override
     @Cacheable(value = CacheConstant.SYSTEM_MENU_USER_CACHE, key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     public List<MenuNode> loadMenu(UserDetailsImpl userDetails) {
-        if (StrUtil.isNotEmpty(systemSecurityProperties.getAdminName()) && StrUtil.isNotEmpty(systemSecurityProperties.getAdminPassword())) {
-            assert userDetails != null;
-            if (systemSecurityProperties.getAdminName().equals(userDetails.getUsername())) {
-                List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getPermissionType, 0).orderByDesc(SystemMenuResource::getSort));
-                Set<SystemMenuResource> systemMenuResourceSet = new LinkedHashSet<>(systemMenuResources);
-                return TreeUtils.buildTree(Optional.ofNullable(ConverterUtil.convertList(SystemMenuResource.class, MenuNode.class, new ArrayList<>(systemMenuResourceSet))).orElseGet(ArrayList::new), "0");
-            }
-        }
         assert userDetails != null;
         String userId = userDetails.getUserId();
         List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId));

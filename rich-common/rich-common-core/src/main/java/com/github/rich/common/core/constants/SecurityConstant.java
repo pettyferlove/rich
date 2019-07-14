@@ -14,10 +14,16 @@ public interface SecurityConstant {
      * 基础用户角色
      */
     String BASE_ROLE = "ROLE_USER";
+
     /**
      * 管理员角色
      */
-    String ADMIN_ROLE = "ROLE_ADMIN";
+    String SUPER_ROLE = "ROLE_ADMIN";
+
+    /**
+     * 超级管理员角色
+     */
+    String SUPER_ADMIN_ROLE = "ROLE_SUPER_ADMIN";
     /**
      * 开发者角色
      */
