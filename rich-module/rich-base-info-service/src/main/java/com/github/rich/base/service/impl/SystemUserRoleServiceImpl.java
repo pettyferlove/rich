@@ -3,7 +3,6 @@ package com.github.rich.base.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.rich.base.entity.SystemRoleMenu;
 import com.github.rich.base.entity.SystemUserRole;
 import com.github.rich.base.mapper.SystemUserRoleMapper;
 import com.github.rich.base.service.ISystemUserRoleService;
@@ -41,7 +40,7 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
     @Override
     public void removeBatch(String userId, List<String> removeIdList) {
         if (removeIdList.size() > 0) {
-            List<SystemUserRole> systemUserRoles = this.list(Wrappers.<SystemUserRole>lambdaQuery().in(SystemUserRole::getRoleId, removeIdList));
+            List<SystemUserRole> systemUserRoles = this.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId).in(SystemUserRole::getRoleId, removeIdList));
             List<String> ids = new ArrayList<>();
             for (SystemUserRole systemUserRole : systemUserRoles) {
                 ids.add(systemUserRole.getId());

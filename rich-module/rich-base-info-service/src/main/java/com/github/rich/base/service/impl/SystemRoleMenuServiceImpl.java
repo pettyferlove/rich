@@ -40,7 +40,7 @@ public class SystemRoleMenuServiceImpl extends ServiceImpl<SystemRoleMenuMapper,
     @Override
     public void removeBatch(String roleId, List<String> removeIdList) {
         if (removeIdList.size() > 0) {
-            List<SystemRoleMenu> systemRoleMenus = this.list(Wrappers.<SystemRoleMenu>lambdaQuery().in(SystemRoleMenu::getMenuId, removeIdList));
+            List<SystemRoleMenu> systemRoleMenus = this.list(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getRoleId,roleId).in(SystemRoleMenu::getMenuId, removeIdList));
             List<String> ids = new ArrayList<>();
             for (SystemRoleMenu systemRoleMenu : systemRoleMenus) {
                 ids.add(systemRoleMenu.getId());

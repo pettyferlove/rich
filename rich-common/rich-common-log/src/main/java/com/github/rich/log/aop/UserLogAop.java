@@ -71,7 +71,6 @@ public class UserLogAop {
             operateLogInfo.setLogType(LogType.ERROR.getValue());
             throw e;
         } finally {
-            System.out.println(operateLogInfo);
             operateLogService.sendLog(operateLogInfo);
         }
     }
