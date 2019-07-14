@@ -59,7 +59,7 @@ public class RegionController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "systemRegion", value = "systemRegion", dataTypeClass = SystemRegion.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建行政区划信息表")
     public R<String> create(SystemRegion systemRegion) {
@@ -70,7 +70,7 @@ public class RegionController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "systemRegion", value = "systemRegion", dataTypeClass = SystemRegion.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新行政区划信息表")
     public R<Boolean> update(SystemRegion systemRegion) {
@@ -81,7 +81,7 @@ public class RegionController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @DeleteMapping("/{id}")
     @UserLog(type = OperateType.DELETE, description = "删除行政区划信息表")
     public R<Boolean> delete(@PathVariable String id) {

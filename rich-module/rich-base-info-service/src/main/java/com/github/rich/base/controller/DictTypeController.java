@@ -60,7 +60,7 @@ public class DictTypeController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "dictType", value = "DictType", dataTypeClass = SystemDictType.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建字典类型")
     public R<String> create(SystemDictType systemDictType) {
@@ -71,7 +71,7 @@ public class DictTypeController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "dictType", value = "DictType", dataTypeClass = SystemDictType.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新字典类型")
     public R<Boolean> update(SystemDictType systemDictType) {
@@ -82,7 +82,7 @@ public class DictTypeController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @DeleteMapping("/{id}")
     @UserLog(type = OperateType.DELETE, description = "删除字典类型")
     public R<Integer> delete(@PathVariable String id) {

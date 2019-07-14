@@ -50,7 +50,7 @@ public class DictItemController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "dictItem", value = "DictItem", dataTypeClass = SystemDictItem.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建字典项")
     public R<String> create(SystemDictItem systemDictItem) {
@@ -61,7 +61,7 @@ public class DictItemController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "dictItem", value = "DictItem", dataTypeClass = SystemDictItem.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新字典项")
     public R<Boolean> update(SystemDictItem systemDictItem) {
@@ -72,7 +72,7 @@ public class DictItemController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @DeleteMapping("/{id}")
     @UserLog(type = OperateType.DELETE, description = "删除字典项")
     public R<Boolean> delete(@PathVariable String id) {
@@ -83,7 +83,7 @@ public class DictItemController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "ids", value = "ids", dataTypeClass = String[].class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping("/delete/batch")
     @Deprecated
     @UserLog(type = OperateType.DELETE, description = "批量删除字典项")

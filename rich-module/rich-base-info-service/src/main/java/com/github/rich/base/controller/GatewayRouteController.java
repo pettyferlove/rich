@@ -48,7 +48,7 @@ public class GatewayRouteController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "gatewayRoute", value = "GatewayRoute", dataTypeClass = SystemGatewayRoute.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建路由")
     public R<String> create(SystemGatewayRoute gatewayRoute) {
@@ -59,7 +59,7 @@ public class GatewayRouteController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "gatewayRoute", value = "GatewayRoute", dataTypeClass = SystemGatewayRoute.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新路由")
     public R<Boolean> update(SystemGatewayRoute gatewayRoute) {
@@ -70,7 +70,7 @@ public class GatewayRouteController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @DeleteMapping("/{id}")
     @UserLog(type = OperateType.DELETE, description = "删除路由")
     public R<Boolean> delete(@PathVariable String id) {
@@ -81,7 +81,7 @@ public class GatewayRouteController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "gatewayRoute", value = "GatewayRoute", dataTypeClass = SystemGatewayRoute.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PutMapping(value = "/status")
     @UserLog(type = OperateType.UPDATE, description = "更新路由状态")
     public R<Boolean> changeStatus(SystemGatewayRoute gatewayRoute) {

@@ -80,7 +80,7 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "systemUser", value = "SystemUser", dataTypeClass = SystemUser.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建用户")
     public R<String> create(SystemUser systemUser) {
@@ -91,7 +91,7 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "systemUser", value = "SystemUser", dataTypeClass = SystemUser.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新用户")
     public R<Boolean> update(SystemUser systemUser) {
@@ -102,7 +102,7 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @DeleteMapping("/{id}")
     @UserLog(type = OperateType.DELETE, description = "删除用户")
     public R<Boolean> delete(@PathVariable String id) {

@@ -50,7 +50,7 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建角色")
     public R<String> create(SystemRole systemRole) {
@@ -61,7 +61,7 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "systemRole", value = "SystemRole", dataTypeClass = SystemRole.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新角色")
     public R<Boolean> update(SystemRole systemRole) {
@@ -72,7 +72,7 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @DeleteMapping("/{id}")
     @UserLog(type = OperateType.DELETE, description = "删除角色")
     public R<Boolean> delete(@PathVariable String id) {
@@ -95,7 +95,7 @@ public class RoleController {
             @ApiImplicitParam(paramType = "query", name = "addIds", value = "addIds", dataTypeClass = String[].class),
             @ApiImplicitParam(paramType = "query", name = "removeIds", value = "removeIds", dataTypeClass = String[].class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PutMapping("/authority")
     @UserLog(type = OperateType.UPDATE, description = "更新角色下已绑定资源（菜单）")
     public R<Boolean> authorityUpdate(String roleId, String[] addIds, String[] removeIds) {
@@ -122,7 +122,7 @@ public class RoleController {
             @ApiImplicitParam(paramType = "query", name = "userId", value = "userId", dataTypeClass = String.class),
             @ApiImplicitParam(paramType = "query", name = "ids", value = "ids", dataTypeClass = String[].class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PostMapping("/user/add")
     @UserLog(type = OperateType.ADD, description = "为用户增加角色")
     public R<Boolean> userAdd(String userId, String[] ids) {
@@ -134,7 +134,7 @@ public class RoleController {
             @ApiImplicitParam(paramType = "query", name = "userId", value = "userId", dataTypeClass = String.class),
             @ApiImplicitParam(paramType = "query", name = "ids", value = "ids", dataTypeClass = String[].class)
     })
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PostMapping("/user/delete")
     @UserLog(type = OperateType.DELETE, description = "为用户删除角色")
     public R<Boolean> userDelete(String userId, String[] ids) {
