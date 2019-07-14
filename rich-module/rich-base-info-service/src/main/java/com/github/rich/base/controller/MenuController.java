@@ -37,7 +37,7 @@ public class MenuController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
     })
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PostMapping("/node/create")
     @UserLog(type = OperateType.ADD, description = "创建菜单节点")
     public R<String> createNode(SystemMenuResource menu) {
@@ -63,7 +63,7 @@ public class MenuController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @DeleteMapping("/node/{id}")
     @UserLog(type = OperateType.DELETE, description = "删除菜单节点")
     public R<Boolean> deleteNode(@PathVariable String id) throws Exception {
@@ -74,7 +74,7 @@ public class MenuController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "menu", value = "Menu", dataTypeClass = SystemMenuResource.class)
     })
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN','ADMIN')")
     @PutMapping("/node")
     @UserLog(type = OperateType.UPDATE, description = "更新菜单节点")
     public R<Boolean> updateNode(SystemMenuResource menu) {

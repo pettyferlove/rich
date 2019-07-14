@@ -147,7 +147,8 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true)
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true),
+            @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, key = "#userId", condition = "#userId!=null")
     })
     public Boolean addUserRole(String userId, String[] roleIds) {
         try {
@@ -162,7 +163,8 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true)
+            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true),
+            @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, key = "#userId", condition = "#userId!=null")
     })
     public Boolean deleteUserRole(String userId, String[] roleIds) {
         try {
