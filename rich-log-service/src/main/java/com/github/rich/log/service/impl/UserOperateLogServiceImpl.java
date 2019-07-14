@@ -65,6 +65,7 @@ public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper,
         List<UserLogVO> nrecords = new LinkedList<>();
         for (UserOperateLog oldLog : records) {
             UserLogVO userLogVO = ConverterUtil.convert(oldLog, new UserLogVO());
+            assert userLogVO != null;
             UserDetailDTO userDetail = remoteUserService.getUserDetail(oldLog.getUserId());
             userLogVO.setUserName(userDetail.getUserName());
             nrecords.add(userLogVO);
