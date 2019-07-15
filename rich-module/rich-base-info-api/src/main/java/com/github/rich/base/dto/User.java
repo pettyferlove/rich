@@ -41,7 +41,7 @@ public class User implements Serializable {
     /**
      * 租户ID
      */
-    private Integer tenantId;
+    private String tenantId;
 
     /**
      * 用户所属行政区划

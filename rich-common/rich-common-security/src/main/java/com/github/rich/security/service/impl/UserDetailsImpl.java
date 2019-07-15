@@ -32,6 +32,9 @@ public class UserDetailsImpl implements UserDetails {
     private Integer status;
     private Integer type;
     private String name;
+    private Integer userType;
+    private String tenantId;
+    private Integer region;
     private List<String> roles;
     private List<String> permissions;
 
@@ -41,6 +44,9 @@ public class UserDetailsImpl implements UserDetails {
         this.password = user.getPassword();
         this.status = user.getStatus();
         this.name = user.getUserName();
+        this.userType = user.getUserType();
+        this.tenantId = user.getTenantId();
+        this.region = user.getRegion();
         this.roles = user.getRoles();
         this.permissions = user.getPermissions();
     }
