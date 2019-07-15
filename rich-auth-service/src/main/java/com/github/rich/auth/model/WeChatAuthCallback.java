@@ -15,6 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class WeChatAuthCallback implements Serializable {
 
+    private static final long serialVersionUID = 2745805794408442721L;
     /**
      * 基本开放认证id
      */

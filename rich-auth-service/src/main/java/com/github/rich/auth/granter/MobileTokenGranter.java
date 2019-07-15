@@ -47,7 +47,7 @@ public class MobileTokenGranter extends AbstractTokenGranter {
         UserDetails userDetails = userDetailsService.loadUserByMobile(mobile);
         AbstractAuthenticationToken userAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         userAuth.setDetails(parameters);
-        OAuth2Request storedOAuth2Request = getRequestFactory().createOAuth2Request(client, tokenRequest);
-        return new OAuth2Authentication(storedOAuth2Request, userAuth);
+        OAuth2Request authRequest = getRequestFactory().createOAuth2Request(client, tokenRequest);
+        return new OAuth2Authentication(authRequest, userAuth);
     }
 }

@@ -1,21 +1,17 @@
 package com.github.rich.auth.controller.error;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.web.servlet.error.AbstractErrorController;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Collections;
 import java.util.Map;
 
@@ -35,30 +31,26 @@ public class ErrorPageController implements ErrorController {
     }
 
     @RequestMapping(value = ERROR_PATH, produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView errorHtml(HttpServletRequest request,
-                                  HttpServletResponse response) {
+    public ModelAndView errorHtml(HttpServletRequest request) {
         Map<String, Object> model = Collections.unmodifiableMap(getErrorAttributes(
-                request, true));
+                request));
         ModelAndView modelAndView = null;
-
         HttpStatus status = getStatus(request);
-        if (status == HttpStatus.NOT_FOUND){
+        if (status == HttpStatus.NOT_FOUND) {
             modelAndView = new ModelAndView("error/404", model);
-        } else if (status == HttpStatus.FORBIDDEN){
+        } else if (status == HttpStatus.FORBIDDEN) {
             modelAndView = new ModelAndView("error/403", model);
-        } else if (status == HttpStatus.INTERNAL_SERVER_ERROR){
+        } else if (status == HttpStatus.INTERNAL_SERVER_ERROR) {
             modelAndView = new ModelAndView("error/500", model);
         } else {
             modelAndView = new ModelAndView("error", model);
         }
-
         return modelAndView;
     }
 
-    private Map<String, Object> getErrorAttributes(HttpServletRequest request,
-                                                     boolean includeStackTrace) {
+    private Map<String, Object> getErrorAttributes(HttpServletRequest request) {
         WebRequest webRequest = new ServletWebRequest(request);
-        return this.errorAttributes.getErrorAttributes(webRequest, includeStackTrace);
+        return this.errorAttributes.getErrorAttributes(webRequest, true);
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {
@@ -69,8 +61,7 @@ public class ErrorPageController implements ErrorController {
         }
         try {
             return HttpStatus.valueOf(statusCode);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
