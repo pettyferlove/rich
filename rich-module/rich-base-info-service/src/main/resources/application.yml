@@ -5,11 +5,11 @@ info:
     description: 基础信息服务
     version: 1.2.0
 multi-tenancy:
-  table-field: tenant_id
+  table-field: tenant_id # 租户标识字段
   ignore:
     roles:
-      - SUPER_ADMIN
-    tables:
+      - SUPER_ADMIN # 超级管理员直接忽略租户控制
+    tables: # 不需要租户控制的表
       - system_tenant
       - system_user_extend
       - system_user_role
