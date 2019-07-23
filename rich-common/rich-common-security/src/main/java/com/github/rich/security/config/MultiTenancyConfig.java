@@ -1,19 +1,17 @@
 package com.github.rich.security.config;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.github.rich.common.core.config.MultiTenancyProperties;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.security.utils.SecurityUtil;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import net.sf.jsqlparser.expression.Expression;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,11 +23,6 @@ import java.util.Objects;
 @Configuration
 @ConditionalOnMissingBean(MultiTenancyProperties.class)
 public class MultiTenancyConfig {
-
-    /**
-     * 需要忽略的表名
-     */
-    private static final List<String> IGNORE_TENANT_TABLES = Lists.newArrayList("system_tenant", "system_user_extend");
 
     private final MultiTenancyProperties multiTenancyProperties;
 
@@ -60,26 +53,20 @@ public class MultiTenancyConfig {
                     @Override
                     public boolean doTableFilter(String tableName) {
                         /*
-                          匿名或无需鉴权的请求将忽略租户控制
+                        匿名用户无法拿到租户ID，忽略处理
                          */
-                        List<String> roles = multiTenancyProperties.getIgnore().getRoles();
-                        SecurityUtil.getRoles();
                         if (ObjectUtil.isNull(SecurityUtil.getUser())) {
                             if (log.isDebugEnabled()) {
                                 log.debug("multi_tenancy #50004 ignore tenant control");
                             }
                             return true;
-                        } else {
-                            /*
-                              忽略TenantID为空时的租户控制
-                             */
-                            String tenantId = SecurityUtil.getUser().getTenantId();
-                            if (StrUtil.isEmpty(tenantId)) {
-                                log.debug("multi_tenancy #50004 ignore tenant control");
-                                return true;
-                            }
                         }
-                        return IGNORE_TENANT_TABLES.stream().anyMatch((e) -> e.equalsIgnoreCase(tableName));
+                        List<String> ignoreRoles = multiTenancyProperties.getIgnore().getRoles();
+                        List<String> roles = SecurityUtil.getRoles();
+                        if(ignoreRoles.stream().anyMatch(roles::contains)){
+                           return ignoreRoles.stream().anyMatch(roles::contains);
+                        }
+                        return  multiTenancyProperties.getIgnore().getTables().stream().anyMatch((e) -> e.equalsIgnoreCase(tableName));
                     }
                 });
     }

@@ -45,9 +45,6 @@ public class SystemUserExtend extends Model<SystemUserExtend> {
     @ApiModelProperty(value = "微信OpenID")
     private String wechatOpenid;
 
-    @ApiModelProperty(value = "租户ID")
-    private String tenantId;
-
 
     @Override
     protected Serializable pkVal() {

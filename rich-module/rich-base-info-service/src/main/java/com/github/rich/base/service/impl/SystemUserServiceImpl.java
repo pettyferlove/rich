@@ -75,7 +75,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
-            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -88,7 +87,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
-            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -105,7 +103,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
-            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -122,7 +119,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
-            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -159,7 +155,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#user.toString())")
     public IPage<SystemUser> page(SystemUser user, Page<SystemUser> page) {
         return this.page(page, Wrappers.lambdaQuery(user).orderByDesc(SystemUser::getCreateTime));
     }
@@ -173,7 +168,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#id", condition = "#id!=null")
@@ -189,7 +183,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true)
     public String create(SystemUser user) {
         String userId = IdUtil.simpleUUID();
         user.setId(userId);
@@ -205,7 +198,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#user.id", condition = "#user.id!=null")
@@ -236,7 +228,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
@@ -255,7 +246,6 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-page", allEntries = true),
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")

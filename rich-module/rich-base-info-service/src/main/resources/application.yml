@@ -8,7 +8,15 @@ multi-tenancy:
   table-field: tenant_id
   ignore:
     roles:
-      - SUPER_ADMIN_ROLE
+      - SUPER_ADMIN
     tables:
       - system_tenant
       - system_user_extend
+      - system_user_role
+      - system_gateway_route
+      - system_dict_item
+      - system_dict_type
+      - system_menu_resource
+      - system_role_menu
+      - system_oauth_client_details
+      - system_region

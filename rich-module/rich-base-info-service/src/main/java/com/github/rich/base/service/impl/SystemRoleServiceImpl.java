@@ -71,7 +71,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
-    @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", key = "T(String).valueOf(#page.current).concat('-').concat(T(String).valueOf(#page.size)).concat('-').concat(#role.toString())")
     public IPage<SystemRole> page(SystemRole role, Page<SystemRole> page) {
         return this.page(page, Wrappers.lambdaQuery(role).orderByDesc(SystemRole::getCreateTime));
     }
@@ -84,7 +83,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true)
+    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#id", condition = "#id!=null")
     public Boolean delete(String id) {
         try {
             this.removeById(id);
@@ -97,7 +96,6 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true)
     public String create(SystemRole role) {
         String roleId = IdUtil.simpleUUID();
         role.setId(roleId);
@@ -111,10 +109,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-page", allEntries = true),
-            @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#role.id", condition = "#role.id!=null")
-    })
+    @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#role.id", condition = "#role.id!=null")
     public Boolean update(SystemRole role) {
         role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         role.setModifierTime(LocalDateTime.now());

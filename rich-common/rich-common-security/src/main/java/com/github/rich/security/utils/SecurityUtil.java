@@ -78,7 +78,6 @@ public class SecurityUtil {
 		authorities.stream()
 			.filter(granted -> StrUtil.startWith(granted.getAuthority(), SecurityConstant.ROLE_PREFIX))
 			.forEach(granted -> {
-				System.out.println(granted);
 				String id = StrUtil.removePrefix(granted.getAuthority(), SecurityConstant.ROLE_PREFIX);
 				roles.add(id);
 			});

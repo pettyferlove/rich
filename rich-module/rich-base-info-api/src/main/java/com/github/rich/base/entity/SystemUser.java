@@ -86,6 +86,9 @@ public class SystemUser extends Model<SystemUser> {
     @ApiModelProperty(value = "行政区划CODE")
     private String regionId;
 
+    @ApiModelProperty(value = "租户ID")
+    private String tenantId;
+
     @ApiModelProperty(value = "是否有效 0 无效 1 有效")
     private Integer status;
 

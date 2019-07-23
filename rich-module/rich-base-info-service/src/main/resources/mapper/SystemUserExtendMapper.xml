@@ -9,12 +9,11 @@
         <result column="qq_openid" property="qqOpenid" />
         <result column="wechat_unionid" property="wechatUnionid" />
         <result column="wechat_openid" property="wechatOpenid" />
-        <result column="tenant_id" property="tenantId" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, qq_openid, wechat_unionid, wechat_openid, tenant_id
+        id, user_id, qq_openid, wechat_unionid, wechat_openid
     </sql>
 
 </mapper>

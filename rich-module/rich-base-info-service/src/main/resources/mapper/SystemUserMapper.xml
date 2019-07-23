@@ -18,6 +18,7 @@
         <result column="user_tel" property="userTel" />
         <result column="user_iden_type" property="userIdenType" />
         <result column="user_iden" property="userIden" />
+        <result column="tenant_id" property="tenantId" />
         <result column="region_id" property="regionId" />
         <result column="status" property="status" />
         <result column="del_flag" property="delFlag" />
@@ -29,7 +30,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, login_name, user_name, password, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_id, status, del_flag, creator, create_time, modifier, modifier_time
+        id, login_name, user_name, password, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_id, tenant_id, status, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

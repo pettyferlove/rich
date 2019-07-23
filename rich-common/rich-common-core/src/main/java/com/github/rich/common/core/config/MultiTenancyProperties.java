@@ -31,7 +31,7 @@ public class MultiTenancyProperties {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public class IgnoreObject {
+    public static class IgnoreObject {
         private List<String> roles = new ArrayList<>();
         private List<String> tables = new ArrayList<>();
     }
