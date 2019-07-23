@@ -75,6 +75,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
+            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -87,6 +88,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
+            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -103,6 +105,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
+            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -119,6 +122,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
+            user.setTenantId(this.queryUserExtend(user.getId()).getTenantId());
         });
         return userOptional.orElseGet(User::new);
     }
@@ -316,6 +320,15 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile)));
     }
 
+
+    /**
+     * 读取用户的扩展信息
+     * @return 用户扩展信息
+     */
+    private SystemUserExtend queryUserExtend(String userId){
+        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getUserId,userId)));
+        return userExtendOptional.orElseGet(SystemUserExtend::new);
+    }
 
     private List<String> loadRoles(String userId) {
         List<SystemRole> systemRoles = systemRoleService.findRoleByUserId(userId);

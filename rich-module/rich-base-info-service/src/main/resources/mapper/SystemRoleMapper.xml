@@ -10,6 +10,7 @@
         <result column="description" property="description" />
         <result column="sort" property="sort" />
         <result column="status" property="status" />
+        <result column="tenant_id" property="tenantId" />
         <result column="del_flag" property="delFlag" />
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
@@ -19,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, role, role_name, description, sort, status, del_flag, creator, create_time, modifier, modifier_time
+        id, role, role_name, description, sort, status, tenant_id, del_flag, creator, create_time, modifier, modifier_time
     </sql>
 
 </mapper>

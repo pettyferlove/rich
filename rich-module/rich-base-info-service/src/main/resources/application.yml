@@ -4,3 +4,11 @@ info:
     name: rich-base-info-service
     description: 基础信息服务
     version: 1.2.0
+multi-tenancy:
+  table-field: tenant_id
+  ignore:
+    roles:
+      - SUPER_ADMIN_ROLE
+    tables:
+      - system_tenant
+      - system_user_extend

@@ -53,6 +53,8 @@ public class SystemRole extends Model<SystemRole> {
     @ApiModelProperty(value = "排序号")
     private Integer sort;
 
+    private String tenantId;
+
     @ApiModelProperty(value = "状态 1有效 0无效 默认为1")
     private Integer status;
 

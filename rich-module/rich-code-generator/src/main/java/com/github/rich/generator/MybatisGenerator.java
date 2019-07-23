@@ -58,7 +58,7 @@ public class MybatisGenerator {
         strategy.setLogicDeleteFieldName("del_flag");
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         // 表名生成策略
-        strategy.setInclude();
+        strategy.setInclude("system_user_extend");
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setEntityBuilderModel(false);
