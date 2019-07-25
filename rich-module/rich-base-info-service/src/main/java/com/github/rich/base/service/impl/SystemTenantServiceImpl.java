@@ -64,7 +64,7 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
 
     @Override
     public Boolean changeStatus(SystemTenant tenant) {
-        boolean result = false;
+        boolean result;
         Integer status = tenant.getStatus();
         tenant.setStatus(status == 0 ? 1 : 0);
         tenant.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
@@ -76,6 +76,16 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     @Override
     public Boolean check(String tenantId) {
         return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemTenant>lambdaQuery().eq(SystemTenant::getTenantId, tenantId)));
+    }
+
+    @Override
+    public Boolean checkTenantStatus(String tenantId) {
+        SystemTenant tenant = this.getOne(Wrappers.<SystemTenant>lambdaQuery().eq(SystemTenant::getTenantId, tenantId));
+        if(ObjectUtil.isNotNull(tenant)){
+            return false;
+        }else {
+            return tenant.getStatus() == 1;
+        }
     }
 
 }

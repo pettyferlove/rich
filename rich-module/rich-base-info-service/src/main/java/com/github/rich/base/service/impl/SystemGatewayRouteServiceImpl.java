@@ -107,7 +107,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-detail", key = "#route.id", condition = "#route.id!=null")
     })
     public Boolean update(SystemGatewayRoute route) {
-        boolean result = false;
+        boolean result;
         route.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         route.setModifierTime(LocalDateTime.now());
         result = this.updateById(route);
@@ -128,7 +128,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-detail", key = "#route.id", condition = "#route.id!=null")
     })
     public Boolean changeStatus(SystemGatewayRoute route) {
-        boolean result = false;
+        boolean result;
         Integer status = route.getStatus();
         route.setStatus(status == 0 ? 1 : 0);
         route.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());

@@ -70,4 +70,11 @@ public interface ISystemTenantService extends IService<SystemTenant> {
      */
     Boolean check(String tenantId);
 
+    /**
+     * 检查租户当前是否有效
+     * @param tenantId tenantId
+     * @return True 有效 False 无效
+     */
+    Boolean checkTenantStatus(String tenantId);
+
 }
