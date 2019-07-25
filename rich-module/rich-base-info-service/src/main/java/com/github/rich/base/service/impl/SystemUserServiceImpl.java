@@ -93,7 +93,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
-    public User findByWeChatOpenID(String openid) {
+    public User findByWeChatOpenId(String openid) {
         Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatOpenid, openid)));
         Optional<User> userOptional = Optional.empty();
         if (userExtendOptional.isPresent()) {
@@ -109,7 +109,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
-    public User findByWeChatUnionID(String unionid) {
+    public User findByWeChatUnionId(String unionid) {
         Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatUnionid, unionid)));
         Optional<User> userOptional = Optional.empty();
         if (userExtendOptional.isPresent()) {
@@ -125,7 +125,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean registerByWeChatOpenID(String openid, String unionid) {
+    public Boolean registerByWeChat(String openid, String unionid) {
         boolean result = false;
         try {
             String userId = IdUtil.simpleUUID();

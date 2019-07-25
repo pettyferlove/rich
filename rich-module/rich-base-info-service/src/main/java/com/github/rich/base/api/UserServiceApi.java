@@ -38,7 +38,7 @@ public interface UserServiceApi {
      * @return User
      */
     @GetMapping("/wechat/open/{openid}")
-    User getByWeChatOpenID(@PathVariable String openid);
+    User getByWeChatOpenId(@PathVariable String openid);
 
     /**
      * 通过微信UnionID查询用户及其角色信息
@@ -47,7 +47,7 @@ public interface UserServiceApi {
      * @return User
      */
     @GetMapping("/wechat/union/{unionid}")
-    User getByWeChatUnionID(@PathVariable String unionid);
+    User getByWeChatUnionId(@PathVariable String unionid);
 
     /**
      * 通过用户ID获取用户信息详情

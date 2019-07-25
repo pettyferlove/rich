@@ -51,10 +51,10 @@ public class UserController {
             @ApiImplicitParam(paramType = "form", name = "unionid", value = "UnionID", dataTypeClass = String.class)
     })
     @PostMapping("/register/wechat/open")
-    public R<Boolean> registerByWeChatOpenID(String openid, String unionid) {
+    public R<Boolean> registerByWeChat(String openid, String unionid) {
         openid = StringUtils.isBlank(openid) ? "" : openid;
         unionid = StringUtils.isBlank(unionid) ? "" : unionid;
-        return new R<>(systemUserService.registerByWeChatOpenID(openid, unionid));
+        return new R<>(systemUserService.registerByWeChat(openid, unionid));
     }
 
     @ApiOperation(value = "获取用户列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))

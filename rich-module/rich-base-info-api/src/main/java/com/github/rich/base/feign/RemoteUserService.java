@@ -40,7 +40,7 @@ public interface RemoteUserService {
      * @return User
      */
     @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/open/{openid}")
-    User findByWeChatOpenID(@PathVariable("openid") String openid);
+    User findByWeChatOpenId(@PathVariable("openid") String openid);
 
     /**
      * 通过微信UnionID查询用户及其角色信息
@@ -49,7 +49,7 @@ public interface RemoteUserService {
      * @return User
      */
     @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/union/{unionid}")
-    User findByWeChatUnionID(@PathVariable("unionid") String unionid);
+    User findByWeChatUnionId(@PathVariable("unionid") String unionid);
 
     /**
      * 通过用户ID获取用户信息详情
