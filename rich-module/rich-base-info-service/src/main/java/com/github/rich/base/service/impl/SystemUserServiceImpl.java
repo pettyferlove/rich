@@ -2,6 +2,8 @@ package com.github.rich.base.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,6 +17,7 @@ import com.github.rich.base.vo.ChangeMobileVO;
 import com.github.rich.base.vo.ChangePasswordVO;
 import com.github.rich.base.vo.UserDetailVO;
 import com.github.rich.base.vo.UserInfoVO;
+import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.constants.EncryptionConstant;
@@ -51,76 +54,123 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     private final ISystemUserExtendService systemUserExtendService;
 
+    private final ISystemTenantService systemTenantService;
+
     private final PasswordEncoder passwordEncoder;
 
     private final PasswordEncoder userPasswordEncoder;
 
     private final CaptchaValidateService sensitiveInfoCaptchaValidateService;
 
-    public SystemUserServiceImpl(ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService, PasswordEncoder passwordEncoder, PasswordEncoder userPasswordEncoder, CaptchaValidateService sensitiveInfoCaptchaValidateService) {
+    public SystemUserServiceImpl(ISystemRoleService systemRoleService, ISystemMenuResourceService systemMenuResourceService, ISystemUserRoleService systemUserRoleService, ISystemUserExtendService systemUserExtendService, ISystemTenantService systemTenantService, PasswordEncoder passwordEncoder, PasswordEncoder userPasswordEncoder, CaptchaValidateService sensitiveInfoCaptchaValidateService) {
         this.systemRoleService = systemRoleService;
         this.systemMenuResourceService = systemMenuResourceService;
         this.systemUserRoleService = systemUserRoleService;
         this.systemUserExtendService = systemUserExtendService;
+        this.systemTenantService = systemTenantService;
         this.passwordEncoder = passwordEncoder;
         this.userPasswordEncoder = userPasswordEncoder;
         this.sensitiveInfoCaptchaValidateService = sensitiveInfoCaptchaValidateService;
     }
 
-    @Override
-    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#loginName", condition = "#loginName!=null")
-    public User findByLoginName(String loginName) {
-        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, loginName));
+    /**
+     * 普通登录封装
+     * @param type 登录类型 eg: loginName、mobile、email等
+     * @param params 参数
+     * @return User
+     */
+    private User findUser(String type, String params){
+        LambdaQueryWrapper<SystemUser> queryWrapper;
+        switch (type){
+            case "userName":
+                queryWrapper = Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, params);
+                break;
+            case "mobile":
+                queryWrapper = Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, params);
+                break;
+            default:
+                throw new BaseRuntimeException("find type is error!");
+        }
+        SystemUser systemUser = this.getOne(queryWrapper);
         Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
+            if(!verifyTenantStatus(user.getTenantId())){
+                user.setStatus(CommonConstant.STATUS_LOCK);
+            }
         });
         return userOptional.orElseGet(User::new);
+    }
+
+    /**
+     * 微信登录封装
+     * @param type 登录类型 eg: openId、unionId
+     * @param params 参数
+     * @return User
+     */
+    private User findUserByWeChat(String type, String params){
+        LambdaQueryWrapper<SystemUserExtend> queryWrapper;
+        switch (type){
+            case "openId":
+                queryWrapper = Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatOpenid, params);
+                break;
+            case "unionId":
+                queryWrapper = Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatUnionid, params);
+                break;
+            default:
+                throw new BaseRuntimeException("find type is error!");
+        }
+        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(queryWrapper));
+        Optional<User> userOptional = Optional.empty();
+        if (userExtendOptional.isPresent()) {
+            SystemUser systemUser = this.getById(userExtendOptional.get().getUserId());
+            userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
+        }
+        userOptional.ifPresent(user -> {
+            user.setRoles(this.loadRoles(user.getId()));
+            user.setPermissions(this.loadPermissions(user.getId()));
+            if(!verifyTenantStatus(user.getTenantId())){
+                user.setStatus(CommonConstant.STATUS_LOCK);
+            }
+        });
+        return userOptional.orElseGet(User::new);
+    }
+
+    /**
+     * 判断租户是否有效，进而判断用户是否生效 未绑定租户的则使用用户自身的状态码
+     * @param tenantId 租户ID
+     * @return Boolean
+     */
+    private Boolean verifyTenantStatus(String tenantId){
+        if(StrUtil.isEmpty(tenantId)){
+            return true;
+        }
+        return systemTenantService.checkTenantStatus(tenantId);
+    }
+
+    @Override
+    @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#loginName", condition = "#loginName!=null")
+    public User findByLoginName(String loginName) {
+        return this.findUser("userName",loginName);
     }
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#mobile", condition = "#mobile!=null")
     public User findByMobile(String mobile) {
-        SystemUser systemUser = this.getOne(Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getMobileTel, mobile));
-        Optional<User> userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
-        userOptional.ifPresent(user -> {
-            user.setRoles(this.loadRoles(user.getId()));
-            user.setPermissions(this.loadPermissions(user.getId()));
-        });
-        return userOptional.orElseGet(User::new);
+        return this.findUser("mobile",mobile);
     }
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenId(String openid) {
-        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatOpenid, openid)));
-        Optional<User> userOptional = Optional.empty();
-        if (userExtendOptional.isPresent()) {
-            SystemUser systemUser = this.getById(userExtendOptional.get().getUserId());
-            userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
-        }
-        userOptional.ifPresent(user -> {
-            user.setRoles(this.loadRoles(user.getId()));
-            user.setPermissions(this.loadPermissions(user.getId()));
-        });
-        return userOptional.orElseGet(User::new);
+        return this.findUserByWeChat("openId",openid);
     }
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionId(String unionid) {
-        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatUnionid, unionid)));
-        Optional<User> userOptional = Optional.empty();
-        if (userExtendOptional.isPresent()) {
-            SystemUser systemUser = this.getById(userExtendOptional.get().getUserId());
-            userOptional = Optional.ofNullable(ConverterUtil.convert(systemUser, new User()));
-        }
-        userOptional.ifPresent(user -> {
-            user.setRoles(this.loadRoles(user.getId()));
-            user.setPermissions(this.loadPermissions(user.getId()));
-        });
-        return userOptional.orElseGet(User::new);
+        return this.findUserByWeChat("unionId",unionid);
     }
 
     @Override
@@ -203,6 +253,13 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#user.id", condition = "#user.id!=null")
     })
     public Boolean update(SystemUser user) {
+        String superAdminRole = "SUPER_ADMIN";
+        if(!SecurityUtil.getRoles().contains(superAdminRole)){
+            /*
+              设置为空值将指不更新数据库字段
+             */
+            user.setTenantId(null);
+        }
         user.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         user.setModifierTime(LocalDateTime.now());
         return this.updateById(user);

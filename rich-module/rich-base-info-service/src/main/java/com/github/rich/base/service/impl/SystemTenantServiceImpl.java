@@ -6,15 +6,22 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemTenant;
 import com.github.rich.base.mapper.SystemTenantMapper;
 import com.github.rich.base.service.ISystemTenantService;
+import com.github.rich.base.vo.TenantVO;
 import com.github.rich.common.core.exception.BaseRuntimeException;
+import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.utils.SecurityUtil;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <p>
@@ -30,6 +37,13 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     @Override
     public IPage<SystemTenant> page(SystemTenant systemTenant, Page<SystemTenant> page) {
         return this.page(page, Wrappers.lambdaQuery(systemTenant).orderByDesc(SystemTenant::getCreateTime));
+    }
+
+    @Override
+    public List<TenantVO> all() {
+        List<SystemTenant> systemTenants = this.list(Wrappers.<SystemTenant>lambdaQuery().orderByDesc(SystemTenant::getCreateTime));
+        Optional<List<TenantVO>> optionalTenants = Optional.ofNullable(ConverterUtil.convertList(SystemTenant.class,TenantVO.class,systemTenants));
+        return optionalTenants.orElseGet(ArrayList::new);
     }
 
     @Override
@@ -63,6 +77,7 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     }
 
     @Override
+    @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-user", allEntries = true)
     public Boolean changeStatus(SystemTenant tenant) {
         boolean result;
         Integer status = tenant.getStatus();
@@ -78,10 +93,15 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemTenant>lambdaQuery().eq(SystemTenant::getTenantId, tenantId)));
     }
 
+    /**
+     * 状态变更同时清理掉用户缓存
+     * @param tenantId tenantId
+     * @return True 有效 False 无效
+     */
     @Override
     public Boolean checkTenantStatus(String tenantId) {
         SystemTenant tenant = this.getOne(Wrappers.<SystemTenant>lambdaQuery().eq(SystemTenant::getTenantId, tenantId));
-        if(ObjectUtil.isNotNull(tenant)){
+        if(ObjectUtil.isNull(tenant)){
             return false;
         }else {
             return tenant.getStatus() == 1;

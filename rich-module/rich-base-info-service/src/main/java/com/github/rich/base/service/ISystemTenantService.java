@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemTenant;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.vo.TenantVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -23,6 +26,13 @@ public interface ISystemTenantService extends IService<SystemTenant> {
      * @return IPage 返回结果
      */
     IPage<SystemTenant> page(SystemTenant systemTenant, Page<SystemTenant> page);
+
+
+    /**
+     * 获取全部租户
+     * @return TenantVO VO类
+     */
+    List<TenantVO> all();
 
     /**
      * 通过Id查询SystemTenant信息

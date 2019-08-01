@@ -13,6 +13,8 @@ import com.github.rich.base.service.ISystemTenantService;
 import com.github.rich.base.entity.SystemTenant;
 import io.swagger.annotations.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 租户信息 接口控制器
@@ -39,6 +41,12 @@ public class TenantController {
     @GetMapping("page")
     public R<IPage> page(SystemTenant systemTenant, Page<SystemTenant> page) {
         return new R<>(systemTenantService.page(systemTenant, page));
+    }
+
+    @ApiOperation(value = "获取全部租户信息表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @GetMapping("all")
+    public R<List> all() {
+        return new R<>(systemTenantService.all());
     }
 
 
