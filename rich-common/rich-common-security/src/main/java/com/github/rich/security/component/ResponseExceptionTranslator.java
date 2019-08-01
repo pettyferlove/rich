@@ -36,10 +36,11 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
 
     private static final String USER_DISABLED = "User is disabled";
 
+    private static final String USER_LOCKED = "User account is locked";
+
     /**
      * @param e spring security内部异常
      * @return 经过处理的异常信息
-     * @throws Exception 通用异常
      */
     @Override
     public ResponseEntity<OAuth2Exception> translate(Exception e) {
@@ -52,6 +53,8 @@ public class ResponseExceptionTranslator extends DefaultWebResponseExceptionTran
             oAuth2Exception = new InvalidGrantException("用户名不存在", e);
         } else if (e instanceof InvalidGrantException && StringUtils.contains(e.getMessage(), USER_DISABLED)) {
             oAuth2Exception = new InvalidGrantException("用户无效或被锁定", e);
+        } else if (e instanceof InvalidGrantException && StringUtils.contains(e.getMessage(), USER_LOCKED)) {
+            oAuth2Exception = new InvalidGrantException("用户被锁定", e);
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             oAuth2Exception = new InvalidGrantException("不支持的请求方式", e);
         } else {
