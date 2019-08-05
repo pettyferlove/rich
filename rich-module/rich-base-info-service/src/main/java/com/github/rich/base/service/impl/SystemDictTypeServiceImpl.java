@@ -15,7 +15,6 @@ import com.github.rich.base.service.ISystemDictTypeService;
 import com.github.rich.base.vo.Dict;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -85,10 +83,10 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
 
     @Override
     @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true)
-    public String create(SystemDictType dictType) {
+    public String create(String userId, SystemDictType dictType) {
         String dictTypeId = IdUtil.simpleUUID();
         dictType.setId(dictTypeId);
-        dictType.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        dictType.setCreator(userId);
         dictType.setCreateTime(LocalDateTime.now());
         if (this.save(dictType)) {
             return dictTypeId;
@@ -103,8 +101,8 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-detail", key = "#dictType.id", condition = "#dictType.id!=null"),
             @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, key = "#dictType.type", condition = "#dictType.type!=null")
     })
-    public Boolean update(SystemDictType dictType) {
-        dictType.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+    public Boolean update(String userId, SystemDictType dictType) {
+        dictType.setModifier(userId);
         dictType.setModifierTime(LocalDateTime.now());
         return this.updateById(dictType);
     }

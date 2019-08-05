@@ -6,6 +6,7 @@ import com.github.rich.attachment.vo.UploadResult;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 
 /**
@@ -38,7 +40,7 @@ public class AttachmentController {
     @PostMapping("upload")
     @UserLog(type = OperateType.ATTACH_UPLOAD, description = "用户附件上传")
     public R<UploadResult> upload(@Validated Upload upload, MultipartFile file) {
-        return new R<>(attachmentOperaService.upload(upload, file));
+        return new R<>(attachmentOperaService.upload(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), upload, file));
     }
 
     @ApiOperation(value = "下载附件", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))

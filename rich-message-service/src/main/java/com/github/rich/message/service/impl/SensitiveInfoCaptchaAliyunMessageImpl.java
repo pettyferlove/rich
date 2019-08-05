@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 用户敏感数据修改验证码
+ *
  * @author Petty
  */
 @Service("sensitiveInfoCaptchaAliyunMessage")
@@ -18,7 +19,7 @@ public class SensitiveInfoCaptchaAliyunMessageImpl extends AbstractAliyunMessage
 
     @Override
     public boolean send(CaptchaMessage message) {
-        return this.sendSms(message,"SMS_169870160");
+        return this.sendSms(message, "SMS_169870160");
     }
 
 

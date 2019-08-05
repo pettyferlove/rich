@@ -7,9 +7,12 @@ import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 /**
  * @author Petty
@@ -52,7 +55,7 @@ public class GatewayRouteController {
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建路由")
     public R<String> create(SystemGatewayRoute gatewayRoute) {
-        return new R<>(systemGatewayRouteService.create(gatewayRoute));
+        return new R<>(systemGatewayRouteService.create(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), gatewayRoute));
     }
 
     @ApiOperation(value = "更新路由", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
@@ -63,7 +66,7 @@ public class GatewayRouteController {
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新路由")
     public R<Boolean> update(SystemGatewayRoute gatewayRoute) {
-        return new R<>(systemGatewayRouteService.update(gatewayRoute));
+        return new R<>(systemGatewayRouteService.update(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), gatewayRoute));
     }
 
     @ApiOperation(value = "删除路由", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
@@ -85,7 +88,7 @@ public class GatewayRouteController {
     @PutMapping(value = "/status")
     @UserLog(type = OperateType.UPDATE, description = "更新路由状态")
     public R<Boolean> changeStatus(SystemGatewayRoute gatewayRoute) {
-        return new R<>(systemGatewayRouteService.changeStatus(gatewayRoute));
+        return new R<>(systemGatewayRouteService.changeStatus(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), gatewayRoute));
     }
 
     @ApiOperation(value = "检测路由是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))

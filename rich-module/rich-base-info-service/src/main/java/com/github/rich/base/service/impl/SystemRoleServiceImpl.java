@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.entity.SystemRoleMenu;
@@ -12,10 +13,8 @@ import com.github.rich.base.entity.SystemUserRole;
 import com.github.rich.base.mapper.SystemRoleMapper;
 import com.github.rich.base.service.ISystemRoleMenuService;
 import com.github.rich.base.service.ISystemRoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.common.core.exception.BaseRuntimeException;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -96,10 +95,10 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     }
 
     @Override
-    public String create(SystemRole role) {
+    public String create(String userId, SystemRole role) {
         String roleId = IdUtil.simpleUUID();
         role.setId(roleId);
-        role.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        role.setCreator(userId);
         role.setCreateTime(LocalDateTime.now());
         if (this.save(role)) {
             return roleId;
@@ -110,8 +109,8 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#role.id", condition = "#role.id!=null")
-    public Boolean update(SystemRole role) {
-        role.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+    public Boolean update(String userId, SystemRole role) {
+        role.setModifier(userId);
         role.setModifierTime(LocalDateTime.now());
         return this.updateById(role);
     }

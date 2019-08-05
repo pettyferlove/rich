@@ -4,7 +4,6 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
-import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.entity.SystemRegion;
 import com.github.rich.base.mapper.SystemRegionMapper;
 import com.github.rich.base.service.ISystemRegionService;
@@ -12,18 +11,15 @@ import com.github.rich.base.utils.TreeUtils;
 import com.github.rich.base.vo.RegionNode;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -75,14 +71,14 @@ public class SystemRegionServiceImpl extends ServiceImpl<SystemRegionMapper, Sys
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-tree", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-nodes", key = "#systemRegion.parentId", condition = "#systemRegion.parentId!=null")
     })
-    public String create(SystemRegion systemRegion) {
+    public String create(String userId, SystemRegion systemRegion) {
         try {
-            systemRegion.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+            systemRegion.setCreator(userId);
             systemRegion.setCreateTime(LocalDateTime.now());
             this.save(systemRegion);
             return systemRegion.getId();
         } catch (Exception e) {
-            if(e instanceof DuplicateKeyException){
+            if (e instanceof DuplicateKeyException) {
                 throw new BaseRuntimeException("已穿在该区划代码");
             }
             throw new BaseRuntimeException("新增失败");
@@ -95,8 +91,8 @@ public class SystemRegionServiceImpl extends ServiceImpl<SystemRegionMapper, Sys
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-tree", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-region-nodes", key = "#systemRegion.parentId", condition = "#systemRegion.parentId!=null")
     })
-    public Boolean update(SystemRegion systemRegion) {
-        systemRegion.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+    public Boolean update(String userId, SystemRegion systemRegion) {
+        systemRegion.setModifier(userId);
         systemRegion.setModifierTime(LocalDateTime.now());
         return this.updateById(systemRegion);
     }

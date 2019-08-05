@@ -8,11 +8,13 @@ import com.github.rich.base.vo.Dict;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Petty
@@ -64,7 +66,7 @@ public class DictTypeController {
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建字典类型")
     public R<String> create(SystemDictType systemDictType) {
-        return new R<>(systemDictTypeService.create(systemDictType));
+        return new R<>(systemDictTypeService.create(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemDictType));
     }
 
     @ApiOperation(value = "更新字典类型", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
@@ -75,7 +77,7 @@ public class DictTypeController {
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新字典类型")
     public R<Boolean> update(SystemDictType systemDictType) {
-        return new R<>(systemDictTypeService.update(systemDictType));
+        return new R<>(systemDictTypeService.update(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemDictType));
     }
 
     @ApiOperation(value = "删除字典类型", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))

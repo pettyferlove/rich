@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.dto.Route;
 import com.github.rich.base.entity.SystemGatewayRoute;
-import com.github.rich.base.entity.SystemRole;
 import com.github.rich.base.mapper.SystemGatewayRouteMapper;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.github.rich.common.core.constants.CommonConstant;
@@ -17,7 +16,6 @@ import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.message.stream.source.GatewaySource;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -28,7 +26,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -88,10 +85,10 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
 
     @Override
     @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-page", allEntries = true)
-    public String create(SystemGatewayRoute route) {
+    public String create(String userId, SystemGatewayRoute route) {
         String routeId = IdUtil.simpleUUID();
         route.setId(routeId);
-        route.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        route.setCreator(userId);
         route.setCreateTime(LocalDateTime.now());
         if (this.save(route)) {
             return routeId;
@@ -106,15 +103,15 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-routes", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-detail", key = "#route.id", condition = "#route.id!=null")
     })
-    public Boolean update(SystemGatewayRoute route) {
+    public Boolean update(String userId, SystemGatewayRoute route) {
         boolean result;
-        route.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        route.setModifier(userId);
         route.setModifierTime(LocalDateTime.now());
         result = this.updateById(route);
         if (route.getStatus() == 1 && result) {
             GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
             message.setRouteId(route.getId());
-            message.setReceiver(SecurityUtil.getUser().getUserId());
+            message.setReceiver(userId);
             message.setDeliver(CommonConstant.SYSTEM_USER_ID);
             source.output().send(MessageBuilder.withPayload(message).setHeader("operate-type", "update").build());
         }
@@ -127,16 +124,16 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
             @CacheEvict(value = CacheConstant.INNER_API_PREFIX + "base-api-routes", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-detail", key = "#route.id", condition = "#route.id!=null")
     })
-    public Boolean changeStatus(SystemGatewayRoute route) {
+    public Boolean changeStatus(String userId, SystemGatewayRoute route) {
         boolean result;
         Integer status = route.getStatus();
         route.setStatus(status == 0 ? 1 : 0);
-        route.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        route.setModifier(userId);
         route.setModifierTime(LocalDateTime.now());
         result = this.updateById(route);
         GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
         message.setRouteId(route.getId());
-        message.setReceiver(SecurityUtil.getUser().getUserId());
+        message.setReceiver(userId);
         message.setDeliver(CommonConstant.SYSTEM_USER_ID);
         String operateType = "shutDown";
         if (status == 0 && result) {
@@ -148,7 +145,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
 
     @Override
     public Boolean check(String name) {
-        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getName,name)));
+        return ObjectUtil.isNotNull(this.getOne(Wrappers.<SystemGatewayRoute>lambdaQuery().eq(SystemGatewayRoute::getName, name)));
     }
 
 

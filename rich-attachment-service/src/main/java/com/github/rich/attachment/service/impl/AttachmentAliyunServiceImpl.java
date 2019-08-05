@@ -3,7 +3,9 @@ package com.github.rich.attachment.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.common.utils.BinaryUtil;
-import com.aliyun.oss.model.*;
+import com.aliyun.oss.model.CannedAccessControlList;
+import com.aliyun.oss.model.OSSObject;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.github.rich.attachment.config.AttachmentAliyunProperties;
 import com.github.rich.attachment.constants.FileType;
 import com.github.rich.attachment.constants.SecurityType;
@@ -46,7 +48,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public UploadResult upload(Upload upload, MultipartFile file) {
+    public UploadResult upload(String userId, Upload upload, MultipartFile file) {
         Assert.notNull(file, "上传文件不可为空");
         UploadResult result = new UploadResult();
         String fileId = IdUtil.simpleUUID();
@@ -62,7 +64,7 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
             ObjectMetadata meta = new ObjectMetadata();
             String md5 = BinaryUtil.toBase64String(BinaryUtil.calculateMd5(file.getBytes()));
             meta.setContentMD5(md5);
-            if (attachmentInfoService.save(fileId, file.getOriginalFilename(), md5, filePath.toString(), upload, file.getContentType(), file.getSize())) {
+            if (attachmentInfoService.save(userId, fileId, file.getOriginalFilename(), md5, filePath.toString(), upload, file.getContentType(), file.getSize())) {
                 result.setMd5(md5);
                 result.setFileId(fileId);
                 result.setStoreType(upload.getStorage().getValue());
@@ -102,9 +104,9 @@ public class AttachmentAliyunServiceImpl implements IAttachmentService {
     @Override
     public Boolean delete(AttachmentInfo attachmentInfo) {
         try {
-            oss.deleteObject(aliyunProperties.getBucket(),attachmentInfo.getPath());
+            oss.deleteObject(aliyunProperties.getBucket(), attachmentInfo.getPath());
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new BaseRuntimeException("file delete error");
         }
     }

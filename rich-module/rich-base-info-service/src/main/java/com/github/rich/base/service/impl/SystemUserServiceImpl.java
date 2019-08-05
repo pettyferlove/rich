@@ -23,7 +23,6 @@ import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.constants.EncryptionConstant;
 import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.security.service.impl.UserDetailsImpl;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -75,13 +74,14 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     /**
      * 普通登录封装
-     * @param type 登录类型 eg: loginName、mobile、email等
+     *
+     * @param type   登录类型 eg: loginName、mobile、email等
      * @param params 参数
      * @return User
      */
-    private User findUser(String type, String params){
+    private User findUser(String type, String params) {
         LambdaQueryWrapper<SystemUser> queryWrapper;
-        switch (type){
+        switch (type) {
             case "userName":
                 queryWrapper = Wrappers.<SystemUser>lambdaQuery().eq(SystemUser::getLoginName, params);
                 break;
@@ -96,7 +96,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
-            if(!verifyTenantStatus(user.getTenantId())){
+            if (!verifyTenantStatus(user.getTenantId())) {
                 user.setStatus(CommonConstant.STATUS_LOCK);
             }
         });
@@ -105,13 +105,14 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     /**
      * 微信登录封装
-     * @param type 登录类型 eg: openId、unionId
+     *
+     * @param type   登录类型 eg: openId、unionId
      * @param params 参数
      * @return User
      */
-    private User findUserByWeChat(String type, String params){
+    private User findUserByWeChat(String type, String params) {
         LambdaQueryWrapper<SystemUserExtend> queryWrapper;
-        switch (type){
+        switch (type) {
             case "openId":
                 queryWrapper = Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getWechatOpenid, params);
                 break;
@@ -130,7 +131,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         userOptional.ifPresent(user -> {
             user.setRoles(this.loadRoles(user.getId()));
             user.setPermissions(this.loadPermissions(user.getId()));
-            if(!verifyTenantStatus(user.getTenantId())){
+            if (!verifyTenantStatus(user.getTenantId())) {
                 user.setStatus(CommonConstant.STATUS_LOCK);
             }
         });
@@ -139,11 +140,12 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     /**
      * 判断租户是否有效，进而判断用户是否生效 未绑定租户的则使用用户自身的状态码
+     *
      * @param tenantId 租户ID
      * @return Boolean
      */
-    private Boolean verifyTenantStatus(String tenantId){
-        if(StrUtil.isEmpty(tenantId)){
+    private Boolean verifyTenantStatus(String tenantId) {
+        if (StrUtil.isEmpty(tenantId)) {
             return true;
         }
         return systemTenantService.checkTenantStatus(tenantId);
@@ -152,25 +154,25 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#loginName", condition = "#loginName!=null")
     public User findByLoginName(String loginName) {
-        return this.findUser("userName",loginName);
+        return this.findUser("userName", loginName);
     }
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#mobile", condition = "#mobile!=null")
     public User findByMobile(String mobile) {
-        return this.findUser("mobile",mobile);
+        return this.findUser("mobile", mobile);
     }
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#openid", condition = "#openid!=null")
     public User findByWeChatOpenId(String openid) {
-        return this.findUserByWeChat("openId",openid);
+        return this.findUserByWeChat("openId", openid);
     }
 
     @Override
     @Cacheable(value = CacheConstant.INNER_API_PREFIX + "base-api-user", key = "#unionid", condition = "#unionid!=null")
     public User findByWeChatUnionId(String unionid) {
-        return this.findUserByWeChat("unionId",unionid);
+        return this.findUserByWeChat("unionId", unionid);
     }
 
     @Override
@@ -233,14 +235,14 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    public String create(SystemUser user) {
-        String userId = IdUtil.simpleUUID();
-        user.setId(userId);
+    public String create(String userId, SystemUser user) {
+        String id = IdUtil.simpleUUID();
+        user.setId(id);
         user.setPassword(userPasswordEncoder.encode(user.getPassword()));
-        user.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        user.setCreator(userId);
         user.setCreateTime(LocalDateTime.now());
         if (this.save(user)) {
-            return userId;
+            return id;
         } else {
             throw new BaseRuntimeException("新增失败");
         }
@@ -252,15 +254,8 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#user.id", condition = "#user.id!=null")
     })
-    public Boolean update(SystemUser user) {
-        String superAdminRole = "SUPER_ADMIN";
-        if(!SecurityUtil.getRoles().contains(superAdminRole)){
-            /*
-              设置为空值将指不更新数据库字段
-             */
-            user.setTenantId(null);
-        }
-        user.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+    public Boolean update(String userId, SystemUser user) {
+        user.setModifier(userId);
         user.setModifierTime(LocalDateTime.now());
         return this.updateById(user);
     }
@@ -321,7 +316,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
                         systemUser.setPassword(userPasswordEncoder.encode(changePassword.getNewPassword()));
                         systemUser.setModifier(userDetails.getUserId());
                         systemUser.setModifierTime(LocalDateTime.now());
-                        if (!this.update(systemUser)) {
+                        if (!this.update(userDetails.getUserId(), systemUser)) {
                             return 0;
                         }
                     }
@@ -346,7 +341,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
                     systemUser.setMobileTel(changeMobile.getMobileTel());
                     systemUser.setModifier(userDetails.getUserId());
                     systemUser.setModifierTime(LocalDateTime.now());
-                    if (!this.update(systemUser)) {
+                    if (!this.update(userDetails.getUserId(), systemUser)) {
                         return 0;
                     }
                 }
@@ -370,10 +365,11 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     /**
      * 读取用户的扩展信息
+     *
      * @return 用户扩展信息
      */
-    private SystemUserExtend queryUserExtend(String userId){
-        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getUserId,userId)));
+    private SystemUserExtend queryUserExtend(String userId) {
+        Optional<SystemUserExtend> userExtendOptional = Optional.ofNullable(systemUserExtendService.getOne(Wrappers.<SystemUserExtend>lambdaQuery().eq(SystemUserExtend::getUserId, userId)));
         return userExtendOptional.orElseGet(SystemUserExtend::new);
     }
 

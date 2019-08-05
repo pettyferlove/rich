@@ -40,9 +40,9 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
 
 
     @Override
-    public UploadResult upload(Upload upload, MultipartFile file) {
+    public UploadResult upload(String userId, Upload upload, MultipartFile file) {
         IAttachmentService attachmentService = factory.create(upload.getStorage());
-        return attachmentService.upload(upload, file);
+        return attachmentService.upload(userId, upload, file);
     }
 
     @Override
@@ -94,13 +94,13 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
             if (attachmentInfoOptional.isPresent()) {
                 AttachmentInfo attachmentInfo = attachmentInfoOptional.get();
                 IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
-                if(attachmentService.delete(attachmentInfo)){
+                if (attachmentService.delete(attachmentInfo)) {
                     result = attachmentInfoService.removeById(attachmentInfo.getId());
                 }
 
             }
             return result;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new BaseRuntimeException("delete file error", 500);
         }
     }
@@ -108,18 +108,18 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteBatch(String[] ids) {
-        try{
+        try {
             boolean result = false;
             List<String> fileIds = Arrays.asList(ids);
             List<AttachmentInfo> attachmentInfos = (List<AttachmentInfo>) attachmentInfoService.listByIds(fileIds);
-            for(AttachmentInfo attachmentInfo: attachmentInfos){
+            for (AttachmentInfo attachmentInfo : attachmentInfos) {
                 IAttachmentService attachmentService = factory.create(StorageType.parse(attachmentInfo.getStorageType()));
-                if(attachmentService.delete(attachmentInfo)){
+                if (attachmentService.delete(attachmentInfo)) {
                     result = attachmentInfoService.removeById(attachmentInfo.getId());
                 }
             }
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new BaseRuntimeException("batch delete file error", 500);
         }
     }

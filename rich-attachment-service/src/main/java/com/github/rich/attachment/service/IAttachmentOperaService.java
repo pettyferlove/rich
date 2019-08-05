@@ -7,21 +7,25 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 附件操作
  * @author Petty
  */
 public interface IAttachmentOperaService {
 
     /**
      * 文件操作-文件上传
+     *
+     * @param userId userId
      * @param upload Upload
-     * @param file MultipartFile
+     * @param file   MultipartFile
      * @return UploadResult
      */
-    UploadResult upload(Upload upload, MultipartFile file);
+    UploadResult upload(String userId, Upload upload, MultipartFile file);
 
     /**
      * 文件操作-文件下载
-     * @param id 文件ID
+     *
+     * @param id       文件ID
      * @param response HttpServletResponse
      * @throws Exception Exception
      */
@@ -29,7 +33,8 @@ public interface IAttachmentOperaService {
 
     /**
      * 文件操作-文件查看
-     * @param id 文件ID
+     *
+     * @param id       文件ID
      * @param response HttpServletResponse
      * @throws Exception Exception
      */
@@ -37,6 +42,7 @@ public interface IAttachmentOperaService {
 
     /**
      * 文件操作-删除文件
+     *
      * @param id 文件ID
      * @return Boolean
      */
@@ -44,6 +50,7 @@ public interface IAttachmentOperaService {
 
     /**
      * 文件操作-批量删除文件
+     *
      * @param ids 文件ID
      * @return Boolean
      */
