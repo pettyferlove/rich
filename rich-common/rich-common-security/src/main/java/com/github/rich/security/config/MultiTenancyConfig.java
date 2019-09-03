@@ -62,6 +62,9 @@ public class MultiTenancyConfig {
                             }
                             return true;
                         }
+                        /**
+                         * 判断需要忽略租户控制的角色
+                         */
                         List<String> ignoreRoles = multiTenancyProperties.getIgnore().getRoles();
                         List<String> roles = SecurityUtil.getRoles();
                         if(ignoreRoles.stream().anyMatch(roles::contains)){
