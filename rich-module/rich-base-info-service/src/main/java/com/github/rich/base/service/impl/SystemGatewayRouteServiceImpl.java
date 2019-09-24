@@ -106,7 +106,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
     public Boolean update(String userId, SystemGatewayRoute route) {
         boolean result;
         route.setModifier(userId);
-        route.setModifierTime(LocalDateTime.now());
+        route.setModifyTime(LocalDateTime.now());
         result = this.updateById(route);
         if (route.getStatus() == 1 && result) {
             GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
@@ -129,7 +129,7 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
         Integer status = route.getStatus();
         route.setStatus(status == 0 ? 1 : 0);
         route.setModifier(userId);
-        route.setModifierTime(LocalDateTime.now());
+        route.setModifyTime(LocalDateTime.now());
         result = this.updateById(route);
         GatewayRouteChangeMessage message = new GatewayRouteChangeMessage();
         message.setRouteId(route.getId());

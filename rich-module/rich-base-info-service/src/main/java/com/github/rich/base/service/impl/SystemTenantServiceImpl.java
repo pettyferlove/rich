@@ -70,7 +70,7 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
     @Override
     public Boolean update(String userId, SystemTenant systemTenant) {
         systemTenant.setModifier(userId);
-        systemTenant.setModifierTime(LocalDateTime.now());
+        systemTenant.setModifyTime(LocalDateTime.now());
         return this.updateById(systemTenant);
     }
 
@@ -81,7 +81,7 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
         Integer status = tenant.getStatus();
         tenant.setStatus(status == 0 ? 1 : 0);
         tenant.setModifier(userId);
-        tenant.setModifierTime(LocalDateTime.now());
+        tenant.setModifyTime(LocalDateTime.now());
         result = this.updateById(tenant);
         return result;
     }

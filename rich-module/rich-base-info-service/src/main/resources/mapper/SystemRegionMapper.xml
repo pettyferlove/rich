@@ -8,16 +8,15 @@
         <result column="parent_id" property="parentId" />
         <result column="region_name" property="regionName" />
         <result column="region_type" property="regionType" />
-        <result column="del_flag" property="delFlag" />
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
         <result column="modifier" property="modifier" />
-        <result column="modifier_time" property="modifierTime" />
+        <result column="modify_time" property="modifyTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, parent_id, region_name, region_type, del_flag, creator, create_time, modifier, modifier_time
+        id, parent_id, region_name, region_type, creator, create_time, modifier, modify_time
     </sql>
 
 </mapper>

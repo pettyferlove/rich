@@ -85,7 +85,7 @@ public class SystemTenant extends Model<SystemTenant> {
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @DateTimeFormat( pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime modifierTime;
+    private LocalDateTime modifyTime;
 
 
     @Override

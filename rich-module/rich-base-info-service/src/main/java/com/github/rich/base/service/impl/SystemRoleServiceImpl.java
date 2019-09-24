@@ -111,7 +111,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-role-detail", key = "#role.id", condition = "#role.id!=null")
     public Boolean update(String userId, SystemRole role) {
         role.setModifier(userId);
-        role.setModifierTime(LocalDateTime.now());
+        role.setCreateTime(LocalDateTime.now());
         return this.updateById(role);
     }
 

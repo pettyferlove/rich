@@ -25,12 +25,12 @@
         <result column="creator" property="creator" />
         <result column="create_time" property="createTime" />
         <result column="modifier" property="modifier" />
-        <result column="modifier_time" property="modifierTime" />
+        <result column="modify_time" property="modifyTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, login_name, user_name, password, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_id, tenant_id, status, del_flag, creator, create_time, modifier, modifier_time
+        id, login_name, user_name, password, user_type, user_sex, user_born, user_avatar, email, user_address, mobile_tel, user_tel, user_iden_type, user_iden, region_id, tenant_id, status, del_flag, creator, create_time, modifier, modify_time
     </sql>
 
 </mapper>

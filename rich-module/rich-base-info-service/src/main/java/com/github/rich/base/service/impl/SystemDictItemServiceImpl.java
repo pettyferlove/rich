@@ -86,7 +86,7 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
     })
     public Boolean update(String userId, SystemDictItem dictItem) {
         dictItem.setModifier(userId);
-        dictItem.setModifierTime(LocalDateTime.now());
+        dictItem.setModifyTime(LocalDateTime.now());
         return this.updateById(dictItem);
     }
 }

@@ -93,7 +93,7 @@ public class SystemRegionServiceImpl extends ServiceImpl<SystemRegionMapper, Sys
     })
     public Boolean update(String userId, SystemRegion systemRegion) {
         systemRegion.setModifier(userId);
-        systemRegion.setModifierTime(LocalDateTime.now());
+        systemRegion.setModifyTime(LocalDateTime.now());
         return this.updateById(systemRegion);
     }
 

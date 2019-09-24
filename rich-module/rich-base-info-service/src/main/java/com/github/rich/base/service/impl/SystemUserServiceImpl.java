@@ -189,7 +189,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             systemUser.setUserType(0);
             systemUser.setStatus(1);
             systemUser.setCreateTime(LocalDateTime.now());
-            systemUser.setModifierTime(LocalDateTime.now());
+            systemUser.setModifyTime(LocalDateTime.now());
             if (this.save(systemUser)) {
                 SystemUserExtend systemUserExtend = new SystemUserExtend();
                 systemUserExtend.setId(IdUtil.simpleUUID());
@@ -256,7 +256,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     })
     public Boolean update(String userId, SystemUser user) {
         user.setModifier(userId);
-        user.setModifierTime(LocalDateTime.now());
+        user.setModifyTime(LocalDateTime.now());
         return this.updateById(user);
     }
 
@@ -315,7 +315,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
                     } else {
                         systemUser.setPassword(userPasswordEncoder.encode(changePassword.getNewPassword()));
                         systemUser.setModifier(userDetails.getUserId());
-                        systemUser.setModifierTime(LocalDateTime.now());
+                        systemUser.setModifyTime(LocalDateTime.now());
                         if (!this.update(userDetails.getUserId(), systemUser)) {
                             return 0;
                         }
@@ -340,7 +340,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
                     SystemUser systemUser = systemUserOptional.get();
                     systemUser.setMobileTel(changeMobile.getMobileTel());
                     systemUser.setModifier(userDetails.getUserId());
-                    systemUser.setModifierTime(LocalDateTime.now());
+                    systemUser.setModifyTime(LocalDateTime.now());
                     if (!this.update(userDetails.getUserId(), systemUser)) {
                         return 0;
                     }

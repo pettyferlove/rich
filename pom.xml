@@ -48,7 +48,7 @@
         <docker.plugin.version>0.4.13</docker.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <zipkin.version>2.12.2</zipkin.version>
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.60</fastjson.version>
         <junit.version>4.12</junit.version>
         <druid.version>1.1.16</druid.version>
         <mysql.version>8.0.9-rc</mysql.version>

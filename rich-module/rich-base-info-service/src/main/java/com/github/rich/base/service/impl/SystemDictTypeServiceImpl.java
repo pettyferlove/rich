@@ -103,7 +103,7 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     })
     public Boolean update(String userId, SystemDictType dictType) {
         dictType.setModifier(userId);
-        dictType.setModifierTime(LocalDateTime.now());
+        dictType.setModifyTime(LocalDateTime.now());
         return this.updateById(dictType);
     }
 

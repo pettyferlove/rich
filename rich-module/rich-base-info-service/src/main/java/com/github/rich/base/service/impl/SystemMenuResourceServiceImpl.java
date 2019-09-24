@@ -127,7 +127,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     })
     public Boolean updateNode(String userId, SystemMenuResource menu) {
         menu.setModifier(userId);
-        menu.setModifierTime(LocalDateTime.now());
+        menu.setModifyTime(LocalDateTime.now());
         return this.updateById(menu);
     }
 
