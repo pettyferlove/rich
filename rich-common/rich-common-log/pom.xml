@@ -5,10 +5,10 @@
     <parent>
         <groupId>com.github.rich</groupId>
         <artifactId>rich-common</artifactId>
-        <version>1.2.0</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>rich-common-log</artifactId>
-    <version>1.2.0</version>
+    <version>${revision}</version>
     <name>rich-common-log</name>
     <packaging>jar</packaging>
     <description>日志公共依赖</description>
@@ -26,13 +26,13 @@
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-core</artifactId>
-            <version>1.2.0</version>
+            <version>${revision}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-security</artifactId>
-            <version>1.2.0</version>
+            <version>${revision}</version>
             <optional>true</optional>
         </dependency>
     </dependencies>

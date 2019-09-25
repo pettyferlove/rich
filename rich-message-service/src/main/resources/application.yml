@@ -3,7 +3,7 @@ info:
     artifact: rich-message-service
     name: rich-message-service
     description: 消息发送服务
-    version: 1.2.0
+    version: @revision@
 sms:
   cloud:
     aliyun:

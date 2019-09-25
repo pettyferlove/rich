@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.github.rich</groupId>
         <artifactId>rich</artifactId>
-        <version>1.2.0</version>
+        <version>${revision}</version>
     </parent>
 
     <dependencies>
@@ -37,17 +37,17 @@
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-core</artifactId>
-            <version>1.2.0</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-security</artifactId>
-            <version>1.2.0</version>
+            <version>${revision}</version>
         </dependency>
         <dependency>
             <groupId>com.github.rich</groupId>
             <artifactId>rich-common-sleuth-zipkin</artifactId>
-            <version>1.2.0</version>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
