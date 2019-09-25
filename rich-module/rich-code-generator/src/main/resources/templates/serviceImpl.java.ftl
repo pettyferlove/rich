@@ -62,7 +62,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     @Override
     public Boolean update(${entity} ${entity?uncap_first}) {
         ${entity?uncap_first}.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
-        ${entity?uncap_first}.setModifierTime(LocalDateTime.now());
+        ${entity?uncap_first}.setModifyTime(LocalDateTime.now());
         return this.updateById(${entity?uncap_first});
     }
 

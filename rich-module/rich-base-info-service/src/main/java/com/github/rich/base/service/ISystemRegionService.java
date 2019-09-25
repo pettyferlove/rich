@@ -50,21 +50,24 @@ public interface ISystemRegionService extends IService<SystemRegion> {
     /**
      * 创建数据
      *
+     * @param userId       userId
      * @param systemRegion 要创建的对象
      * @return Boolean
      */
-    String create(SystemRegion systemRegion);
+    String create(String userId, SystemRegion systemRegion);
 
     /**
      * 更新数据（必须带Id）
      *
+     * @param userId       userId
      * @param systemRegion 对象
      * @return Boolean
      */
-    Boolean update(SystemRegion systemRegion);
+    Boolean update(String userId, SystemRegion systemRegion);
 
     /**
      * 检查区域编号是否存在
+     *
      * @param region 区域编号（CODE）
      * @return 存在True 不存在False
      */

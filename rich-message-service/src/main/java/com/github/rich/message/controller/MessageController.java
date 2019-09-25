@@ -4,10 +4,12 @@ package com.github.rich.message.controller;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.message.service.ISystemMessageService;
 import com.github.rich.message.vo.message.UserMessageVO;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -30,7 +32,7 @@ public class MessageController {
     @ApiOperation(value = "获取用户未读消息列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @GetMapping("load/unread")
     public R<List<UserMessageVO>> loadUnread() {
-        return new R<>(systemMessageService.loadUnread());
+        return new R<>(systemMessageService.loadUnread(Objects.requireNonNull(SecurityUtil.getUser()).getUserId()));
     }
 
 
@@ -40,6 +42,6 @@ public class MessageController {
     })
     @PutMapping("/read/{id}")
     public R<Boolean> get(@PathVariable String id) {
-        return new R<>(systemMessageService.read(id));
+        return new R<>(systemMessageService.read(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), id));
     }
 }

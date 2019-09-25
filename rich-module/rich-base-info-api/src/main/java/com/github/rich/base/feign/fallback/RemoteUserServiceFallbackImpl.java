@@ -30,13 +30,13 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
     }
 
     @Override
-    public User findByWeChatOpenID(String openid) {
+    public User findByWeChatOpenId(String openid) {
         log.error("Feign---RemoteUserService->findByWeChatOpenID Hystrix Fusing->Params:{},Date:{},Cause:{}", openid, System.currentTimeMillis(), cause);
         return null;
     }
 
     @Override
-    public User findByWeChatUnionID(String unionid) {
+    public User findByWeChatUnionId(String unionid) {
         log.error("Feign---RemoteUserService->findByWeChatUnionID Hystrix Fusing->Params:{},Date:{},Cause:{}", unionid, System.currentTimeMillis(), cause);
         return null;
     }

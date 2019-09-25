@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Petty
@@ -41,7 +42,7 @@ public class MenuController {
     @PostMapping("/node/create")
     @UserLog(type = OperateType.ADD, description = "创建菜单节点")
     public R<String> createNode(SystemMenuResource menu) {
-        return new R<>(systemMenuResourceService.createNode(menu));
+        return new R<>(systemMenuResourceService.createNode(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), menu));
     }
 
     @ApiOperation(value = "加载菜单树", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
@@ -78,7 +79,7 @@ public class MenuController {
     @PutMapping("/node")
     @UserLog(type = OperateType.UPDATE, description = "更新菜单节点")
     public R<Boolean> updateNode(SystemMenuResource menu) {
-        return new R<>(systemMenuResourceService.updateNode(menu));
+        return new R<>(systemMenuResourceService.updateNode(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), menu));
     }
 
     @ApiOperation(value = "获取当前节点的子节点列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))

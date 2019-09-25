@@ -18,12 +18,12 @@
         <result column="trace" property="trace" />
         <result column="del_flag" property="delFlag" />
         <result column="create_time" property="createTime" />
-        <result column="modifier_time" property="modifierTime" />
+        <result column="modify_time" property="modifyTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_id, client_id, operate_time, operate_type, description, request_ip, user_agent, request_method, log_type, trace, del_flag, create_time, modifier_time
+        id, user_id, client_id, operate_time, operate_type, description, request_ip, user_agent, request_method, log_type, trace, del_flag, create_time, modify_time
     </sql>
 
 </mapper>

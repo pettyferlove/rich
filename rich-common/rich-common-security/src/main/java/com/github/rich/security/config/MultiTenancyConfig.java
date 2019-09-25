@@ -1,6 +1,7 @@
 package com.github.rich.security.config;
 
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import com.github.rich.common.core.config.MultiTenancyProperties;
@@ -39,7 +40,7 @@ public class MultiTenancyConfig {
                     public Expression getTenantId() {
                         // 从当前系统上下文中取出当前请求的服务商ID，通过解析器注入到SQL中。
                         String tenantId = Objects.requireNonNull(SecurityUtil.getUser(), "multi_tenancy #50003 get user error.").getTenantId();
-                        if (null == tenantId) {
+                        if (StrUtil.isEmpty(tenantId)) {
                             throw new BaseRuntimeException("multi_tenancy #50001 get tenant_id error.");
                         }
                         return new StringValue(tenantId);
@@ -61,6 +62,9 @@ public class MultiTenancyConfig {
                             }
                             return true;
                         }
+                        /*
+                         * 判断需要忽略租户控制的角色
+                         */
                         List<String> ignoreRoles = multiTenancyProperties.getIgnore().getRoles();
                         List<String> roles = SecurityUtil.getRoles();
                         if(ignoreRoles.stream().anyMatch(roles::contains)){

@@ -39,6 +39,7 @@ public class MessageSenderImpl implements IMessageSender {
         this.rabbitTemplate.setReturnCallback(this);
         this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {
+                assert correlationData != null;
                 log.error("消息发送失败" + cause + correlationData.toString());
             } else {
                 if (log.isDebugEnabled()) {
@@ -54,6 +55,7 @@ public class MessageSenderImpl implements IMessageSender {
         this.rabbitTemplate.setReturnCallback(this);
         this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {
+                assert correlationData != null;
                 log.error("消息发送失败" + cause + correlationData.toString());
             } else {
                 if (log.isDebugEnabled()) {

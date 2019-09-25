@@ -4,14 +4,12 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemDictItem;
-import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.mapper.SystemDictItemMapper;
 import com.github.rich.base.service.ISystemDictItemService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.common.core.exception.BaseRuntimeException;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * <p>
@@ -69,14 +66,14 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-page", allEntries = true),
             @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true)
     })
-    public String create(SystemDictItem dictItem) {
+    public String create(String userId, SystemDictItem dictItem) {
         String dictItemId = IdUtil.simpleUUID();
         dictItem.setId(dictItemId);
-        dictItem.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        dictItem.setCreator(userId);
         dictItem.setCreateTime(LocalDateTime.now());
-        if(this.save(dictItem)){
+        if (this.save(dictItem)) {
             return dictItemId;
-        }else {
+        } else {
             throw new BaseRuntimeException("新增失败");
         }
     }
@@ -87,9 +84,9 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
             @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-item-detail", key = "#dictItem.id", condition = "#dictItem.id!=null")
     })
-    public Boolean update(SystemDictItem dictItem) {
-        dictItem.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
-        dictItem.setModifierTime(LocalDateTime.now());
+    public Boolean update(String userId, SystemDictItem dictItem) {
+        dictItem.setModifier(userId);
+        dictItem.setModifyTime(LocalDateTime.now());
         return this.updateById(dictItem);
     }
 }

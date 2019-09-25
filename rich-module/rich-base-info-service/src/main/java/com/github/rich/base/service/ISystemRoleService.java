@@ -2,8 +2,8 @@ package com.github.rich.base.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.rich.base.entity.SystemRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.base.entity.SystemRole;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ public interface ISystemRoleService extends IService<SystemRole> {
 
     /**
      * 加载当前roleId已分配菜单的Keys
+     *
      * @param roleId roleId
      * @return 集合
      */
@@ -26,8 +27,9 @@ public interface ISystemRoleService extends IService<SystemRole> {
 
     /**
      * 更绝角色菜单关联信息
-     * @param roleId 角色ID
-     * @param addIds 需要添加的ID集合
+     *
+     * @param roleId    角色ID
+     * @param addIds    需要添加的ID集合
      * @param removeIds 需要删除的ID集合
      * @return Boolean
      */
@@ -37,7 +39,7 @@ public interface ISystemRoleService extends IService<SystemRole> {
      * List查找
      *
      * @param role 查询参数对象
-     * @param page     Page分页对象
+     * @param page Page分页对象
      * @return IPage 返回结果
      */
     IPage<SystemRole> page(SystemRole role, Page<SystemRole> page);
@@ -61,21 +63,24 @@ public interface ISystemRoleService extends IService<SystemRole> {
     /**
      * 创建数据
      *
-     * @param role 要创建的对象
+     * @param userId userId
+     * @param role   要创建的对象
      * @return String
      */
-    String create(SystemRole role);
+    String create(String userId, SystemRole role);
 
     /**
      * 更新数据（必须带Id）
      *
-     * @param role 对象
+     * @param userId userId
+     * @param role   对象
      * @return Boolean
      */
-    Boolean update(SystemRole role);
+    Boolean update(String userId, SystemRole role);
 
     /**
      * 通过用户名查询角色集合
+     *
      * @param userId 用户ID
      * @return 集合
      */
@@ -83,6 +88,7 @@ public interface ISystemRoleService extends IService<SystemRole> {
 
     /**
      * 通过用户名查询角色ID集合
+     *
      * @param userID 用户ID
      * @return 集合
      */
@@ -90,7 +96,8 @@ public interface ISystemRoleService extends IService<SystemRole> {
 
     /**
      * 为用户添加角色
-     * @param userId 用户ID
+     *
+     * @param userId  用户ID
      * @param roleIds 需要添加得Role ID集合
      * @return Boolean
      */
@@ -98,7 +105,8 @@ public interface ISystemRoleService extends IService<SystemRole> {
 
     /**
      * 删除用户角色
-     * @param userId 用户ID
+     *
+     * @param userId  用户ID
      * @param roleIds 需要删除得Role ID集合
      * @return Boolean
      */
@@ -106,6 +114,7 @@ public interface ISystemRoleService extends IService<SystemRole> {
 
     /**
      * 检查角色是否存在
+     *
      * @param role 角色名（CODE）
      * @return 存在True 不存在False
      */

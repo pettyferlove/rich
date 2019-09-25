@@ -3,15 +3,18 @@ package com.github.rich.base.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.rich.base.entity.SystemTenant;
+import com.github.rich.base.service.ISystemTenantService;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserLog;
-import org.springframework.web.bind.annotation.*;
 import com.github.rich.log.constants.OperateType;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RestController;
-import com.github.rich.base.service.ISystemTenantService;
-import com.github.rich.base.entity.SystemTenant;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -41,9 +44,15 @@ public class TenantController {
         return new R<>(systemTenantService.page(systemTenant, page));
     }
 
+    @ApiOperation(value = "获取全部租户信息表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
+    @GetMapping("all")
+    public R<List> all() {
+        return new R<>(systemTenantService.all());
+    }
+
 
     @ApiOperation(value = "获取租户信息详情", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
-            @ApiImplicitParams({
+    @ApiImplicitParams({
             @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @GetMapping("/{id}")
@@ -52,14 +61,14 @@ public class TenantController {
     }
 
     @ApiOperation(value = "创建租户信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
-            @ApiImplicitParams({
+    @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", name = "systemTenant", value = "systemTenant", dataTypeClass = SystemTenant.class)
     })
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建租户信息")
     public R<String> create(SystemTenant systemTenant) {
-        return new R<>(systemTenantService.create(systemTenant));
+        return new R<>(systemTenantService.create(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemTenant));
     }
 
     @ApiOperation(value = "更新租户信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
@@ -70,12 +79,12 @@ public class TenantController {
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新租户信息")
     public R<Boolean> update(SystemTenant systemTenant) {
-        return new R<>(systemTenantService.update(systemTenant));
+        return new R<>(systemTenantService.update(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemTenant));
     }
 
     @ApiOperation(value = "删除租户信息", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
     @ApiImplicitParams({
-    @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
+            @ApiImplicitParam(paramType = "path", name = "id", value = "id", dataTypeClass = String.class)
     })
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     @DeleteMapping("/{id}")
@@ -93,7 +102,7 @@ public class TenantController {
     @PutMapping(value = "/status")
     @UserLog(type = OperateType.UPDATE, description = "更新路由状态")
     public R<Boolean> changeStatus(SystemTenant tenant) {
-        return new R<>(systemTenantService.changeStatus(tenant));
+        return new R<>(systemTenantService.changeStatus(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), tenant));
     }
 
     @ApiOperation(value = "检测租户是否存在", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))

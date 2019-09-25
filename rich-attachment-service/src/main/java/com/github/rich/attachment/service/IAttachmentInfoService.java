@@ -1,14 +1,13 @@
 package com.github.rich.attachment.service;
 
-import com.github.rich.attachment.entity.AttachmentInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.attachment.entity.AttachmentInfo;
 import com.github.rich.attachment.vo.Upload;
-import com.github.rich.attachment.vo.UploadResult;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * <p>
- *  服务类
+ * 附件信息保存实体，持久化到数据库
+ * 服务类
  * </p>
  *
  * @author Petty
@@ -18,18 +17,26 @@ public interface IAttachmentInfoService extends IService<AttachmentInfo> {
 
     /**
      * 保存文件上传记录
-     * @param fileId FileID
-     * @param fileName FileName
-     * @param md5 MD5
-     * @param filePath 文件相对地址
-     * @param upload 上传对象
+     *
+     * @param userId      UserId
+     * @param fileId      FileID
+     * @param fileName    FileName
+     * @param md5         MD5
+     * @param filePath    文件相对地址
+     * @param upload      上传对象
      * @param contentType 类型
-     * @param fileSize 大小
+     * @param fileSize    大小
      * @return Boolean
      */
-    Boolean save(String fileId,String fileName,String md5, String filePath, Upload upload, String contentType, Long fileSize);
+    Boolean save(String userId, String fileId, String fileName, String md5, String filePath, Upload upload, String contentType, Long fileSize);
 
 
+    /**
+     * 通过附件ID获取附件内容
+     *
+     * @param id 附件ID
+     * @return AttachmentInfo
+     */
     AttachmentInfo getAttachmentInfoById(String id);
 
 

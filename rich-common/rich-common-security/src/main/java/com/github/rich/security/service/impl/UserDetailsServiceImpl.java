@@ -42,15 +42,15 @@ public class UserDetailsServiceImpl implements RichUserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByWeChatOpenID(String openid) {
-        User user = remoteUserService.findByWeChatOpenID(openid);
+    public UserDetails loadUserByWeChatOpenId(String openid) {
+        User user = remoteUserService.findByWeChatOpenId(openid);
         Preconditions.checkNotNull(user.getId(), "微信号未绑定");
         return new UserDetailsImpl(user);
     }
 
     @Override
-    public UserDetails loadUserByWeChatUnionID(String unionid) {
-        User user = remoteUserService.findByWeChatUnionID(unionid);
+    public UserDetails loadUserByWeChatUnionId(String unionid) {
+        User user = remoteUserService.findByWeChatUnionId(unionid);
         Preconditions.checkNotNull(user.getId(), "微信号未绑定");
         return new UserDetailsImpl(user);
     }

@@ -21,6 +21,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 /**
  * @author Petty
  */
@@ -51,10 +53,10 @@ public class UserController {
             @ApiImplicitParam(paramType = "form", name = "unionid", value = "UnionID", dataTypeClass = String.class)
     })
     @PostMapping("/register/wechat/open")
-    public R<Boolean> registerByWeChatOpenID(String openid, String unionid) {
+    public R<Boolean> registerByWeChat(String openid, String unionid) {
         openid = StringUtils.isBlank(openid) ? "" : openid;
         unionid = StringUtils.isBlank(unionid) ? "" : unionid;
-        return new R<>(systemUserService.registerByWeChatOpenID(openid, unionid));
+        return new R<>(systemUserService.registerByWeChat(openid, unionid));
     }
 
     @ApiOperation(value = "获取用户列表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
@@ -84,7 +86,7 @@ public class UserController {
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建用户")
     public R<String> create(SystemUser systemUser) {
-        return new R<>(systemUserService.create(systemUser));
+        return new R<>(systemUserService.create(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemUser));
     }
 
     @ApiOperation(value = "更新用户", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
@@ -95,7 +97,15 @@ public class UserController {
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新用户")
     public R<Boolean> update(SystemUser systemUser) {
-        return new R<>(systemUserService.update(systemUser));
+        String superAdminRole = "SUPER_ADMIN";
+        if (!SecurityUtil.getRoles().contains(superAdminRole)) {
+            /*
+              超级管理员更新数据部要更新租户ID
+              设置为空值将指不更新数据库字段
+             */
+            systemUser.setTenantId(null);
+        }
+        return new R<>(systemUserService.update(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemUser));
     }
 
     @ApiOperation(value = "删除用户", notes = "删除用户将会删除与用户相关的关联数据，同时需要管理员权限", authorizations = @Authorization(value = "oauth2"))

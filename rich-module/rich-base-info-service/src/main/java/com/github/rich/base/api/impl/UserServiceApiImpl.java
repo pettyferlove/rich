@@ -33,13 +33,13 @@ public class UserServiceApiImpl implements UserServiceApi {
     }
 
     @Override
-    public User getByWeChatOpenID(String openid) {
-        return systemUserService.findByWeChatOpenID(openid);
+    public User getByWeChatOpenId(String openid) {
+        return systemUserService.findByWeChatOpenId(openid);
     }
 
     @Override
-    public User getByWeChatUnionID(String unionid) {
-        return systemUserService.findByWeChatUnionID(unionid);
+    public User getByWeChatUnionId(String unionid) {
+        return systemUserService.findByWeChatUnionId(unionid);
     }
 
     @Override

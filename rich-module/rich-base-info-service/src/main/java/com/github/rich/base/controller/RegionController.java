@@ -7,11 +7,13 @@ import com.github.rich.base.vo.RegionNode;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -63,7 +65,7 @@ public class RegionController {
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建行政区划信息表")
     public R<String> create(SystemRegion systemRegion) {
-        return new R<>(systemRegionService.create(systemRegion));
+        return new R<>(systemRegionService.create(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemRegion));
     }
 
     @ApiOperation(value = "更新行政区划信息表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))
@@ -74,7 +76,7 @@ public class RegionController {
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新行政区划信息表")
     public R<Boolean> update(SystemRegion systemRegion) {
-        return new R<>(systemRegionService.update(systemRegion));
+        return new R<>(systemRegionService.update(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemRegion));
     }
 
     @ApiOperation(value = "删除行政区划信息表", notes = "无需特殊权限", authorizations = @Authorization(value = "oauth2"))

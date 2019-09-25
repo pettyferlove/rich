@@ -26,7 +26,7 @@ public interface RichUserDetailsService extends UserDetailsService {
      * @param openid OpenID
      * @return UserDetails
      */
-    UserDetails loadUserByWeChatOpenID(String openid);
+    UserDetails loadUserByWeChatOpenId(String openid);
 
     /**
      * 通过微信UnionID查询用户及其角色信息
@@ -34,5 +34,5 @@ public interface RichUserDetailsService extends UserDetailsService {
      * @param unionid UnionID
      * @return UserDetails
      */
-    UserDetails loadUserByWeChatUnionID(String unionid);
+    UserDetails loadUserByWeChatUnionId(String unionid);
 }

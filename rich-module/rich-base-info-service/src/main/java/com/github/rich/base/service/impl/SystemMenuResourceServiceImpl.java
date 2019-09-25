@@ -16,7 +16,6 @@ import com.github.rich.base.vo.MenuNode;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.service.impl.UserDetailsImpl;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -52,10 +51,10 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
             @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#menu.parentId", condition = "#menu.parentId!=null")
     })
-    public String createNode(SystemMenuResource menu) {
+    public String createNode(String userId, SystemMenuResource menu) {
         String menuId = IdUtil.simpleUUID();
         menu.setId(menuId);
-        menu.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        menu.setCreator(userId);
         menu.setCreateTime(LocalDateTime.now());
         if (this.save(menu)) {
             return menuId;
@@ -112,7 +111,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
     @Transactional(rollbackFor = Throwable.class)
     public Boolean deleteNode(String id) {
         List<SystemMenuResource> systemMenuResources = this.list(Wrappers.<SystemMenuResource>lambdaQuery().eq(SystemMenuResource::getParentId, id));
-        systemRoleMenuService.remove(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getMenuId,id));
+        systemRoleMenuService.remove(Wrappers.<SystemRoleMenu>lambdaQuery().eq(SystemRoleMenu::getMenuId, id));
         if (!systemMenuResources.isEmpty()) {
             throw new BaseRuntimeException("存在子节点，无法删除");
         }
@@ -126,9 +125,9 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
             @CacheEvict(value = CacheConstant.SYSTEM_MENU_USER_CACHE, allEntries = true),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#menu.parentId", condition = "#menu.parentId!=null")
     })
-    public Boolean updateNode(SystemMenuResource menu) {
-        menu.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
-        menu.setModifierTime(LocalDateTime.now());
+    public Boolean updateNode(String userId, SystemMenuResource menu) {
+        menu.setModifier(userId);
+        menu.setModifyTime(LocalDateTime.now());
         return this.updateById(menu);
     }
 

@@ -7,11 +7,13 @@ import com.github.rich.base.service.ISystemRoleService;
 import com.github.rich.common.core.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
+import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Petty
@@ -54,7 +56,7 @@ public class RoleController {
     @PostMapping
     @UserLog(type = OperateType.ADD, description = "创建角色")
     public R<String> create(SystemRole systemRole) {
-        return new R<>(systemRoleService.create(systemRole));
+        return new R<>(systemRoleService.create(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemRole));
     }
 
     @ApiOperation(value = "更新角色", notes = "需要管理员权限", authorizations = @Authorization(value = "oauth2"))
@@ -65,7 +67,7 @@ public class RoleController {
     @PutMapping
     @UserLog(type = OperateType.UPDATE, description = "更新角色")
     public R<Boolean> update(SystemRole systemRole) {
-        return new R<>(systemRoleService.update(systemRole));
+        return new R<>(systemRoleService.update(Objects.requireNonNull(SecurityUtil.getUser()).getUserId(), systemRole));
     }
 
     @ApiOperation(value = "删除角色", notes = "删除角色将会删除与角色相关的关联数据，同时需要管理员权限", authorizations = @Authorization(value = "oauth2"))

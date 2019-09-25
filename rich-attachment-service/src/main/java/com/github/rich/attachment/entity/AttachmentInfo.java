@@ -71,7 +71,7 @@ public class AttachmentInfo extends Model<AttachmentInfo> {
     private String modifier;
 
     @ApiModelProperty(value = "修改时间")
-    private LocalDateTime modifierTime;
+    private LocalDateTime modifyTime;
 
 
     @Override

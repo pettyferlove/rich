@@ -20,6 +20,7 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
 
     /**
      * 根据字典类型查询字典项
+     *
      * @param type 字典类型 eg: user_type
      * @return Dict集合
      */
@@ -53,21 +54,24 @@ public interface ISystemDictTypeService extends IService<SystemDictType> {
     /**
      * 创建数据
      *
+     * @param userId   UserId
      * @param dictType 要创建的对象
      * @return Boolean
      */
-    String create(SystemDictType dictType);
+    String create(String userId, SystemDictType dictType);
 
     /**
      * 更新数据（必须带Code）
      *
+     * @param userId   UserId
      * @param dictType 对象
      * @return Boolean
      */
-    Boolean update(SystemDictType dictType);
+    Boolean update(String userId, SystemDictType dictType);
 
     /**
      * 检查字典类型是否存在
+     *
      * @param type 类型（CODE）
      * @return 存在True 不存在False
      */

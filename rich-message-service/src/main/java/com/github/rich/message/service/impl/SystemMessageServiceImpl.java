@@ -9,12 +9,10 @@ import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.mapper.SystemMessageMapper;
 import com.github.rich.message.service.ISystemMessageService;
 import com.github.rich.message.vo.message.UserMessageVO;
-import com.github.rich.security.utils.SecurityUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -29,9 +27,9 @@ import java.util.Optional;
 public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, SystemMessage> implements ISystemMessageService {
 
     @Override
-    public List<UserMessageVO> loadUnread() {
+    public List<UserMessageVO> loadUnread(String userId) {
         List<SystemMessage> list = this.list(Wrappers.<SystemMessage>lambdaQuery().orderByDesc(SystemMessage::getCreateTime)
-                .eq(SystemMessage::getReceiver, Objects.requireNonNull(SecurityUtil.getUser()).getUserId())
+                .eq(SystemMessage::getReceiver, userId)
                 .eq(SystemMessage::getState, 0));
         Optional<List<UserMessageVO>> optionalUserGeneralMessages = Optional.ofNullable(ConverterUtil.convertList(SystemMessage.class, UserMessageVO.class, list));
         return optionalUserGeneralMessages.orElseGet(ArrayList::new);
@@ -49,11 +47,11 @@ public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, S
     }
 
     @Override
-    public Boolean read(String id) {
+    public Boolean read(String userId, String id) {
         SystemMessage systemMessage = new SystemMessage();
         systemMessage.setId(id);
         systemMessage.setState(1);
-        systemMessage.setModifier(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
+        systemMessage.setModifier(userId);
         return this.updateById(systemMessage);
     }
 
