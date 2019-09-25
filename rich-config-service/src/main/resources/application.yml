@@ -3,4 +3,4 @@ info:
     artifact: rich-config-service
     name: rich-config-service
     description: 服务配置中心
-    version: 1.2.0
+    version: @revision@

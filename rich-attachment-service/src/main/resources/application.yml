@@ -3,7 +3,7 @@ info:
     artifact: rich-attachment-service
     name: rich-attachment-service
     description: 附件服务
-    version: 1.2.0
+    version: @revision@
 attachment:
   cloud:
     aliyun:

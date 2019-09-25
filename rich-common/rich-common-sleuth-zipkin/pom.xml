@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.github.rich</groupId>
         <artifactId>rich-common</artifactId>
-        <version>1.2.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>rich-common-sleuth-zipkin</artifactId>
-    <version>1.2.0</version>
+    <version>${revision}</version>
     <name>rich-common-sleuth-zipkin</name>
 
     <dependencies>

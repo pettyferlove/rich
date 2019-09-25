@@ -3,4 +3,4 @@ info:
     artifact: rich-demo-service
     name: rich-demo-service
     description: 示范
-    version: 1.2.0
+    version: @revision@

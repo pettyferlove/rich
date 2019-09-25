@@ -126,14 +126,14 @@ Rich Tx Manager Service
 <parent>
     <groupId>com.github.rich</groupId>
     <artifactId>rich-module</artifactId>
-    <version>1.2.0</version>
+    <version>${revision}</version>
 </parent>
 
 **支撑整个Rich生态的服务使用该依赖**
 <parent>
     <groupId>com.github.rich</groupId>
     <artifactId>rich</artifactId>
-    <version>1.2.0</version>
+    <version>${revision}</version>
 </parent>
 ~~~
 

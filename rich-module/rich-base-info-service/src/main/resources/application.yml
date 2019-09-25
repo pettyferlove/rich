@@ -3,7 +3,7 @@ info:
     artifact: rich-base-info-service
     name: rich-base-info-service
     description: 基础信息服务
-    version: 1.2.0
+    version: @revision@
 multi-tenancy:
   table-field: tenant_id # 租户标识字段
   ignore:
