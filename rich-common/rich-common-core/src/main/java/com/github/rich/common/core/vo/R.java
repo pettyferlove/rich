@@ -29,12 +29,14 @@ public class R<T> implements Serializable {
 
     public R() {
         super();
+        this.message = CommonConstant.SUCCESS_MESSAGE;
         this.timestamp = System.currentTimeMillis();
     }
 
     public R(T data) {
         super();
         this.data = data;
+        this.message = CommonConstant.SUCCESS_MESSAGE;
         this.timestamp = System.currentTimeMillis();
     }
 
