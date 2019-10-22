@@ -22,6 +22,8 @@ public interface CommonConstant {
      */
     int SUCCESS = 200;
 
+    String SUCCESS_MESSAGE = "SUCCESS";
+
     /**
      * WebSocket 处理成功
      */
@@ -38,6 +40,7 @@ public interface CommonConstant {
     int WS_FAIL = 200005;
 
     int FAIL = 500;
+    String FAIL_MESSAGE = "FAIL";
 
     /**
      * 没有权限
