@@ -1,6 +1,7 @@
 package com.github.rich.common.core.utils;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Arrays;
  * @author Petty
  */
 public class PKCS7Encoder {
-    private static final Charset CHARSET = Charset.forName("utf-8");
+    private static final Charset CHARSET = StandardCharsets.UTF_8;
     private static final int BLOCK_SIZE = 32;
 
     /**
@@ -21,9 +22,6 @@ public class PKCS7Encoder {
     public static byte[] encode(int count) {
         // 计算需要填充的位数
         int amountToPad = BLOCK_SIZE - (count % BLOCK_SIZE);
-        if (amountToPad == 0) {
-            amountToPad = BLOCK_SIZE;
-        }
         // 获得补位所用的字符
         char padChr = chr(amountToPad);
         StringBuilder tmp = new StringBuilder();

@@ -49,7 +49,7 @@ public class UserLogAop {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         assert requestAttributes != null;
         HttpServletRequest request = requestAttributes.getRequest();
-        String ip = CommonUtils.getIpAdrress(request);
+        String ip = CommonUtils.getIpAddress(request);
         String userAgent = request.getHeader("user-agent");
         String method = request.getMethod();
         String url = request.getRequestURI();

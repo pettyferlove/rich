@@ -1,6 +1,6 @@
 package com.github.rich.common.core.bean.handler;
 
-import com.github.rich.common.core.constants.CommonConstant;
+import cn.hutool.http.HttpStatus;
 import com.github.rich.common.core.exception.BaseException;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.vo.R;
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
     public R baseExceptionHandler(HttpServletResponse response, BaseRuntimeException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(ex.getStatus());
-        return new R(ex, ex.getStatus());
+        return new R(ex);
     }
 
     /**
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public R runtimeExceptionHandler(HttpServletResponse response, RuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        response.setStatus(CommonConstant.EX_OTHER_CODE);
+        response.setStatus(HttpStatus.HTTP_INTERNAL_ERROR);
         return new R(ex);
     }
 
@@ -62,7 +62,7 @@ public class GlobalExceptionHandler {
     public R otherExceptionHandler(HttpServletResponse response, BaseException ex) {
         log.error(ex.getMessage(), ex);
         response.setStatus(ex.getStatus());
-        return new R(ex, ex.getStatus());
+        return new R(ex);
     }
 
 
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public R exceptionHandler(HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
-        response.setStatus(CommonConstant.EX_OTHER_CODE);
+        response.setStatus(HttpStatus.HTTP_INTERNAL_ERROR);
         return new R(ex);
     }
 
@@ -102,8 +102,8 @@ public class GlobalExceptionHandler {
             errorMessage.append(":");
             errorMessage.append(error.getDefaultMessage());
         }
-        response.setStatus(CommonConstant.FAIL);
-        return new R(CommonConstant.FAIL, errorMessage.toString());
+        response.setStatus(HttpStatus.HTTP_INTERNAL_ERROR);
+        return new R(errorMessage.toString());
     }
 
 }

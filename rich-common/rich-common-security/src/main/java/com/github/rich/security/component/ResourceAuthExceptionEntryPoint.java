@@ -49,7 +49,6 @@ public class ResourceAuthExceptionEntryPoint implements AuthenticationEntryPoint
 		response.setCharacterEncoding(CommonConstant.UTF8);
 		response.setContentType(CommonConstant.CONTENT_TYPE);
 		R<String> result = new R<>();
-		result.setStatus(HttpStatus.HTTP_UNAUTHORIZED);
 		result.setTimestamp(System.currentTimeMillis());
 		if (authException != null) {
 			result.setMessage("error");

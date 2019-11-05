@@ -65,7 +65,7 @@ public class CommonUtils {
      * @param request Request
      * @return IP地址
      */
-    public static String getIpAdrress(HttpServletRequest request) {
+    public static String getIpAddress(HttpServletRequest request) {
         String xIp = request.getHeader("X-Real-IP");
         String xFor = request.getHeader("X-Forwarded-For");
         if (StringUtils.isNotEmpty(xFor) && !CommonConstant.UN_KNOWN_CLIENT_IP.equalsIgnoreCase(xFor)) {

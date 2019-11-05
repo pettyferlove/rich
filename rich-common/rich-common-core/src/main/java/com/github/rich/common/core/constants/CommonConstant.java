@@ -17,12 +17,10 @@ public interface CommonConstant {
 
     String OUTER_SERVICE_PREFIX_REGEX = OUTER_SERVICE_PREFIX + "/.[0-9a-zA-Z_]*/";
 
-    /**
-     * 请求成功
-     */
-    int SUCCESS = 200;
 
-    String SUCCESS_MESSAGE = "SUCCESS";
+    String SUCCESS_MESSAGE = "Success";
+
+    String FAIL_MESSAGE = "Fail";
 
     /**
      * WebSocket 处理成功
@@ -39,19 +37,7 @@ public interface CommonConstant {
      */
     int WS_FAIL = 200005;
 
-    int FAIL = 500;
-    String FAIL_MESSAGE = "FAIL";
 
-    /**
-     * 没有权限
-     */
-    int FORBIDDEN = 403;
-
-    int EX_USER_LOGIN = 400;
-
-    int EX_NO_USER = 405;
-
-    int EX_OTHER_CODE = 500;
     /**
      * Jwt加密/解密凭据
      */
