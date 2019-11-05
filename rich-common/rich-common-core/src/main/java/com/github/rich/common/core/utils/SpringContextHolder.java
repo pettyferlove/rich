@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * SpringApplicationContext工具类
+ *
  * @author Petty
  */
 @Slf4j
@@ -29,14 +30,14 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
         SpringContextHolder.applicationContext = applicationContext;
     }
 
-    private void clearContext(){
-        if(log.isDebugEnabled()){
+    private void clearContext() {
+        if (log.isDebugEnabled()) {
             log.debug("ApplicationContext clear");
         }
         applicationContext = null;
     }
 
-    public static ApplicationContext getApplicationContext(){
+    public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
@@ -48,7 +49,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
         return applicationContext.getBean(clazz);
     }
 
-    public static <T> T getBean(String name,Class<T> clazz){
+    public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
     }
 }

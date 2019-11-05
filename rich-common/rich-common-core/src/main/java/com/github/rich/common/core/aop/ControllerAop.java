@@ -1,5 +1,6 @@
 package com.github.rich.common.core.aop;
 
+import cn.hutool.http.HttpStatus;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +67,7 @@ public class ControllerAop {
         } catch (Throwable e) {
             log.error("Error：", e);
             if (e instanceof AccessDeniedException) {
-                throw new BaseRuntimeException(e.getMessage(), CommonConstant.FORBIDDEN);
+                throw new BaseRuntimeException(e.getMessage(), HttpStatus.HTTP_FORBIDDEN);
             } else {
                 throw e;
             }
