@@ -2,12 +2,16 @@ package com.github.rich.gateway.route;
 
 import com.alibaba.fastjson.JSON;
 import com.github.rich.base.dto.Route;
+import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.RemoteGatewayRouteService;
+import com.github.rich.base.feign.RemoteUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

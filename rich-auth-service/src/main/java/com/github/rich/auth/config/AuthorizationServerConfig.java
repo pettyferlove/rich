@@ -7,6 +7,7 @@ import com.github.rich.auth.service.RichClientDetailsService;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.security.component.ResponseExceptionTranslator;
 import com.github.rich.security.service.RichUserDetailsService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
@@ -68,6 +70,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final RichUserDetailsService userDetailsService;
 
+    private final ClientDetailsService clientDetailsService;
+
     private final RedisConnectionFactory redisConnectionFactory;
 
     private final CaptchaValidateService captchaValidateService;
@@ -75,30 +79,32 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final DataSource dataSource;
 
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService) {
+    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, ClientDetailsService clientDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
+        this.clientDetailsService = clientDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
         this.captchaValidateService = smsCaptchaValidateService;
     }
 
-    @Bean
-    public ClientDetailsService clientDetailsService() {
-        RichClientDetailsService richClientDetailsService = new RichClientDetailsService(dataSource);
-        richClientDetailsService.setSelectClientDetailsSql(DEFAULT_SELECT_STATEMENT);
-        richClientDetailsService.setFindClientDetailsSql(DEFAULT_FIND_STATEMENT);
-        return richClientDetailsService;
+    @Override
+    @SneakyThrows
+    public void configure(ClientDetailsServiceConfigurer clients) {
+        RichClientDetailsService clientDetailsService = new RichClientDetailsService(dataSource);
+        clientDetailsService.setSelectClientDetailsSql(DEFAULT_SELECT_STATEMENT);
+        clientDetailsService.setFindClientDetailsSql(DEFAULT_FIND_STATEMENT);
+        clients.withClientDetails(clientDetailsService);
     }
 
     private OAuth2RequestFactory requestFactory() {
-        return new DefaultOAuth2RequestFactory(clientDetailsService());
+        return new DefaultOAuth2RequestFactory(clientDetailsService);
     }
 
     @Bean
     @Primary
     public DefaultTokenServices tokenServices() {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-        defaultTokenServices.setClientDetailsService(clientDetailsService());
+        defaultTokenServices.setClientDetailsService(clientDetailsService);
         defaultTokenServices.setTokenStore(tokenStore());
         defaultTokenServices.setSupportRefreshToken(true);
         defaultTokenServices.setReuseRefreshToken(false);
@@ -113,7 +119,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      * @return List
      */
     private List<TokenGranter> getDefaultTokenGranters(AuthorizationCodeServices authorizationCodeServices) {
-        ClientDetailsService clientDetails = clientDetailsService();
+        ClientDetailsService clientDetails = clientDetailsService;
         AuthorizationServerTokenServices tokenServices = tokenServices();
         OAuth2RequestFactory requestFactory = requestFactory();
 

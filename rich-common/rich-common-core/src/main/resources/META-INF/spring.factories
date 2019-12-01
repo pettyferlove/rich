@@ -1,4 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.github.rich.common.core.config.JacksonConfig,\
   com.github.rich.common.core.config.RedisConfig,\
   com.github.rich.common.core.web.CacheManagerController,\
   com.github.rich.common.core.config.CacheProperties,\

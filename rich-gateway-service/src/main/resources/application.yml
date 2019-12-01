@@ -4,3 +4,6 @@ info:
     name: rich-gateway-service
     description: 服务网关
     version: @revision@
+spring:
+  main:
+    allow-bean-definition-overriding: true
