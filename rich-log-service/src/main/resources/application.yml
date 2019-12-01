@@ -4,3 +4,6 @@ info:
     name: rich-log-service
     description: Rich用户操作日志收集/持久化服务
     version: @revision@
+spring:
+  main:
+    allow-bean-definition-overriding: true

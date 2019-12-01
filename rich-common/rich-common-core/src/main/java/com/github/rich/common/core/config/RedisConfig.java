@@ -12,6 +12,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -50,6 +51,7 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     @Bean
+    @Primary
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(keySerializer());
@@ -60,14 +62,14 @@ public class RedisConfig extends CachingConfigurerSupport {
         return redisTemplate;
     }
 
-    @Bean
+    /*@Bean
     @Override
     public CacheManager cacheManager() {
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(redisCacheConfiguration())
                 .transactionAware()
                 .build();
-    }
+    }*/
 
     private RedisSerializer<String> keySerializer() {
         return new StringRedisSerializer();

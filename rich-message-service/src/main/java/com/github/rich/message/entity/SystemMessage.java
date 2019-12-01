@@ -88,7 +88,7 @@ public class SystemMessage extends Model<SystemMessage> {
     private String modifier;
 
     @ApiModelProperty(value = "修改时间")
-    private LocalDateTime modifierTime;
+    private LocalDateTime modifyTime;
 
 
     @Override
