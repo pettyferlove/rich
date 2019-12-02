@@ -1,6 +1,0 @@
-info:
-  build:
-    artifact: rich-config-service
-    name: rich-config-service
-    description: 服务配置中心
-    version: @revision@

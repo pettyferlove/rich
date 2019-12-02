@@ -1,63 +1,74 @@
 spring:
   application:
     name: rich-gateway-service
-  main:
-    allow-bean-definition-overriding: true
   profiles:
     active: dev
-  cloud:
-    config:
-      retry:
-        initial-interval: 1000
-        max-attempts: 6
-        max-interval: 2000
-        multiplier: 1.1
-      discovery:
-        enabled: true
-        service-id: rich-config-service
-      label: ${spring.profiles.active}
-      fail-fast: true
-    bus:
-      trace:
-        enabled: true
-      enabled: true
 ---
 server:
   port: 8020
 spring:
   profiles: dev
-eureka:
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 5
-    lease-expiration-duration-in-seconds: 20
-  client:
-    service-url:
-      defaultZone: http://10.0.100.1:10151/eureka
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        port: 8848
+        server-addr: ${spring.cloud.nacos.discovery.ip}:${spring.cloud.nacos.discovery.port}
+        group: DEFAULT_GROUP
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+      config:
+        group: RICH_GROUP
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        ext-config:
+          - data-id: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+          - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
 ---
 server:
   port: 8020
 spring:
   profiles: remote-dev
-eureka:
-  instance:
-    ip-address: 106.14.2.180
-    hostname: ${eureka.instance.ip-address}
-    prefer-ip-address: false
-    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
-    lease-renewal-interval-in-seconds: 5
-    lease-expiration-duration-in-seconds: 20
-  client:
-    service-url:
-      defaultZone: http://${eureka.instance.hostname}:10151/eureka
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        port: 8848
+        server-addr: ${spring.cloud.nacos.discovery.ip}:${spring.cloud.nacos.discovery.port}
+        group: DEFAULT_GROUP
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+      config:
+        group: RICH_GROUP
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        ext-config:
+          - data-id: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+          - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
 ---
 server:
   port: 8020
 spring:
   profiles: prd
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    serviceUrl:
-      defaultZone: http://10.0.100.1:10151/eureka
+  cloud:
+    nacos:
+      discovery:
+        ip: 127.0.0.1
+        port: 8848
+        server-addr: ${spring.cloud.nacos.discovery.ip}:${spring.cloud.nacos.discovery.port}
+        group: DEFAULT_GROUP
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+      config:
+        group: RICH_GROUP
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        ext-config:
+          - data-id: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+          - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}

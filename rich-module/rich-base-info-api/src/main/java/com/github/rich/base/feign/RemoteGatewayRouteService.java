@@ -13,7 +13,7 @@ import java.util.List;
  * @author Petty
  */
 
-@FeignClient(contextId = "remoteGatewayRouteService",value = "rich-base-info-service", fallbackFactory = RemoteGatewayRouteServiceFallbackFactory.class)
+@FeignClient(contextId = "remoteGatewayRouteService",name = "rich-base-info-service", fallbackFactory = RemoteGatewayRouteServiceFallbackFactory.class)
 public interface RemoteGatewayRouteService {
 
     /**
