@@ -3,9 +3,9 @@ logging:
     org.springframework.security: debug
 spring:
   application:
-    name: @artifactId@
+    name: rich-monitor-service
   profiles:
-    active: @profiles.active@
+    active: dev
 ---
 server:
   port: 10158
