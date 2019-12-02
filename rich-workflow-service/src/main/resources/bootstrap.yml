@@ -4,8 +4,6 @@ logging:
 spring:
   application:
     name: rich-workflow-service
-  main:
-    allow-bean-definition-overriding: true
   profiles:
     active: dev
   cloud:
