@@ -4,8 +4,6 @@ logging:
 spring:
   application:
     name: rich-third-party-service
-  main:
-    allow-bean-definition-overriding: true
   profiles:
     active: dev
   cloud:
