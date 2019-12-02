@@ -12,6 +12,7 @@ import de.codecentric.boot.admin.server.notify.AbstractStatusChangeNotifier;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.GenericMessage;
+import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ import java.util.concurrent.TimeUnit;
  * @author Petty
  */
 @Slf4j
+@Component
 @EnableBinding(ServiceMonitorSource.class)
 public class ServiceStatusNotifier extends AbstractStatusChangeNotifier {
 
