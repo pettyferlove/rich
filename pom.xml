@@ -31,7 +31,7 @@
     </parent>
 
     <properties>
-        <revision>2.0.0</revision>
+        <revision>2.0.1</revision>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.compile.source.version>1.8</jdk.compile.source.version>
