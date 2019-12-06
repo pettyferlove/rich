@@ -1,7 +1,5 @@
 package com.github.rich.base.config;
 
-import com.baomidou.mybatisplus.core.injector.ISqlInjector;
-import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
@@ -34,16 +32,6 @@ public class MybatisPlusConfig {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
         paginationInterceptor.setSqlParserList(Lists.newArrayList(tenantSqlParser));
         return paginationInterceptor;
-    }
-
-    /**
-     * 逻辑删除插件
-     *
-     * @return LogicSqlInjector
-     */
-    @Bean
-    public ISqlInjector sqlInjector() {
-        return new LogicSqlInjector();
     }
 
     /**
