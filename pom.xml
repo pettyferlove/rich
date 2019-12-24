@@ -56,6 +56,7 @@
         <logstash.version>5.0</logstash.version>
         <jasypt.version>1.18</jasypt.version>
         <hutool.version>4.5.1</hutool.version>
+        <contiperf.version>2.3.4</contiperf.version>
         <aliyun-core.version>4.1.0</aliyun-core.version>
         <aliyun-sdk-oss.version>2.8.3</aliyun-sdk-oss.version>
         <skipTests>true</skipTests>
@@ -101,6 +102,12 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.databene</groupId>
+            <artifactId>contiperf</artifactId>
+            <version>${contiperf.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
