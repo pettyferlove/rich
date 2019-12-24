@@ -40,9 +40,6 @@ public class ExcelReadUtil{
 		if (POIFSFileSystem.hasPOIFSHeader(in)) {
 			return new HSSFWorkbook(in);
 		}
-		if (POIXMLDocument.hasOOXMLHeader(in)) {
-			return new XSSFWorkbook(OPCPackage.open(in));
-		}
 		
 		throw new IllegalArgumentException("你的excel版本目前poi解析不了！");
 	}

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
-import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 /**
  * @author Petty
  */
-@ThreadSafe
 public class CustomLocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
 
     private DateTimeFormatter dateTimeFormatter;

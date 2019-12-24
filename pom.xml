@@ -49,14 +49,11 @@
         <swagger.version>2.9.2</swagger.version>
         <zipkin.version>2.12.2</zipkin.version>
         <fastjson.version>1.2.60</fastjson.version>
-        <junit.version>4.12</junit.version>
         <druid.version>1.1.21</druid.version>
         <mysql.version>8.0.9-rc</mysql.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <velocity.version>2.0</velocity.version>
-        <joda-time.version>2.9.9</joda-time.version>
         <logstash.version>5.0</logstash.version>
-        <guava.version>23.0</guava.version>
         <jasypt.version>1.18</jasypt.version>
         <hutool.version>4.5.1</hutool.version>
         <aliyun-core.version>4.1.0</aliyun-core.version>
@@ -104,7 +101,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -120,13 +116,10 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>${joda-time.version}</version>
         </dependency>
         <dependency>
             <groupId>net.logstash.logback</groupId>
@@ -143,7 +136,6 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
