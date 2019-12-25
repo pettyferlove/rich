@@ -35,7 +35,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 106.52.184.13:8848
         group: DEFAULT_GROUP
         namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
       config:

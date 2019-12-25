@@ -37,7 +37,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: hwtest-nacos.hbhmkj.net
+        server-addr: 106.52.184.13:8848
         group: DEFAULT_GROUP
         namespace: f85ba8f1-80c1-4126-8b96-bb4a5bdc9389
       config:
