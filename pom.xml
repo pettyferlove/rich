@@ -20,13 +20,12 @@
         <module>rich-attachment-service</module>
         <module>rich-log-service</module>
         <module>rich-workflow-service</module>
-        <module>rich-zipkin-service</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.4.RELEASE</version>
+        <version>2.2.5.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -37,17 +36,17 @@
         <jdk.compile.source.version>1.8</jdk.compile.source.version>
         <jdk.compile.target.version>1.8</jdk.compile.target.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
-        <spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
+        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
         <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
         <spring-platform.version>Cairo-SR8</spring-platform.version>
-        <security.oauth.version>2.3.6.RELEASE</security.oauth.version>
-        <security.oauth.auto.version>2.1.2.RELEASE</security.oauth.auto.version>
+        <security.oauth.version>2.4.0.RELEASE</security.oauth.version>
+        <security.oauth.auto.version>2.2.5.RELEASE</security.oauth.auto.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <docker.image.prefix>rich</docker.image.prefix>
         <docker.plugin.version>0.4.13</docker.plugin.version>
         <swagger.version>2.9.2</swagger.version>
-        <zipkin.version>2.12.2</zipkin.version>
+        <zipkin.version>2.12.9</zipkin.version>
         <fastjson.version>1.2.60</fastjson.version>
         <druid.version>1.1.21</druid.version>
         <mysql.version>8.0.9-rc</mysql.version>
@@ -151,6 +150,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
     </dependencies>
@@ -184,16 +184,6 @@
                 <version>${spring-platform.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security.oauth</groupId>
-                <artifactId>spring-security-oauth2</artifactId>
-                <version>${security.oauth.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.security.oauth.boot</groupId>
-                <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-                <version>${security.oauth.auto.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -29,7 +29,7 @@ public class SystemUserRole extends Model<SystemUserRole> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
     private String userId;
