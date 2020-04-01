@@ -10,6 +10,7 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 
 
 /**
+ * 设置Feign拦截器在请求头加上用户Token
  * @author Petty
  */
 @Slf4j
@@ -36,13 +37,14 @@ public class RichFeignClientInterceptor extends OAuth2FeignRequestInterceptor {
 
     /**
      * 这里可以根据条件判断是否需要附加Token到请求链中，防止性能消耗
-     *
+     *  @see com.github.rich.security.annotation.InnerServiceSecurity
      * @param template RequestTemplate
      */
     @Override
     public void apply(RequestTemplate template) {
         boolean needSecurity = false;
         try {
+            // 判断是否需要内部鉴权
             needSecurity = (boolean) BaseContextHandler.get("x-inner-service-security");
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
