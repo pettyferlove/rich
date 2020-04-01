@@ -40,7 +40,7 @@
         <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
         <spring-cloud-alibaba.version>2.1.1.RELEASE</spring-cloud-alibaba.version>
         <spring-platform.version>Cairo-SR8</spring-platform.version>
-        <security.oauth.version>2.2.4.RELEASE</security.oauth.version>
+        <security.oauth.version>2.4.0.RELEASE</security.oauth.version>
         <mybatis-plus.version>3.3.0</mybatis-plus.version>
         <docker.image.prefix>rich</docker.image.prefix>
         <docker.plugin.version>0.4.13</docker.plugin.version>

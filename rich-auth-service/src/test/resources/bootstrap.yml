@@ -17,11 +17,11 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        group: RICH_GROUP
-        namespace: 2878696f-82da-487b-8755-8efabfaaa8b4
+        group: DEFAULT_GROUP
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
       config:
         group: RICH_GROUP
-        namespace: 2878696f-82da-487b-8755-8efabfaaa8b4
+        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         file-extension: yml
         ext-config:
@@ -38,11 +38,11 @@ spring:
     nacos:
       discovery:
         server-addr: 106.52.184.13:8848
-        group: RICH_GROUP
-        namespace: 35937549-b105-441c-be16-173d73baaaca
+        group: DEFAULT_GROUP
+        namespace: f85ba8f1-80c1-4126-8b96-bb4a5bdc9389
       config:
         group: RICH_GROUP
-        namespace: 35937549-b105-441c-be16-173d73baaaca
+        namespace: f85ba8f1-80c1-4126-8b96-bb4a5bdc9389
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         file-extension: yml
         ext-config:
