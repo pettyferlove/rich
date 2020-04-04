@@ -1,11 +1,11 @@
-package com.github.rich.auth;
+package com.github.rich.auth.utils;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class PasswordValidateTests {
+public class PasswordValidateUtilsTests {
 
     private static PasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
