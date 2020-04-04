@@ -1,4 +1,4 @@
-package com.github.rich.base;
+package com.github.rich.base.service;
 
 import cn.hutool.core.util.IdUtil;
 import com.github.rich.base.entity.SystemRole;

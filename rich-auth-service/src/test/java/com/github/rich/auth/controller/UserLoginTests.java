@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.rich.base.dto.User;
 import com.github.rich.base.feign.RemoteUserService;
 import com.github.rich.security.service.AbstractCaptchaValidateService;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
  */
 @ActiveProfiles("test")
 @SpringBootTest
+@Slf4j
 public class UserLoginTests {
 
     private MockMvc mockMvc;
@@ -50,7 +53,7 @@ public class UserLoginTests {
     static User user;
 
     @BeforeAll
-    static void startup() {
+    static void init() {
         /*初始化用户信息数据*/
         user = new User();
         user.setId("1");
@@ -62,12 +65,18 @@ public class UserLoginTests {
 
     @BeforeEach
     public void beforeEach() {
+        log.info("测试开始");
         mockMvc =
                 //配置ServletContext上下文
                 MockMvcBuilders.webAppContextSetup(webApplicationContext)
                         //设置springSecurity配置
                         .apply(springSecurity())
                         .build();
+    }
+
+    @AfterEach
+    void tearDown() {
+        log.info("测试结束");
     }
 
 

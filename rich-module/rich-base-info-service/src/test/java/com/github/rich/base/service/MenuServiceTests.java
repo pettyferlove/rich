@@ -1,4 +1,4 @@
-package com.github.rich.base;
+package com.github.rich.base.service;
 
 import com.alibaba.fastjson.JSON;
 import com.github.rich.base.service.ISystemMenuResourceService;
