@@ -19,7 +19,6 @@
         <module>rich-common-security</module>
         <module>rich-common-log</module>
         <module>rich-common-message</module>
-        <module>rich-common-sleuth-zipkin</module>
     </modules>
 
 </project>

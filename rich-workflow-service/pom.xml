@@ -44,11 +44,6 @@
             <artifactId>rich-common-security</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>com.github.rich</groupId>
-            <artifactId>rich-common-sleuth-zipkin</artifactId>
-            <version>${revision}</version>
-        </dependency>
     </dependencies>
 
     <build>
