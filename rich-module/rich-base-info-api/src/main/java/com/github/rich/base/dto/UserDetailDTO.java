@@ -8,10 +8,7 @@ import com.github.rich.common.core.datatype.CustomLocalDateTimeDeserializer;
 import com.github.rich.common.core.datatype.CustomLocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -21,6 +18,7 @@ import java.time.LocalDateTime;
  * @author Petty
  */
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)

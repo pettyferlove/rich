@@ -11,28 +11,33 @@ public interface SecurityConstant {
     String ROLE_PREFIX = "ROLE_";
 
     /**
+     * 权限前缀
+     */
+    String PERMISSION_PREFIX = "PERMISSION_";
+
+    /**
      * 基础用户角色
      */
-    String BASE_ROLE = "ROLE_USER";
+    String BASE_ROLE = "USER";
 
     /**
      * 管理员角色
      */
-    String SUPER_ROLE = "ROLE_ADMIN";
+    String SUPER_ROLE = "ADMIN";
 
     /**
      * 超级管理员角色
      */
-    String SUPER_ADMIN_ROLE = "ROLE_SUPER_ADMIN";
+    String SUPER_ADMIN_ROLE = "SUPER_ADMIN";
     /**
      * 开发者角色
      */
-    String DEVELOPER_ROLE = "ROLE_DEVELOPER";
+    String DEVELOPER_ROLE = "DEVELOPER";
 
     /**
      * 匿名角色
      */
-    String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
+    String ROLE_ANONYMOUS = "ANONYMOUS";
     /**
      * oauth 授权码模式
      */

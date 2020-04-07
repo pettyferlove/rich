@@ -38,7 +38,7 @@ public class UserDetailsImpl implements UserDetails {
     private List<String> roles;
     private List<String> permissions;
 
-    UserDetailsImpl(User user) {
+    public UserDetailsImpl(User user) {
         this.userId = user.getId();
         this.username = user.getLoginName();
         this.password = user.getPassword();
@@ -61,23 +61,23 @@ public class UserDetailsImpl implements UserDetails {
         Set<GrantedAuthority> authoritySet = new HashSet<>();
         for (String permission : permissions) {
             if (StrUtil.isNotEmpty(permission)) {
-                authoritySet.add(new SimpleGrantedAuthority(permission));
+                authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.PERMISSION_PREFIX + permission));
             }
         }
         for (String role : roles) {
             if (StrUtil.isNotEmpty(role)) {
-                authoritySet.add(new SimpleGrantedAuthority(role));
+                authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ROLE_PREFIX + role));
             }
         }
         //增加基础用户角色 ROLE_USER
         //如果用户自身具备 ROLE_USER则通过Set唯一性保留一个
-        authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.BASE_ROLE));
+        authoritySet.add(new SimpleGrantedAuthority(SecurityConstant.ROLE_PREFIX + SecurityConstant.BASE_ROLE));
         return authoritySet;
     }
 
     @Override
     public String getPassword() {
-        return EncryptionConstant.SIGNATURE+this.password;
+        return EncryptionConstant.SIGNATURE + this.password;
     }
 
     @Override

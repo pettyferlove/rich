@@ -1,12 +1,12 @@
 package com.github.rich.base.controller;
 
+import com.github.rich.security.test.WithMockRichAuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,7 +40,7 @@ class DictItemControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockRichAuthUser
     void testPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/dict/item/page")
                 .param("typeId", "74bf55e9740c41b6b24bbaa8c23c2e87")
