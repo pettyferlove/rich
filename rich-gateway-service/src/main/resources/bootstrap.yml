@@ -1,5 +1,6 @@
 spring:
   application:
+    group: rich
     name: rich-gateway-service
   profiles:
     active: dev
@@ -24,6 +25,10 @@ spring:
             group: ${spring.cloud.nacos.config.group}
           - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
             group: ${spring.cloud.nacos.config.group}
+logging:
+  config: classpath:conf/logback-dev.xml
+  level:
+    org.springframework.security: debug
 ---
 server:
   port: 8020
@@ -45,6 +50,10 @@ spring:
             group: ${spring.cloud.nacos.config.group}
           - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
             group: ${spring.cloud.nacos.config.group}
+logging:
+  config: classpath:conf/logback-dev.xml
+  level:
+    org.springframework.security: debug
 ---
 server:
   port: 8020
@@ -66,3 +75,5 @@ spring:
             group: ${spring.cloud.nacos.config.group}
           - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
             group: ${spring.cloud.nacos.config.group}
+logging:
+  config: classpath:conf/logback-prd.xml
