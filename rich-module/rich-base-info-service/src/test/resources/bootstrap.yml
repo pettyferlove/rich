@@ -1,0 +1,29 @@
+logging:
+  level:
+    org.springframework.security: debug
+spring:
+  application:
+    name: rich-base-info-service
+  profiles:
+    active: test
+---
+server:
+  port: 20000
+spring:
+  profiles: test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: DEFAULT_GROUP
+        namespace: ab031508-25c0-4179-bb35-c91fa60184b1
+      config:
+        group: RICH_GROUP
+        namespace: ab031508-25c0-4179-bb35-c91fa60184b1
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        ext-config:
+          - data-id: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+          - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}

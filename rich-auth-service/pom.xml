@@ -90,11 +90,6 @@
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.rich</groupId>
-            <artifactId>rich-common-sleuth-zipkin</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>3.4.0</version>

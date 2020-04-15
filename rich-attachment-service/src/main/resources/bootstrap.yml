@@ -1,8 +1,6 @@
-logging:
-  level:
-    org.springframework.security: debug
 spring:
   application:
+    group: rich
     name: rich-attachment-service
   profiles:
     active: dev
@@ -15,11 +13,11 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        group: DEFAULT_GROUP
-        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+        group: RICH_GROUP
+        namespace: 2878696f-82da-487b-8755-8efabfaaa8b4
       config:
         group: RICH_GROUP
-        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+        namespace: 2878696f-82da-487b-8755-8efabfaaa8b4
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         file-extension: yml
         ext-config:
@@ -27,6 +25,10 @@ spring:
             group: ${spring.cloud.nacos.config.group}
           - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
             group: ${spring.cloud.nacos.config.group}
+logging:
+  config: classpath:conf/logback-dev.xml
+  level:
+    org.springframework.security: debug
 ---
 server:
   port: 10154
@@ -36,11 +38,11 @@ spring:
     nacos:
       discovery:
         server-addr: 106.52.184.13:8848
-        group: DEFAULT_GROUP
-        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+        group: RICH_GROUP
+        namespace: 35937549-b105-441c-be16-173d73baaaca
       config:
         group: RICH_GROUP
-        namespace: 970338ef-25e5-4734-9c5b-c15917d68ae2
+        namespace: 35937549-b105-441c-be16-173d73baaaca
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
         file-extension: yml
         ext-config:
@@ -48,6 +50,10 @@ spring:
             group: ${spring.cloud.nacos.config.group}
           - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
             group: ${spring.cloud.nacos.config.group}
+logging:
+  config: classpath:conf/logback-dev.xml
+  level:
+    org.springframework.security: debug
 ---
 server:
   port: 10154
@@ -69,3 +75,5 @@ spring:
             group: ${spring.cloud.nacos.config.group}
           - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
             group: ${spring.cloud.nacos.config.group}
+logging:
+  config: classpath:conf/logback-prd.xml
