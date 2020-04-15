@@ -77,3 +77,26 @@ spring:
             group: ${spring.cloud.nacos.config.group}
 logging:
   config: classpath:conf/logback-prd.xml
+---
+server:
+  port: 10156
+spring:
+  profiles: uat
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.0.100.1:8848
+        group: DEFAULT_GROUP
+        namespace: ff4cfd2d-20a7-4b78-821e-33d629acf7e2
+      config:
+        group: RICH_GROUP
+        namespace: ff4cfd2d-20a7-4b78-821e-33d629acf7e2
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yml
+        ext-config:
+          - data-id: application.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+          - data-id: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+logging:
+  config: classpath:conf/logback-uat.xml

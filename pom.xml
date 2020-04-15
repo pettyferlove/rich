@@ -16,10 +16,8 @@
         <module>rich-module</module>
         <module>rich-message-service</module>
         <module>rich-monitor-service</module>
-        <module>rich-tx-manager-service</module>
         <module>rich-attachment-service</module>
         <module>rich-log-service</module>
-        <module>rich-workflow-service</module>
     </modules>
 
     <parent>
@@ -268,31 +266,6 @@
                             </configuration>
                         </execution>
                     </executions>
-                </plugin>
-                <plugin>
-                    <groupId>com.spotify</groupId>
-                    <artifactId>docker-maven-plugin</artifactId>
-                    <version>${docker.plugin.version}</version>
-                    <configuration>
-                        <imageTags>
-                            <imageTag>${project.version}</imageTag>
-                        </imageTags>
-                        <forceTags>true</forceTags>
-                        <imageName>${docker.image.prefix}/${project.name}</imageName>
-                        <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
-                        <resources>
-                            <resource>
-                                <targetPath>/</targetPath>
-                                <directory>${project.build.directory}</directory>
-                                <include>${project.build.finalName}.jar</include>
-                            </resource>
-                            <resource>
-                                <targetPath>/lib</targetPath>
-                                <directory>${project.build.directory}/lib</directory>
-                                <include>*.jar</include>
-                            </resource>
-                        </resources>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>

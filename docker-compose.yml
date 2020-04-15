@@ -1,0 +1,71 @@
+version: '3.7'
+services:
+  rich-attachment-service:
+    build: ./rich-attachment-service
+    image: rich-attachment-service
+    environment:
+      - AGENT_SERVICE_NAME='spring-boot-demo'
+      - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    networks:
+      - internal_access
+  rich-auth-service:
+    build: ./rich-auth-service
+    image: rich-auth-service
+    environment:
+      - AGENT_SERVICE_NAME='spring-boot-demo'
+      - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    depends_on:
+      - rich-base-info-service
+    networks:
+      - internal_access
+  rich-gateway-service:
+    build: ./rich-gateway-service
+    image: rich-gateway-service
+    environment:
+      - AGENT_SERVICE_NAME='spring-boot-demo'
+      - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    ports:
+      - 8020:8020
+    depends_on:
+      - rich-base-info-service
+    networks:
+      - internal_access
+      - external_access
+  rich-base-info-service:
+    build: ./rich-module/rich-base-info-service
+    image: rich-base-info-service
+    environment:
+      - AGENT_SERVICE_NAME='spring-boot-demo'
+      - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    networks:
+      - internal_access
+  rich-monitor-service:
+    build: ./rich-monitor-service
+    image: rich-monitor-service
+    environment:
+      - AGENT_SERVICE_NAME='spring-boot-demo'
+      - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    networks:
+      - internal_access
+  rich-log-service:
+    build: ./rich-log-service
+    image: rich-log-service
+    environment:
+      - AGENT_SERVICE_NAME='spring-boot-demo'
+      - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    networks:
+      - internal_access
+  rich-message-service:
+    build: ./rich-message-service
+    image: rich-message-service
+    environment:
+      - AGENT_SERVICE_NAME='spring-boot-demo'
+      - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    networks:
+      - internal_access
+networks:
+  internal_access:
+    internal: true
+  external_access:
+    external:
+      name: external_access
