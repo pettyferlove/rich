@@ -7,7 +7,7 @@ services:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
     networks:
-      - internal_access
+      - external_access
   rich-auth-service:
     build: ./rich-auth-service
     image: rich-auth-service
@@ -17,7 +17,7 @@ services:
     depends_on:
       - rich-base-info-service
     networks:
-      - internal_access
+      - external_access
   rich-gateway-service:
     build: ./rich-gateway-service
     image: rich-gateway-service
@@ -29,7 +29,6 @@ services:
     depends_on:
       - rich-base-info-service
     networks:
-      - internal_access
       - external_access
   rich-base-info-service:
     build: ./rich-module/rich-base-info-service
@@ -38,7 +37,7 @@ services:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
     networks:
-      - internal_access
+      - external_access
   rich-monitor-service:
     build: ./rich-monitor-service
     image: rich-monitor-service
@@ -46,7 +45,7 @@ services:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
     networks:
-      - internal_access
+      - external_access
   rich-log-service:
     build: ./rich-log-service
     image: rich-log-service
@@ -54,7 +53,7 @@ services:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
     networks:
-      - internal_access
+      - external_access
   rich-message-service:
     build: ./rich-message-service
     image: rich-message-service
@@ -62,10 +61,8 @@ services:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
     networks:
-      - internal_access
+      - external_access
 networks:
-  internal_access:
-    internal: true
   external_access:
     external:
       name: external_access
