@@ -1,22 +1,25 @@
 package com.github.rich.log.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.rich.common.core.datatype.CustomLocalDateTimeDeserializer;
 import com.github.rich.common.core.datatype.CustomLocalDateTimeSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -38,7 +41,7 @@ public class UserOperateLog extends Model<UserOperateLog> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据ID")
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
     @ApiModelProperty(value = "用户ID")

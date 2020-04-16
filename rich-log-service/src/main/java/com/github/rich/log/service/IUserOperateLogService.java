@@ -2,9 +2,8 @@ package com.github.rich.log.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.rich.log.entity.UserOperateLog;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.rich.log.vo.UserLogVO;
+import com.github.rich.log.entity.UserOperateLog;
 
 /**
  * <p>
@@ -28,7 +27,7 @@ public interface IUserOperateLogService extends IService<UserOperateLog> {
      * @param page Page
      * @return IPage
      */
-    IPage<UserLogVO> page(UserOperateLog userOperateLog, Page<UserOperateLog> page);
+    IPage<UserOperateLog> page(UserOperateLog userOperateLog, Page<UserOperateLog> page);
 
     /**
      * 通过Id查询日志详情

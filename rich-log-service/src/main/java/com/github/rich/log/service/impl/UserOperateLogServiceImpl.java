@@ -6,25 +6,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.rich.base.dto.UserDetailDTO;
-import com.github.rich.base.feign.RemoteUserService;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.log.constants.LogKafkaTopicConstant;
 import com.github.rich.log.dto.OperateLogInfo;
 import com.github.rich.log.entity.UserOperateLog;
 import com.github.rich.log.mapper.UserOperateLogMapper;
 import com.github.rich.log.service.IUserOperateLogService;
-import com.github.rich.log.vo.UserLogVO;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,12 +28,6 @@ import java.util.Optional;
  */
 @Service
 public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper, UserOperateLog> implements IUserOperateLogService {
-
-    private final RemoteUserService remoteUserService;
-
-    public UserOperateLogServiceImpl(RemoteUserService remoteUserService) {
-        this.remoteUserService = remoteUserService;
-    }
 
     @Override
     @KafkaListener(topics = {LogKafkaTopicConstant.USER_OPERATE_LOG_TOPIC})
@@ -58,24 +43,8 @@ public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper,
     }
 
     @Override
-    public IPage<UserLogVO> page(UserOperateLog userOperateLog, Page<UserOperateLog> page) {
-        IPage<UserLogVO> userLogPage = new Page<>();
-        IPage<UserOperateLog> userOperateLogPage = this.page(page, Wrappers.lambdaQuery(userOperateLog).orderByDesc(UserOperateLog::getCreateTime));
-        List<UserOperateLog> records = userOperateLogPage.getRecords();
-        List<UserLogVO> nrecords = new LinkedList<>();
-        for (UserOperateLog oldLog : records) {
-            UserLogVO userLogVO = ConverterUtil.convert(oldLog, new UserLogVO());
-            assert userLogVO != null;
-            UserDetailDTO userDetail = remoteUserService.getUserDetail(oldLog.getUserId());
-            userLogVO.setUserName(userDetail.getUserName());
-            nrecords.add(userLogVO);
-        }
-        userLogPage.setCurrent(userOperateLogPage.getCurrent());
-        userLogPage.setPages(userOperateLogPage.getPages());
-        userLogPage.setSize(userOperateLogPage.getSize());
-        userLogPage.setTotal(userOperateLogPage.getTotal());
-        userLogPage.setRecords(nrecords);
-        return userLogPage;
+    public IPage<UserOperateLog> page(UserOperateLog userOperateLog, Page<UserOperateLog> page) {
+        return this.page(page, Wrappers.lambdaQuery(userOperateLog).orderByDesc(UserOperateLog::getCreateTime));
     }
 
     @Override

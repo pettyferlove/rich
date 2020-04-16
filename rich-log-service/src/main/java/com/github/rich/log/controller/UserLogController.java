@@ -3,6 +3,7 @@ package com.github.rich.log.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.common.core.vo.R;
+import com.github.rich.log.entity.UserOperateLog;
 import com.github.rich.log.service.IUserOperateLogService;
 import io.swagger.annotations.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +29,7 @@ public class UserLogController {
             @ApiImplicitParam(paramType = "query", name = "page", value = "Page", dataTypeClass = Page.class)
     })
     @GetMapping("page")
-    public R<IPage> page(com.github.rich.log.entity.UserOperateLog systemGatewayRoute, Page<com.github.rich.log.entity.UserOperateLog> page) {
+    public R<IPage<UserOperateLog>> page(com.github.rich.log.entity.UserOperateLog systemGatewayRoute, Page<com.github.rich.log.entity.UserOperateLog> page) {
         return new R<>(userOperateLogService.page(systemGatewayRoute, page));
     }
 
