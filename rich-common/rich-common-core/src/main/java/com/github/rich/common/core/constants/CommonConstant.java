@@ -17,11 +17,6 @@ public interface CommonConstant {
 
     String OUTER_SERVICE_PREFIX_REGEX = OUTER_SERVICE_PREFIX + "/.[0-9a-zA-Z_]*/";
 
-
-    String SUCCESS_MESSAGE = "Success";
-
-    String FAIL_MESSAGE = "Fail";
-
     /**
      * WebSocket 处理成功
      */
