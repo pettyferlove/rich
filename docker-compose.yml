@@ -6,6 +6,8 @@ services:
     environment:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    ports:
+      - 10154:10154
     networks:
       - external_access
   rich-auth-service:
@@ -14,6 +16,8 @@ services:
     environment:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    ports:
+      - 6060:6060
     depends_on:
       - rich-base-info-service
     networks:
@@ -36,6 +40,8 @@ services:
     environment:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    ports:
+      - 20000:20000
     networks:
       - external_access
   rich-monitor-service:
@@ -44,6 +50,8 @@ services:
     environment:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    ports:
+      - 10158:10158
     networks:
       - external_access
   rich-log-service:
@@ -52,6 +60,8 @@ services:
     environment:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    ports:
+      - 10153:10153
     networks:
       - external_access
   rich-message-service:
@@ -60,6 +70,8 @@ services:
     environment:
       - AGENT_SERVICE_NAME='spring-boot-demo'
       - AGENT_COLLECTOR_ADDRESS='localhost:11800'
+    ports:
+      - 10156:10156
     networks:
       - external_access
 networks:
