@@ -23,7 +23,7 @@ public class AttachmentInfoServiceImpl extends ServiceImpl<AttachmentInfoMapper,
     @Override
     public Boolean save(String userId, String fileId, String fileName, String md5, String filePath, Upload upload, String contentType, Long fileSize) {
         AttachmentInfo attachmentInfo = new AttachmentInfo();
-        attachmentInfo.setId(fileId);
+        attachmentInfo.setFileId(fileId);
         attachmentInfo.setMd5(md5);
         attachmentInfo.setCreator(userId);
         attachmentInfo.setCreateTime(LocalDateTime.now());

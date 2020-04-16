@@ -84,12 +84,10 @@ public class SystemDictTypeServiceImpl extends ServiceImpl<SystemDictTypeMapper,
     @Override
     @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-dict-type-page", allEntries = true)
     public String create(String userId, SystemDictType dictType) {
-        String dictTypeId = IdUtil.simpleUUID();
-        dictType.setId(dictTypeId);
         dictType.setCreator(userId);
         dictType.setCreateTime(LocalDateTime.now());
         if (this.save(dictType)) {
-            return dictTypeId;
+            return dictType.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

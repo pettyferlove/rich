@@ -96,12 +96,10 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
 
     @Override
     public String create(String userId, SystemRole role) {
-        String roleId = IdUtil.simpleUUID();
-        role.setId(roleId);
         role.setCreator(userId);
         role.setCreateTime(LocalDateTime.now());
         if (this.save(role)) {
-            return roleId;
+            return role.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

@@ -37,10 +37,8 @@ public class SystemMessageServiceImpl extends ServiceImpl<SystemMessageMapper, S
 
     @Override
     public String create(SystemMessage systemMessage) {
-        String systemMessageId = IdUtil.simpleUUID();
-        systemMessage.setId(systemMessageId);
         if (this.save(systemMessage)) {
-            return systemMessageId;
+            return systemMessage.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

@@ -5,10 +5,11 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.github.rich.attachment.entity.AttachmentInfo">
         <id column="id" property="id" />
-        <result column="fileName" property="fileName" />
-        <result column="fileType" property="fileType" />
+        <result column="file_id" property="fileId" />
+        <result column="file_name" property="fileName" />
+        <result column="file_type" property="fileType" />
         <result column="size" property="size" />
-        <result column="storageType" property="storageType" />
+        <result column="storage_type" property="storageType" />
         <result column="md5" property="md5" />
         <result column="path" property="path" />
         <result column="del_flag" property="delFlag" />
@@ -20,7 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, fileName, fileType, size, storageType, md5, path, del_flag, creator, create_time, modifier, modify_time
+        id, file_id, file_name, file_type, size, storage_type, md5, path, del_flag, creator, create_time, modifier, modify_time
     </sql>
 
 </mapper>

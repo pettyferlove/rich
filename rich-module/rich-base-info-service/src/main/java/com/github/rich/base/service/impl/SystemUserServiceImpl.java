@@ -5,6 +5,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -180,10 +181,9 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     public Boolean registerByWeChat(String openid, String unionid) {
         boolean result = false;
         try {
-            String userId = IdUtil.simpleUUID();
             SystemUser systemUser = new SystemUser();
-            systemUser.setId(userId);
-            systemUser.setLoginName("wx_" + userId);
+            // 生成随机登录名
+            systemUser.setLoginName("wx_" + IdWorker.getId());
             systemUser.setUserName("");
             systemUser.setPassword("");
             systemUser.setUserType(0);
@@ -192,8 +192,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             systemUser.setModifyTime(LocalDateTime.now());
             if (this.save(systemUser)) {
                 SystemUserExtend systemUserExtend = new SystemUserExtend();
-                systemUserExtend.setId(IdUtil.simpleUUID());
-                systemUserExtend.setUserId(userId);
+                systemUserExtend.setUserId(systemUser.getId());
                 systemUserExtend.setWechatOpenid(openid);
                 systemUserExtend.setWechatUnionid(unionid);
                 result = systemUserExtendService.save(systemUserExtend);
@@ -236,13 +235,11 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     public String create(String userId, SystemUser user) {
-        String id = IdUtil.simpleUUID();
-        user.setId(id);
         user.setPassword(userPasswordEncoder.encode(user.getPassword()));
         user.setCreator(userId);
         user.setCreateTime(LocalDateTime.now());
         if (this.save(user)) {
-            return id;
+            return user.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

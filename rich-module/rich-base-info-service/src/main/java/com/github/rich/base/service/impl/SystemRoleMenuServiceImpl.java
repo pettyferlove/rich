@@ -27,7 +27,6 @@ public class SystemRoleMenuServiceImpl extends ServiceImpl<SystemRoleMenuMapper,
         List<SystemRoleMenu> systemRoleMenus = new ArrayList<>();
         for (String menuId : addIdList) {
             SystemRoleMenu systemRoleMenu = new SystemRoleMenu();
-            systemRoleMenu.setId(IdUtil.simpleUUID());
             systemRoleMenu.setRoleId(roleId);
             systemRoleMenu.setMenuId(menuId);
             systemRoleMenus.add(systemRoleMenu);

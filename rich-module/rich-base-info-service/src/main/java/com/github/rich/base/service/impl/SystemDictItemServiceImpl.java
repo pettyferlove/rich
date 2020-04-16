@@ -67,12 +67,10 @@ public class SystemDictItemServiceImpl extends ServiceImpl<SystemDictItemMapper,
             @CacheEvict(value = CacheConstant.DICT_ITEM_RELEVANCE_CACHE, allEntries = true)
     })
     public String create(String userId, SystemDictItem dictItem) {
-        String dictItemId = IdUtil.simpleUUID();
-        dictItem.setId(dictItemId);
         dictItem.setCreator(userId);
         dictItem.setCreateTime(LocalDateTime.now());
         if (this.save(dictItem)) {
-            return dictItemId;
+            return dictItem.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

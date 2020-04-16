@@ -16,7 +16,6 @@ public class MultiTenancyTests {
     @Test
     public void roleInsert(){
         SystemRole systemRole = new SystemRole();
-        systemRole.setId(IdUtil.simpleUUID());
         systemRole.setRole("demo");
         systemRole.setRoleName("demo");
         systemRole.setDescription("demo");

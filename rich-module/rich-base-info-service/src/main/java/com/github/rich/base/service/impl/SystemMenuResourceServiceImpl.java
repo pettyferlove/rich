@@ -52,12 +52,10 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-menu-children-tree", key = "#menu.parentId", condition = "#menu.parentId!=null")
     })
     public String createNode(String userId, SystemMenuResource menu) {
-        String menuId = IdUtil.simpleUUID();
-        menu.setId(menuId);
         menu.setCreator(userId);
         menu.setCreateTime(LocalDateTime.now());
         if (this.save(menu)) {
-            return menuId;
+            return menu.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

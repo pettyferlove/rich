@@ -36,7 +36,6 @@ public class UserOperateLogServiceImpl extends ServiceImpl<UserOperateLogMapper,
         Optional<UserOperateLog> convert = Optional.ofNullable(ConverterUtil.convert(operateLogInfos, new UserOperateLog()));
         if (convert.isPresent()) {
             UserOperateLog userOperateLog = convert.get();
-            userOperateLog.setId(IdUtil.simpleUUID());
             userOperateLog.setCreateTime(LocalDateTime.now());
             this.save(userOperateLog);
         }

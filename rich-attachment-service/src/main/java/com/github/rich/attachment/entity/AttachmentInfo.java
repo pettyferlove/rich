@@ -40,19 +40,20 @@ public class AttachmentInfo extends Model<AttachmentInfo> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
+    @ApiModelProperty(value = "文件ID")
+    private String fileId;
+
     @ApiModelProperty(value = "文件名")
-    @TableField("fileName")
     private String fileName;
 
+
     @ApiModelProperty(value = "文件类型")
-    @TableField("fileType")
     private String fileType;
 
     @ApiModelProperty(value = "文件大小")
     private Long size;
 
     @ApiModelProperty(value = "储存类型")
-    @TableField("storageType")
     private Integer storageType;
 
     @ApiModelProperty(value = "MD5值")

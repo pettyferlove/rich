@@ -86,12 +86,10 @@ public class SystemGatewayRouteServiceImpl extends ServiceImpl<SystemGatewayRout
     @Override
     @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-gateway-route-page", allEntries = true)
     public String create(String userId, SystemGatewayRoute route) {
-        String routeId = IdUtil.simpleUUID();
-        route.setId(routeId);
         route.setCreator(userId);
         route.setCreateTime(LocalDateTime.now());
         if (this.save(route)) {
-            return routeId;
+            return route.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

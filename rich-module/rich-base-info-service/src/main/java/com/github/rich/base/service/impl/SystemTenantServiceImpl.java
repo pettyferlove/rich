@@ -56,12 +56,10 @@ public class SystemTenantServiceImpl extends ServiceImpl<SystemTenantMapper, Sys
 
     @Override
     public String create(String userId, SystemTenant systemTenant) {
-        String systemTenantId = IdUtil.simpleUUID();
-        systemTenant.setId(systemTenantId);
         systemTenant.setCreator(userId);
         systemTenant.setCreateTime(LocalDateTime.now());
         if (this.save(systemTenant)) {
-            return systemTenantId;
+            return systemTenant.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }

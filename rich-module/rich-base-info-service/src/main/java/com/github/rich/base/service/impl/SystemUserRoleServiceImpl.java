@@ -27,7 +27,6 @@ public class SystemUserRoleServiceImpl extends ServiceImpl<SystemUserRoleMapper,
         List<SystemUserRole> systemUserRoles = new ArrayList<>();
         for (String roleId : addIdList) {
             SystemUserRole systemUserRole = new SystemUserRole();
-            systemUserRole.setId(IdUtil.simpleUUID());
             systemUserRole.setRoleId(roleId);
             systemUserRole.setUserId(userId);
             systemUserRoles.add(systemUserRole);

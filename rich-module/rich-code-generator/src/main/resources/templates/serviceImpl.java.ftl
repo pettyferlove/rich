@@ -48,12 +48,10 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public String create(${entity} ${entity?uncap_first}) {
-        String ${entity?uncap_first}Id = IdUtil.simpleUUID();
-        ${entity?uncap_first}.setId(${entity?uncap_first}Id);
         ${entity?uncap_first}.setCreator(Objects.requireNonNull(SecurityUtil.getUser()).getUserId());
         ${entity?uncap_first}.setCreateTime(LocalDateTime.now());
         if (this.save(${entity?uncap_first})) {
-            return ${entity?uncap_first}Id;
+            return ${entity?uncap_first}.getId();
         } else {
             throw new BaseRuntimeException("新增失败");
         }
