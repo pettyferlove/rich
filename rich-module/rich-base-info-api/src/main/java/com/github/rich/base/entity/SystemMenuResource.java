@@ -38,7 +38,7 @@ public class SystemMenuResource extends Model<SystemMenuResource> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "菜单资源code")
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     @ApiModelProperty(value = "父级CODE")

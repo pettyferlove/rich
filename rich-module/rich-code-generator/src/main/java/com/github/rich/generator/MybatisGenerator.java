@@ -23,7 +23,7 @@ public class MybatisGenerator {
         gc.setOutputDir(outputDir);
         gc.setFileOverride(true);
         gc.setActiveRecord(true);
-        gc.setIdType(IdType.UUID);
+        gc.setIdType(IdType.ASSIGN_ID);
         gc.setDateType(DateType.TIME_PACK);
         // XML 二级缓存
         gc.setEnableCache(false);

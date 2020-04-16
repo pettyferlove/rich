@@ -38,7 +38,7 @@ public class SystemDictItem extends Model<SystemDictItem> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "数据唯一标识符")
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     @ApiModelProperty(value = "类型ID")
