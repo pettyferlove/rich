@@ -43,11 +43,6 @@ public class R<T> implements Serializable {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public R(String message) {
-        this.message = message;
-        this.timestamp = System.currentTimeMillis();
-    }
-
     public R(Throwable e) {
         super();
         this.message = e.getMessage();
