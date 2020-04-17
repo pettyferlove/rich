@@ -19,7 +19,7 @@ public class RichAccessTokenConverter extends DefaultAccessTokenConverter {
         super.setUserTokenConverter(new CustomerUserAuthenticationConverter());
     }
 
-    public class CustomerUserAuthenticationConverter extends DefaultUserAuthenticationConverter {
+    public static class CustomerUserAuthenticationConverter extends DefaultUserAuthenticationConverter {
         @Override
         public Map<String, ?> convertUserAuthentication(Authentication authentication) {
             Map<String, Object> response = new LinkedHashMap<String, Object>();

@@ -1,7 +1,6 @@
 package com.github.rich.common.core.aop;
 
 import cn.hutool.http.HttpStatus;
-import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

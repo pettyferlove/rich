@@ -2,17 +2,16 @@ package com.github.rich.auth.config;
 
 import com.github.rich.auth.granter.MobileTokenGranter;
 import com.github.rich.auth.granter.WeChatTokenGranter;
-import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.auth.service.RichClientDetailsService;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.security.component.ResponseExceptionTranslator;
+import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.security.service.RichUserDetailsService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -46,9 +45,7 @@ import java.util.List;
  * @see org.springframework.security.oauth2.provider.client.JdbcClientDetailsService
  * 用户认证服务
  */
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @Configuration
-@Order(Integer.MIN_VALUE)
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
@@ -65,8 +62,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     private final RichUserDetailsService userDetailsService;
 
@@ -79,12 +75,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final DataSource dataSource;
 
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, ClientDetailsService clientDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService) {
+    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, ClientDetailsService clientDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService, AuthenticationManager authenticationManager) {
         this.dataSource = dataSource;
         this.userDetailsService = userDetailsService;
         this.clientDetailsService = clientDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
         this.captchaValidateService = smsCaptchaValidateService;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override

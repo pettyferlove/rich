@@ -2,12 +2,11 @@ package com.github.rich.auth.config;
 
 import com.github.rich.auth.handler.SuccessHandler;
 import com.github.rich.security.service.RichUserDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,17 +20,17 @@ import org.springframework.security.web.authentication.rememberme.InMemoryTokenR
  * @author Petty
  */
 @Configuration
-@Order(1)
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private RichUserDetailsService userDetailsService;
+    private final RichUserDetailsService userDetailsService;
 
     private final PasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(PasswordEncoder passwordEncoder) {
+    public WebSecurityConfig(PasswordEncoder passwordEncoder, RichUserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
@@ -63,7 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/authorize")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").authenticated()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/**").authenticated()
                 .and()
                 //开启记住密码
                 .rememberMe()
