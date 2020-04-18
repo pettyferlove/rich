@@ -43,6 +43,8 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
     public void configure(HttpSecurity httpSecurity) {
         //允许使用iframe 嵌套，避免swagger-ui 不被加载的问题
         httpSecurity.headers().frameOptions().disable();
+        //确定哪些url需要验证
+        httpSecurity.requestMatchers().anyRequest();
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>
                 .ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
@@ -57,6 +59,7 @@ public class RichResourceServerConfigurerAdapter extends ResourceServerConfigure
         registry.antMatchers("/swagger/api-docs").permitAll();
         filterIgnoreProperties.getAnon()
                 .forEach(url -> registry.antMatchers(url).permitAll());
+        // 确定验证方式
         registry.anyRequest().authenticated()
                 .and().csrf().disable();
     }
