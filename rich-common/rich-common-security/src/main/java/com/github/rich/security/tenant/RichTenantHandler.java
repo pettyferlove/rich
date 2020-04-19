@@ -3,7 +3,7 @@ package com.github.rich.security.tenant;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
-import com.github.rich.common.core.config.MultiTenancyProperties;
+import com.github.rich.security.properties.MultiTenancyProperties;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;

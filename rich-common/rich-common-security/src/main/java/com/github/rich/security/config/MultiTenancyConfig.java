@@ -1,7 +1,7 @@
 package com.github.rich.security.config;
 
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
-import com.github.rich.common.core.config.MultiTenancyProperties;
+import com.github.rich.security.properties.MultiTenancyProperties;
 import com.github.rich.security.tenant.RichTenantHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

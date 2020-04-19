@@ -1,6 +1,6 @@
 package com.github.rich.security.component;
 
-import com.github.rich.common.core.config.FilterIgnoreProperties;
+import com.github.rich.common.core.properties.FilterIgnoreProperties;
 import com.github.rich.security.service.impl.RichRemoteTokenServices;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

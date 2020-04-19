@@ -1,4 +1,4 @@
-package com.github.rich.common.core.config;
+package com.github.rich.common.core.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,27 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 不需要过滤的URL
+ *
  * @author Petty
+ * @since 2018年2月27日
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Configuration
 @RefreshScope
-@ConditionalOnExpression("!'${multi-tenancy}'.isEmpty()")
-@ConfigurationProperties(prefix = "multi-tenancy")
-public class MultiTenancyProperties {
-
-    String tableField;
-
-    IgnoreObject ignore;
-
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class IgnoreObject {
-        private List<String> roles = new ArrayList<>();
-        private List<String> tables = new ArrayList<>();
-    }
+@ConditionalOnExpression("!'${urls}'.isEmpty()")
+@ConfigurationProperties(prefix = "urls")
+public class FilterIgnoreProperties {
+    private List<String> anon = new ArrayList<>();
 }
