@@ -1,4 +1,4 @@
-package com.github.rich.security.properties;
+package com.github.rich.common.core.properties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

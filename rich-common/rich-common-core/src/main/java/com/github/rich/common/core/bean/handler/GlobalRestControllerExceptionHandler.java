@@ -1,16 +1,15 @@
 package com.github.rich.common.core.bean.handler;
 
-import cn.hutool.http.HttpStatus;
 import com.github.rich.common.core.exception.BaseException;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.vo.R;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,9 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  * @author Petty
  */
 @Slf4j
-@ControllerAdvice("com.github.rich")
-@ResponseBody
-public class GlobalExceptionHandler {
+@RestControllerAdvice("com.github.rich")
+public class GlobalRestControllerExceptionHandler {
     /**
      * 处理BaseRuntimeException异常
      *
@@ -31,10 +29,10 @@ public class GlobalExceptionHandler {
      * @return data
      */
     @ExceptionHandler(BaseRuntimeException.class)
-    public R baseExceptionHandler(HttpServletResponse response, BaseRuntimeException ex) {
+    public R<BaseRuntimeException> baseExceptionHandler(HttpServletResponse response, BaseRuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        response.setStatus(ex.getStatus());
-        return new R(ex);
+        response.setStatus(ex.getStatus().value());
+        return new R<>(ex);
     }
 
     /**
@@ -45,10 +43,10 @@ public class GlobalExceptionHandler {
      * @return data
      */
     @ExceptionHandler(RuntimeException.class)
-    public R runtimeExceptionHandler(HttpServletResponse response, RuntimeException ex) {
+    public R<RuntimeException> runtimeExceptionHandler(HttpServletResponse response, RuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        response.setStatus(HttpStatus.HTTP_INTERNAL_ERROR);
-        return new R(ex);
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new R<>(ex);
     }
 
     /**
@@ -59,10 +57,10 @@ public class GlobalExceptionHandler {
      * @return data
      */
     @ExceptionHandler(BaseException.class)
-    public R otherExceptionHandler(HttpServletResponse response, BaseException ex) {
+    public R<BaseException> otherExceptionHandler(HttpServletResponse response, BaseException ex) {
         log.error(ex.getMessage(), ex);
-        response.setStatus(ex.getStatus());
-        return new R(ex);
+        response.setStatus(ex.getStatus().value());
+        return new R<>(ex);
     }
 
 
@@ -74,10 +72,10 @@ public class GlobalExceptionHandler {
      * @return data
      */
     @ExceptionHandler(Exception.class)
-    public R exceptionHandler(HttpServletResponse response, Exception ex) {
+    public R<Exception> exceptionHandler(HttpServletResponse response, Exception ex) {
         log.error(ex.getMessage(), ex);
-        response.setStatus(HttpStatus.HTTP_INTERNAL_ERROR);
-        return new R(ex);
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new R<>(ex);
     }
 
     /**
@@ -88,7 +86,7 @@ public class GlobalExceptionHandler {
      * @return data
      */
     @ExceptionHandler(BindException.class)
-    public R methodArgumentNotValidExceptionHandler(HttpServletResponse response, BindException ex) {
+    public R<String> methodArgumentNotValidExceptionHandler(HttpServletResponse response, BindException ex) {
         log.error(ex.getMessage(), ex);
         BindingResult bindingResult = ex.getBindingResult();
         StringBuilder errorMessage = new StringBuilder(bindingResult.getFieldErrors().size() << 4);
@@ -102,8 +100,8 @@ public class GlobalExceptionHandler {
             errorMessage.append(":");
             errorMessage.append(error.getDefaultMessage());
         }
-        response.setStatus(HttpStatus.HTTP_INTERNAL_ERROR);
-        return new R(errorMessage.toString());
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new R<>(errorMessage.toString());
     }
 
 }

@@ -1,6 +1,5 @@
 package com.github.rich.common.core.aop;
 
-import cn.hutool.http.HttpStatus;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -8,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -66,7 +66,7 @@ public class ControllerAop {
         } catch (Throwable e) {
             log.error("Error：", e);
             if (e instanceof AccessDeniedException) {
-                throw new BaseRuntimeException(e.getMessage(), HttpStatus.HTTP_FORBIDDEN);
+                throw new BaseRuntimeException(e.getMessage(), HttpStatus.FORBIDDEN);
             } else {
                 throw e;
             }

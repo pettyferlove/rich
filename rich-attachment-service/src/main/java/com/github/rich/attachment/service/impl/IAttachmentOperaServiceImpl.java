@@ -11,6 +11,7 @@ import com.github.rich.attachment.vo.Upload;
 import com.github.rich.attachment.vo.UploadResult;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,7 +63,7 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
             }
             response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
         } else {
-            throw new BaseRuntimeException("not found file", 404);
+            throw new BaseRuntimeException("not found file", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -78,10 +79,10 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
                 response.setContentType(attachmentInfo.getFileType());
                 attachmentService.download(attachmentInfo, response.getOutputStream());
             } else {
-                throw new BaseRuntimeException("not support view this file", 500);
+                throw new BaseRuntimeException("not support view this file", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } else {
-            throw new BaseRuntimeException("not found file", 404);
+            throw new BaseRuntimeException("not found file", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -101,7 +102,7 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
             }
             return result;
         } catch (Exception e) {
-            throw new BaseRuntimeException("delete file error", 500);
+            throw new BaseRuntimeException("delete file error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -120,7 +121,7 @@ public class IAttachmentOperaServiceImpl implements IAttachmentOperaService {
             }
             return result;
         } catch (Exception e) {
-            throw new BaseRuntimeException("batch delete file error", 500);
+            throw new BaseRuntimeException("batch delete file error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

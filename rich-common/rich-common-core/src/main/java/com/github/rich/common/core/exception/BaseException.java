@@ -2,6 +2,7 @@ package com.github.rich.common.core.exception;
 
 
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -18,9 +19,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class BaseException extends Exception implements Serializable {
     private static final long serialVersionUID = -8390390631837103313L;
-    private int status = 500;
+    private HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
 
-    public BaseException(String message, int status) {
+    public BaseException(String message, HttpStatus status) {
         super(message);
         this.status = status;
     }
