@@ -19,7 +19,12 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
-@ComponentScan("com.github.rich.security")
+@ComponentScan({
+        "com.github.rich.security.aop",
+        "com.github.rich.security.component",
+        "com.github.rich.security.feign",
+        "com.github.rich.security.service",
+})
 public class RichResourceServerAutoConfiguration {
 
     private final ResourceServerProperties resource;

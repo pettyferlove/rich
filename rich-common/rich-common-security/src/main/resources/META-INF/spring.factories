@@ -1,3 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.rich.security.service.impl.UserDetailsServiceImpl
+  com.github.rich.security.service.impl.UserDetailsServiceImpl,\
+  com.github.rich.security.config.MultiTenancyConfig,\
+  com.github.rich.security.properties.MultiTenancyProperties
 

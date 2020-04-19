@@ -6,7 +6,6 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.github.rich.common.core.bean.interceptor.ServiceFeignInterceptor,\
   com.github.rich.common.core.config.FeignOkHttpConfig,\
   com.github.rich.common.core.properties.FilterIgnoreProperties,\
-  com.github.rich.common.core.properties.MultiTenancyProperties,\
   com.github.rich.common.core.config.CorsFilterConfig,\
   com.github.rich.common.core.bean.handler.GlobalRestControllerExceptionHandler,\
   com.github.rich.common.core.aop.ControllerAop,\
