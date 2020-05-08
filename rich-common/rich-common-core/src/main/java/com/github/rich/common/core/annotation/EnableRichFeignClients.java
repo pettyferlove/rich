@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.github.rich")
 public @interface EnableRichFeignClients {
 
     /**
