@@ -26,3 +26,6 @@
 /.nb-gradle/
 
 ### Service ###
+
+### VSCode ###
+.vscode

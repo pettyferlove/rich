@@ -7,13 +7,11 @@ import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Petty
  */
 @FeignClient(contextId = "remoteUserService", name = "rich-base-info-service", fallbackFactory = UserServiceFallbackFactory.class)
-@RequestMapping(CommonConstant.INNER_SERVICE_PREFIX + "/user")
 public interface UserServiceFeignClient {
 
     /**
@@ -22,7 +20,7 @@ public interface UserServiceFeignClient {
      * @param loginName 登录名
      * @return 用户信息实体类
      */
-    @GetMapping("{loginName}")
+    @GetMapping(CommonConstant.INNER_SERVICE_PREFIX + "/user/{loginName}")
     User findUserByLoginName(@PathVariable("loginName") String loginName);
 
     /**
@@ -31,7 +29,7 @@ public interface UserServiceFeignClient {
      * @param mobile 手机号码
      * @return 用户信息实体类
      */
-    @GetMapping("{mobile}")
+    @GetMapping(CommonConstant.INNER_SERVICE_PREFIX + "/user/mobile/{mobile}")
     User findUserByMobile(@PathVariable("mobile") String mobile);
 
 
@@ -41,7 +39,7 @@ public interface UserServiceFeignClient {
      * @param openid OpenID
      * @return User
      */
-    @GetMapping("wechat/open/{openid}")
+    @GetMapping(CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/open/{openid}")
     User findByWeChatOpenId(@PathVariable("openid") String openid);
 
     /**
@@ -50,7 +48,7 @@ public interface UserServiceFeignClient {
      * @param unionid UnionID
      * @return User
      */
-    @GetMapping("wechat/union/{unionid}")
+    @GetMapping(CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/union/{unionid}")
     User findByWeChatUnionId(@PathVariable("unionid") String unionid);
 
     /**
@@ -59,6 +57,6 @@ public interface UserServiceFeignClient {
      * @param userId 用户ID
      * @return UserDetailDTO
      */
-    @GetMapping("detail/{userId}")
+    @GetMapping(CommonConstant.INNER_SERVICE_PREFIX + "/user/detail/{userId}")
     UserDetailDTO getUserDetail(@PathVariable("userId") String userId);
 }

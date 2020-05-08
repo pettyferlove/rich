@@ -6,7 +6,6 @@ import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -14,8 +13,7 @@ import java.util.List;
  * @author Petty
  */
 
-@FeignClient(contextId = "remoteGatewayRouteService",name = "rich-base-info-service", fallbackFactory = GatewayRouteServiceFallbackFactory.class)
-@RequestMapping(CommonConstant.INNER_SERVICE_PREFIX + "/gateway")
+@FeignClient(contextId = "remoteGatewayRouteService", name = "rich-base-info-service", fallbackFactory = GatewayRouteServiceFallbackFactory.class)
 public interface GatewayRouteServiceFeignClient {
 
     /**
@@ -23,7 +21,7 @@ public interface GatewayRouteServiceFeignClient {
      *
      * @return Route集合
      */
-    @GetMapping("all")
+    @GetMapping(CommonConstant.INNER_SERVICE_PREFIX + "/gateway/all")
     List<Route> loadRoutes();
 
     /**
@@ -32,7 +30,7 @@ public interface GatewayRouteServiceFeignClient {
      * @param routeId routeId
      * @return Route
      */
-    @GetMapping("{routeId}")
+    @GetMapping(CommonConstant.INNER_SERVICE_PREFIX + "/gateway/{routeId}")
     Route load(@PathVariable String routeId);
 
 }
