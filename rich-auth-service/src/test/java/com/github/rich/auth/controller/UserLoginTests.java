@@ -4,7 +4,7 @@ import cn.hutool.core.lang.UUID;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.rich.base.dto.User;
-import com.github.rich.base.feign.RemoteUserService;
+import com.github.rich.base.feign.UserServiceFeignClient;
 import com.github.rich.security.service.AbstractCaptchaValidateService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -40,7 +40,7 @@ public class UserLoginTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private RemoteUserService remoteUserService;
+    private UserServiceFeignClient userServiceFeignClient;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -87,7 +87,7 @@ public class UserLoginTests {
      */
     @Test
     public void testUserLoginByLoginName() throws Exception {
-        when(remoteUserService.findUserByLoginName(any(String.class))).thenReturn(user);
+        when(userServiceFeignClient.findUserByLoginName(any(String.class))).thenReturn(user);
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/oauth/token")
                 .param("username", "rich")
                 .param("password", "123456")
@@ -116,7 +116,7 @@ public class UserLoginTests {
      */
     @Test
     public void testUserLoginByUserByMobile() throws Exception {
-        when(remoteUserService.findUserByMobile(any(String.class))).thenReturn(user);
+        when(userServiceFeignClient.findUserByMobile(any(String.class))).thenReturn(user);
         /*模拟Service默认返回为True*/
         when(smsCaptchaValidateService.validate(any(String.class),any(String.class))).thenReturn(true);
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/oauth/token")
@@ -146,7 +146,7 @@ public class UserLoginTests {
      */
     @Test
     public void testUserLoginByWeChatOpenId() throws Exception {
-        when(remoteUserService.findByWeChatOpenId(any(String.class))).thenReturn(user);
+        when(userServiceFeignClient.findByWeChatOpenId(any(String.class))).thenReturn(user);
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/oauth/token")
                 .param("open_id", UUID.fastUUID().toString())
                 .param("grant_type", "wechat")
@@ -173,7 +173,7 @@ public class UserLoginTests {
      */
     @Test
     public void testUserLoginByWeChatUnionId() throws Exception {
-        when(remoteUserService.findByWeChatUnionId(any(String.class))).thenReturn(user);
+        when(userServiceFeignClient.findByWeChatUnionId(any(String.class))).thenReturn(user);
         ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/oauth/token")
                 .param("union_id", UUID.fastUUID().toString())
                 .param("grant_type", "wechat")

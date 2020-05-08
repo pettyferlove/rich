@@ -1,10 +1,9 @@
 package com.github.rich.base.feign.fallback;
 
 import com.github.rich.base.dto.Route;
-import com.github.rich.base.feign.RemoteGatewayRouteService;
+import com.github.rich.base.feign.GatewayRouteServiceFeignClient;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,8 +11,7 @@ import java.util.List;
  * @author Petty
  */
 @Slf4j
-@Component
-public class RemoteGatewayRouteServiceFallbackImpl implements RemoteGatewayRouteService {
+public class GatewayRouteServiceFeignClientFallbackImpl implements GatewayRouteServiceFeignClient {
 
     @Setter
     private Throwable cause;

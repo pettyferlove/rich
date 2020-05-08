@@ -1,7 +1,7 @@
-package com.github.rich.base.api.impl;
+package com.github.rich.base.feign.impl;
 
-import com.github.rich.base.api.GatewayRouteServiceApi;
 import com.github.rich.base.dto.Route;
+import com.github.rich.base.feign.GatewayRouteServiceFeignClient;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,11 +11,11 @@ import java.util.List;
  * @author Petty
  */
 @RestController
-public class GatewayRouteServiceApiImpl implements GatewayRouteServiceApi {
+public class GatewayRouteServiceFeignClientImpl implements GatewayRouteServiceFeignClient {
 
     private final ISystemGatewayRouteService systemGatewayRouteService;
 
-    public GatewayRouteServiceApiImpl(ISystemGatewayRouteService systemGatewayRouteService) {
+    public GatewayRouteServiceFeignClientImpl(ISystemGatewayRouteService systemGatewayRouteService) {
         this.systemGatewayRouteService = systemGatewayRouteService;
     }
 

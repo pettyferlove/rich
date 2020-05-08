@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.rich.base.dto.Route;
-import com.github.rich.base.feign.RemoteGatewayRouteService;
+import com.github.rich.base.feign.GatewayRouteServiceFeignClient;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.message.dto.message.UserGeneralMessage;
@@ -30,7 +30,7 @@ import reactor.core.publisher.Mono;
 @EnableBinding({GatewaySink.class, UserMessageSource.class})
 public class GatewayChangeListener {
 
-    private final RemoteGatewayRouteService remoteGatewayRouteService;
+    private final GatewayRouteServiceFeignClient gatewayRouteServiceFeignClient;
 
     private final Registration registration;
 
@@ -38,8 +38,8 @@ public class GatewayChangeListener {
 
     private final UserMessageSource source;
 
-    public GatewayChangeListener(RemoteGatewayRouteService remoteGatewayRouteService, Registration registration, RouteDefinitionWriter routeDefinitionWriter, UserMessageSource source) {
-        this.remoteGatewayRouteService = remoteGatewayRouteService;
+    public GatewayChangeListener(GatewayRouteServiceFeignClient gatewayRouteServiceFeignClient, Registration registration, RouteDefinitionWriter routeDefinitionWriter, UserMessageSource source) {
+        this.gatewayRouteServiceFeignClient = gatewayRouteServiceFeignClient;
         this.registration = registration;
         this.routeDefinitionWriter = routeDefinitionWriter;
         this.source = source;
@@ -47,7 +47,7 @@ public class GatewayChangeListener {
 
     @StreamListener(value = GatewaySink.INPUT, condition = "headers['operate-type']=='update'")
     public void routeUpdate(GatewayRouteChangeMessage message) {
-        Route route = remoteGatewayRouteService.load(message.getRouteId());
+        Route route = gatewayRouteServiceFeignClient.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
         StringBuilder messageSb = new StringBuilder("路由更新");
         sb.append(registration.getHost());
@@ -87,7 +87,7 @@ public class GatewayChangeListener {
 
     @StreamListener(value = GatewaySink.INPUT, condition = "headers['operate-type']=='turnOn'")
     public void routeTurnOn(GatewayRouteChangeMessage message) {
-        Route route = remoteGatewayRouteService.load(message.getRouteId());
+        Route route = gatewayRouteServiceFeignClient.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
         StringBuilder messageSb = new StringBuilder("路由开启");
         sb.append(registration.getHost());
@@ -127,7 +127,7 @@ public class GatewayChangeListener {
 
     @StreamListener(value = GatewaySink.INPUT, condition = "headers['operate-type']=='shutDown'")
     public void routeShutDown(GatewayRouteChangeMessage message) {
-        Route route = remoteGatewayRouteService.load(message.getRouteId());
+        Route route = gatewayRouteServiceFeignClient.load(message.getRouteId());
         StringBuilder sb = new StringBuilder("主机名：");
         StringBuilder messageSb = new StringBuilder("路由关闭");
         sb.append(registration.getHost());

@@ -2,16 +2,12 @@ package com.github.rich.gateway.route;
 
 import com.alibaba.fastjson.JSON;
 import com.github.rich.base.dto.Route;
-import com.github.rich.base.dto.User;
-import com.github.rich.base.feign.RemoteGatewayRouteService;
-import com.github.rich.base.feign.RemoteUserService;
+import com.github.rich.base.feign.GatewayRouteServiceFeignClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -28,14 +24,14 @@ import java.util.List;
 @Order(0)
 public class RemoteLoadRouteRunner implements CommandLineRunner {
 
-    private final RemoteGatewayRouteService remoteGatewayRouteService;
+    private final GatewayRouteServiceFeignClient gatewayRouteServiceFeignClient;
 
     private final RouteDefinitionWriter routeDefinitionWriter;
 
     private volatile boolean noInit = true;
 
-    public RemoteLoadRouteRunner(RemoteGatewayRouteService remoteGatewayRouteService, @Qualifier("richInMemoryRouteDefinitionRepository") RouteDefinitionWriter routeDefinitionWriter) {
-        this.remoteGatewayRouteService = remoteGatewayRouteService;
+    public RemoteLoadRouteRunner(GatewayRouteServiceFeignClient gatewayRouteServiceFeignClient, @Qualifier("richInMemoryRouteDefinitionRepository") RouteDefinitionWriter routeDefinitionWriter) {
+        this.gatewayRouteServiceFeignClient = gatewayRouteServiceFeignClient;
         this.routeDefinitionWriter = routeDefinitionWriter;
     }
 
@@ -44,7 +40,7 @@ public class RemoteLoadRouteRunner implements CommandLineRunner {
         while (noInit) {
             try {
                 log.info("start load route");
-                List<Route> routes = remoteGatewayRouteService.loadRoutes();
+                List<Route> routes = gatewayRouteServiceFeignClient.loadRoutes();
                 routes.forEach(route -> {
                     RouteDefinition routeDefinition = JSON.parseObject(route.getRoute(), RouteDefinition.class);
                     routeDefinition.setId(route.getName());

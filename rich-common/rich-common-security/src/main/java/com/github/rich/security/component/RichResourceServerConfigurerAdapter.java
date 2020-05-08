@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
  * @author Petty
  */
 @Slf4j
-@EnableFeignClients(basePackageClasses = {com.github.rich.base.feign.RemoteUserService.class})
+@EnableFeignClients(basePackageClasses = {com.github.rich.base.feign.UserServiceFeignClient.class})
 public class RichResourceServerConfigurerAdapter extends ResourceServerConfigurerAdapter {
     @Autowired
     protected ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;

@@ -2,17 +2,19 @@ package com.github.rich.base.feign;
 
 import com.github.rich.base.dto.User;
 import com.github.rich.base.dto.UserDetailDTO;
-import com.github.rich.base.feign.factory.RemoteUserServiceFallbackFactory;
+import com.github.rich.base.feign.factory.UserServiceFallbackFactory;
 import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @author Petty
  */
-@FeignClient(contextId = "remoteUserService", name = "rich-base-info-service", fallbackFactory = RemoteUserServiceFallbackFactory.class)
-public interface RemoteUserService {
+@FeignClient(contextId = "remoteUserService", name = "rich-base-info-service", fallbackFactory = UserServiceFallbackFactory.class)
+@RequestMapping(CommonConstant.INNER_SERVICE_PREFIX + "/user")
+public interface UserServiceFeignClient {
 
     /**
      * 通过用户名查询用户信息
@@ -20,7 +22,7 @@ public interface RemoteUserService {
      * @param loginName 登录名
      * @return 用户信息实体类
      */
-    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/{loginName}")
+    @GetMapping("{loginName}")
     User findUserByLoginName(@PathVariable("loginName") String loginName);
 
     /**
@@ -29,7 +31,7 @@ public interface RemoteUserService {
      * @param mobile 手机号码
      * @return 用户信息实体类
      */
-    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/mobile/{mobile}")
+    @GetMapping("{mobile}")
     User findUserByMobile(@PathVariable("mobile") String mobile);
 
 
@@ -39,7 +41,7 @@ public interface RemoteUserService {
      * @param openid OpenID
      * @return User
      */
-    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/open/{openid}")
+    @GetMapping("wechat/open/{openid}")
     User findByWeChatOpenId(@PathVariable("openid") String openid);
 
     /**
@@ -48,7 +50,7 @@ public interface RemoteUserService {
      * @param unionid UnionID
      * @return User
      */
-    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/wechat/union/{unionid}")
+    @GetMapping("wechat/union/{unionid}")
     User findByWeChatUnionId(@PathVariable("unionid") String unionid);
 
     /**
@@ -57,6 +59,6 @@ public interface RemoteUserService {
      * @param userId 用户ID
      * @return UserDetailDTO
      */
-    @GetMapping(value = CommonConstant.INNER_SERVICE_PREFIX + "/user/detail/{userId}")
+    @GetMapping("detail/{userId}")
     UserDetailDTO getUserDetail(@PathVariable("userId") String userId);
 }
