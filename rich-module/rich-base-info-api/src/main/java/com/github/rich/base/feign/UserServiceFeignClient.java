@@ -5,12 +5,14 @@ import com.github.rich.base.dto.UserDetailDTO;
 import com.github.rich.base.feign.factory.UserServiceFallbackFactory;
 import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @author Petty
  */
+@Primary
 @FeignClient(contextId = "userServiceFeignClient", name = "rich-base-info-service", fallbackFactory = UserServiceFallbackFactory.class)
 public interface UserServiceFeignClient {
 
