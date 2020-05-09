@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * @author Petty
  */
-@FeignClient(contextId = "remoteUserService", name = "rich-base-info-service", fallbackFactory = UserServiceFallbackFactory.class)
+@FeignClient(contextId = "userServiceFeignClient", name = "rich-base-info-service", fallbackFactory = UserServiceFallbackFactory.class)
 public interface UserServiceFeignClient {
 
     /**
