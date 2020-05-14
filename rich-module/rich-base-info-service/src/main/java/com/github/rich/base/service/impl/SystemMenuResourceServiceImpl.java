@@ -14,7 +14,7 @@ import com.github.rich.base.utils.TreeUtils;
 import com.github.rich.base.domain.vo.MenuNode;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.security.userdetails.RichUserDetails;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -69,7 +69,7 @@ public class SystemMenuResourceServiceImpl extends ServiceImpl<SystemMenuResourc
 
     @Override
     @Cacheable(value = CacheConstant.SYSTEM_MENU_USER_CACHE, key = "#userDetails.userId", condition = "#userDetails.userId!=null")
-    public List<MenuNode> loadMenu(UserDetailsImpl userDetails) {
+    public List<MenuNode> loadMenu(RichUserDetails userDetails) {
         assert userDetails != null;
         String userId = userDetails.getUserId();
         List<SystemUserRole> systemUserRoles = systemUserRoleService.list(Wrappers.<SystemUserRole>lambdaQuery().eq(SystemUserRole::getUserId, userId));

@@ -1,7 +1,7 @@
 package com.github.rich.security.test;
 
 import com.github.rich.base.domain.dto.User;
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.security.userdetails.RichUserDetails;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -39,7 +39,7 @@ final class WithMockRichAuthUserSecurityContextFactory implements
                 .roles(roles)
                 .permissions(permissions)
                 .build();
-        UserDetailsImpl userDetails = new UserDetailsImpl(principal);
+        RichUserDetails userDetails = new RichUserDetails(principal);
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, userDetails.getPassword(), userDetails.getAuthorities());
         SecurityContext context = SecurityContextHolder.createEmptyContext();

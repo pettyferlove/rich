@@ -1,4 +1,4 @@
-package com.github.rich.security.service.impl;
+package com.github.rich.security.userdetails;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.rich.base.domain.dto.User;
@@ -17,7 +17,7 @@ import java.util.*;
  * UserDetails接口实现
  */
 @Data
-public class UserDetailsImpl implements UserDetails {
+public class RichUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
     private String userId;
     /**
@@ -34,7 +34,7 @@ public class UserDetailsImpl implements UserDetails {
     private List<String> roles;
     private List<String> permissions;
 
-    public UserDetailsImpl(User user) {
+    public RichUserDetails(User user) {
         this.userId = user.getId();
         this.username = user.getLoginName();
         this.password = user.getPassword();

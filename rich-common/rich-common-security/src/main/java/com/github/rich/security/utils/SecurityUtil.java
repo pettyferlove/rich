@@ -3,7 +3,7 @@ package com.github.rich.security.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.rich.common.core.constants.SecurityConstant;
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.security.userdetails.RichUserDetails;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,10 +33,10 @@ public class SecurityUtil {
 	/**
 	 * 获取用户
 	 */
-	private UserDetailsImpl getUser(Authentication authentication) {
+	private RichUserDetails getUser(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
-		if (principal instanceof UserDetailsImpl) {
-			return (UserDetailsImpl) principal;
+		if (principal instanceof RichUserDetails) {
+			return (RichUserDetails) principal;
 		}
 		return null;
 	}
@@ -57,7 +57,7 @@ public class SecurityUtil {
 	/**
 	 * 获取用户
 	 */
-	public UserDetailsImpl getUser() {
+	public RichUserDetails getUser() {
 		Authentication authentication = getAuthentication();
 		if (authentication == null) {
 			return null;
