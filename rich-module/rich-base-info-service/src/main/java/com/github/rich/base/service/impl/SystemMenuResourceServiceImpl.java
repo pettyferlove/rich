@@ -1,6 +1,5 @@
 package com.github.rich.base.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
@@ -12,7 +11,7 @@ import com.github.rich.base.service.ISystemMenuResourceService;
 import com.github.rich.base.service.ISystemRoleMenuService;
 import com.github.rich.base.service.ISystemUserRoleService;
 import com.github.rich.base.utils.TreeUtils;
-import com.github.rich.base.vo.MenuNode;
+import com.github.rich.base.domain.vo.MenuNode;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.service.impl.UserDetailsImpl;

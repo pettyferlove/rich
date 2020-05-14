@@ -2,7 +2,7 @@ package com.github.rich.log.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.common.core.domain.vo.R;
 import com.github.rich.log.entity.UserOperateLog;
 import com.github.rich.log.service.IUserOperateLogService;
 import io.swagger.annotations.*;

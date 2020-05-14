@@ -2,7 +2,7 @@ package com.github.rich.common.core.bean.handler;
 
 import com.github.rich.common.core.exception.BaseException;
 import com.github.rich.common.core.exception.BaseRuntimeException;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.common.core.domain.vo.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;

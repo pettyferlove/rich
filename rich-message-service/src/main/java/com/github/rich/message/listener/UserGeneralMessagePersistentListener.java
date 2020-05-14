@@ -3,7 +3,7 @@ package com.github.rich.message.listener;
 import com.github.rich.base.feign.UserServiceFeignClient;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.message.dto.message.UserGeneralMessage;
+import com.github.rich.message.domain.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.service.ISystemMessageService;
 import com.github.rich.message.stream.source.UserMessageBroadcastSource;

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.rich.base.entity.SystemGatewayRoute;
 import com.github.rich.base.service.ISystemGatewayRouteService;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.common.core.domain.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.utils.SecurityUtil;

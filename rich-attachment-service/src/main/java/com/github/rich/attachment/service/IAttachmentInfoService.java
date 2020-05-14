@@ -2,7 +2,7 @@ package com.github.rich.attachment.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.rich.attachment.entity.AttachmentInfo;
-import com.github.rich.attachment.vo.Upload;
+import com.github.rich.attachment.domain.vo.Upload;
 
 /**
  * <p>

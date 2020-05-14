@@ -1,6 +1,6 @@
 package com.github.rich.base.utils;
 
-import com.github.rich.base.dto.TreeNode;
+import com.github.rich.base.domain.dto.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Iterator;

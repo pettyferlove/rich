@@ -1,7 +1,7 @@
 package com.github.rich.base.feign.impl;
 
-import com.github.rich.base.dto.User;
-import com.github.rich.base.dto.UserDetailDTO;
+import com.github.rich.base.domain.dto.User;
+import com.github.rich.base.domain.dto.UserDetailDTO;
 import com.github.rich.base.entity.SystemUser;
 import com.github.rich.base.feign.UserServiceFeignClient;
 import com.github.rich.base.service.ISystemUserService;

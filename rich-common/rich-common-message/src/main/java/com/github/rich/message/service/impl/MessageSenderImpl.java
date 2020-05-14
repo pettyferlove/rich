@@ -35,7 +35,7 @@ public class MessageSenderImpl implements IMessageSender {
     }
 
     @Override
-    public void send(String routerKey, com.github.rich.message.dto.Message message) {
+    public void send(String routerKey, com.github.rich.message.domain.dto.Message message) {
         this.rabbitTemplate.setReturnCallback(this);
         this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {
@@ -51,7 +51,7 @@ public class MessageSenderImpl implements IMessageSender {
     }
 
     @Override
-    public void send(String exchange, String routerKey, com.github.rich.message.dto.Message message) {
+    public void send(String exchange, String routerKey, com.github.rich.message.domain.dto.Message message) {
         this.rabbitTemplate.setReturnCallback(this);
         this.rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {

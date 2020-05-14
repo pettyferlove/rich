@@ -1,6 +1,6 @@
 package com.github.rich.message.interceptor;
 
-import com.github.rich.message.dto.User;
+import com.github.rich.message.domain.dto.User;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;

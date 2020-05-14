@@ -2,7 +2,7 @@ package com.github.rich.base.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.rich.base.entity.SystemRegion;
-import com.github.rich.base.vo.RegionNode;
+import com.github.rich.base.domain.vo.RegionNode;
 
 import java.util.List;
 

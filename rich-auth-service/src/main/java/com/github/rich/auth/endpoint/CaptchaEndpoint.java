@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.rich.security.service.CaptchaValidateService;
 import com.github.rich.common.core.utils.SMSUtil;
 import com.github.rich.common.core.constants.SecurityConstant;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.common.core.domain.vo.R;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;

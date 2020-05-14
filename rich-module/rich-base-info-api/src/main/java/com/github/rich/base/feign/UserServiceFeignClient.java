@@ -1,7 +1,7 @@
 package com.github.rich.base.feign;
 
-import com.github.rich.base.dto.User;
-import com.github.rich.base.dto.UserDetailDTO;
+import com.github.rich.base.domain.dto.User;
+import com.github.rich.base.domain.dto.UserDetailDTO;
 import com.github.rich.base.feign.factory.UserServiceFallbackFactory;
 import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;

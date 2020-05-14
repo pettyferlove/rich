@@ -1,6 +1,5 @@
 package com.github.rich.base.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -10,14 +9,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
-import com.github.rich.base.dto.User;
+import com.github.rich.base.domain.dto.User;
 import com.github.rich.base.entity.*;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.*;
-import com.github.rich.base.vo.ChangeMobileVO;
-import com.github.rich.base.vo.ChangePasswordVO;
-import com.github.rich.base.vo.UserDetailVO;
-import com.github.rich.base.vo.UserInfoVO;
+import com.github.rich.base.domain.vo.ChangeMobileVO;
+import com.github.rich.base.domain.vo.ChangePasswordVO;
+import com.github.rich.base.domain.vo.UserDetailVO;
+import com.github.rich.base.domain.vo.UserInfoVO;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;

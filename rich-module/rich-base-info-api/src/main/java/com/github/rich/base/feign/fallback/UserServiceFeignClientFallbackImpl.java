@@ -1,7 +1,7 @@
 package com.github.rich.base.feign.fallback;
 
-import com.github.rich.base.dto.User;
-import com.github.rich.base.dto.UserDetailDTO;
+import com.github.rich.base.domain.dto.User;
+import com.github.rich.base.domain.dto.UserDetailDTO;
 import com.github.rich.base.feign.UserServiceFeignClient;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;

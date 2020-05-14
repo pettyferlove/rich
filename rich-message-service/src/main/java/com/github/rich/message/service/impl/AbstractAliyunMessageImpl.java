@@ -10,7 +10,7 @@ import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.message.config.SmsAliyunProperties;
-import com.github.rich.message.dto.message.CaptchaMessage;
+import com.github.rich.message.domain.dto.message.CaptchaMessage;
 import com.github.rich.message.service.ISmsService;
 
 /**

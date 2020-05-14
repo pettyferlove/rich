@@ -1,6 +1,5 @@
 package com.github.rich.base.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -10,7 +9,7 @@ import com.github.rich.base.constants.CacheConstant;
 import com.github.rich.base.entity.SystemTenant;
 import com.github.rich.base.mapper.SystemTenantMapper;
 import com.github.rich.base.service.ISystemTenantService;
-import com.github.rich.base.vo.TenantVO;
+import com.github.rich.base.domain.vo.TenantVO;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.cache.annotation.CacheEvict;

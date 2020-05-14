@@ -3,7 +3,7 @@ package com.github.rich.security.component;
 import cn.hutool.http.HttpStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.rich.common.core.constants.CommonConstant;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.common.core.domain.vo.R;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

@@ -2,7 +2,7 @@ package com.github.rich.log.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.github.rich.log.constants.LogKafkaTopicConstant;
-import com.github.rich.log.dto.OperateLogInfo;
+import com.github.rich.log.domain.dto.OperateLogInfo;
 import com.github.rich.log.service.OperateLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

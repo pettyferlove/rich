@@ -1,6 +1,6 @@
 package com.github.rich.base.feign.impl;
 
-import com.github.rich.base.dto.Route;
+import com.github.rich.base.domain.dto.Route;
 import com.github.rich.base.feign.GatewayRouteServiceFeignClient;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import org.springframework.web.bind.annotation.RestController;

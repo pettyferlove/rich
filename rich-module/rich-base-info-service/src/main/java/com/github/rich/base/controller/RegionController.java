@@ -3,8 +3,8 @@ package com.github.rich.base.controller;
 
 import com.github.rich.base.entity.SystemRegion;
 import com.github.rich.base.service.ISystemRegionService;
-import com.github.rich.base.vo.RegionNode;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.base.domain.vo.RegionNode;
+import com.github.rich.common.core.domain.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.utils.SecurityUtil;

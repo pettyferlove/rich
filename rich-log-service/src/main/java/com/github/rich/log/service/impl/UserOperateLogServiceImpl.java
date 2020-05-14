@@ -1,6 +1,5 @@
 package com.github.rich.log.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -8,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.log.constants.LogKafkaTopicConstant;
-import com.github.rich.log.dto.OperateLogInfo;
+import com.github.rich.log.domain.dto.OperateLogInfo;
 import com.github.rich.log.entity.UserOperateLog;
 import com.github.rich.log.mapper.UserOperateLogMapper;
 import com.github.rich.log.service.IUserOperateLogService;

@@ -3,7 +3,7 @@ package com.github.rich.auth.controller;
 import cn.hutool.core.lang.UUID;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.github.rich.base.dto.User;
+import com.github.rich.base.domain.dto.User;
 import com.github.rich.base.feign.UserServiceFeignClient;
 import com.github.rich.security.service.AbstractCaptchaValidateService;
 import lombok.extern.slf4j.Slf4j;

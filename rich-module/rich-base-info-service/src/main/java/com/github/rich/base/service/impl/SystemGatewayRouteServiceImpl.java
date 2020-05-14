@@ -1,20 +1,19 @@
 package com.github.rich.base.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
-import com.github.rich.base.dto.Route;
+import com.github.rich.base.domain.dto.Route;
 import com.github.rich.base.entity.SystemGatewayRoute;
 import com.github.rich.base.mapper.SystemGatewayRouteMapper;
 import com.github.rich.base.service.ISystemGatewayRouteService;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.message.dto.message.GatewayRouteChangeMessage;
+import com.github.rich.message.domain.dto.message.GatewayRouteChangeMessage;
 import com.github.rich.message.stream.source.GatewaySource;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

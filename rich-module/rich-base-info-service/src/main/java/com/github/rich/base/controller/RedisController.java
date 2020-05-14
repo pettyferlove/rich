@@ -1,6 +1,6 @@
 package com.github.rich.base.controller;
 
-import com.github.rich.common.core.vo.R;
+import com.github.rich.common.core.domain.vo.R;
 import io.lettuce.core.RedisFuture;
 import io.lettuce.core.api.async.RedisAsyncCommands;
 import io.swagger.annotations.Api;

@@ -2,7 +2,7 @@ package com.github.rich.message.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.rich.message.entity.SystemMessage;
-import com.github.rich.message.vo.message.UserMessageVO;
+import com.github.rich.message.domain.vo.message.UserMessageVO;
 
 import java.util.List;
 

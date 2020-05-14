@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.attachment.entity.AttachmentInfo;
 import com.github.rich.attachment.mapper.AttachmentInfoMapper;
 import com.github.rich.attachment.service.IAttachmentInfoService;
-import com.github.rich.attachment.vo.Upload;
+import com.github.rich.attachment.domain.vo.Upload;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

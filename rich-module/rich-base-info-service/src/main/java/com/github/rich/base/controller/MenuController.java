@@ -2,8 +2,8 @@ package com.github.rich.base.controller;
 
 import com.github.rich.base.entity.SystemMenuResource;
 import com.github.rich.base.service.ISystemMenuResourceService;
-import com.github.rich.base.vo.MenuNode;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.base.domain.vo.MenuNode;
+import com.github.rich.common.core.domain.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.utils.SecurityUtil;

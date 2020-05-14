@@ -2,7 +2,7 @@ package com.github.rich.base.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.rich.base.entity.SystemMenuResource;
-import com.github.rich.base.vo.MenuNode;
+import com.github.rich.base.domain.vo.MenuNode;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 
 import java.util.List;

@@ -3,12 +3,12 @@ package com.github.rich.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.rich.base.dto.User;
+import com.github.rich.base.domain.dto.User;
 import com.github.rich.base.entity.SystemUser;
-import com.github.rich.base.vo.ChangeMobileVO;
-import com.github.rich.base.vo.ChangePasswordVO;
-import com.github.rich.base.vo.UserDetailVO;
-import com.github.rich.base.vo.UserInfoVO;
+import com.github.rich.base.domain.vo.ChangeMobileVO;
+import com.github.rich.base.domain.vo.ChangePasswordVO;
+import com.github.rich.base.domain.vo.UserDetailVO;
+import com.github.rich.base.domain.vo.UserInfoVO;
 import com.github.rich.security.service.impl.UserDetailsImpl;
 
 /**

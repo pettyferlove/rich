@@ -1,7 +1,7 @@
 package com.github.rich.message.service.impl;
 
 import com.github.rich.message.config.SmsAliyunProperties;
-import com.github.rich.message.dto.message.CaptchaMessage;
+import com.github.rich.message.domain.dto.message.CaptchaMessage;
 import org.springframework.stereotype.Service;
 
 

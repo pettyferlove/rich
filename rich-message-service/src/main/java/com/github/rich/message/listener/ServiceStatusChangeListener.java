@@ -1,6 +1,6 @@
 package com.github.rich.message.listener;
 
-import com.github.rich.message.dto.message.ServiceStatusChangeEmailMessage;
+import com.github.rich.message.domain.dto.message.ServiceStatusChangeEmailMessage;
 import com.github.rich.message.stream.sink.ServiceMonitorSink;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.EnableBinding;

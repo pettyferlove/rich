@@ -1,6 +1,6 @@
 package com.github.rich.base.feign;
 
-import com.github.rich.base.dto.Route;
+import com.github.rich.base.domain.dto.Route;
 import com.github.rich.base.feign.factory.GatewayRouteServiceFallbackFactory;
 import com.github.rich.common.core.constants.CommonConstant;
 import org.springframework.cloud.openfeign.FeignClient;
