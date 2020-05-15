@@ -3,6 +3,7 @@ package com.github.rich.log.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.rich.log.domain.dto.OperateLogInfo;
 import com.github.rich.log.entity.UserOperateLog;
 
 /**
@@ -19,7 +20,7 @@ public interface IUserOperateLogService extends IService<UserOperateLog> {
      * 接受Kafka消息
      * @param message 消息
      */
-    void receiveMessage(String message);
+    void receiveMessage(OperateLogInfo message);
 
     /**
      * 查询日志列表
