@@ -3,7 +3,7 @@ package com.github.rich.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.rich.base.dto.Route;
+import com.github.rich.base.domain.dto.Route;
 import com.github.rich.base.entity.SystemGatewayRoute;
 
 import java.util.List;

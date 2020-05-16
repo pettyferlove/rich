@@ -1,8 +1,8 @@
 package com.github.rich.attachment.service;
 
 import com.github.rich.attachment.entity.AttachmentInfo;
-import com.github.rich.attachment.vo.Upload;
-import com.github.rich.attachment.vo.UploadResult;
+import com.github.rich.attachment.domain.vo.Upload;
+import com.github.rich.attachment.domain.vo.UploadResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.OutputStream;

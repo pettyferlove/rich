@@ -1,6 +1,5 @@
 package com.github.rich.base.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -10,20 +9,20 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.base.constants.CacheConstant;
-import com.github.rich.base.dto.User;
+import com.github.rich.base.domain.dto.User;
 import com.github.rich.base.entity.*;
 import com.github.rich.base.mapper.SystemUserMapper;
 import com.github.rich.base.service.*;
-import com.github.rich.base.vo.ChangeMobileVO;
-import com.github.rich.base.vo.ChangePasswordVO;
-import com.github.rich.base.vo.UserDetailVO;
-import com.github.rich.base.vo.UserInfoVO;
+import com.github.rich.base.domain.vo.ChangeMobileVO;
+import com.github.rich.base.domain.vo.ChangePasswordVO;
+import com.github.rich.base.domain.vo.UserDetailVO;
+import com.github.rich.base.domain.vo.UserInfoVO;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.security.constants.EncryptionConstant;
 import com.github.rich.security.service.CaptchaValidateService;
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.security.userdetails.RichUserDetails;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -259,7 +258,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 
     @Override
     @Cacheable(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null")
-    public UserDetailVO getUserDetail(UserDetailsImpl userDetails) {
+    public UserDetailVO getUserDetail(RichUserDetails userDetails) {
         assert userDetails != null;
         Optional<SystemUser> systemUserOptional = Optional.ofNullable(this.getById(userDetails.getUserId()));
         if (systemUserOptional.isPresent()) {
@@ -281,7 +280,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     })
-    public Boolean updateUserInfo(UserDetailsImpl userDetails, UserInfoVO info) {
+    public Boolean updateUserInfo(RichUserDetails userDetails, UserInfoVO info) {
         assert userDetails != null;
         String userId = userDetails.getUserId();
         Optional<SystemUser> systemUserOptional = Optional.ofNullable(ConverterUtil.convert(info, new SystemUser()));
@@ -299,7 +298,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-info-detail", key = "#userDetails.username", condition = "#userDetails.username!=null"),
             @CacheEvict(value = CacheConstant.OUTER_API_PREFIX + "base-user-detail", key = "#userDetails.userId", condition = "#userDetails.userId!=null")
     })
-    public Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword) {
+    public Integer changePassword(RichUserDetails userDetails, ChangePasswordVO changePassword) {
         try {
             if (!changePassword.getNewPassword().equals(changePassword.getRepeatPassword())) {
                 return 2;
@@ -327,7 +326,7 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
     }
 
     @Override
-    public Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile) {
+    public Integer changeMobile(RichUserDetails userDetails, ChangeMobileVO changeMobile) {
         try {
             if (!sensitiveInfoCaptchaValidateService.validate(changeMobile.getMobileTel(), changeMobile.getCaptcha())) {
                 return 2;

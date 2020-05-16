@@ -1,6 +1,6 @@
 package com.github.rich.auth.config;
 
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.security.userdetails.RichUserDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -21,7 +21,7 @@ public class RichTokenEnhancer implements TokenEnhancer {
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         final Map<String, Object> additionalInfo = new HashMap<>(256);
         try{
-            UserDetailsImpl user = (UserDetailsImpl) authentication.getUserAuthentication().getPrincipal();
+            RichUserDetails user = (RichUserDetails) authentication.getUserAuthentication().getPrincipal();
             /*additionalInfo.put("username", user.getUsername());
             additionalInfo.put("authorities", user.getAuthorities());
             additionalInfo.put("type", user.getType());

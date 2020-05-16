@@ -1,7 +1,7 @@
 package com.github.rich.base.service.impl;
 
 import com.github.rich.common.core.constants.SecurityConstant;
-import com.github.rich.message.dto.message.CaptchaMessage;
+import com.github.rich.message.domain.dto.message.CaptchaMessage;
 import com.github.rich.message.stream.source.SensitiveInfoCaptchaSmsSource;
 import com.github.rich.security.service.AbstractCaptchaValidateService;
 import org.springframework.cloud.stream.annotation.EnableBinding;

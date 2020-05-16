@@ -1,6 +1,6 @@
 package com.github.rich.message.listener;
 
-import com.github.rich.message.dto.message.CaptchaMessage;
+import com.github.rich.message.domain.dto.message.CaptchaMessage;
 import com.github.rich.message.service.IMessageService;
 import com.github.rich.message.stream.sink.LoginCaptchaSmsSink;
 import lombok.extern.slf4j.Slf4j;

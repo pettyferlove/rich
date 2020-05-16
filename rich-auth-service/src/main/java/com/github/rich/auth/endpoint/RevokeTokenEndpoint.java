@@ -2,7 +2,7 @@ package com.github.rich.auth.endpoint;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.rich.security.exception.RichOAuth2LogoutException;
-import com.github.rich.auth.model.Logout;
+import com.github.rich.security.domain.vo.Logout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -12,8 +12,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.Map;
 
 /**
  * @author Petty

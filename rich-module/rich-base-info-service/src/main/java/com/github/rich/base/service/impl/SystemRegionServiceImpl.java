@@ -8,7 +8,7 @@ import com.github.rich.base.entity.SystemRegion;
 import com.github.rich.base.mapper.SystemRegionMapper;
 import com.github.rich.base.service.ISystemRegionService;
 import com.github.rich.base.utils.TreeUtils;
-import com.github.rich.base.vo.RegionNode;
+import com.github.rich.base.domain.vo.RegionNode;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.cache.annotation.CacheEvict;

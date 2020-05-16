@@ -1,6 +1,6 @@
 package com.github.rich.log.service;
 
-import com.github.rich.log.dto.OperateLogInfo;
+import com.github.rich.log.domain.dto.OperateLogInfo;
 
 /**
  * @author Petty

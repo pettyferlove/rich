@@ -1,6 +1,5 @@
 package com.github.rich.message.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.rich.common.core.exception.BaseRuntimeException;
@@ -8,7 +7,7 @@ import com.github.rich.common.core.utils.ConverterUtil;
 import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.mapper.SystemMessageMapper;
 import com.github.rich.message.service.ISystemMessageService;
-import com.github.rich.message.vo.message.UserMessageVO;
+import com.github.rich.message.domain.vo.message.UserMessageVO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

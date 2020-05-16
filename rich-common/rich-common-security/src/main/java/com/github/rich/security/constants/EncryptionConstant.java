@@ -10,4 +10,6 @@ public interface EncryptionConstant {
      */
     String SIGNATURE = "{SHA-256}";
 
+    String SIGNATURE_NOOP = "{noop}";
+
 }

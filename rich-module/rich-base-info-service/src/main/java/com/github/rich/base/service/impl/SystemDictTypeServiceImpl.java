@@ -1,6 +1,5 @@
 package com.github.rich.base.service.impl;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -12,7 +11,7 @@ import com.github.rich.base.entity.SystemDictType;
 import com.github.rich.base.mapper.SystemDictTypeMapper;
 import com.github.rich.base.service.ISystemDictItemService;
 import com.github.rich.base.service.ISystemDictTypeService;
-import com.github.rich.base.vo.Dict;
+import com.github.rich.base.domain.vo.Dict;
 import com.github.rich.common.core.exception.BaseRuntimeException;
 import com.github.rich.common.core.utils.ConverterUtil;
 import org.springframework.cache.annotation.CacheEvict;

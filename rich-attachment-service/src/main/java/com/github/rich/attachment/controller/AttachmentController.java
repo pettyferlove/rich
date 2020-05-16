@@ -1,9 +1,9 @@
 package com.github.rich.attachment.controller;
 
 import com.github.rich.attachment.service.IAttachmentOperaService;
-import com.github.rich.attachment.vo.Upload;
-import com.github.rich.attachment.vo.UploadResult;
-import com.github.rich.common.core.vo.R;
+import com.github.rich.attachment.domain.vo.Upload;
+import com.github.rich.attachment.domain.vo.UploadResult;
+import com.github.rich.common.core.domain.vo.R;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.OperateType;
 import com.github.rich.security.utils.SecurityUtil;

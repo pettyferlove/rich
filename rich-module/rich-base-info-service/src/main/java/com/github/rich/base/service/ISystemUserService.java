@@ -3,13 +3,13 @@ package com.github.rich.base.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.rich.base.dto.User;
+import com.github.rich.base.domain.dto.User;
 import com.github.rich.base.entity.SystemUser;
-import com.github.rich.base.vo.ChangeMobileVO;
-import com.github.rich.base.vo.ChangePasswordVO;
-import com.github.rich.base.vo.UserDetailVO;
-import com.github.rich.base.vo.UserInfoVO;
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.base.domain.vo.ChangeMobileVO;
+import com.github.rich.base.domain.vo.ChangePasswordVO;
+import com.github.rich.base.domain.vo.UserDetailVO;
+import com.github.rich.base.domain.vo.UserInfoVO;
+import com.github.rich.security.userdetails.RichUserDetails;
 
 /**
  * <p>
@@ -112,7 +112,7 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @param userDetails UserDetailsImpl
      * @return UserDetailVO
      */
-    UserDetailVO getUserDetail(UserDetailsImpl userDetails);
+    UserDetailVO getUserDetail(RichUserDetails userDetails);
 
     /**
      * 更新用户详情
@@ -121,7 +121,7 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @param info        UserInfoVO
      * @return Boolean
      */
-    Boolean updateUserInfo(UserDetailsImpl userDetails, UserInfoVO info);
+    Boolean updateUserInfo(RichUserDetails userDetails, UserInfoVO info);
 
 
     /**
@@ -131,7 +131,7 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @param changePassword 密码变更类
      * @return 1 变更成功 0 变更失败 2 两次输入的密码不一致 3 原始密码错误
      */
-    Integer changePassword(UserDetailsImpl userDetails, ChangePasswordVO changePassword);
+    Integer changePassword(RichUserDetails userDetails, ChangePasswordVO changePassword);
 
 
     /**
@@ -141,7 +141,7 @@ public interface ISystemUserService extends IService<SystemUser> {
      * @param changeMobile 手机号码变更类
      * @return 1 变更成功 0 变更失败 2 验证码错误
      */
-    Integer changeMobile(UserDetailsImpl userDetails, ChangeMobileVO changeMobile);
+    Integer changeMobile(RichUserDetails userDetails, ChangeMobileVO changeMobile);
 
 
     /**

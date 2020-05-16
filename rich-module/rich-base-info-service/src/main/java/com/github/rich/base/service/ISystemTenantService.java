@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.rich.base.entity.SystemTenant;
-import com.github.rich.base.vo.TenantVO;
+import com.github.rich.base.domain.vo.TenantVO;
 
 import java.util.List;
 

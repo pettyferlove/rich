@@ -1,7 +1,7 @@
 package com.github.rich.message.interceptor;
 
-import com.github.rich.message.dto.User;
-import com.github.rich.security.service.impl.UserDetailsImpl;
+import com.github.rich.message.domain.dto.User;
+import com.github.rich.security.userdetails.RichUserDetails;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -29,7 +29,7 @@ public class UserChannelInterceptor implements ChannelInterceptor {
         if (StompCommand.CONNECT.equals(accessor.getCommand())) {
             OAuth2Authentication authentication = (OAuth2Authentication) accessor.getHeader(StompHeaderAccessor.USER_HEADER);
             assert authentication != null;
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getUserAuthentication().getPrincipal();
+            RichUserDetails userDetails = (RichUserDetails) authentication.getUserAuthentication().getPrincipal();
             User user = new User(userDetails.getUserId());
             accessor.setUser(user);
         }

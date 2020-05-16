@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.rich.base.entity.SystemDictType;
-import com.github.rich.base.vo.Dict;
+import com.github.rich.base.domain.vo.Dict;
 
 import java.util.List;
 

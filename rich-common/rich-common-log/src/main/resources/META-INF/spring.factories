@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.rich.log.LogAutoConfiguration
+  com.github.rich.log.service.impl.OperateLogServiceImpl,\
+  com.github.rich.log.aop.UserLogAop

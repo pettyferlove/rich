@@ -1,9 +1,9 @@
 package com.github.rich.message.listener;
 
-import com.github.rich.base.feign.RemoteUserService;
+import com.github.rich.base.feign.UserServiceFeignClient;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.common.core.utils.ConverterUtil;
-import com.github.rich.message.dto.message.UserGeneralMessage;
+import com.github.rich.message.domain.dto.message.UserGeneralMessage;
 import com.github.rich.message.entity.SystemMessage;
 import com.github.rich.message.service.ISystemMessageService;
 import com.github.rich.message.stream.source.UserMessageBroadcastSource;
@@ -26,11 +26,11 @@ public class UserGeneralMessagePersistentListener {
 
     private final ISystemMessageService systemMessageService;
 
-    private final RemoteUserService remoteUserService;
+    private final UserServiceFeignClient userServiceFeignClient;
 
-    public UserGeneralMessagePersistentListener(ISystemMessageService systemMessageService, RemoteUserService remoteUserService) {
+    public UserGeneralMessagePersistentListener(ISystemMessageService systemMessageService, UserServiceFeignClient userServiceFeignClient) {
         this.systemMessageService = systemMessageService;
-        this.remoteUserService = remoteUserService;
+        this.userServiceFeignClient = userServiceFeignClient;
     }
 
     /**
@@ -46,7 +46,7 @@ public class UserGeneralMessagePersistentListener {
         systemMessage.setCreator(CommonConstant.SYSTEM_USER_ID);
         systemMessage.setCreateTime(LocalDateTime.now());
         if (!CommonConstant.SYSTEM_USER_ID.equals(message.getDeliver())) {
-            message.setAvatar(remoteUserService.getUserDetail(message.getDeliver()).getUserAvatar());
+            message.setAvatar(userServiceFeignClient.getUserDetail(message.getDeliver()).getUserAvatar());
         }
         try {
             String id = systemMessageService.create(systemMessage);

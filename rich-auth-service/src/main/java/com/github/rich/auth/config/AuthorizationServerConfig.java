@@ -2,7 +2,6 @@ package com.github.rich.auth.config;
 
 import com.github.rich.auth.granter.MobileTokenGranter;
 import com.github.rich.auth.granter.WeChatTokenGranter;
-import com.github.rich.auth.service.RichClientDetailsService;
 import com.github.rich.common.core.constants.CommonConstant;
 import com.github.rich.security.component.ResponseExceptionTranslator;
 import com.github.rich.security.service.CaptchaValidateService;
@@ -34,7 +33,6 @@ import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
-import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,19 +47,6 @@ import java.util.List;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    private static final String CLIENT_FIELDS_FOR_UPDATE = "resource_ids, scope, "
-            + "authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, "
-            + "refresh_token_validity, additional_information, autoapprove";
-
-    private static final String CLIENT_FIELDS = "CONCAT('{noop}',client_secret) as client_secret, " + CLIENT_FIELDS_FOR_UPDATE;
-
-    private static final String BASE_FIND_STATEMENT = "select client_id, " + CLIENT_FIELDS
-            + " from system_oauth_client_details";
-
-    private static final String DEFAULT_FIND_STATEMENT = BASE_FIND_STATEMENT + " order by client_id";
-
-    private static final String DEFAULT_SELECT_STATEMENT = BASE_FIND_STATEMENT + " where client_id = ?";
-
     private final AuthenticationManager authenticationManager;
 
     private final RichUserDetailsService userDetailsService;
@@ -72,11 +57,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final CaptchaValidateService captchaValidateService;
 
-    private final DataSource dataSource;
-
     @Autowired
-    public AuthorizationServerConfig(DataSource dataSource, RichUserDetailsService userDetailsService, ClientDetailsService clientDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService, AuthenticationManager authenticationManager) {
-        this.dataSource = dataSource;
+    public AuthorizationServerConfig(RichUserDetailsService userDetailsService, ClientDetailsService clientDetailsService, RedisConnectionFactory redisConnectionFactory, CaptchaValidateService smsCaptchaValidateService, AuthenticationManager authenticationManager) {
         this.userDetailsService = userDetailsService;
         this.clientDetailsService = clientDetailsService;
         this.redisConnectionFactory = redisConnectionFactory;
@@ -87,9 +69,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     @SneakyThrows
     public void configure(ClientDetailsServiceConfigurer clients) {
-        RichClientDetailsService clientDetailsService = new RichClientDetailsService(dataSource);
-        clientDetailsService.setSelectClientDetailsSql(DEFAULT_SELECT_STATEMENT);
-        clientDetailsService.setFindClientDetailsSql(DEFAULT_FIND_STATEMENT);
         clients.withClientDetails(clientDetailsService);
     }
 

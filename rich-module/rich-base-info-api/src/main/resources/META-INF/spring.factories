@@ -1,5 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.github.rich.base.feign.fallback.RemoteUserServiceFallbackImpl,\
-  com.github.rich.base.feign.factory.RemoteUserServiceFallbackFactory,\
-  com.github.rich.base.feign.fallback.RemoteGatewayRouteServiceFallbackImpl,\
-  com.github.rich.base.feign.factory.RemoteGatewayRouteServiceFallbackFactory
+  com.github.rich.base.feign.factory.GatewayRouteServiceFallbackFactory,\
+  com.github.rich.base.feign.factory.ClientServiceFeignClientFallbackFactory,\
+  com.github.rich.base.feign.factory.UserServiceFallbackFactory

@@ -1,9 +1,9 @@
 package com.github.rich.message.controller;
 
 
-import com.github.rich.common.core.vo.R;
+import com.github.rich.common.core.domain.vo.R;
 import com.github.rich.message.service.ISystemMessageService;
-import com.github.rich.message.vo.message.UserMessageVO;
+import com.github.rich.message.domain.vo.message.UserMessageVO;
 import com.github.rich.security.utils.SecurityUtil;
 import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;

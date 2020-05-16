@@ -3,13 +3,12 @@ package com.github.rich.log.aop;
 import com.github.rich.common.core.utils.CommonUtils;
 import com.github.rich.log.annotation.UserLog;
 import com.github.rich.log.constants.LogType;
-import com.github.rich.log.dto.OperateLogInfo;
+import com.github.rich.log.domain.dto.OperateLogInfo;
 import com.github.rich.log.service.OperateLogService;
 import com.github.rich.security.utils.SecurityUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -20,7 +19,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 
