@@ -9,6 +9,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Petty
  */
 @Slf4j
-@RestControllerAdvice("com.github.rich")
+@RestControllerAdvice(annotations = RestController.class)
 public class GlobalRestControllerExceptionHandler {
     /**
      * 处理BaseRuntimeException异常

@@ -18,13 +18,13 @@ public class GatewayRouteServiceFeignClientFallbackImpl implements GatewayRouteS
 
     @Override
     public List<Route> loadRoutes() {
-        log.error("Feign---RemoteGatewayRouteService->loadRoutes Hystrix Fusing->Params:{},Date:{},Cause:{}", null, System.currentTimeMillis(), cause);
+        log.error("Feign---GatewayRouteServiceFeignClient->loadRoutes Hystrix Fusing->Params:{},Date:{},Cause:{}", null, System.currentTimeMillis(), cause);
         return null;
     }
 
     @Override
     public Route load(String routeId) {
-        log.error("Feign---RemoteGatewayRouteService->load Hystrix Fusing->Params:{},Date:{},Cause:{}", routeId, System.currentTimeMillis(), cause);
+        log.error("Feign---GatewayRouteServiceFeignClient->load Hystrix Fusing->Params:{},Date:{},Cause:{}", routeId, System.currentTimeMillis(), cause);
         return null;
     }
 }
