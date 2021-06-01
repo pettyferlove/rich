@@ -44,8 +44,8 @@
         <docker.plugin.version>0.4.13</docker.plugin.version>
         <swagger.version>2.9.2</swagger.version>
         <zipkin.version>2.12.9</zipkin.version>
-        <fastjson.version>1.2.60</fastjson.version>
-        <druid.version>1.1.21</druid.version>
+        <fastjson.version>1.2.72</fastjson.version>
+        <druid.version>1.2.4</druid.version>
         <mysql.version>8.0.9-rc</mysql.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <velocity.version>2.0</velocity.version>
